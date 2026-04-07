@@ -10,8 +10,8 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Backends
   - Applications
+  - Backends
   - Mobile
   - Open Source
 url: >-
@@ -29,8 +29,8 @@ apis:
     humanURL: https://appwrite.io/
     baseURL: https://cloud.appwrite.io/v1
     tags:
-      - Backends
       - Authentication
+      - Backends
       - Database
       - Storage
     properties:
