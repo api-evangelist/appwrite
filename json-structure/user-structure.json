@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/appwrite/main/json-structure/user-structure.json",
+  "title": "User",
+  "description": "An Appwrite user account with authentication credentials",
+  "type": "record",
+  "fields": [
+    {
+      "name": "$id",
+      "type": "string",
+      "description": "Unique user identifier"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "User display name"
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "description": "User email address"
+    },
+    {
+      "name": "phone",
+      "type": "string",
+      "description": "User phone number"
+    },
+    {
+      "name": "emailVerification",
+      "type": "boolean",
+      "description": "Email verification status"
+    },
+    {
+      "name": "phoneVerification",
+      "type": "boolean",
+      "description": "Phone verification status"
+    },
+    {
+      "name": "status",
+      "type": "boolean",
+      "description": "Account active status"
+    },
+    {
+      "name": "createdAt",
+      "type": "string",
+      "description": "Creation timestamp"
+    },
+    {
+      "name": "labels",
+      "type": {
+        "type": "sequence",
+        "items": "string"
+      },
+      "description": "RBAC labels"
+    }
+  ]
+}

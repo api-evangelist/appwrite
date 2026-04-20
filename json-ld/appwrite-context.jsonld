@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "appwrite": "https://appwrite.io/vocab#",
+    "$id": "schema:identifier",
+    "name": "schema:name",
+    "email": "schema:email",
+    "phone": "schema:telephone",
+    "emailVerification": "appwrite:emailVerification",
+    "phoneVerification": "appwrite:phoneVerification",
+    "status": "appwrite:status",
+    "createdAt": "schema:dateCreated",
+    "updatedAt": "schema:dateModified",
+    "labels": "appwrite:labels"
+  }
+}

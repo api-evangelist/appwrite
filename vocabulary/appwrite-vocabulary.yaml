@@ -1,0 +1,152 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: Appwrite
+  description: >-
+    Vocabulary for the Appwrite open source backend server, covering user
+    authentication, database management, file storage, cloud functions, and
+    messaging for web and mobile application backends.
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - name: Appwrite API
+      namespace: appwrite
+      version: "1.6.0"
+      baseUrl: "https://cloud.appwrite.io/v1"
+      status: active
+
+  resources:
+    - name: account
+      description: Authenticated user account management
+      api: Appwrite API
+      actions:
+        - get
+        - update
+        - delete
+    - name: users
+      description: Server-side user account management
+      api: Appwrite API
+      actions:
+        - list
+        - create
+        - get
+        - update
+        - delete
+    - name: databases
+      description: Database and collection management
+      api: Appwrite API
+      actions:
+        - list
+        - create
+        - get
+        - delete
+    - name: storage-buckets
+      description: File storage bucket management
+      api: Appwrite API
+      actions:
+        - list
+        - create
+        - get
+        - delete
+    - name: functions
+      description: Cloud functions for serverless backend logic
+      api: Appwrite API
+      actions:
+        - list
+        - create
+        - get
+        - execute
+
+  actions:
+    - name: list
+      httpMethod: GET
+      pattern: read
+    - name: get
+      httpMethod: GET
+      pattern: read
+    - name: create
+      httpMethod: POST
+      pattern: write
+    - name: update
+      httpMethod: PATCH
+      pattern: write
+    - name: delete
+      httpMethod: DELETE
+      pattern: destructive
+    - name: execute
+      httpMethod: POST
+      pattern: write
+
+  schemas:
+    core:
+      - name: User
+        description: An Appwrite user account with auth credentials and labels
+      - name: Database
+        description: An Appwrite database for collections and documents
+      - name: Bucket
+        description: An Appwrite file storage bucket
+
+  parameters:
+    identifiers:
+      - name: userId
+        description: Unique Appwrite user identifier
+      - name: databaseId
+        description: Unique database identifier
+      - name: bucketId
+        description: Unique storage bucket identifier
+    filters:
+      - name: queries
+        description: Array of query strings for filtering results
+      - name: search
+        description: Full-text search term
+
+  enums:
+    authMethods:
+      - email-password
+      - phone
+      - oauth2
+      - magic-url
+      - anonymous
+    bucketPermissions:
+      - read
+      - write
+      - delete
+
+  authentication:
+    schemes:
+      - type: apikey
+        description: Project ID and API key via request headers
+
+capability:
+  workflows:
+    - name: Mobile Backend Setup
+      description: Configure and manage a mobile app backend with Appwrite
+      resources:
+        - users
+        - databases
+        - storage-buckets
+  personas:
+    - name: Mobile Developer
+      description: Developer building iOS, Android, or web apps with Appwrite
+    - name: Backend Administrator
+      description: Administrator managing Appwrite project users and configuration
+  domains:
+    - name: Authentication
+      description: User authentication and account management
+      resources:
+        - account
+        - users
+    - name: Data Storage
+      description: Database and file storage management
+      resources:
+        - databases
+        - storage-buckets
+    - name: Serverless Functions
+      description: Cloud function deployment and execution
+      resources:
+        - functions
+
+  namespaces: []
+  binds: []

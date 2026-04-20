@@ -1,42 +1,56 @@
 # Appwrite (appwrite)
-Appwrite is an open-source backend server for building web and mobile applications. It provides a wide range of features and tools for developers, including user authentication, file storage, database management, and cloud functions. With Appwrite, developers can easily set up a backend server for their applications without the need to write code from scratch. It offers a simple and intuitive API that allows for seamless integration with front-end applications. Overall, Appwrite streamlines the development process and provides a robust backend infrastructure for building modern and scalable applications.
+
+Appwrite is an open-source Backend-as-a-Service platform for building web and mobile applications. It provides user authentication, database management, file storage, cloud functions, real-time messaging, and team management — all available via a unified REST API that can be self-hosted or used through Appwrite Cloud.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/appwrite/refs/heads/main/apis.yml)
 
-## Scope
+## Scope of Coverage
 
-- **Type:** Contract 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+| Item | Count |
+|------|-------|
+| APIs | 1 |
+| OpenAPI Specs | 1 |
+| JSON Schemas | 1 |
+| JSON Structures | 1 |
+| Examples | 1 |
+| JSON-LD Contexts | 1 |
+| Spectral Rulesets | 1 |
+| Naftiko Capabilities | 2 |
+| Vocabularies | 1 |
 
-## Tags:
+## APIs Covered
 
- - Backends, Applications, Mobile
+- **Appwrite API** — REST API for authentication, databases, storage, and functions in open source mobile and web backends.
 
-## Timestamps
+## Artifacts
 
-- **Created:** 2025-02-17 
-- **Modified:** 2025-02-24 
+### OpenAPI Specifications
+- [openapi/appwrite-openapi.yaml](openapi/appwrite-openapi.yaml)
 
-## APIs
+### JSON Schemas
+- [json-schema/user-schema.json](json-schema/user-schema.json)
 
-### Appwrite
-Build your entire backend within minutes and scale effortlessly using Appwrites open-source platform. Add Authentication, Databases, Functions, Storage, and Messaging to your projects using the frameworks and languages of your choice. 
+### JSON Structures
+- [json-structure/user-structure.json](json-structure/user-structure.json)
 
-**Human URL:** [ https://appwrite.io/]( https://appwrite.io/)
+### Examples
+- [examples/user-example.json](examples/user-example.json)
 
+### JSON-LD
+- [json-ld/appwrite-context.jsonld](json-ld/appwrite-context.jsonld)
 
-#### Tags:
+### Spectral Rules
+- [rules/appwrite-spectral-rules.yml](rules/appwrite-spectral-rules.yml)
 
- - API
+### Naftiko Capabilities
+- [capabilities/shared/appwrite-api.yaml](capabilities/shared/appwrite-api.yaml)
+- [capabilities/mobile-backend.yaml](capabilities/mobile-backend.yaml)
 
-#### Properties
-
-- [Documentation]( https://appwrite.io/)
+### Vocabulary
+- [vocabulary/appwrite-vocabulary.yaml](vocabulary/appwrite-vocabulary.yaml)
 
 ## Maintainers
 
-**FN:** Kin Lane
+**FN:** API Evangelist
 
 **Email:** info@apievangelist.com
-

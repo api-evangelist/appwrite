@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/appwrite/main/json-schema/user-schema.json",
+  "title": "User",
+  "description": "An Appwrite user account with authentication credentials",
+  "type": "object",
+  "properties": {
+    "$id": {
+      "type": "string",
+      "description": "Unique user identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "User phone number"
+    },
+    "emailVerification": {
+      "type": "boolean",
+      "description": "Whether email is verified"
+    },
+    "phoneVerification": {
+      "type": "boolean",
+      "description": "Whether phone is verified"
+    },
+    "status": {
+      "type": "boolean",
+      "description": "User account status (active/disabled)"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Account creation timestamp"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "User labels for RBAC"
+    }
+  },
+  "required": [
+    "$id",
+    "email"
+  ]
+}

@@ -1,0 +1,79 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Appwrite Mobile Backend
+  description: >-
+    Workflow capability for building mobile and web application backends using Appwrite.
+    Provides AI-assisted management of users, databases, file storage, and backend
+    configuration for developers building with Appwrite as their Backend-as-a-Service.
+  tags:
+    - Appwrite
+    - Mobile
+    - Backend-as-a-Service
+    - Open Source
+    - Developer Tools
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      APPWRITE_PROJECT_ID: APPWRITE_PROJECT_ID
+      APPWRITE_API_KEY: APPWRITE_API_KEY
+
+capability:
+  consumes:
+    - import: appwrite
+      location: ./shared/appwrite-api.yaml
+
+  exposes:
+    - type: mcp
+      port: 9090
+      namespace: mobile-backend-mcp
+      transport: http
+      description: MCP server for AI-assisted mobile and web backend management with Appwrite.
+      tools:
+        - name: list-project-users
+          description: Lists all registered users in the Appwrite project backend
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appwrite.list-users"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: provision-user
+          description: Creates a new user account in the Appwrite backend for a mobile app
+          hints:
+            readOnly: false
+            destructive: false
+          call: "appwrite.create-user"
+          with:
+            userId: "tools.userId"
+            email: "tools.email"
+            password: "tools.password"
+            name: "tools.name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-databases
+          description: Lists Appwrite databases available in the backend project
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appwrite.list-databases"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-storage-buckets
+          description: Lists file storage buckets configured in the Appwrite backend
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appwrite.list-buckets"
+          outputParameters:
+            - type: object
+              mapping: "$."
