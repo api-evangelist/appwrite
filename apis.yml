@@ -73,6 +73,13 @@ common:
   url: https://appwrite.io/pricing
 - type: Status
   url: https://status.appwrite.online/
+- type: Integrations
+  url: https://appwrite.io/integrations
+integrations:
+  - name: Text to speech with ElevenLabs AI
+  - name: MCP with Cursor MCP
+  - name: OAuth with X Auth
+  - name: Self-host Appwrite with MongoDB Databases
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
