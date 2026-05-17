@@ -63,15 +63,15 @@ common:
   url: https://appwrite.io/blog
 - type: Community
   url: https://appwrite.io/community
-- type: Sign Up
+- type: SignUp
   url: https://cloud.appwrite.io/register
 - type: Login
   url: https://cloud.appwrite.io/login
-- type: GitHub Organization
+- type: GitHubOrganization
   url: https://github.com/appwrite
 - type: Pricing
   url: https://appwrite.io/pricing
-- type: Status
+- type: StatusPage
   url: https://status.appwrite.online/
 - type: Integrations
   url: https://appwrite.io/integrations
