@@ -10,76 +10,82 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- Applications
-- Backends
-- Mobile
-- Open Source
+  - Applications
+  - Backends
+  - Mobile
+  - Open Source
 url: >-
   https://raw.githubusercontent.com/api-evangelist/appwrite/refs/heads/main/apis.yml
 created: '2025-02-17'
-modified: '2026-04-19'
+modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: appwrite:appwrite-api
-  name: Appwrite API
-  tags:
-  - Authentication
-  - Database
-  - Storage
-  - Functions
-  - Open Source
-  - Backend-as-a-Service
-  humanURL: https://appwrite.io/
-  properties:
-  - url: https://appwrite.io/docs
-    type: Documentation
-  - url: https://github.com/appwrite/appwrite
-    type: GitHubRepository
-  - url: openapi/appwrite-openapi.yaml
-    type: OpenAPI
-  - url: json-schema/user-schema.json
-    type: JSONSchema
-  - url: json-structure/user-structure.json
-    type: JSONStructure
-  - url: examples/user-example.json
-    type: Example
-  - url: json-ld/appwrite-context.jsonld
-    type: JSONLD
-  - url: rules/appwrite-spectral-rules.yml
-    type: SpectralRules
-  - url: capabilities/shared/appwrite-api.yaml
-    type: NaftikoCapability
-  - url: capabilities/mobile-backend.yaml
-    type: NaftikoCapability
-  - url: vocabulary/appwrite-vocabulary.yaml
-    type: Vocabulary
-  description: The Appwrite REST API provides programmatic access to authentication, databases, storage, functions, and messaging for building open source web and mobile application backends.
+  - aid: appwrite:appwrite-api
+    name: Appwrite API
+    tags:
+      - Authentication
+      - Database
+      - Storage
+      - Functions
+      - Open Source
+      - Backend-as-a-Service
+    humanURL: https://appwrite.io/
+    properties:
+      - url: https://appwrite.io/docs
+        type: Documentation
+      - url: https://github.com/appwrite/appwrite
+        type: GitHubRepository
+      - url: openapi/appwrite-openapi.yaml
+        type: OpenAPI
+      - url: json-schema/user-schema.json
+        type: JSONSchema
+      - url: json-structure/user-structure.json
+        type: JSONStructure
+      - url: examples/user-example.json
+        type: Example
+      - url: json-ld/appwrite-context.jsonld
+        type: JSONLD
+      - url: rules/appwrite-spectral-rules.yml
+        type: SpectralRules
+      - url: capabilities/shared/appwrite-api.yaml
+        type: NaftikoCapability
+      - url: capabilities/mobile-backend.yaml
+        type: NaftikoCapability
+      - url: vocabulary/appwrite-vocabulary.yaml
+        type: Vocabulary
+    description: The Appwrite REST API provides programmatic access to authentication, databases, storage, functions, and messaging for building open source web and mobile application backends.
 common:
-- type: Website
-  url: https://appwrite.io/
-- type: Documentation
-  url: https://appwrite.io/docs
-- type: Blog
-  url: https://appwrite.io/blog
-- type: Community
-  url: https://appwrite.io/community
-- type: SignUp
-  url: https://cloud.appwrite.io/register
-- type: Login
-  url: https://cloud.appwrite.io/login
-- type: GitHubOrganization
-  url: https://github.com/appwrite
-- type: Pricing
-  url: https://appwrite.io/pricing
-- type: StatusPage
-  url: https://status.appwrite.online/
-- type: Integrations
-  url: https://appwrite.io/integrations
+  - type: Website
+    url: https://appwrite.io/
+  - type: Documentation
+    url: https://appwrite.io/docs
+  - type: Blog
+    url: https://appwrite.io/blog
+  - type: Community
+    url: https://appwrite.io/community
+  - type: SignUp
+    url: https://cloud.appwrite.io/register
+  - type: Login
+    url: https://cloud.appwrite.io/login
+  - type: GitHubOrganization
+    url: https://github.com/appwrite
+  - type: Pricing
+    url: https://appwrite.io/pricing
+  - type: StatusPage
+    url: https://status.appwrite.online/
+  - type: Integrations
+    url: https://appwrite.io/integrations
+  - name: MCP Server
+    url: https://github.com/appwrite/mcp-for-api
+    type: MCPServer
+  - name: Agent Skills
+    url: https://github.com/appwrite/agent-skills
+    type: AgentSkill
 integrations:
   - name: Text to speech with ElevenLabs AI
   - name: MCP with Cursor MCP
   - name: OAuth with X Auth
   - name: Self-host Appwrite with MongoDB Databases
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
