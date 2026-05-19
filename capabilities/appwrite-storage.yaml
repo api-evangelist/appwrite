@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Appwrite API — Storage
+  description: 'Appwrite API — Storage. 1 operations. Lead operation: Appwrite - List Buckets. Self-contained Naftiko capability
+    covering one Appwrite business surface.'
+  tags:
+  - Appwrite
+  - Storage
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APPWRITE_API_KEY: APPWRITE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appwrite-storage
+    baseUri: https://cloud.appwrite.io/v1
+    description: Appwrite API — Storage business capability. Self-contained, no shared references.
+    resources:
+    - name: storage-buckets
+      path: /storage/buckets
+      operations:
+      - name: listbuckets
+        method: GET
+        description: Appwrite - List Buckets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: X-Appwrite-Project
+      value: '{{env.APPWRITE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: appwrite-storage-rest
+    port: 8080
+    description: REST adapter for Appwrite API — Storage. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/storage/buckets
+      name: storage-buckets
+      description: REST surface for storage-buckets.
+      operations:
+      - method: GET
+        name: listbuckets
+        description: Appwrite - List Buckets
+        call: appwrite-storage.listbuckets
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: appwrite-storage-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Appwrite API — Storage. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: appwrite-list-buckets
+      description: Appwrite - List Buckets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: appwrite-storage.listbuckets
+      outputParameters:
+      - type: object
+        mapping: $.
