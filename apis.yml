@@ -84,6 +84,8 @@ common:
 - name: Agent Skills
   url: https://github.com/appwrite/agent-skills
   type: AgentSkill
+- type: LLMsTxt
+  url: https://appwrite.io/llms.txt
 integrations:
 - name: Text to speech with ElevenLabs AI
 - name: MCP with Cursor MCP
