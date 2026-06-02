@@ -1,0 +1,776 @@
+asyncapi: '2.6.0'
+info:
+  title: Appwrite Realtime API
+  version: '1.0.0'
+  description: |
+    AsyncAPI specification for the Appwrite Realtime WebSocket API.
+
+    Appwrite Realtime lets clients subscribe to channels and receive callbacks
+    whenever a subscribed resource changes. Subscriptions are scoped to a
+    project via the required `project` query parameter on the WebSocket
+    handshake. Clients pass one or more `channels` query parameters indicating
+    which resources they want to receive events for.
+
+    Every message delivered by the server uses a common envelope containing:
+      - `events`     : list of event names that triggered the message
+      - `channels`   : list of channels the message was delivered on
+      - `timestamp`  : ISO-8601 server timestamp
+      - `payload`    : the underlying resource object (Document, File,
+                       Execution, Account, Team, Membership, etc.)
+
+    Source: https://appwrite.io/docs/apis/realtime
+  contact:
+    name: Appwrite
+    url: https://appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://github.com/appwrite/appwrite/blob/main/LICENSE
+  termsOfService: https://appwrite.io/terms
+
+defaultContentType: application/json
+
+servers:
+  cloud:
+    url: cloud.appwrite.io/v1/realtime
+    protocol: wss
+    description: Appwrite Cloud Realtime WebSocket endpoint
+    variables:
+      project:
+        description: Appwrite Project ID supplied as the `project` query parameter on the WebSocket handshake.
+        default: '[PROJECT_ID]'
+    bindings:
+      ws:
+        query:
+          type: object
+          required:
+            - project
+          properties:
+            project:
+              type: string
+              description: Appwrite Project ID.
+            channels:
+              type: array
+              description: One or more channel identifiers to subscribe to.
+              items:
+                type: string
+
+channels:
+  account:
+    description: |
+      Subscribes to all account related events for the currently authenticated user
+      (session create, name update, password change, etc.).
+      Channel identifier: `account`.
+    subscribe:
+      operationId: subscribeAccount
+      summary: Receive account events for the current user.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/AccountEvent'
+
+  'databases.{databaseId}.collections.{collectionId}.documents':
+    description: |
+      Subscribes to events for any document in a specific collection.
+      Channel identifier pattern: `databases.[DATABASE_ID].collections.[COLLECTION_ID].documents`.
+    parameters:
+      databaseId:
+        $ref: '#/components/parameters/databaseId'
+      collectionId:
+        $ref: '#/components/parameters/collectionId'
+    subscribe:
+      operationId: subscribeCollectionDocuments
+      summary: Receive create/update/delete events for documents in a collection.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/DocumentEvent'
+
+  'databases.{databaseId}.collections.{collectionId}.documents.{documentId}':
+    description: |
+      Subscribes to events for a single document.
+      Channel identifier pattern: `databases.[DATABASE_ID].collections.[COLLECTION_ID].documents.[DOCUMENT_ID]`.
+    parameters:
+      databaseId:
+        $ref: '#/components/parameters/databaseId'
+      collectionId:
+        $ref: '#/components/parameters/collectionId'
+      documentId:
+        $ref: '#/components/parameters/documentId'
+    subscribe:
+      operationId: subscribeDocument
+      summary: Receive update/delete events for a specific document.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/DocumentEvent'
+
+  files:
+    description: |
+      Subscribes to events for any file in any bucket.
+      Channel identifier: `files`.
+    subscribe:
+      operationId: subscribeFiles
+      summary: Receive create/update/delete events for files.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/FileEvent'
+
+  'files.{fileId}':
+    description: |
+      Subscribes to events for a specific file.
+      Channel identifier pattern: `files.[FILE_ID]`.
+    parameters:
+      fileId:
+        $ref: '#/components/parameters/fileId'
+    subscribe:
+      operationId: subscribeFile
+      summary: Receive update/delete events for a specific file.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/FileEvent'
+
+  'functions.{functionId}':
+    description: |
+      Subscribes to execution events for a specific function.
+      Channel identifier pattern: `functions.[FUNCTION_ID]`.
+    parameters:
+      functionId:
+        $ref: '#/components/parameters/functionId'
+    subscribe:
+      operationId: subscribeFunction
+      summary: Receive execution lifecycle events for a function.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/ExecutionEvent'
+
+  executions:
+    description: |
+      Subscribes to events for all function executions.
+      Channel identifier: `executions`.
+    subscribe:
+      operationId: subscribeExecutions
+      summary: Receive create/update/delete events for all executions.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/ExecutionEvent'
+
+  'executions.{executionId}':
+    description: |
+      Subscribes to events for a specific function execution.
+      Channel identifier pattern: `executions.[EXECUTION_ID]`.
+    parameters:
+      executionId:
+        $ref: '#/components/parameters/executionId'
+    subscribe:
+      operationId: subscribeExecution
+      summary: Receive update events for a specific execution.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/ExecutionEvent'
+
+  teams:
+    description: |
+      Subscribes to events for all teams the current user is part of.
+      Channel identifier: `teams`.
+    subscribe:
+      operationId: subscribeTeams
+      summary: Receive create/update/delete events for teams.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TeamEvent'
+
+  'teams.{teamId}':
+    description: |
+      Subscribes to events for a specific team.
+      Channel identifier pattern: `teams.[TEAM_ID]`.
+    parameters:
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    subscribe:
+      operationId: subscribeTeam
+      summary: Receive update/delete events for a specific team.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TeamEvent'
+
+  memberships:
+    description: |
+      Subscribes to events for all team memberships.
+      Channel identifier: `memberships`.
+    subscribe:
+      operationId: subscribeMemberships
+      summary: Receive create/update/delete events for memberships.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/MembershipEvent'
+
+  'memberships.{membershipId}':
+    description: |
+      Subscribes to events for a specific team membership.
+      Channel identifier pattern: `memberships.[MEMBERSHIP_ID]`.
+    parameters:
+      membershipId:
+        $ref: '#/components/parameters/membershipId'
+    subscribe:
+      operationId: subscribeMembership
+      summary: Receive update/delete events for a specific membership.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/MembershipEvent'
+
+components:
+  parameters:
+    databaseId:
+      description: The Appwrite Database ID.
+      schema:
+        type: string
+    collectionId:
+      description: The Appwrite Collection ID.
+      schema:
+        type: string
+    documentId:
+      description: The Appwrite Document ID.
+      schema:
+        type: string
+    fileId:
+      description: The Appwrite File ID.
+      schema:
+        type: string
+    functionId:
+      description: The Appwrite Function ID.
+      schema:
+        type: string
+    executionId:
+      description: The Appwrite Execution ID.
+      schema:
+        type: string
+    teamId:
+      description: The Appwrite Team ID.
+      schema:
+        type: string
+    membershipId:
+      description: The Appwrite Membership ID.
+      schema:
+        type: string
+
+  messages:
+    AccountEvent:
+      name: AccountEvent
+      title: Account Realtime Event
+      summary: Account-scoped realtime event envelope.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AccountEnvelope'
+      examples:
+        - name: accountUpdateName
+          payload:
+            events:
+              - users.[USER_ID].update.name
+              - users.[USER_ID].update
+              - users.*.update.name
+              - users.*.update
+              - users.*
+            channels:
+              - account
+            timestamp: '2026-05-29T12:34:56.000+00:00'
+            payload:
+              $id: 6406d3e8c4d9b
+              $createdAt: '2026-01-15T10:11:12.000+00:00'
+              $updatedAt: '2026-05-29T12:34:56.000+00:00'
+              name: Kin Lane
+              email: kin@example.com
+              status: true
+
+    DocumentEvent:
+      name: DocumentEvent
+      title: Document Realtime Event
+      summary: |
+        Database document event envelope. Triggered by
+        `databases.*.collections.*.documents.*.create`,
+        `databases.*.collections.*.documents.*.update`, and
+        `databases.*.collections.*.documents.*.delete`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DocumentEnvelope'
+      examples:
+        - name: documentCreate
+          payload:
+            events:
+              - databases.[DB_ID].collections.[COL_ID].documents.[DOC_ID].create
+              - databases.[DB_ID].collections.[COL_ID].documents.*.create
+              - databases.*.collections.*.documents.*.create
+            channels:
+              - databases.[DB_ID].collections.[COL_ID].documents
+              - databases.[DB_ID].collections.[COL_ID].documents.[DOC_ID]
+            timestamp: '2026-05-29T12:34:56.000+00:00'
+            payload:
+              $id: 6406d3e8c4d9b
+              $collectionId: '[COL_ID]'
+              $databaseId: '[DB_ID]'
+              $createdAt: '2026-05-29T12:34:56.000+00:00'
+              $updatedAt: '2026-05-29T12:34:56.000+00:00'
+              $permissions: []
+
+    FileEvent:
+      name: FileEvent
+      title: File Realtime Event
+      summary: |
+        Storage file event envelope. Triggered by
+        `buckets.*.files.*.create`, `buckets.*.files.*.update`,
+        `buckets.*.files.*.delete`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/FileEnvelope'
+      examples:
+        - name: fileCreate
+          payload:
+            events:
+              - buckets.[BUCKET_ID].files.[FILE_ID].create
+              - buckets.*.files.*.create
+            channels:
+              - files
+              - files.[FILE_ID]
+            timestamp: '2026-05-29T12:34:56.000+00:00'
+            payload:
+              $id: '[FILE_ID]'
+              bucketId: '[BUCKET_ID]'
+              $createdAt: '2026-05-29T12:34:56.000+00:00'
+              $updatedAt: '2026-05-29T12:34:56.000+00:00'
+              name: photo.png
+              signature: ''
+              mimeType: image/png
+              sizeOriginal: 102400
+              chunksTotal: 1
+              chunksUploaded: 1
+
+    ExecutionEvent:
+      name: ExecutionEvent
+      title: Execution Realtime Event
+      summary: |
+        Function execution event envelope. Triggered by
+        `functions.*.executions.*.create`, `functions.*.executions.*.update`,
+        `functions.*.executions.*.delete`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ExecutionEnvelope'
+      examples:
+        - name: executionUpdate
+          payload:
+            events:
+              - functions.[FN_ID].executions.[EXEC_ID].update
+              - functions.*.executions.*.update
+            channels:
+              - executions
+              - executions.[EXEC_ID]
+              - functions.[FN_ID]
+            timestamp: '2026-05-29T12:34:56.000+00:00'
+            payload:
+              $id: '[EXEC_ID]'
+              functionId: '[FN_ID]'
+              $createdAt: '2026-05-29T12:34:56.000+00:00'
+              $updatedAt: '2026-05-29T12:34:56.000+00:00'
+              status: completed
+              responseStatusCode: 200
+              duration: 0.512
+
+    TeamEvent:
+      name: TeamEvent
+      title: Team Realtime Event
+      summary: |
+        Team event envelope. Triggered by `teams.*.create`,
+        `teams.*.update`, `teams.*.delete`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TeamEnvelope'
+      examples:
+        - name: teamCreate
+          payload:
+            events:
+              - teams.[TEAM_ID].create
+              - teams.*.create
+            channels:
+              - teams
+              - teams.[TEAM_ID]
+            timestamp: '2026-05-29T12:34:56.000+00:00'
+            payload:
+              $id: '[TEAM_ID]'
+              $createdAt: '2026-05-29T12:34:56.000+00:00'
+              $updatedAt: '2026-05-29T12:34:56.000+00:00'
+              name: Engineering
+              total: 1
+
+    MembershipEvent:
+      name: MembershipEvent
+      title: Membership Realtime Event
+      summary: |
+        Team membership event envelope. Triggered by
+        `teams.*.memberships.*.create`, `teams.*.memberships.*.update`,
+        `teams.*.memberships.*.delete`,
+        `teams.*.memberships.*.update.status`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/MembershipEnvelope'
+      examples:
+        - name: membershipUpdateStatus
+          payload:
+            events:
+              - teams.[TEAM_ID].memberships.[MEM_ID].update.status
+              - teams.*.memberships.*.update.status
+            channels:
+              - memberships
+              - memberships.[MEM_ID]
+            timestamp: '2026-05-29T12:34:56.000+00:00'
+            payload:
+              $id: '[MEM_ID]'
+              teamId: '[TEAM_ID]'
+              userId: '[USER_ID]'
+              $createdAt: '2026-05-29T12:34:56.000+00:00'
+              $updatedAt: '2026-05-29T12:34:56.000+00:00'
+              confirm: true
+              roles:
+                - owner
+
+  schemas:
+    Envelope:
+      type: object
+      description: |
+        Common envelope structure shared by every Realtime message delivered
+        from the Appwrite server.
+      required:
+        - events
+        - channels
+        - timestamp
+        - payload
+      properties:
+        events:
+          type: array
+          description: |
+            Array of event names that triggered this message. Includes the
+            most specific event plus its wildcard parents (e.g.
+            `databases.*.collections.*.documents.*.create`).
+          items:
+            type: string
+        channels:
+          type: array
+          description: List of channel identifiers this message was delivered on.
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO-8601 server timestamp at which the event occurred.
+        payload:
+          type: object
+          description: The underlying resource object.
+
+    AccountEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            events:
+              type: array
+              items:
+                type: string
+                enum:
+                  - users.*.create
+                  - users.*.update
+                  - users.*.update.name
+                  - users.*.update.email
+                  - users.*.update.password
+                  - users.*.update.status
+                  - users.*.delete
+                  - users.*.sessions.*.create
+                  - users.*.sessions.*.delete
+                  - users.*.recovery.*.create
+                  - users.*.recovery.*.update
+                  - users.*.verification.*.create
+                  - users.*.verification.*.update
+            payload:
+              $ref: '#/components/schemas/Account'
+
+    DocumentEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            events:
+              type: array
+              items:
+                type: string
+                enum:
+                  - databases.*.collections.*.documents.*.create
+                  - databases.*.collections.*.documents.*.update
+                  - databases.*.collections.*.documents.*.delete
+            payload:
+              $ref: '#/components/schemas/Document'
+
+    FileEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            events:
+              type: array
+              items:
+                type: string
+                enum:
+                  - buckets.*.files.*.create
+                  - buckets.*.files.*.update
+                  - buckets.*.files.*.delete
+            payload:
+              $ref: '#/components/schemas/File'
+
+    ExecutionEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            events:
+              type: array
+              items:
+                type: string
+                enum:
+                  - functions.*.executions.*.create
+                  - functions.*.executions.*.update
+                  - functions.*.executions.*.delete
+            payload:
+              $ref: '#/components/schemas/Execution'
+
+    TeamEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            events:
+              type: array
+              items:
+                type: string
+                enum:
+                  - teams.*.create
+                  - teams.*.update
+                  - teams.*.delete
+            payload:
+              $ref: '#/components/schemas/Team'
+
+    MembershipEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            events:
+              type: array
+              items:
+                type: string
+                enum:
+                  - teams.*.memberships.*.create
+                  - teams.*.memberships.*.update
+                  - teams.*.memberships.*.update.status
+                  - teams.*.memberships.*.delete
+            payload:
+              $ref: '#/components/schemas/Membership'
+
+    Account:
+      type: object
+      description: Appwrite Account / User resource.
+      properties:
+        $id:
+          type: string
+        $createdAt:
+          type: string
+          format: date-time
+        $updatedAt:
+          type: string
+          format: date-time
+        name:
+          type: string
+        registration:
+          type: string
+          format: date-time
+        status:
+          type: boolean
+        labels:
+          type: array
+          items:
+            type: string
+        passwordUpdate:
+          type: string
+          format: date-time
+        email:
+          type: string
+        phone:
+          type: string
+        emailVerification:
+          type: boolean
+        phoneVerification:
+          type: boolean
+        mfa:
+          type: boolean
+        prefs:
+          type: object
+        accessedAt:
+          type: string
+          format: date-time
+
+    Document:
+      type: object
+      description: Appwrite Database Document resource.
+      properties:
+        $id:
+          type: string
+        $collectionId:
+          type: string
+        $databaseId:
+          type: string
+        $createdAt:
+          type: string
+          format: date-time
+        $updatedAt:
+          type: string
+          format: date-time
+        $permissions:
+          type: array
+          items:
+            type: string
+      additionalProperties: true
+
+    File:
+      type: object
+      description: Appwrite Storage File resource.
+      properties:
+        $id:
+          type: string
+        bucketId:
+          type: string
+        $createdAt:
+          type: string
+          format: date-time
+        $updatedAt:
+          type: string
+          format: date-time
+        $permissions:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        signature:
+          type: string
+        mimeType:
+          type: string
+        sizeOriginal:
+          type: integer
+        chunksTotal:
+          type: integer
+        chunksUploaded:
+          type: integer
+
+    Execution:
+      type: object
+      description: Appwrite Function Execution resource.
+      properties:
+        $id:
+          type: string
+        $createdAt:
+          type: string
+          format: date-time
+        $updatedAt:
+          type: string
+          format: date-time
+        $permissions:
+          type: array
+          items:
+            type: string
+        functionId:
+          type: string
+        trigger:
+          type: string
+          enum:
+            - http
+            - schedule
+            - event
+        status:
+          type: string
+          enum:
+            - waiting
+            - processing
+            - completed
+            - failed
+        requestMethod:
+          type: string
+        requestPath:
+          type: string
+        requestHeaders:
+          type: array
+          items:
+            type: object
+        responseStatusCode:
+          type: integer
+        responseBody:
+          type: string
+        responseHeaders:
+          type: array
+          items:
+            type: object
+        logs:
+          type: string
+        errors:
+          type: string
+        duration:
+          type: number
+        scheduledAt:
+          type: string
+          format: date-time
+
+    Team:
+      type: object
+      description: Appwrite Team resource.
+      properties:
+        $id:
+          type: string
+        $createdAt:
+          type: string
+          format: date-time
+        $updatedAt:
+          type: string
+          format: date-time
+        name:
+          type: string
+        total:
+          type: integer
+        prefs:
+          type: object
+
+    Membership:
+      type: object
+      description: Appwrite Team Membership resource.
+      properties:
+        $id:
+          type: string
+        $createdAt:
+          type: string
+          format: date-time
+        $updatedAt:
+          type: string
+          format: date-time
+        userId:
+          type: string
+        userName:
+          type: string
+        userEmail:
+          type: string
+        teamId:
+          type: string
+        teamName:
+          type: string
+        invited:
+          type: string
+          format: date-time
+        joined:
+          type: string
+          format: date-time
+        confirm:
+          type: boolean
+        mfa:
+          type: boolean
+        roles:
+          type: array
+          items:
+            type: string

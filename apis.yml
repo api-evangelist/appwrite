@@ -13,7 +13,7 @@ tags:
 - Open Source
 url: https://raw.githubusercontent.com/api-evangelist/appwrite/refs/heads/main/apis.yml
 created: '2025-02-17'
-modified: '2026-05-19'
+modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
 - aid: appwrite:appwrite-api
@@ -33,6 +33,8 @@ apis:
     type: GitHubRepository
   - url: openapi/appwrite-openapi.yaml
     type: OpenAPI
+  - url: asyncapi/appwrite-asyncapi.yml
+    type: AsyncAPI
   - url: json-schema/user-schema.json
     type: JSONSchema
   - url: json-structure/user-structure.json
