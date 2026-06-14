@@ -1,0 +1,782 @@
+# Appwrite GraphQL Schema
+#
+# This schema is generated dynamically from Appwrite's REST routes.
+# GET routes become Query fields; POST/PUT/PATCH/DELETE routes become Mutation fields.
+# Field naming convention: {namespace}{MethodName} (e.g., accountGet, databasesList).
+# Internal Appwrite model fields prefixed with $ (e.g., $id, $createdAt) are mapped
+# to underscore-prefixed fields in GraphQL (e.g., _id, _createdAt).
+#
+# Source: https://github.com/appwrite/appwrite (src/Appwrite/GraphQL/)
+# Docs:   https://appwrite.io/docs/apis/graphql
+# Endpoint: https://{hostname}/v1/graphql
+
+scalar JSON
+scalar Assoc
+
+# ──────────────────────────────────────────────
+# Core Object Types
+# ──────────────────────────────────────────────
+
+type Account {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  name: String
+  registration: String
+  status: Boolean
+  labels: [String]
+  passwordUpdate: String
+  email: String
+  phone: String
+  emailVerification: Boolean
+  phoneVerification: Boolean
+  mfa: Boolean
+  prefs: Preferences
+  targets: [Target]
+  accessedAt: String
+}
+
+type Preferences {
+  data: String
+}
+
+type Session {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  userId: String
+  expire: String
+  provider: String
+  providerUid: String
+  providerAccessToken: String
+  providerAccessTokenExpiry: String
+  providerRefreshToken: String
+  ip: String
+  osCode: String
+  osName: String
+  osVersion: String
+  clientType: String
+  clientCode: String
+  clientName: String
+  clientVersion: String
+  clientEngine: String
+  clientEngineVersion: String
+  deviceName: String
+  deviceBrand: String
+  deviceModel: String
+  countryCode: String
+  countryName: String
+  current: Boolean
+  factors: [String]
+  secret: String
+  mfaUpdatedAt: String
+}
+
+type SessionList {
+  total: Int
+  sessions: [Session]
+}
+
+type Token {
+  _id: String!
+  _createdAt: String
+  userId: String
+  secret: String
+  expire: String
+  phrase: String
+}
+
+type JWT {
+  jwt: String
+}
+
+type Identity {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  userId: String
+  provider: String
+  providerUid: String
+  providerEmail: String
+  providerAccessToken: String
+  providerAccessTokenExpiry: String
+  providerRefreshToken: String
+}
+
+type IdentityList {
+  total: Int
+  identities: [Identity]
+}
+
+type Log {
+  event: String
+  userId: String
+  userEmail: String
+  userName: String
+  mode: String
+  userType: String
+  ip: String
+  time: String
+  osCode: String
+  osName: String
+  osVersion: String
+  clientType: String
+  clientCode: String
+  clientName: String
+  clientVersion: String
+  clientEngine: String
+  clientEngineVersion: String
+  deviceName: String
+  deviceBrand: String
+  deviceModel: String
+  countryCode: String
+  countryName: String
+}
+
+type LogList {
+  total: Int
+  logs: [Log]
+}
+
+type Target {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  name: String
+  userId: String
+  providerId: String
+  providerType: String
+  identifier: String
+  expired: Boolean
+}
+
+type TargetList {
+  total: Int
+  targets: [Target]
+}
+
+type MFAFactors {
+  totp: Boolean
+  email: Boolean
+  phone: Boolean
+}
+
+type MFAChallenge {
+  _id: String!
+  _createdAt: String
+  userId: String
+  expire: String
+}
+
+type MFARecoveryCodes {
+  recoveryCodes: [String]
+}
+
+type MFAType {
+  secret: String
+  uri: String
+}
+
+# ──────────────────────────────────────────────
+# User Types (server-side admin)
+# ──────────────────────────────────────────────
+
+type User {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  name: String
+  password: String
+  hash: String
+  hashOptions: JSON
+  registration: String
+  status: Boolean
+  labels: [String]
+  passwordUpdate: String
+  email: String
+  phone: String
+  emailVerification: Boolean
+  phoneVerification: Boolean
+  mfa: Boolean
+  prefs: Preferences
+  targets: [Target]
+  accessedAt: String
+}
+
+type UserList {
+  total: Int
+  users: [User]
+}
+
+# ──────────────────────────────────────────────
+# Teams & Memberships
+# ──────────────────────────────────────────────
+
+type Team {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  name: String
+  total: Int
+  prefs: Preferences
+}
+
+type TeamList {
+  total: Int
+  teams: [Team]
+}
+
+type Membership {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  userId: String
+  userName: String
+  userEmail: String
+  userPhone: String
+  teamId: String
+  teamName: String
+  invited: String
+  joined: String
+  confirm: Boolean
+  mfa: Boolean
+  userAccessedAt: String
+  roles: [String]
+}
+
+type MembershipList {
+  total: Int
+  memberships: [Membership]
+}
+
+# ──────────────────────────────────────────────
+# Databases
+# ──────────────────────────────────────────────
+
+type Database {
+  _id: String!
+  name: String
+  _createdAt: String
+  _updatedAt: String
+  enabled: Boolean
+  type: String
+}
+
+type DatabaseList {
+  total: Int
+  databases: [Database]
+}
+
+type Collection {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  _permissions: [String]
+  databaseId: String
+  name: String
+  enabled: Boolean
+  documentSecurity: Boolean
+  attributes: [JSON]
+  indexes: [JSON]
+}
+
+type CollectionList {
+  total: Int
+  collections: [Collection]
+}
+
+type Document {
+  _id: String!
+  _sequence: String
+  _collectionId: String
+  _databaseId: String
+  _createdAt: String
+  _updatedAt: String
+  _permissions: [String]
+  data: String
+}
+
+type DocumentList {
+  total: Int
+  documents: [Document]
+}
+
+type Index {
+  key: String
+  type: String
+  status: String
+  error: String
+  attributes: [String]
+  orders: [String]
+  _createdAt: String
+  _updatedAt: String
+}
+
+type IndexList {
+  total: Int
+  indexes: [Index]
+}
+
+type AttributeList {
+  total: Int
+  attributes: [JSON]
+}
+
+# ──────────────────────────────────────────────
+# Storage
+# ──────────────────────────────────────────────
+
+type Bucket {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  _permissions: [String]
+  fileSecurity: Boolean
+  name: String
+  enabled: Boolean
+  maximumFileSize: Int
+  allowedFileExtensions: [String]
+  compression: String
+  encryption: Boolean
+  antivirus: Boolean
+}
+
+type BucketList {
+  total: Int
+  buckets: [Bucket]
+}
+
+type File {
+  _id: String!
+  bucketId: String
+  _createdAt: String
+  _updatedAt: String
+  _permissions: [String]
+  name: String
+  signature: String
+  mimeType: String
+  sizeOriginal: Int
+  chunksTotal: Int
+  chunksUploaded: Int
+}
+
+type FileList {
+  total: Int
+  files: [File]
+}
+
+# ──────────────────────────────────────────────
+# Functions
+# ──────────────────────────────────────────────
+
+type Function {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  execute: [String]
+  name: String
+  enabled: Boolean
+  live: Boolean
+  logging: Boolean
+  runtime: String
+  deploymentId: String
+  deploymentCreatedAt: String
+  latestDeploymentId: String
+  latestDeploymentStatus: String
+  scopes: [String]
+  events: [String]
+  schedule: String
+  timeout: Int
+  entrypoint: String
+  commands: String
+  version: String
+  installationId: String
+  providerRepositoryId: String
+  providerBranch: String
+  providerRootDirectory: String
+  providerSilentMode: Boolean
+}
+
+type FunctionList {
+  total: Int
+  functions: [Function]
+}
+
+type Deployment {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  type: String
+  resourceId: String
+  resourceType: String
+  entrypoint: String
+  sourceSize: Int
+  buildSize: Int
+  totalSize: Int
+  buildId: String
+  activate: Boolean
+  status: String
+  buildLogs: String
+  buildDuration: Float
+  providerRepositoryName: String
+  providerRepositoryOwner: String
+  providerRepositoryUrl: String
+  providerCommitHash: String
+  providerCommitAuthor: String
+  providerCommitMessage: String
+  providerCommitUrl: String
+  providerBranch: String
+  providerBranchUrl: String
+}
+
+type DeploymentList {
+  total: Int
+  deployments: [Deployment]
+}
+
+type Execution {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  _permissions: [String]
+  functionId: String
+  deploymentId: String
+  trigger: String
+  status: String
+  requestMethod: String
+  requestPath: String
+  requestHeaders: [JSON]
+  responseStatusCode: Int
+  responseBody: String
+  responseHeaders: [JSON]
+  logs: String
+  errors: String
+  duration: Float
+  scheduledAt: String
+}
+
+type ExecutionList {
+  total: Int
+  executions: [Execution]
+}
+
+type Variable {
+  _id: String!
+  _createdAt: String
+  _updatedAt: String
+  key: String
+  value: String
+  secret: Boolean
+  resourceType: String
+  resourceId: String
+}
+
+type VariableList {
+  total: Int
+  variables: [Variable]
+}
+
+type Runtime {
+  _id: String!
+  name: String
+  version: String
+  base: String
+  image: String
+  logo: String
+  supports: [String]
+}
+
+type RuntimeList {
+  total: Int
+  runtimes: [Runtime]
+}
+
+# ──────────────────────────────────────────────
+# Locale
+# ──────────────────────────────────────────────
+
+type Locale {
+  ip: String
+  countryCode: String
+  country: String
+  continentCode: String
+  continent: String
+  eu: Boolean
+  currency: String
+}
+
+type Country {
+  name: String
+  code: String
+}
+
+type CountryList {
+  total: Int
+  countries: [Country]
+}
+
+type Continent {
+  name: String
+  code: String
+}
+
+type ContinentList {
+  total: Int
+  continents: [Continent]
+}
+
+type Currency {
+  symbol: String
+  name: String
+  symbolNative: String
+  decimalDigits: Int
+  rounding: Float
+  code: String
+  namePlural: String
+}
+
+type CurrencyList {
+  total: Int
+  currencies: [Currency]
+}
+
+type Language {
+  name: String
+  code: String
+  nativeName: String
+}
+
+type LanguageList {
+  total: Int
+  languages: [Language]
+}
+
+type LocaleCode {
+  name: String
+  code: String
+}
+
+type LocaleCodeList {
+  total: Int
+  localeCodes: [LocaleCode]
+}
+
+type Phone {
+  code: String
+  countryCode: String
+  countryName: String
+}
+
+type PhoneList {
+  total: Int
+  phones: [Phone]
+}
+
+# ──────────────────────────────────────────────
+# Query Root
+# All GET routes become Query fields.
+# Naming: {namespace}{MethodNamePascalCase}
+# ──────────────────────────────────────────────
+
+type Query {
+  # Account
+  accountGet: Account
+  accountGetPrefs: Preferences
+  accountGetSession(sessionId: String!): Session
+  accountListSessions: SessionList
+  accountListLogs(queries: [String]): LogList
+  accountListIdentities(queries: [String]): IdentityList
+  accountGetMFARecoveryCodes: MFARecoveryCodes
+  accountListMFAFactors: MFAFactors
+
+  # Users (server-side admin)
+  usersList(queries: [String], search: String): UserList
+  usersGet(userId: String!): User
+  usersGetPrefs(userId: String!): Preferences
+  usersGetTarget(userId: String!, targetId: String!): Target
+  usersListSessions(userId: String!): SessionList
+  usersListMemberships(userId: String!): MembershipList
+  usersListLogs(userId: String!, queries: [String]): LogList
+  usersListTargets(userId: String!, queries: [String]): TargetList
+  usersListIdentities(queries: [String], search: String): IdentityList
+
+  # Teams
+  teamsList(queries: [String], search: String): TeamList
+  teamsGet(teamId: String!): Team
+  teamsGetPrefs(teamId: String!): Preferences
+  teamsListMemberships(teamId: String!, queries: [String], search: String): MembershipList
+  teamsGetMembership(teamId: String!, membershipId: String!): Membership
+
+  # Databases
+  databasesList(queries: [String], search: String): DatabaseList
+  databasesGet(databaseId: String!): Database
+  databasesListCollections(databaseId: String!, queries: [String], search: String): CollectionList
+  databasesGetCollection(databaseId: String!, collectionId: String!): Collection
+  databasesListAttributes(databaseId: String!, collectionId: String!, queries: [String]): AttributeList
+  databasesGetAttribute(databaseId: String!, collectionId: String!, key: String!): JSON
+  databasesListIndexes(databaseId: String!, collectionId: String!, queries: [String]): IndexList
+  databasesGetIndex(databaseId: String!, collectionId: String!, key: String!): Index
+  databasesListDocuments(databaseId: String!, collectionId: String!, queries: [String]): DocumentList
+  databasesGetDocument(databaseId: String!, collectionId: String!, documentId: String!, queries: [String]): Document
+
+  # Storage
+  storageListBuckets(queries: [String], search: String): BucketList
+  storageGetBucket(bucketId: String!): Bucket
+  storageListFiles(bucketId: String!, queries: [String], search: String): FileList
+  storageGetFile(bucketId: String!, fileId: String!): File
+
+  # Functions
+  functionsList(queries: [String], search: String): FunctionList
+  functionsGet(functionId: String!): Function
+  functionsListDeployments(functionId: String!, queries: [String], search: String): DeploymentList
+  functionsGetDeployment(functionId: String!, deploymentId: String!): Deployment
+  functionsListExecutions(functionId: String!, queries: [String], search: String): ExecutionList
+  functionsGetExecution(functionId: String!, executionId: String!): Execution
+  functionsListVariables(functionId: String!): VariableList
+  functionsGetVariable(functionId: String!, variableId: String!): Variable
+  functionsListRuntimes: RuntimeList
+
+  # Locale
+  localeGet: Locale
+  localeListCountries(queries: [String]): CountryList
+  localeListCountriesEU(queries: [String]): CountryList
+  localeListCountriesPhones: PhoneList
+  localeListContinents(queries: [String]): ContinentList
+  localeListCurrencies: CurrencyList
+  localeListLanguages: LanguageList
+  localeListCodes: LocaleCodeList
+}
+
+# ──────────────────────────────────────────────
+# Mutation Root
+# All POST, PUT, PATCH, DELETE routes become Mutation fields.
+# ──────────────────────────────────────────────
+
+type Mutation {
+  # Account
+  accountCreate(userId: String!, email: String!, password: String!, name: String): Account
+  accountDelete: JSON
+  accountCreateEmailPasswordSession(email: String!, password: String!): Session
+  accountCreateAnonymousSession: Session
+  accountCreateSession(userId: String!, secret: String!): Session
+  accountCreateMagicURLToken(userId: String!, email: String!, url: String, phrase: Boolean): Token
+  accountUpdateMagicURLSession(userId: String!, secret: String!): Session
+  accountCreateEmailToken(userId: String!, email: String!, phrase: Boolean): Token
+  accountCreatePhoneToken(userId: String!, phone: String!): Token
+  accountUpdatePhoneSession(userId: String!, secret: String!): Session
+  accountUpdateSession(sessionId: String!): Session
+  accountDeleteSession(sessionId: String!): JSON
+  accountDeleteSessions: JSON
+  accountCreateJWT: JWT
+  accountUpdateName(name: String!): Account
+  accountUpdatePassword(password: String!, oldPassword: String): Account
+  accountUpdateEmail(email: String!, password: String!): Account
+  accountUpdatePhone(phone: String!, password: String!): Account
+  accountUpdatePrefs(prefs: Assoc!): Account
+  accountUpdateStatus: Account
+  accountCreateRecovery(email: String!, url: String!): Token
+  accountUpdateRecovery(userId: String!, secret: String!, password: String!): Token
+  accountCreateEmailVerification(url: String!): Token
+  accountUpdateEmailVerification(userId: String!, secret: String!): Token
+  accountCreatePhoneVerification: Token
+  accountUpdatePhoneVerification(userId: String!, secret: String!): Token
+  accountCreatePushTarget(targetId: String!, identifier: String!, providerId: String): Target
+  accountUpdatePushTarget(targetId: String!, identifier: String!): Target
+  accountDeletePushTarget(targetId: String!): JSON
+  accountDeleteIdentity(identityId: String!): JSON
+  accountUpdateMFA(mfa: Boolean!): Account
+  accountCreateMFAAuthenticator(type: String!): MFAType
+  accountUpdateMFAAuthenticator(type: String!, otp: String!): MFAType
+  accountDeleteMFAAuthenticator(type: String!): JSON
+  accountCreateMFAChallenge(factor: String!): MFAChallenge
+  accountUpdateMFAChallenge(challengeId: String!, otp: String!): JSON
+  accountCreateMFARecoveryCodes: MFARecoveryCodes
+  accountUpdateMFARecoveryCodes: MFARecoveryCodes
+
+  # Users (server-side admin)
+  usersCreate(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreateBcryptUser(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreateMD5User(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreateArgon2User(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreateSHAUser(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreatePHPassUser(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreateScryptUser(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreateScryptModifiedUser(userId: String!, email: String, phone: String, password: String, name: String): User
+  usersCreateTarget(userId: String!, targetId: String!, providerType: String!, identifier: String!, providerId: String, name: String): Target
+  usersUpdateStatus(userId: String!, status: Boolean!): User
+  usersUpdateLabels(userId: String!, labels: [String]!): User
+  usersUpdateName(userId: String!, name: String!): User
+  usersUpdatePassword(userId: String!, password: String!): User
+  usersUpdateEmail(userId: String!, email: String!): User
+  usersUpdatePhone(userId: String!, number: String!): User
+  usersUpdateEmailVerification(userId: String!, emailVerification: Boolean!): User
+  usersUpdatePhoneVerification(userId: String!, phoneVerification: Boolean!): User
+  usersUpdatePrefs(userId: String!, prefs: Assoc!): Preferences
+  usersUpdateTarget(userId: String!, targetId: String!, identifier: String, providerId: String, name: String): Target
+  usersDeleteSession(userId: String!, sessionId: String!): JSON
+  usersDeleteSessions(userId: String!): JSON
+  usersDelete(userId: String!): JSON
+  usersDeleteTarget(userId: String!, targetId: String!): JSON
+  usersDeleteIdentity(userId: String!, identityId: String!): JSON
+
+  # Teams
+  teamsCreate(teamId: String!, name: String!, roles: [String]): Team
+  teamsUpdateName(teamId: String!, name: String!): Team
+  teamsUpdatePrefs(teamId: String!, prefs: Assoc!): Preferences
+  teamsDelete(teamId: String!): JSON
+  teamsCreateMembership(teamId: String!, roles: [String]!, email: String, userId: String, phone: String, url: String, name: String): Membership
+  teamsUpdateMembership(teamId: String!, membershipId: String!, roles: [String]!): Membership
+  teamsUpdateMembershipStatus(teamId: String!, membershipId: String!, userId: String!, secret: String!): Membership
+  teamsDeleteMembership(teamId: String!, membershipId: String!): JSON
+
+  # Databases
+  databasesCreate(databaseId: String!, name: String!, enabled: Boolean): Database
+  databasesUpdate(databaseId: String!, name: String!, enabled: Boolean): Database
+  databasesDelete(databaseId: String!): JSON
+  databasesCreateCollection(databaseId: String!, collectionId: String!, name: String!, permissions: [String], documentSecurity: Boolean, enabled: Boolean): Collection
+  databasesUpdateCollection(databaseId: String!, collectionId: String!, name: String!, enabled: Boolean, permissions: [String], documentSecurity: Boolean): Collection
+  databasesDeleteCollection(databaseId: String!, collectionId: String!): JSON
+  databasesCreateDocument(databaseId: String!, collectionId: String!, documentId: String!, data: Assoc!, permissions: [String]): Document
+  databasesUpdateDocument(databaseId: String!, collectionId: String!, documentId: String!, data: Assoc, permissions: [String]): Document
+  databasesUpsertDocument(databaseId: String!, collectionId: String!, documentId: String!, data: Assoc!, permissions: [String]): Document
+  databasesDeleteDocument(databaseId: String!, collectionId: String!, documentId: String!): JSON
+  databasesDeleteDocuments(databaseId: String!, collectionId: String!, queries: [String]): JSON
+  databasesCreateStringAttribute(databaseId: String!, collectionId: String!, key: String!, size: Int!, required: Boolean!, default: String, array: Boolean, encrypt: Boolean): JSON
+  databasesCreateEmailAttribute(databaseId: String!, collectionId: String!, key: String!, required: Boolean!, default: String, array: Boolean): JSON
+  databasesCreateEnumAttribute(databaseId: String!, collectionId: String!, key: String!, elements: [String]!, required: Boolean!, default: String, array: Boolean): JSON
+  databasesCreateIpAttribute(databaseId: String!, collectionId: String!, key: String!, required: Boolean!, default: String, array: Boolean): JSON
+  databasesCreateUrlAttribute(databaseId: String!, collectionId: String!, key: String!, required: Boolean!, default: String, array: Boolean): JSON
+  databasesCreateIntegerAttribute(databaseId: String!, collectionId: String!, key: String!, required: Boolean!, min: Int, max: Int, default: Int, array: Boolean): JSON
+  databasesCreateFloatAttribute(databaseId: String!, collectionId: String!, key: String!, required: Boolean!, min: Float, max: Float, default: Float, array: Boolean): JSON
+  databasesCreateBooleanAttribute(databaseId: String!, collectionId: String!, key: String!, required: Boolean!, default: Boolean, array: Boolean): JSON
+  databasesCreateDatetimeAttribute(databaseId: String!, collectionId: String!, key: String!, required: Boolean!, default: String, array: Boolean): JSON
+  databasesCreateRelationshipAttribute(databaseId: String!, collectionId: String!, relatedCollectionId: String!, type: String!, twoWay: Boolean, key: String, twoWayKey: String, onDelete: String): JSON
+  databasesDeleteAttribute(databaseId: String!, collectionId: String!, key: String!): JSON
+  databasesCreateIndex(databaseId: String!, collectionId: String!, key: String!, type: String!, attributes: [String]!, orders: [String]): Index
+  databasesDeleteIndex(databaseId: String!, collectionId: String!, key: String!): JSON
+
+  # Storage
+  storageCreateBucket(bucketId: String!, name: String!, permissions: [String], fileSecurity: Boolean, enabled: Boolean, maximumFileSize: Int, allowedFileExtensions: [String], compression: String, encryption: Boolean, antivirus: Boolean): Bucket
+  storageUpdateBucket(bucketId: String!, name: String!, permissions: [String], fileSecurity: Boolean, enabled: Boolean, maximumFileSize: Int, allowedFileExtensions: [String], compression: String, encryption: Boolean, antivirus: Boolean): Bucket
+  storageDeleteBucket(bucketId: String!): JSON
+  storageCreateFile(bucketId: String!, fileId: String!, file: String!, permissions: [String]): File
+  storageUpdateFile(bucketId: String!, fileId: String!, name: String, permissions: [String]): File
+  storageDeleteFile(bucketId: String!, fileId: String!): JSON
+
+  # Functions
+  functionsCreate(functionId: String!, name: String!, runtime: String!, execute: [String], events: [String], schedule: String, timeout: Int, enabled: Boolean, logging: Boolean, entrypoint: String, commands: String, scopes: [String], installationId: String, providerRepositoryId: String, providerBranch: String, providerSilentMode: Boolean, providerRootDirectory: String, templateRepository: String, templateOwner: String, templateRootDirectory: String, templateVersion: String, specification: String): Function
+  functionsUpdate(functionId: String!, name: String!, runtime: String, execute: [String], events: [String], schedule: String, timeout: Int, enabled: Boolean, logging: Boolean, entrypoint: String, commands: String, scopes: [String], installationId: String, providerRepositoryId: String, providerBranch: String, providerSilentMode: Boolean, providerRootDirectory: String, specification: String): Function
+  functionsUpdateFunctionDeployment(functionId: String!, deploymentId: String!): Function
+  functionsDelete(functionId: String!): JSON
+  functionsCreateDeployment(functionId: String!, code: String!, activate: Boolean!, entrypoint: String, commands: String): Deployment
+  functionsDeleteDeployment(functionId: String!, deploymentId: String!): JSON
+  functionsCreateExecution(functionId: String!, body: String, async: Boolean, xpath: String, method: String, headers: Assoc, scheduledAt: String): Execution
+  functionsDeleteExecution(functionId: String!, executionId: String!): JSON
+  functionsCreateVariable(functionId: String!, key: String!, value: String!, secret: Boolean): Variable
+  functionsUpdateVariable(functionId: String!, variableId: String!, key: String!, value: String, secret: Boolean): Variable
+  functionsDeleteVariable(functionId: String!, variableId: String!): JSON
+
+  # GraphQL (meta)
+  graphqlQuery(query: JSON!): JSON
+  graphqlMutation(query: JSON!): JSON
+}

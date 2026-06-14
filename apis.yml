@@ -1,9 +1,10 @@
 aid: appwrite
 name: Appwrite
-description: Appwrite is an open-source backend server for building web and mobile applications. It provides a wide range
-  of features including user authentication, file storage, database management, cloud functions, and messaging. With Appwrite,
-  developers can easily set up a backend for their applications without writing code from scratch, offering a simple and intuitive
-  API for seamless front-end integration.
+description: Appwrite is an open-source backend server for building web and mobile
+  applications. It provides a wide range of features including user authentication,
+  file storage, database management, cloud functions, and messaging. With Appwrite,
+  developers can easily set up a backend for their applications without writing code
+  from scratch, offering a simple and intuitive API for seamless front-end integration.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
@@ -55,8 +56,11 @@ apis:
     url: capabilities/appwrite-storage.yaml
   - type: NaftikoCapability
     url: capabilities/appwrite-users.yaml
-  description: The Appwrite REST API provides programmatic access to authentication, databases, storage, functions, and messaging
-    for building open source web and mobile application backends.
+  - url: graphql/appwrite-graphql.md
+    type: GraphQL
+  description: The Appwrite REST API provides programmatic access to authentication,
+    databases, storage, functions, and messaging for building open source web and
+    mobile application backends.
 common:
 - type: LinkedIn
   url: https://www.linkedin.com/company/appwrite
