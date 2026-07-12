@@ -62,6 +62,10 @@ apis:
     databases, storage, functions, and messaging for building open source web and
     mobile application backends.
 common:
+- type: DomainSecurity
+  url: security/appwrite-domain-security.yml
+- type: Authentication
+  url: authentication/appwrite-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/appwrite
 - type: Website
