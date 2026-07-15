@@ -62,6 +62,8 @@ apis:
     databases, storage, functions, and messaging for building open source web and
     mobile application backends.
 common:
+- type: AgenticAccess
+  url: agentic-access/appwrite-agentic-access.yml
 - type: DomainSecurity
   url: security/appwrite-domain-security.yml
 - type: Authentication
