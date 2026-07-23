@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Appwrite Account Databases API
+  description: The Appwrite REST API provides programmatic access to backend services for web and mobile applications, including user authentication, databases, file storage, cloud functions, real-time messaging, and team management. Appwrite is open source and can be self-hosted or used via Appwrite Cloud.
+  version: 1.6.0
+  contact:
+    name: Appwrite
+    url: https://appwrite.io/docs
+  license:
+    name: BSD 3-Clause
+    url: https://opensource.org/licenses/BSD-3-Clause
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud API
+security:
+- projectKey: []
+tags:
+- name: Databases
+  description: Database and collection management
+paths:
+  /databases:
+    get:
+      operationId: listDatabases
+      summary: Appwrite - List Databases
+      description: Returns a list of all databases in the Appwrite project
+      tags:
+      - Databases
+      responses:
+        '200':
+          description: A list of databases
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of databases
+                  databases:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Database'
+              examples:
+                ListDatabasesExample:
+                  x-microcks-default: true
+                  summary: Example databases list
+                  value:
+                    total: 1
+                    databases:
+                    - $id: main-db
+                      name: Main Database
+                      createdAt: '2026-01-01T00:00:00Z'
+        '401':
+          description: Unauthorized - invalid or missing API key
+components:
+  schemas:
+    Database:
+      title: Database
+      description: An Appwrite database for storing collections and documents
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Unique database identifier
+        name:
+          type: string
+          description: Database name
+        createdAt:
+          type: string
+          format: date-time
+          description: Database creation timestamp
+  securitySchemes:
+    projectKey:
+      type: apiKey
+      in: header
+      name: X-Appwrite-Project
