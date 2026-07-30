@@ -6,7 +6,20 @@ description: Appwrite is an open-source backend server for building web and mobi
   developers can easily set up a backend for their applications without writing code
   from scratch, offering a simple and intuitive API for seamless front-end integration.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
 tags:
 - Applications
 - Backends
@@ -17,37 +30,33 @@ created: '2025-02-17'
 modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
-- aid: appwrite:appwrite-api
-  name: Appwrite API
-  tags:
-  - Authentication
-  - Database
-  - Storage
-  - Functions
-  - Open Source
-  - Backend-as-a-Service
+- aid: appwrite:appwrite-account-api
+  name: Appwrite Account API
+  description: User account management
   humanURL: https://appwrite.io/
+  tags:
+  - Account
   properties:
-  - url: https://appwrite.io/docs
-    type: Documentation
-  - url: https://github.com/appwrite/appwrite
-    type: GitHubRepository
-  - url: openapi/appwrite-openapi.yaml
-    type: OpenAPI
-  - url: asyncapi/appwrite-asyncapi.yml
-    type: AsyncAPI
-  - url: json-schema/user-schema.json
-    type: JSONSchema
-  - url: json-structure/user-structure.json
-    type: JSONStructure
-  - url: examples/user-example.json
-    type: Examples
-  - url: json-ld/appwrite-context.jsonld
-    type: JSONLD
-  - url: rules/appwrite-spectral-rules.yml
-    type: SpectralRules
-  - url: vocabulary/appwrite-vocabulary.yaml
-    type: Vocabulary
+  - type: OpenAPI
+    url: openapi/appwrite-account-api-openapi.yml
+  - type: Documentation
+    url: https://appwrite.io/docs
+  - type: GitHubRepository
+    url: https://github.com/appwrite/appwrite
+  - type: AsyncAPI
+    url: asyncapi/appwrite-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/user-schema.json
+  - type: JSONStructure
+    url: json-structure/user-structure.json
+  - type: Examples
+    url: examples/user-example.json
+  - type: JSONLD
+    url: json-ld/appwrite-context.jsonld
+  - type: SpectralRules
+    url: rules/appwrite-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/appwrite-vocabulary.yaml
   - type: X-NaftikoCapability
     url: capabilities/appwrite-account.yaml
   - type: X-NaftikoCapability
@@ -56,12 +65,122 @@ apis:
     url: capabilities/appwrite-storage.yaml
   - type: X-NaftikoCapability
     url: capabilities/appwrite-users.yaml
-  - url: graphql/appwrite-graphql.md
-    type: GraphQL
-  description: The Appwrite REST API provides programmatic access to authentication,
-    databases, storage, functions, and messaging for building open source web and
-    mobile application backends.
+  - type: GraphQL
+    url: graphql/appwrite-graphql.md
+- aid: appwrite:appwrite-databases-api
+  name: Appwrite Databases API
+  description: Database and collection management
+  humanURL: https://appwrite.io/
+  tags:
+  - Databases
+  properties:
+  - type: OpenAPI
+    url: openapi/appwrite-databases-api-openapi.yml
+  - type: Documentation
+    url: https://appwrite.io/docs
+  - type: GitHubRepository
+    url: https://github.com/appwrite/appwrite
+  - type: AsyncAPI
+    url: asyncapi/appwrite-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/user-schema.json
+  - type: JSONStructure
+    url: json-structure/user-structure.json
+  - type: Examples
+    url: examples/user-example.json
+  - type: JSONLD
+    url: json-ld/appwrite-context.jsonld
+  - type: SpectralRules
+    url: rules/appwrite-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/appwrite-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-account.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-databases.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-storage.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-users.yaml
+  - type: GraphQL
+    url: graphql/appwrite-graphql.md
+- aid: appwrite:appwrite-storage-api
+  name: Appwrite Storage API
+  description: File storage management
+  humanURL: https://appwrite.io/
+  tags:
+  - Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/appwrite-storage-api-openapi.yml
+  - type: Documentation
+    url: https://appwrite.io/docs
+  - type: GitHubRepository
+    url: https://github.com/appwrite/appwrite
+  - type: AsyncAPI
+    url: asyncapi/appwrite-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/user-schema.json
+  - type: JSONStructure
+    url: json-structure/user-structure.json
+  - type: Examples
+    url: examples/user-example.json
+  - type: JSONLD
+    url: json-ld/appwrite-context.jsonld
+  - type: SpectralRules
+    url: rules/appwrite-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/appwrite-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-account.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-databases.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-storage.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-users.yaml
+  - type: GraphQL
+    url: graphql/appwrite-graphql.md
+- aid: appwrite:appwrite-users-api
+  name: Appwrite Users API
+  description: Server-side user management (requires server key)
+  humanURL: https://appwrite.io/
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/appwrite-users-api-openapi.yml
+  - type: Documentation
+    url: https://appwrite.io/docs
+  - type: GitHubRepository
+    url: https://github.com/appwrite/appwrite
+  - type: AsyncAPI
+    url: asyncapi/appwrite-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/user-schema.json
+  - type: JSONStructure
+    url: json-structure/user-structure.json
+  - type: Examples
+    url: examples/user-example.json
+  - type: JSONLD
+    url: json-ld/appwrite-context.jsonld
+  - type: SpectralRules
+    url: rules/appwrite-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/appwrite-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-account.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-databases.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-storage.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/appwrite-users.yaml
+  - type: GraphQL
+    url: graphql/appwrite-graphql.md
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/appwrite/overview
 - type: AgenticAccess
   url: agentic-access/appwrite-agentic-access.yml
 - type: DomainSecurity
