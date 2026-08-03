@@ -1,0 +1,438 @@
+{
+  "info": {
+    "_postman_id": "630bca0f-ae94-4453-af8e-393d314f85e2",
+    "name": "Appwrite Account Users API",
+    "description": "The Appwrite REST API provides programmatic access to backend services for web and mobile applications, including user authentication, databases, file storage, cloud functions, real-time messaging, and team management. Appwrite is open source and can be self-hosted or used via Appwrite Cloud.\n\nContact Support:\n Name: Appwrite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:03:45.000Z",
+    "updatedAt": "2026-07-28T01:03:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-630bca0f-ae94-4453-af8e-393d314f85e2"
+  },
+  "item": [
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "Appwrite - List Users",
+          "id": "7ad2f94f-8993-4b97-9620-4972f305f722",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users?queries=<string>&queries=<string>&search=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "description": "Array of query strings for filtering users",
+                  "key": "queries",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Array of query strings for filtering users",
+                  "key": "queries",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Search term to filter users by name or email",
+                  "key": "search",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Returns a list of all users in the project (requires server API key)"
+          },
+          "response": [
+            {
+              "id": "679bdbe1-40da-4cea-9e0f-e464ffdf9d7c",
+              "name": "A list of users",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?queries=<string>&search=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Array of query strings for filtering users",
+                      "key": "queries",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Search term to filter users by name or email",
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"total\": \"<integer>\",\n  \"users\": [\n    {\n      \"$id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"emailVerification\": \"<boolean>\",\n      \"phoneVerification\": \"<boolean>\",\n      \"status\": \"<boolean>\",\n      \"createdAt\": \"<dateTime>\",\n      \"labels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"$id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"emailVerification\": \"<boolean>\",\n      \"phoneVerification\": \"<boolean>\",\n      \"status\": \"<boolean>\",\n      \"createdAt\": \"<dateTime>\",\n      \"labels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:03:46.000Z",
+              "updatedAt": "2026-07-28T01:03:46.000Z",
+              "uid": "35240-679bdbe1-40da-4cea-9e0f-e464ffdf9d7c"
+            },
+            {
+              "id": "1702025b-f08e-4f0e-8297-068529876b33",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?queries=<string>&search=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Array of query strings for filtering users",
+                      "key": "queries",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Search term to filter users by name or email",
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:03:46.000Z",
+              "updatedAt": "2026-07-28T01:03:46.000Z",
+              "uid": "35240-1702025b-f08e-4f0e-8297-068529876b33"
+            }
+          ],
+          "createdAt": "2026-07-28T01:03:46.000Z",
+          "updatedAt": "2026-07-28T01:03:46.000Z",
+          "uid": "35240-7ad2f94f-8993-4b97-9620-4972f305f722"
+        },
+        {
+          "name": "Appwrite - Create User",
+          "id": "540de7e2-3bf9-459d-bec2-6e1d1a6737c0",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Creates a new user account in the Appwrite project"
+          },
+          "response": [
+            {
+              "id": "78c71b71-5ad1-4940-8e44-9c53466364a8",
+              "name": "User created successfully",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"$id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"emailVerification\": \"<boolean>\",\n  \"phoneVerification\": \"<boolean>\",\n  \"status\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"labels\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "createdAt": "2026-07-28T01:03:46.000Z",
+              "updatedAt": "2026-07-28T01:03:46.000Z",
+              "uid": "35240-78c71b71-5ad1-4940-8e44-9c53466364a8"
+            },
+            {
+              "id": "45e1d41f-914a-4d63-ac6a-5424e5091a49",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:03:46.000Z",
+              "updatedAt": "2026-07-28T01:03:46.000Z",
+              "uid": "35240-45e1d41f-914a-4d63-ac6a-5424e5091a49"
+            },
+            {
+              "id": "c3493198-72dd-4008-9793-920bb117d0f9",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:03:46.000Z",
+              "updatedAt": "2026-07-28T01:03:46.000Z",
+              "uid": "35240-c3493198-72dd-4008-9793-920bb117d0f9"
+            },
+            {
+              "id": "488925fd-e28f-420e-a2f9-68b8025f6a67",
+              "name": "User with this email already exists",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:03:46.000Z",
+              "updatedAt": "2026-07-28T01:03:46.000Z",
+              "uid": "35240-488925fd-e28f-420e-a2f9-68b8025f6a67"
+            }
+          ],
+          "createdAt": "2026-07-28T01:03:46.000Z",
+          "updatedAt": "2026-07-28T01:03:46.000Z",
+          "uid": "35240-540de7e2-3bf9-459d-bec2-6e1d1a6737c0"
+        }
+      ],
+      "id": "0327d133-7e6c-48a9-a9c6-7f0f1e434379",
+      "createdAt": "2026-07-28T01:03:46.000Z",
+      "updatedAt": "2026-07-28T01:03:46.000Z",
+      "uid": "35240-0327d133-7e6c-48a9-a9c6-7f0f1e434379"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Appwrite-Project",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://cloud.appwrite.io/v1"
+    }
+  ]
+}

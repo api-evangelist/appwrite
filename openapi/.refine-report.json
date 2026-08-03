@@ -1,0 +1,20 @@
+{
+  "provider": "appwrite",
+  "sources": [
+    "appwrite-account-api-openapi.yml",
+    "appwrite-databases-api-openapi.yml",
+    "appwrite-storage-api-openapi.yml",
+    "appwrite-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "appwrite-account-api-openapi.yml",
+    "appwrite-databases-api-openapi.yml",
+    "appwrite-storage-api-openapi.yml",
+    "appwrite-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

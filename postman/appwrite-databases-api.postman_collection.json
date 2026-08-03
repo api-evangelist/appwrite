@@ -1,0 +1,155 @@
+{
+  "info": {
+    "_postman_id": "ae3abba1-340e-4f57-a12d-9b791ac76c3c",
+    "name": "Appwrite Account Databases API",
+    "description": "The Appwrite REST API provides programmatic access to backend services for web and mobile applications, including user authentication, databases, file storage, cloud functions, real-time messaging, and team management. Appwrite is open source and can be self-hosted or used via Appwrite Cloud.\n\nContact Support:\n Name: Appwrite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:03:43.000Z",
+    "updatedAt": "2026-07-28T01:03:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ae3abba1-340e-4f57-a12d-9b791ac76c3c"
+  },
+  "item": [
+    {
+      "name": "databases",
+      "item": [
+        {
+          "name": "Appwrite - List Databases",
+          "id": "3e286f9f-690c-400f-9098-ed5569b288b2",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/databases",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "databases"
+              ]
+            },
+            "description": "Returns a list of all databases in the Appwrite project"
+          },
+          "response": [
+            {
+              "id": "a661af52-cd1d-4d36-9448-8763acb7dea2",
+              "name": "A list of databases",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/databases",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "databases"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"total\": \"<integer>\",\n  \"databases\": [\n    {\n      \"$id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"$id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:03:44.000Z",
+              "updatedAt": "2026-07-28T01:03:44.000Z",
+              "uid": "35240-a661af52-cd1d-4d36-9448-8763acb7dea2"
+            },
+            {
+              "id": "844fa7b2-e3ee-4cde-8e26-5417e373bdbf",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/databases",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "databases"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:03:44.000Z",
+              "updatedAt": "2026-07-28T01:03:44.000Z",
+              "uid": "35240-844fa7b2-e3ee-4cde-8e26-5417e373bdbf"
+            }
+          ],
+          "createdAt": "2026-07-28T01:03:44.000Z",
+          "updatedAt": "2026-07-28T01:03:44.000Z",
+          "uid": "35240-3e286f9f-690c-400f-9098-ed5569b288b2"
+        }
+      ],
+      "id": "f3e96b79-f07c-4e80-8d23-f73037b66dc4",
+      "createdAt": "2026-07-28T01:03:44.000Z",
+      "updatedAt": "2026-07-28T01:03:44.000Z",
+      "uid": "35240-f3e96b79-f07c-4e80-8d23-f73037b66dc4"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Appwrite-Project",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://cloud.appwrite.io/v1"
+    }
+  ]
+}
