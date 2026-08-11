@@ -57,14 +57,6 @@ apis:
     url: rules/appwrite-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/appwrite-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-account.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-databases.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-storage.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-users.yaml
   - type: GraphQL
     url: graphql/appwrite-graphql.md
 - aid: appwrite:appwrite-databases-api
@@ -94,14 +86,6 @@ apis:
     url: rules/appwrite-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/appwrite-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-account.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-databases.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-storage.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-users.yaml
   - type: GraphQL
     url: graphql/appwrite-graphql.md
 - aid: appwrite:appwrite-storage-api
@@ -131,14 +115,6 @@ apis:
     url: rules/appwrite-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/appwrite-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-account.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-databases.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-storage.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-users.yaml
   - type: GraphQL
     url: graphql/appwrite-graphql.md
 - aid: appwrite:appwrite-users-api
@@ -168,17 +144,22 @@ apis:
     url: rules/appwrite-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/appwrite-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-account.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-databases.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-storage.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/appwrite-users.yaml
   - type: GraphQL
     url: graphql/appwrite-graphql.md
 common:
+- type: IssueTracker
+  url: https://github.com/appwrite/appwrite/issues
+- type: Releases
+  url: https://github.com/appwrite/appwrite/releases
+- type: SecurityPolicy
+  url: https://github.com/appwrite/appwrite/blob/main/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/appwrite/.github/blob/main/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/appwrite/appwrite/blob/main/CONTRIBUTING.md
+- type: License
+  name: BSD-3-Clause
+  url: https://github.com/appwrite/appwrite/blob/main/LICENSE
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/appwrite/overview
 - type: AgenticAccess
