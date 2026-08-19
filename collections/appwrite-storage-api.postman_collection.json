@@ -1,0 +1,169 @@
+{
+  "item": [
+    {
+      "id": "a7a092fa-b495-4be4-bfa1-5d728568e81f",
+      "name": "Storage",
+      "description": {
+        "content": "File storage management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9bf49c21-8572-4b28-9d21-22804dec857e",
+          "name": "Appwrite - List Buckets",
+          "request": {
+            "name": "Appwrite - List Buckets",
+            "description": {
+              "content": "Returns a list of all storage buckets in the Appwrite project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "storage",
+                "buckets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2d04617-21cb-4316-b3a0-a438b511f766",
+              "name": "A list of storage buckets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "storage",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 1,\n  \"buckets\": [\n    {\n      \"$id\": \"avatars\",\n      \"name\": \"User Avatars\",\n      \"createdAt\": \"2026-01-01T00:00:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07e3e158-16e8-4d34-941b-4a61f17ef9c0",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "storage",
+                    "buckets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Appwrite-Project",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cloud.appwrite.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Appwrite-Project"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e9a309a5-1018-4583-8fec-2f04c0f6c9df",
+    "name": "Appwrite Account Storage API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Appwrite REST API provides programmatic access to backend services for web and mobile applications, including user authentication, databases, file storage, cloud functions, real-time messaging, and team management. Appwrite is open source and can be self-hosted or used via Appwrite Cloud.\n\nContact Support:\n Name: Appwrite",
+      "type": "text/plain"
+    }
+  }
+}

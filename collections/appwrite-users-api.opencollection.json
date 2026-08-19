@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Appwrite Account Users API",
+    "version": "1.6.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Appwrite-Project",
+      "value": "{{X-Appwrite-Project}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Appwrite - List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cloud.appwrite.io/v1/users",
+            "params": [
+              {
+                "name": "queries",
+                "value": "",
+                "type": "query",
+                "description": "Array of query strings for filtering users"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter users by name or email"
+              }
+            ]
+          },
+          "docs": "Returns a list of all users in the project (requires server API key)"
+        },
+        {
+          "info": {
+            "name": "Appwrite - Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cloud.appwrite.io/v1/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user account in the Appwrite project"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Appwrite Account Storage API",
+    "version": "1.6.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Appwrite-Project",
+      "value": "{{X-Appwrite-Project}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Storage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Appwrite - List Buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cloud.appwrite.io/v1/storage/buckets"
+          },
+          "docs": "Returns a list of all storage buckets in the Appwrite project"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
