@@ -21,6 +21,11 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
 tags:
+- Application
+- Backend
+- Mobile
+- Open-Source
+tags_raw:
 - Applications
 - Backends
 - Mobile
@@ -122,6 +127,8 @@ apis:
   description: Server-side user management (requires server key)
   humanURL: https://appwrite.io/
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
