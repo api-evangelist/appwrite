@@ -36,7 +36,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
 tags:
 - Application
-- Backends
+- Backend
 - Mobile
 - Open-Source
 tags_raw:
