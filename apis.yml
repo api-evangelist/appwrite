@@ -46,7 +46,7 @@ tags:
 - Backend
 - Mobile
 - Open-Source
-- Database
+- Databases
 - Storage
 - Serverless
 - Authentication
@@ -116,6 +116,9 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Authentication
+  - User
+  tags_raw:
   - Authentication
   - Users
   properties:
@@ -199,6 +202,9 @@ apis:
   baseURL: https://cloud.appwrite.io/v1
   tags:
   - Messaging
+  - Notification
+  tags_raw:
+  - Messaging
   - Notifications
   properties:
   - type: OpenAPI
@@ -240,6 +246,9 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - User
+  - Authentication
+  tags_raw:
   - Users
   - Authentication
   properties:
@@ -305,6 +314,9 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Databases
+  - Machine-Learning
+  tags_raw:
   - Databases
   - Machine Learning
   properties:
@@ -430,6 +442,8 @@ apis:
   baseURL: https://cloud.appwrite.io/v1
   tags:
   - Authentication
+  tags_raw:
+  - Authentication
   - OAuth
   properties:
   - type: OpenAPI
@@ -491,6 +505,9 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Team
+  - User
+  tags_raw:
   - Teams
   - Users
   properties:
@@ -553,6 +570,8 @@ apis:
   baseURL: https://cloud.appwrite.io/v1
   tags:
   - Authentication
+  tags_raw:
+  - Authentication
   - OAuth
   properties:
   - type: OpenAPI
@@ -573,6 +592,9 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Storage
+  - File
+  tags_raw:
   - Storage
   - Files
   properties:
@@ -661,6 +683,9 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Image
+  - Utilities
+  tags_raw:
   - Images
   - Utilities
   properties:
@@ -743,6 +768,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Real-Time
+  tags_raw:
   - Realtime
   properties:
   - type: OpenAPI
@@ -785,6 +812,9 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Webhook
+  - Event
+  tags_raw:
   - Webhooks
   - Events
   properties:
@@ -850,6 +880,9 @@ apis:
   baseURL: https://cloud.appwrite.io/v1
   tags:
   - Logging
+  - Event
+  tags_raw:
+  - Logging
   - Events
   properties:
   - type: OpenAPI
@@ -894,6 +927,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
@@ -935,6 +970,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Artificial Intelligence
+  tags_raw:
   - AI
   properties:
   - type: OpenAPI
@@ -955,6 +992,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Machine-Learning
+  tags_raw:
   - Machine Learning
   properties:
   - type: OpenAPI
