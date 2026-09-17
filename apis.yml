@@ -70,7 +70,8 @@ specificationVersion: '0.23'
 apis:
 - aid: appwrite:appwrite-project-api
   name: Appwrite Project API
-  description: The Project service allows you to manage all the projects in your Appwrite server. 109 operations
+  description: >-
+    The Project service allows you to manage all the projects in your Appwrite server. 109 operations
     across 97 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -90,7 +91,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-tablesdb-api
   name: Appwrite TablesDB API
-  description: The TablesDB service allows you to create structured tables of columns, query and filter lists of
+  description: >-
+    The TablesDB service allows you to create structured tables of columns, query and filter lists of
     rows. 80 operations across 59 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -110,7 +112,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-account-api
   name: Appwrite Account API
-  description: The Account service allows you to authenticate and manage a user account. 73 operations across 47
+  description: >-
+    The Account service allows you to authenticate and manage a user account. 73 operations across 47
     paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -150,8 +153,9 @@ apis:
     url: vocabulary/appwrite-vocabulary.yaml
 - aid: appwrite:appwrite-databases-api
   name: Appwrite Databases API
-  description: The Databases service allows you to create structured collections of documents, query and filter
-    lists of documents. 70 operations across 51 paths in the Appwrite 2.0.0 OpenAPI.
+  description: >-
+    The Databases service allows you to create structured collections of documents, query and filter lists
+    of documents. 70 operations across 51 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -174,7 +178,8 @@ apis:
     url: collections/appwrite-databases-api.opencollection.json
 - aid: appwrite:appwrite-domains-api
   name: Appwrite Domains API
-  description: Appwrite Domains — buy domains and host DNS inside an Appwrite organization, announced 2026-09-04.
+  description: >-
+    Appwrite Domains — buy domains and host DNS inside an Appwrite organization, announced 2026-09-04.
     54 operations across 44 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -195,8 +200,9 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-messaging-api
   name: Appwrite Messaging API
-  description: The Messaging service allows you to send messages to any provider type (SMTP, push notification,
-    SMS, etc.). 46 operations across 39 paths in the Appwrite 2.0.0 OpenAPI.
+  description: >-
+    The Messaging service allows you to send messages to any provider type (SMTP, push notification, SMS,
+    etc.). 46 operations across 39 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -219,7 +225,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-organizations-api
   name: Appwrite Organizations API
-  description: The Organizations service allows you to manage organization billing, plans, invoices, and add-ons.
+  description: >-
+    The Organizations service allows you to manage organization billing, plans, invoices, and add-ons.
     45 operations across 38 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -240,7 +247,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-users-api
   name: Appwrite Users API
-  description: The Users service allows you to manage your project users. 45 operations across 35 paths in the Appwrite
+  description: >-
+    The Users service allows you to manage your project users. 45 operations across 35 paths in the Appwrite
     2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -268,7 +276,8 @@ apis:
     url: collections/appwrite-users-api.opencollection.json
 - aid: appwrite:appwrite-postgresql-api
   name: Appwrite PostgreSQL API
-  description: Managed PostgreSQL hosting with pgvector, Prisma support, backups, replicas and point-in-time recovery.
+  description: >-
+    Managed PostgreSQL hosting with pgvector, Prisma support, backups, replicas and point-in-time recovery.
     37 operations across 25 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -288,7 +297,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-documentsdb-api
   name: Appwrite DocumentsDB API
-  description: DocumentsDB — schemaless document storage with documents that evolve with the application, announced
+  description: >-
+    DocumentsDB — schemaless document storage with documents that evolve with the application, announced
     2026-09-02. 36 operations across 18 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -308,7 +318,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-vectorsdb-api
   name: Appwrite VectorsDB API
-  description: VectorsDB — similarity search as a first-class Appwrite database, announced 2026-09-02. 35 operations
+  description: >-
+    VectorsDB — similarity search as a first-class Appwrite database, announced 2026-09-02. 35 operations
     across 17 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -332,7 +343,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-mysql-api
   name: Appwrite MySQL API
-  description: Managed MySQL databases — bring your own MySQL or run Appwrite-hosted instances, announced 2026-09-02.
+  description: >-
+    Managed MySQL databases — bring your own MySQL or run Appwrite-hosted instances, announced 2026-09-02.
     34 operations across 23 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -352,8 +364,9 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-mongo-api
   name: Appwrite MongoDB API
-  description: Managed MongoDB databases, with backup policies, archives and restorations. 31 operations across
-    21 paths in the Appwrite 2.0.0 OpenAPI.
+  description: >-
+    Managed MongoDB databases, with backup policies, archives and restorations. 31 operations across 21
+    paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -372,7 +385,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-functions-api
   name: Appwrite Functions API
-  description: The Functions Service allows you view, create and manage your Cloud Functions. 28 operations across
+  description: >-
+    The Functions Service allows you view, create and manage your Cloud Functions. 28 operations across
     18 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -393,8 +407,9 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-sites-api
   name: Appwrite Sites API
-  description: The Sites Service allows you view, create and manage your web applications. 27 operations across
-    18 paths in the Appwrite 2.0.0 OpenAPI.
+  description: >-
+    The Sites Service allows you view, create and manage your web applications. 27 operations across 18
+    paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -414,7 +429,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-organization-api
   name: Appwrite Organization API
-  description: The Organization service allows you to manage organization-level projects. 23 operations across 9
+  description: >-
+    The Organization service allows you to manage organization-level projects. 23 operations across 9
     paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -435,7 +451,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-apps-api
   name: Appwrite Apps API
-  description: The Apps service allows you to manage OAuth2 applications, their keys, secrets, scopes, and installations.
+  description: >-
+    The Apps service allows you to manage OAuth2 applications, their keys, secrets, scopes, and installations.
     22 operations across 14 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -458,7 +475,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-console-api
   name: Appwrite Console API
-  description: The Console service allows you to interact with console relevant information. 19 operations across
+  description: >-
+    The Console service allows you to interact with console relevant information. 19 operations across
     19 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -478,7 +496,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-manager-api
   name: Appwrite Manager API
-  description: Console management surface for project-level WAF rules and operator tooling. 19 operations across
+  description: >-
+    Console management surface for project-level WAF rules and operator tooling. 19 operations across
     18 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -499,8 +518,9 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-teams-api
   name: Appwrite Teams API
-  description: The Teams service allows you to group users of your project and to enable them to share read and
-    write access to your project resources. 19 operations across 9 paths in the Appwrite 2.0.0 OpenAPI.
+  description: >-
+    The Teams service allows you to group users of your project and to enable them to share read and write
+    access to your project resources. 19 operations across 9 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -523,8 +543,9 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-projects-api
   name: Appwrite Projects API
-  description: The Project service allows you to manage all the projects in your Appwrite server. 18 operations
-    across 14 paths in the Appwrite 2.0.0 OpenAPI.
+  description: >-
+    The Project service allows you to manage all the projects in your Appwrite server. 18 operations across
+    14 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -543,7 +564,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-migrations-api
   name: Appwrite Migrations API
-  description: The Migrations service allows you to migrate third-party data to your Appwrite project. 16 operations
+  description: >-
+    The Migrations service allows you to migrate third-party data to your Appwrite project. 16 operations
     across 14 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -561,33 +583,11 @@ apis:
     url: https://appwrite.io/docs/references
   - type: GitHubRepository
     url: https://github.com/appwrite/appwrite
-- aid: appwrite:appwrite-oauth2-api
-  name: Appwrite OAuth2 API
-  description: The OAuth2 service allows you to authorize apps and issue standards-based OAuth2 and OpenID Connect
-    tokens. 14 operations across 12 paths in the Appwrite 2.0.0 OpenAPI.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
-  humanURL: https://appwrite.io/docs/references
-  baseURL: https://cloud.appwrite.io/v1
-  tags:
-  - Authentication
-  tags_raw:
-  - Authentication
-  - OAuth
-  properties:
-  - type: OpenAPI
-    url: openapi/appwrite-oauth2-api-openapi.yml
-  - type: Overlay
-    url: overlays/appwrite-oauth2-overlay.yaml
-  - type: Documentation
-    url: https://appwrite.io/docs
-  - type: APIReference
-    url: https://appwrite.io/docs/references
-  - type: GitHubRepository
-    url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-storage-api
   name: Appwrite Storage API
-  description: The Storage service allows you to manage your project files. 13 operations across 7 paths in the
-    Appwrite 2.0.0 OpenAPI.
+  description: >-
+    The Storage service allows you to manage your project files. 13 operations across 7 paths in the Appwrite
+    2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -614,7 +614,8 @@ apis:
     url: collections/appwrite-storage-api.opencollection.json
 - aid: appwrite:appwrite-waf-api
   name: Appwrite Firewall (WAF) API
-  description: Appwrite Firewall — traffic control and WAF rules for a project, announced 2026-09-04. 13 operations
+  description: >-
+    Appwrite Firewall — traffic control and WAF rules for a project, announced 2026-09-04. 13 operations
     across 12 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -635,7 +636,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-backups-api
   name: Appwrite Backups API
-  description: The Backups service allows you to manage backup policies, archives, and restorations for your project.
+  description: >-
+    The Backups service allows you to manage backup policies, archives, and restorations for your project.
     12 operations across 7 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -656,7 +658,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-vcs-api
   name: Appwrite VCS API
-  description: The VCS service allows you to interact with providers like GitHub, GitLab etc. 11 operations across
+  description: >-
+    The VCS service allows you to interact with providers like GitHub, GitLab etc. 11 operations across
     9 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -677,7 +680,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-avatars-api
   name: Appwrite Avatars API
-  description: The Avatars service aims to help you complete everyday tasks related to your app image, icons, and
+  description: >-
+    The Avatars service aims to help you complete everyday tasks related to your app image, icons, and
     avatars. 9 operations across 9 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -701,7 +705,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-proxy-api
   name: Appwrite Proxy API
-  description: The Proxy Service allows you to configure actions for your domains beyond DNS configuration. 9 operations
+  description: >-
+    The Proxy Service allows you to configure actions for your domains beyond DNS configuration. 9 operations
     across 8 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -722,7 +727,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-locale-api
   name: Appwrite Locale API
-  description: The Locale service allows you to customize your app based on your users' location. 8 operations across
+  description: >-
+    The Locale service allows you to customize your app based on your users' location. 8 operations across
     8 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -742,7 +748,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-affiliates-api
   name: Appwrite Affiliates API
-  description: The Affiliates service allows you to share referral codes, track conversions, and apply earned credits.
+  description: >-
+    The Affiliates service allows you to share referral codes, track conversions, and apply earned credits.
     7 operations across 5 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -762,7 +769,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-presences-api
   name: Appwrite Presences API
-  description: The Presences service allows you to track and manage real-time user presence in your project. 6 operations
+  description: >-
+    The Presences service allows you to track and manage real-time user presence in your project. 6 operations
     across 3 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -786,7 +794,8 @@ apis:
     url: asyncapi/appwrite-asyncapi.yml
 - aid: appwrite:appwrite-regions-api
   name: Appwrite Regions API
-  description: Appwrite Cloud regions available to a project, and the regional endpoints they resolve to. 6 operations
+  description: >-
+    Appwrite Cloud regions available to a project, and the regional endpoints they resolve to. 6 operations
     across 6 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -806,7 +815,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-webhooks-api
   name: Appwrite Webhooks API
-  description: The Webhooks service allows you to manage your project webhooks. 6 operations across 3 paths in the
+  description: >-
+    The Webhooks service allows you to manage your project webhooks. 6 operations across 3 paths in the
     Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -832,7 +842,8 @@ apis:
     url: asyncapi/appwrite-webhooks.yml
 - aid: appwrite:appwrite-advisor-api
   name: Appwrite Advisor API
-  description: The Advisor service surfaces actionable reports about your project resources, with CTA descriptors
+  description: >-
+    The Advisor service surfaces actionable reports about your project resources, with CTA descriptors
     for one-click remediation in the console. 5 operations across 4 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -852,7 +863,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-tokens-api
   name: Appwrite Tokens API
-  description: The Tokens service allows you to create and manage resource tokens for secure file access. 5 operations
+  description: >-
+    The Tokens service allows you to create and manage resource tokens for secure file access. 5 operations
     across 2 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -873,7 +885,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-activities-api
   name: Appwrite Activities API
-  description: The Activities service allows you to list and inspect project activity events. 2 operations across
+  description: >-
+    The Activities service allows you to list and inspect project activity events. 2 operations across
     2 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -895,33 +908,10 @@ apis:
     url: https://appwrite.io/docs/references
   - type: GitHubRepository
     url: https://github.com/appwrite/appwrite
-- aid: appwrite:appwrite-graphql-api
-  name: Appwrite GraphQL API
-  description: The GraphQL API allows you to query and mutate your Appwrite server using GraphQL. 2 operations across
-    2 paths in the Appwrite 2.0.0 OpenAPI.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
-  humanURL: https://appwrite.io/docs/references
-  baseURL: https://cloud.appwrite.io/v1
-  tags:
-  - GraphQL
-  properties:
-  - type: OpenAPI
-    url: openapi/appwrite-graphql-api-openapi.yml
-  - type: Overlay
-    url: overlays/appwrite-graphql-overlay.yaml
-  - type: Documentation
-    url: https://appwrite.io/docs
-  - type: APIReference
-    url: https://appwrite.io/docs/references
-  - type: GitHubRepository
-    url: https://github.com/appwrite/appwrite
-  - type: GraphQL
-    url: graphql/appwrite-graphql.md
-  - type: GraphQLSchema
-    url: graphql/appwrite-schema.graphql
 - aid: appwrite:appwrite-notifications-api
   name: Appwrite Notifications API
-  description: The Notifications service allows you to read and manage your Appwrite Console notifications. 2 operations
+  description: >-
+    The Notifications service allows you to read and manage your Appwrite Console notifications. 2 operations
     across 2 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -943,7 +933,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-usage-api
   name: Appwrite Usage API
-  description: Usage reporting for an organization or project across the metered Appwrite resources. 2 operations
+  description: >-
+    Usage reporting for an organization or project across the metered Appwrite resources. 2 operations
     across 2 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -964,7 +955,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-assistant-api
   name: Appwrite Assistant API
-  description: The Appwrite Assistant surface used by the Console. 1 operations across 1 paths in the Appwrite 2.0.0
+  description: >-
+    The Appwrite Assistant surface used by the Console. 1 operations across 1 paths in the Appwrite 2.0.0
     OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -986,8 +978,9 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-embeddings-api
   name: Appwrite Embeddings API
-  description: Embedding generation used by VectorsDB similarity search, metered in embedding tokens per model.
-    1 operations across 1 paths in the Appwrite 2.0.0 OpenAPI.
+  description: >-
+    Embedding generation used by VectorsDB similarity search, metered in embedding tokens per model. 1
+    operations across 1 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
@@ -1008,7 +1001,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-growth-api
   name: Appwrite Growth API
-  description: Internal growth surface exposed in the published console spec. 1 operations across 1 paths in the
+  description: >-
+    Internal growth surface exposed in the published console spec. 1 operations across 1 paths in the
     Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -1028,7 +1022,8 @@ apis:
     url: https://github.com/appwrite/appwrite
 - aid: appwrite:appwrite-ping-api
   name: Appwrite Ping API
-  description: Health probe endpoint used to verify connectivity between an SDK and an Appwrite project. 1 operations
+  description: >-
+    Health probe endpoint used to verify connectivity between an SDK and an Appwrite project. 1 operations
     across 1 paths in the Appwrite 2.0.0 OpenAPI.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
   humanURL: https://appwrite.io/docs/references
@@ -1046,7 +1041,53 @@ apis:
     url: https://appwrite.io/docs/references
   - type: GitHubRepository
     url: https://github.com/appwrite/appwrite
+- aid: appwrite:appwrite-oauth2-api
+  name: Appwrite Oauth2 API
+  description: >-
+    The OAuth2 service allows you to authorize apps and issue standards-based OAuth2 and OpenID Connect
+    tokens.
+  humanURL: https://appwrite.io/docs/references
+  baseURL: https://cloud.appwrite.io/v1
+  tags:
+  - oauth2
+  properties:
+  - type: OpenAPI
+    url: openapi/appwrite-oauth2-api-openapi.yml
+  - type: Documentation
+    url: https://appwrite.io/docs
+  - type: APIReference
+    url: https://appwrite.io/docs/references
+  - type: GitHubRepository
+    url: https://github.com/appwrite/appwrite
+  - type: GraphQL
+    url: graphql/appwrite-graphql.md
+  - type: GraphQLSchema
+    url: graphql/appwrite-schema.graphql
+- aid: appwrite:appwrite-graph-ql-api
+  name: Appwrite Graph QL API
+  description: The GraphQL API allows you to query and mutate your Appwrite server using GraphQL.
+  humanURL: https://appwrite.io/docs/references
+  baseURL: https://cloud.appwrite.io/v1
+  tags:
+  - Graph QL
+  properties:
+  - type: OpenAPI
+    url: openapi/appwrite-graph-ql-api-openapi.yml
+  - type: Documentation
+    url: https://appwrite.io/docs
+  - type: APIReference
+    url: https://appwrite.io/docs/references
+  - type: GitHubRepository
+    url: https://github.com/appwrite/appwrite
+  - type: GraphQL
+    url: graphql/appwrite-graphql.md
+  - type: GraphQLSchema
+    url: graphql/appwrite-schema.graphql
 common:
+- type: Overlay
+  url: overlays/appwrite-oauth2-overlay.yaml
+- type: Overlay
+  url: overlays/appwrite-graphql-overlay.yaml
 - type: Website
   url: https://appwrite.io/
 - type: DeveloperPortal
