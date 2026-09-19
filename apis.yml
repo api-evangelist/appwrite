@@ -46,7 +46,7 @@ tags:
 - Backend
 - Mobile
 - Open-Source
-- Databases
+- Database
 - Storage
 - Serverless
 - Authentication
@@ -98,6 +98,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
@@ -160,6 +162,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
@@ -283,6 +287,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
@@ -304,6 +310,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
@@ -325,7 +333,7 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
-  - Databases
+  - Database
   - Machine-Learning
   tags_raw:
   - Databases
@@ -350,6 +358,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
@@ -371,6 +381,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
@@ -1049,6 +1061,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - Authentication
+  tags_raw:
   - oauth2
   properties:
   - type: OpenAPI
@@ -1069,6 +1083,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
