@@ -1,0 +1,3839 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Avatars API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Avatars
+  description: The Avatars service aims to help you complete everyday tasks related to your app image, icons, and avatars.
+paths:
+  /avatars/browsers/{code}:
+    get:
+      summary: Get browser icon
+      operationId: avatarsGetBrowser
+      tags:
+      - Avatars
+      description: 'You can use this endpoint to show different browser icons to your users. The code argument receives the browser code as it appears in your user GET /account/sessions endpoint. Use width, height and quality arguments to change the output settings.
+
+
+        When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-browser.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: code
+        description: Browser Code.
+        required: true
+        schema:
+          type: string
+          example: aa
+          title: Browser
+          oneOf:
+          - type: string
+            enum:
+            - aa
+            title: Avant Browser
+          - type: string
+            enum:
+            - an
+            title: Android WebView Beta
+          - type: string
+            enum:
+            - ch
+            title: Google Chrome
+          - type: string
+            enum:
+            - ci
+            title: Google Chrome (iOS)
+          - type: string
+            enum:
+            - cm
+            title: Google Chrome (Mobile)
+          - type: string
+            enum:
+            - cr
+            title: Chromium
+          - type: string
+            enum:
+            - ff
+            title: Mozilla Firefox
+          - type: string
+            enum:
+            - sf
+            title: Safari
+          - type: string
+            enum:
+            - mf
+            title: Mobile Safari
+          - type: string
+            enum:
+            - ps
+            title: Microsoft Edge
+          - type: string
+            enum:
+            - oi
+            title: Microsoft Edge (iOS)
+          - type: string
+            enum:
+            - om
+            title: Opera Mini
+          - type: string
+            enum:
+            - op
+            title: Opera
+          - type: string
+            enum:
+            - 'on'
+            title: Opera (Next)
+        in: path
+      - name: width
+        description: Image width. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 100
+        in: query
+      - name: height
+        description: Image height. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 100
+        in: query
+      - name: quality
+        description: Image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: -1
+          default: -1
+        in: query
+  /avatars/credit-cards/{code}:
+    get:
+      summary: Get credit card icon
+      operationId: avatarsGetCreditCard
+      tags:
+      - Avatars
+      description: 'The credit card endpoint will return you the icon of the credit card provider you need. Use width, height and quality arguments to change the output settings.
+
+
+        When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-credit-card.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: code
+        description: 'Credit Card Code. Possible values: amex, argencard, cabal, cencosud, diners, discover, elo, hipercard, jcb, mastercard, naranja, targeta-shopping, unionpay, visa, mir, maestro, rupay.'
+        required: true
+        schema:
+          type: string
+          example: amex
+          title: CreditCard
+          oneOf:
+          - type: string
+            enum:
+            - amex
+            title: American Express
+          - type: string
+            enum:
+            - argencard
+            title: Argencard
+          - type: string
+            enum:
+            - cabal
+            title: Cabal
+          - type: string
+            enum:
+            - cencosud
+            title: Cencosud
+          - type: string
+            enum:
+            - diners
+            title: Diners Club
+          - type: string
+            enum:
+            - discover
+            title: Discover
+          - type: string
+            enum:
+            - elo
+            title: Elo
+          - type: string
+            enum:
+            - hipercard
+            title: Hipercard
+          - type: string
+            enum:
+            - jcb
+            title: JCB
+          - type: string
+            enum:
+            - mastercard
+            title: Mastercard
+          - type: string
+            enum:
+            - naranja
+            title: Naranja
+          - type: string
+            enum:
+            - targeta-shopping
+            title: Tarjeta Shopping
+          - type: string
+            enum:
+            - unionpay
+            title: Union Pay
+          - type: string
+            enum:
+            - visa
+            title: Visa
+          - type: string
+            enum:
+            - mir
+            title: MIR
+          - type: string
+            enum:
+            - maestro
+            title: Maestro
+          - type: string
+            enum:
+            - rupay
+            title: Rupay
+        in: path
+      - name: width
+        description: Image width. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 100
+        in: query
+      - name: height
+        description: Image height. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 100
+        in: query
+      - name: quality
+        description: Image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: -1
+          default: -1
+        in: query
+  /avatars/favicon:
+    get:
+      summary: Get favicon
+      operationId: avatarsGetFavicon
+      tags:
+      - Avatars
+      description: 'Use this endpoint to fetch the favorite icon (AKA favicon) of any remote website URL.
+
+
+        This endpoint does not follow HTTP redirects.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-favicon.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: url
+        description: Website URL which you want to fetch the favicon from.
+        required: true
+        schema:
+          type: string
+          format: url
+          example: https://example.com
+        in: query
+  /avatars/flags/{code}:
+    get:
+      summary: Get country flag
+      operationId: avatarsGetFlag
+      tags:
+      - Avatars
+      description: 'You can use this endpoint to show different country flags icons to your users. The code argument receives the 2 letter country code. Use width, height and quality arguments to change the output settings. Country codes follow the ISO 3166-1 standard.
+
+
+        When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-flag.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: code
+        description: Country Code. ISO Alpha-2 country code format.
+        required: true
+        schema:
+          type: string
+          example: af
+          title: Flag
+          oneOf:
+          - type: string
+            enum:
+            - af
+            title: Afghanistan
+          - type: string
+            enum:
+            - ao
+            title: Angola
+          - type: string
+            enum:
+            - al
+            title: Albania
+          - type: string
+            enum:
+            - ad
+            title: Andorra
+          - type: string
+            enum:
+            - ae
+            title: United Arab Emirates
+          - type: string
+            enum:
+            - ar
+            title: Argentina
+          - type: string
+            enum:
+            - am
+            title: Armenia
+          - type: string
+            enum:
+            - ag
+            title: Antigua and Barbuda
+          - type: string
+            enum:
+            - au
+            title: Australia
+          - type: string
+            enum:
+            - at
+            title: Austria
+          - type: string
+            enum:
+            - az
+            title: Azerbaijan
+          - type: string
+            enum:
+            - bi
+            title: Burundi
+          - type: string
+            enum:
+            - be
+            title: Belgium
+          - type: string
+            enum:
+            - bj
+            title: Benin
+          - type: string
+            enum:
+            - bf
+            title: Burkina Faso
+          - type: string
+            enum:
+            - bd
+            title: Bangladesh
+          - type: string
+            enum:
+            - bg
+            title: Bulgaria
+          - type: string
+            enum:
+            - bh
+            title: Bahrain
+          - type: string
+            enum:
+            - bs
+            title: Bahamas
+          - type: string
+            enum:
+            - ba
+            title: Bosnia and Herzegovina
+          - type: string
+            enum:
+            - by
+            title: Belarus
+          - type: string
+            enum:
+            - bz
+            title: Belize
+          - type: string
+            enum:
+            - bo
+            title: Bolivia
+          - type: string
+            enum:
+            - br
+            title: Brazil
+          - type: string
+            enum:
+            - bb
+            title: Barbados
+          - type: string
+            enum:
+            - bn
+            title: Brunei Darussalam
+          - type: string
+            enum:
+            - bt
+            title: Bhutan
+          - type: string
+            enum:
+            - bw
+            title: Botswana
+          - type: string
+            enum:
+            - cf
+            title: Central African Republic
+          - type: string
+            enum:
+            - ca
+            title: Canada
+          - type: string
+            enum:
+            - ch
+            title: Switzerland
+          - type: string
+            enum:
+            - cl
+            title: Chile
+          - type: string
+            enum:
+            - cn
+            title: China
+          - type: string
+            enum:
+            - ci
+            title: Côte d'Ivoire
+          - type: string
+            enum:
+            - cm
+            title: Cameroon
+          - type: string
+            enum:
+            - cd
+            title: Democratic Republic of the Congo
+          - type: string
+            enum:
+            - cg
+            title: Republic of the Congo
+          - type: string
+            enum:
+            - co
+            title: Colombia
+          - type: string
+            enum:
+            - km
+            title: Comoros
+          - type: string
+            enum:
+            - cv
+            title: Cape Verde
+          - type: string
+            enum:
+            - cr
+            title: Costa Rica
+          - type: string
+            enum:
+            - cu
+            title: Cuba
+          - type: string
+            enum:
+            - cy
+            title: Cyprus
+          - type: string
+            enum:
+            - cz
+            title: Czech Republic
+          - type: string
+            enum:
+            - de
+            title: Germany
+          - type: string
+            enum:
+            - dj
+            title: Djibouti
+          - type: string
+            enum:
+            - dm
+            title: Dominica
+          - type: string
+            enum:
+            - dk
+            title: Denmark
+          - type: string
+            enum:
+            - do
+            title: Dominican Republic
+          - type: string
+            enum:
+            - dz
+            title: Algeria
+          - type: string
+            enum:
+            - ec
+            title: Ecuador
+          - type: string
+            enum:
+            - eg
+            title: Egypt
+          - type: string
+            enum:
+            - er
+            title: Eritrea
+          - type: string
+            enum:
+            - es
+            title: Spain
+          - type: string
+            enum:
+            - ee
+            title: Estonia
+          - type: string
+            enum:
+            - et
+            title: Ethiopia
+          - type: string
+            enum:
+            - fi
+            title: Finland
+          - type: string
+            enum:
+            - fj
+            title: Fiji
+          - type: string
+            enum:
+            - fr
+            title: France
+          - type: string
+            enum:
+            - fm
+            title: Micronesia (Federated States of)
+          - type: string
+            enum:
+            - ga
+            title: Gabon
+          - type: string
+            enum:
+            - gb
+            title: United Kingdom
+          - type: string
+            enum:
+            - ge
+            title: Georgia
+          - type: string
+            enum:
+            - gh
+            title: Ghana
+          - type: string
+            enum:
+            - gn
+            title: Guinea
+          - type: string
+            enum:
+            - gm
+            title: Gambia
+          - type: string
+            enum:
+            - gw
+            title: Guinea-Bissau
+          - type: string
+            enum:
+            - gq
+            title: Equatorial Guinea
+          - type: string
+            enum:
+            - gr
+            title: Greece
+          - type: string
+            enum:
+            - gd
+            title: Grenada
+          - type: string
+            enum:
+            - gt
+            title: Guatemala
+          - type: string
+            enum:
+            - gy
+            title: Guyana
+          - type: string
+            enum:
+            - hn
+            title: Honduras
+          - type: string
+            enum:
+            - hr
+            title: Croatia
+          - type: string
+            enum:
+            - ht
+            title: Haiti
+          - type: string
+            enum:
+            - hu
+            title: Hungary
+          - type: string
+            enum:
+            - id
+            title: Indonesia
+          - type: string
+            enum:
+            - in
+            title: India
+          - type: string
+            enum:
+            - ie
+            title: Ireland
+          - type: string
+            enum:
+            - ir
+            title: Iran (Islamic Republic of)
+          - type: string
+            enum:
+            - iq
+            title: Iraq
+          - type: string
+            enum:
+            - is
+            title: Iceland
+          - type: string
+            enum:
+            - il
+            title: Israel
+          - type: string
+            enum:
+            - it
+            title: Italy
+          - type: string
+            enum:
+            - jm
+            title: Jamaica
+          - type: string
+            enum:
+            - jo
+            title: Jordan
+          - type: string
+            enum:
+            - jp
+            title: Japan
+          - type: string
+            enum:
+            - kz
+            title: Kazakhstan
+          - type: string
+            enum:
+            - ke
+            title: Kenya
+          - type: string
+            enum:
+            - kg
+            title: Kyrgyzstan
+          - type: string
+            enum:
+            - kh
+            title: Cambodia
+          - type: string
+            enum:
+            - ki
+            title: Kiribati
+          - type: string
+            enum:
+            - kn
+            title: Saint Kitts and Nevis
+          - type: string
+            enum:
+            - kr
+            title: South Korea
+          - type: string
+            enum:
+            - kw
+            title: Kuwait
+          - type: string
+            enum:
+            - la
+            title: Lao People's Democratic Republic
+          - type: string
+            enum:
+            - lb
+            title: Lebanon
+          - type: string
+            enum:
+            - lr
+            title: Liberia
+          - type: string
+            enum:
+            - ly
+            title: Libya
+          - type: string
+            enum:
+            - lc
+            title: Saint Lucia
+          - type: string
+            enum:
+            - li
+            title: Liechtenstein
+          - type: string
+            enum:
+            - lk
+            title: Sri Lanka
+          - type: string
+            enum:
+            - ls
+            title: Lesotho
+          - type: string
+            enum:
+            - lt
+            title: Lithuania
+          - type: string
+            enum:
+            - lu
+            title: Luxembourg
+          - type: string
+            enum:
+            - lv
+            title: Latvia
+          - type: string
+            enum:
+            - ma
+            title: Morocco
+          - type: string
+            enum:
+            - mc
+            title: Monaco
+          - type: string
+            enum:
+            - md
+            title: Moldova
+          - type: string
+            enum:
+            - mg
+            title: Madagascar
+          - type: string
+            enum:
+            - mv
+            title: Maldives
+          - type: string
+            enum:
+            - mx
+            title: Mexico
+          - type: string
+            enum:
+            - mh
+            title: Marshall Islands
+          - type: string
+            enum:
+            - mk
+            title: North Macedonia
+          - type: string
+            enum:
+            - ml
+            title: Mali
+          - type: string
+            enum:
+            - mt
+            title: Malta
+          - type: string
+            enum:
+            - mm
+            title: Myanmar
+          - type: string
+            enum:
+            - me
+            title: Montenegro
+          - type: string
+            enum:
+            - mn
+            title: Mongolia
+          - type: string
+            enum:
+            - mz
+            title: Mozambique
+          - type: string
+            enum:
+            - mr
+            title: Mauritania
+          - type: string
+            enum:
+            - mu
+            title: Mauritius
+          - type: string
+            enum:
+            - mw
+            title: Malawi
+          - type: string
+            enum:
+            - my
+            title: Malaysia
+          - type: string
+            enum:
+            - na
+            title: Namibia
+          - type: string
+            enum:
+            - ne
+            title: Niger
+          - type: string
+            enum:
+            - ng
+            title: Nigeria
+          - type: string
+            enum:
+            - ni
+            title: Nicaragua
+          - type: string
+            enum:
+            - nl
+            title: Netherlands
+          - type: string
+            enum:
+            - 'no'
+            title: Norway
+          - type: string
+            enum:
+            - np
+            title: Nepal
+          - type: string
+            enum:
+            - nr
+            title: Nauru
+          - type: string
+            enum:
+            - nz
+            title: New Zealand
+          - type: string
+            enum:
+            - om
+            title: Oman
+          - type: string
+            enum:
+            - pk
+            title: Pakistan
+          - type: string
+            enum:
+            - pa
+            title: Panama
+          - type: string
+            enum:
+            - pe
+            title: Peru
+          - type: string
+            enum:
+            - ph
+            title: Philippines
+          - type: string
+            enum:
+            - pw
+            title: Palau
+          - type: string
+            enum:
+            - pg
+            title: Papua New Guinea
+          - type: string
+            enum:
+            - pl
+            title: Poland
+          - type: string
+            enum:
+            - pf
+            title: French Polynesia
+          - type: string
+            enum:
+            - kp
+            title: North Korea
+          - type: string
+            enum:
+            - pt
+            title: Portugal
+          - type: string
+            enum:
+            - py
+            title: Paraguay
+          - type: string
+            enum:
+            - qa
+            title: Qatar
+          - type: string
+            enum:
+            - ro
+            title: Romania
+          - type: string
+            enum:
+            - ru
+            title: Russia
+          - type: string
+            enum:
+            - rw
+            title: Rwanda
+          - type: string
+            enum:
+            - sa
+            title: Saudi Arabia
+          - type: string
+            enum:
+            - sd
+            title: Sudan
+          - type: string
+            enum:
+            - sn
+            title: Senegal
+          - type: string
+            enum:
+            - sg
+            title: Singapore
+          - type: string
+            enum:
+            - sb
+            title: Solomon Islands
+          - type: string
+            enum:
+            - sl
+            title: Sierra Leone
+          - type: string
+            enum:
+            - sv
+            title: El Salvador
+          - type: string
+            enum:
+            - sm
+            title: San Marino
+          - type: string
+            enum:
+            - so
+            title: Somalia
+          - type: string
+            enum:
+            - rs
+            title: Serbia
+          - type: string
+            enum:
+            - ss
+            title: South Sudan
+          - type: string
+            enum:
+            - st
+            title: Sao Tome and Principe
+          - type: string
+            enum:
+            - sr
+            title: Suriname
+          - type: string
+            enum:
+            - sk
+            title: Slovakia
+          - type: string
+            enum:
+            - si
+            title: Slovenia
+          - type: string
+            enum:
+            - se
+            title: Sweden
+          - type: string
+            enum:
+            - sz
+            title: Eswatini
+          - type: string
+            enum:
+            - sc
+            title: Seychelles
+          - type: string
+            enum:
+            - sy
+            title: Syria
+          - type: string
+            enum:
+            - td
+            title: Chad
+          - type: string
+            enum:
+            - tg
+            title: Togo
+          - type: string
+            enum:
+            - th
+            title: Thailand
+          - type: string
+            enum:
+            - tj
+            title: Tajikistan
+          - type: string
+            enum:
+            - tm
+            title: Turkmenistan
+          - type: string
+            enum:
+            - tl
+            title: Timor-Leste
+          - type: string
+            enum:
+            - to
+            title: Tonga
+          - type: string
+            enum:
+            - tt
+            title: Trinidad and Tobago
+          - type: string
+            enum:
+            - tn
+            title: Tunisia
+          - type: string
+            enum:
+            - tr
+            title: Turkey
+          - type: string
+            enum:
+            - tv
+            title: Tuvalu
+          - type: string
+            enum:
+            - tz
+            title: Tanzania
+          - type: string
+            enum:
+            - ug
+            title: Uganda
+          - type: string
+            enum:
+            - ua
+            title: Ukraine
+          - type: string
+            enum:
+            - uy
+            title: Uruguay
+          - type: string
+            enum:
+            - us
+            title: United States
+          - type: string
+            enum:
+            - uz
+            title: Uzbekistan
+          - type: string
+            enum:
+            - va
+            title: Vatican City
+          - type: string
+            enum:
+            - vc
+            title: Saint Vincent and the Grenadines
+          - type: string
+            enum:
+            - ve
+            title: Venezuela
+          - type: string
+            enum:
+            - vn
+            title: Vietnam
+          - type: string
+            enum:
+            - vu
+            title: Vanuatu
+          - type: string
+            enum:
+            - ws
+            title: Samoa
+          - type: string
+            enum:
+            - ye
+            title: Yemen
+          - type: string
+            enum:
+            - za
+            title: South Africa
+          - type: string
+            enum:
+            - zm
+            title: Zambia
+          - type: string
+            enum:
+            - zw
+            title: Zimbabwe
+        in: path
+      - name: width
+        description: Image width. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 100
+        in: query
+      - name: height
+        description: Image height. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 100
+        in: query
+      - name: quality
+        description: Image quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: -1
+          default: -1
+        in: query
+  /avatars/image:
+    get:
+      summary: Get image from URL
+      operationId: avatarsGetImage
+      tags:
+      - Avatars
+      description: 'Use this endpoint to fetch a remote image URL and crop it to any image size you want. This endpoint is very useful if you need to crop and display remote images in your app or in case you want to make sure a 3rd party image is properly served using a TLS protocol.
+
+
+        When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 400x400px.
+
+
+        This endpoint does not follow HTTP redirects.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-image.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: url
+        description: Image URL which you want to crop.
+        required: true
+        schema:
+          type: string
+          format: url
+          example: https://example.com
+        in: query
+      - name: width
+        description: Resize preview image width, Pass an integer between 0 to 2000. Defaults to 400.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 400
+        in: query
+      - name: height
+        description: Resize preview image height, Pass an integer between 0 to 2000. Defaults to 400.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 400
+        in: query
+  /avatars/initials:
+    get:
+      summary: Get user initials
+      operationId: avatarsGetInitials
+      tags:
+      - Avatars
+      description: 'Use this endpoint to show your user initials avatar icon on your website or app. By default, this route will try to print your logged-in user name or email initials. You can also overwrite the user name if you pass the ''name'' parameter. If no name is given and no user is logged, an empty avatar will be returned.
+
+
+        You can use the color and background params to change the avatar colors. By default, a random theme will be selected. The random theme will persist for the user''s initials when reloading the same theme will always return for the same initials.
+
+
+        When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-initials.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: name
+        description: 'Full Name. When empty, current user name or email will be used. Max length: 128 chars.'
+        required: false
+        schema:
+          type: string
+          example: <NAME>
+          default: ''
+        in: query
+      - name: width
+        description: Image width. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 500
+        in: query
+      - name: height
+        description: Image height. Pass an integer between 0 to 2000. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 500
+        in: query
+      - name: background
+        description: Changes background color. By default a random color will be picked and stay will persistent to the given name.
+        required: false
+        schema:
+          type: string
+          example: FFFFFF
+          default: ''
+        in: query
+  /avatars/photo:
+    get:
+      summary: Get user photo
+      operationId: avatarsGetPhoto
+      tags:
+      - Avatars
+      description: 'Returns the best available profile photo for a user. The endpoint tries each source in priority order and returns the first successful result: OAuth2 identity photo, Gravatar, Libravatar, Appwrite Initials, built-in static fallback.
+
+
+        Passing `userId` — `current()` for the authenticated user — resolves the photo from everything known about that user: identity photos, email, and name. An explicit `emailHash` or `name` then overrides just that value, and the user''s remaining sources stay in the chain. Without `userId`, passing `emailHash` and/or `name` resolves the avatar from those values alone: the hash is looked up on Gravatar and Libravatar, the name is rendered as initials, and the session user stays out of the chain so their own photo never shadows the avatar being asked for. When nothing is passed, the photo resolves for the currently authenticated user. Emails are only ever accepted pre-hashed, so no address ends up in a URL.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-photo.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: width
+        description: Output image width in pixels. Pass an integer between 0 and 2000. Defaults to 256.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 256
+        in: query
+      - name: height
+        description: Output image height in pixels. Pass an integer between 0 and 2000. Defaults to 256.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 256
+        in: query
+      - name: quality
+        description: Output image quality between 0 and 100. Defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 100
+        in: query
+      - name: output
+        description: Output image format. Defaults to 'png'.
+        required: false
+        schema:
+          type: string
+          example: png
+          default: png
+        in: query
+      - name: rating
+        description: Maximum image rating to fetch from Gravatar/Libravatar. Defaults to 'g'.
+        required: false
+        schema:
+          type: string
+          example: g
+          default: g
+        in: query
+      - name: userId
+        description: User ID to resolve the photo for. Pass 'current()' for the currently authenticated user. When omitted, the session user is used only if no emailHash and no name is passed.
+        required: false
+        schema:
+          type: string
+          example: current()
+          default: ''
+        in: query
+      - name: emailHash
+        description: SHA256 hash of the lowercase, trimmed email address to look up on Gravatar and Libravatar instead of the user's own email. Pass the hash, never the address itself.
+        required: false
+        schema:
+          type: string
+          example: <EMAIL_HASH>
+          default: ''
+        in: query
+      - name: name
+        description: 'Name to render initials from instead of the user''s own name. Max length: 128 chars.'
+        required: false
+        schema:
+          type: string
+          example: <NAME>
+          default: ''
+        in: query
+  /avatars/qr:
+    get:
+      summary: Get QR code
+      operationId: avatarsGetQR
+      tags:
+      - Avatars
+      description: Converts a given plain text to a QR code image. You can use the query parameters to change the size and style of the resulting image.
+      responses:
+        '200':
+          description: Image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-qr.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: text
+        description: Plain text to be converted to QR code image.
+        required: true
+        schema:
+          type: string
+          example: <TEXT>
+        in: query
+      - name: size
+        description: QR code size. Pass an integer between 1 to 1000. Defaults to 400.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 400
+        in: query
+      - name: margin
+        description: Margin from edge. Pass an integer between 0 to 10. Defaults to 1.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 1
+        in: query
+      - name: download
+        description: 'Return resulting image with ''Content-Disposition: attachment '' headers for the browser to start downloading it. Pass 0 for no header, or 1 for otherwise. Default value is set to 0.'
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: false
+        in: query
+  /avatars/screenshots:
+    get:
+      summary: Get webpage screenshot
+      operationId: avatarsGetScreenshot
+      tags:
+      - Avatars
+      description: 'Use this endpoint to capture a screenshot of any website URL. This endpoint uses a headless browser to render the webpage and capture it as an image.
+
+
+        You can configure the browser viewport size, theme, user agent, geolocation, permissions, and more. Capture either just the viewport or the full page scroll.
+
+
+        When width and height are specified, the image is resized accordingly. If both dimensions are 0, the API provides an image at original size. If dimensions are not specified, the default viewport size is 1280x720px.'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: avatars/get-screenshot.md
+        rate-limit: 60
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: avatars.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+            ImpersonateUserId: []
+          client:
+            Project: []
+            ImpersonateUserId: []
+          server:
+            Project: []
+            Session: []
+            ImpersonateUserId: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+        ImpersonateUserId: []
+      parameters:
+      - name: url
+        description: Website URL which you want to capture.
+        required: true
+        schema:
+          type: string
+          format: url
+          example: https://example.com
+        in: query
+      - name: headers
+        description: HTTP headers to send with the browser request. Defaults to empty.
+        required: false
+        schema:
+          type: object
+          default: {}
+          example:
+            Authorization: Bearer token123
+            X-Custom-Header: value
+        in: query
+      - name: viewportWidth
+        description: Browser viewport width. Pass an integer between 1 to 1920. Defaults to 1280.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1920
+          default: 1280
+        in: query
+      - name: viewportHeight
+        description: Browser viewport height. Pass an integer between 1 to 1080. Defaults to 720.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1080
+          default: 720
+        in: query
+      - name: scale
+        description: Browser scale factor. Pass a number between 0.1 to 3. Defaults to 1.
+        required: false
+        schema:
+          type: number
+          format: float
+          example: 2
+          default: 1
+        in: query
+      - name: theme
+        description: Browser theme. Pass "light" or "dark". Defaults to "light".
+        required: false
+        schema:
+          type: string
+          example: dark
+          title: BrowserTheme
+          oneOf:
+          - type: string
+            enum:
+            - light
+            title: light
+          - type: string
+            enum:
+            - dark
+            title: dark
+          default: light
+        in: query
+      - name: userAgent
+        description: Custom user agent string. Defaults to browser default.
+        required: false
+        schema:
+          type: string
+          example: Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15
+          default: ''
+        in: query
+      - name: fullpage
+        description: Capture full page scroll. Pass 0 for viewport only, or 1 for full page. Defaults to 0.
+        required: false
+        schema:
+          type: boolean
+          example: true
+          default: false
+        in: query
+      - name: locale
+        description: Browser locale (e.g., "en-US", "fr-FR"). Defaults to browser default.
+        required: false
+        schema:
+          type: string
+          example: en-US
+          default: ''
+        in: query
+      - name: timezone
+        description: IANA timezone identifier (e.g., "America/New_York", "Europe/London"). Defaults to browser default.
+        required: false
+        schema:
+          type: string
+          example: America/New_York
+          title: Timezone
+          oneOf:
+          - type: string
+            enum:
+            - africa/abidjan
+            title: africa/abidjan
+          - type: string
+            enum:
+            - africa/accra
+            title: africa/accra
+          - type: string
+            enum:
+            - africa/addis_ababa
+            title: africa/addis_ababa
+          - type: string
+            enum:
+            - africa/algiers
+            title: africa/algiers
+          - type: string
+            enum:
+            - africa/asmara
+            title: africa/asmara
+          - type: string
+            enum:
+            - africa/bamako
+            title: africa/bamako
+          - type: string
+            enum:
+            - africa/bangui
+            title: africa/bangui
+          - type: string
+            enum:
+            - africa/banjul
+            title: africa/banjul
+          - type: string
+            enum:
+            - africa/bissau
+            title: africa/bissau
+          - type: string
+            enum:
+            - africa/blantyre
+            title: africa/blantyre
+          - type: string
+            enum:
+            - africa/brazzaville
+            title: africa/brazzaville
+          - type: string
+            enum:
+            - africa/bujumbura
+            title: africa/bujumbura
+          - type: string
+            enum:
+            - africa/cairo
+            title: africa/cairo
+          - type: string
+            enum:
+            - africa/casablanca
+            title: africa/casablanca
+          - type: string
+            enum:
+            - africa/ceuta
+            title: africa/ceuta
+          - type: string
+            enum:
+            - africa/conakry
+            title: africa/conakry
+          - type: string
+            enum:
+            - africa/dakar
+            title: africa/dakar
+          - type: string
+            enum:
+            - africa/dar_es_salaam
+            title: africa/dar_es_salaam
+          - type: string
+            enum:
+            - africa/djibouti
+            title: africa/djibouti
+          - type: string
+            enum:
+            - africa/douala
+            title: africa/douala
+          - type: string
+            enum:
+            - africa/el_aaiun
+            title: africa/el_aaiun
+          - type: string
+            enum:
+            - africa/freetown
+            title: africa/freetown
+          - type: string
+            enum:
+            - africa/gaborone
+            title: africa/gaborone
+          - type: string
+            enum:
+            - africa/harare
+            title: africa/harare
+          - type: string
+            enum:
+            - africa/johannesburg
+            title: africa/johannesburg
+          - type: string
+            enum:
+            - africa/juba
+            title: africa/juba
+          - type: string
+            enum:
+            - africa/kampala
+            title: africa/kampala
+          - type: string
+            enum:
+            - africa/khartoum
+            title: africa/khartoum
+          - type: string
+            enum:
+            - africa/kigali
+            title: africa/kigali
+          - type: string
+            enum:
+            - africa/kinshasa
+            title: africa/kinshasa
+          - type: string
+            enum:
+            - africa/lagos
+            title: africa/lagos
+          - type: string
+            enum:
+            - africa/libreville
+            title: africa/libreville
+          - type: string
+            enum:
+            - africa/lome
+            title: africa/lome
+          - type: string
+            enum:
+            - africa/luanda
+            title: africa/luanda
+          - type: string
+            enum:
+            - africa/lubumbashi
+            title: africa/lubumbashi
+          - type: string
+            enum:
+            - africa/lusaka
+            title: africa/lusaka
+          - type: string
+            enum:
+            - africa/malabo
+            title: africa/malabo
+          - type: string
+            enum:
+            - africa/maputo
+            title: africa/maputo
+          - type: string
+            enum:
+            - africa/maseru
+            title: africa/maseru
+          - type: string
+            enum:
+            - africa/mbabane
+            title: africa/mbabane
+          - type: string
+            enum:
+            - africa/mogadishu
+            title: africa/mogadishu
+          - type: string
+            enum:
+            - africa/monrovia
+            title: africa/monrovia
+          - type: string
+            enum:
+            - africa/nairobi
+            title: africa/nairobi
+          - type: string
+            enum:
+            - africa/ndjamena
+            title: africa/ndjamena
+          - type: string
+            enum:
+            - africa/niamey
+            title: africa/niamey
+          - type: string
+            enum:
+            - africa/nouakchott
+            title: africa/nouakchott
+          - type: string
+            enum:
+            - africa/ouagadougou
+            title: africa/ouagadougou
+          - type: string
+            enum:
+            - africa/porto-novo
+            title: africa/porto-novo
+          - type: string
+            enum:
+            - africa/sao_tome
+            title: africa/sao_tome
+          - type: string
+            enum:
+            - africa/tripoli
+            title: africa/tripoli
+          - type: string
+            enum:
+            - africa/tunis
+            title: africa/tunis
+          - type: string
+            enum:
+            - africa/windhoek
+            title: africa/windhoek
+          - type: string
+            enum:
+            - america/adak
+            title: america/adak
+          - type: string
+            enum:
+            - america/anchorage
+            title: america/anchorage
+          - type: string
+            enum:
+            - america/anguilla
+            title: america/anguilla
+          - type: string
+            enum:
+            - america/antigua
+            title: america/antigua
+          - type: string
+            enum:
+            - america/araguaina
+            title: america/araguaina
+          - type: string
+            enum:
+            - america/argentina/buenos_aires
+            title: america/argentina/buenos_aires
+          - type: string
+            enum:
+            - america/argentina/catamarca
+            title: america/argentina/catamarca
+          - type: string
+            enum:
+            - america/argentina/cordoba
+            title: america/argentina/cordoba
+          - type: string
+            enum:
+            - america/argentina/jujuy
+            title: america/argentina/jujuy
+          - type: string
+            enum:
+            - america/argentina/la_rioja
+            title: america/argentina/la_rioja
+          - type: string
+            enum:
+            - america/argentina/mendoza
+            title: america/argentina/mendoza
+          - type: string
+            enum:
+            - america/argentina/rio_gallegos
+            title: america/argentina/rio_gallegos
+          - type: string
+            enum:
+            - america/argentina/salta
+            title: america/argentina/salta
+          - type: string
+            enum:
+            - america/argentina/san_juan
+            title: america/argentina/san_juan
+          - type: string
+            enum:
+            - america/argentina/san_luis
+            title: america/argentina/san_luis
+          - type: string
+            enum:
+            - america/argentina/tucuman
+            title: america/argentina/tucuman
+          - type: string
+            enum:
+            - america/argentina/ushuaia
+            title: america/argentina/ushuaia
+          - type: string
+            enum:
+            - america/aruba
+            title: america/aruba
+          - type: string
+            enum:
+            - america/asuncion
+            title: america/asuncion
+          - type: string
+            enum:
+            - america/atikokan
+            title: america/atikokan
+          - type: string
+            enum:
+            - america/bahia
+            title: america/bahia
+          - type: string
+            enum:
+            - america/bahia_banderas
+            title: america/bahia_banderas
+          - type: string
+            enum:
+            - america/barbados
+            title: america/barbados
+          - type: string
+            enum:
+            - america/belem
+            title: america/belem
+          - type: string
+            enum:
+            - america/belize
+            title: america/belize
+          - type: string
+            enum:
+            - america/blanc-sablon
+            title: america/blanc-sablon
+          - type: string
+            enum:
+            - america/boa_vista
+            title: america/boa_vista
+          - type: string
+            enum:
+            - america/bogota
+            title: america/bogota
+          - type: string
+            enum:
+            - america/boise
+            title: america/boise
+          - type: string
+            enum:
+            - america/cambridge_bay
+            title: america/cambridge_bay
+          - type: string
+            enum:
+            - america/campo_grande
+            title: america/campo_grande
+          - type: string
+            enum:
+            - america/cancun
+            title: america/cancun
+          - type: string
+            enum:
+            - america/caracas
+            title: america/caracas
+          - type: string
+            enum:
+            - america/cayenne
+            title: america/cayenne
+          - type: string
+            enum:
+            - america/cayman
+            title: america/cayman
+          - type: string
+            enum:
+            - america/chicago
+            title: america/chicago
+          - type: string
+            enum:
+            - america/chihuahua
+            title: america/chihuahua
+          - type: string
+            enum:
+            - america/ciudad_juarez
+            title: america/ciudad_juarez
+          - type: string
+            enum:
+            - america/costa_rica
+            title: america/costa_rica
+          - type: string
+            enum:
+            - america/coyhaique
+            title: america/coyhaique
+          - type: string
+            enum:
+            - america/creston
+            title: america/creston
+          - type: string
+            enum:
+            - america/cuiaba
+            title: america/cuiaba
+          - type: string
+            enum:
+            - america/curacao
+            title: america/curacao
+          - type: string
+            enum:
+            - america/danmarkshavn
+            title: america/danmarkshavn
+          - type: string
+            enum:
+            - america/dawson
+            title: america/dawson
+          - type: string
+            enum:
+            - america/dawson_creek
+            title: america/dawson_creek
+          - type: string
+            enum:
+            - america/denver
+            title: america/denver
+          - type: string
+            enum:
+            - america/detroit
+            title: america/detroit
+          - type: string
+            enum:
+            - america/dominica
+            title: america/dominica
+          - type: string
+            enum:
+            - america/edmonton
+            title: america/edmonton
+          - type: string
+            enum:
+            - america/eirunepe
+            title: america/eirunepe
+          - type: string
+            enum:
+            - america/el_salvador
+            title: america/el_salvador
+          - type: string
+            enum:
+            - america/fort_nelson
+            title: america/fort_nelson
+          - type: string
+            enum:
+            - america/fortaleza
+            title: america/fortaleza
+          - type: string
+            enum:
+            - america/glace_bay
+            title: america/glace_bay
+          - type: string
+            enum:
+            - america/goose_bay
+            title: america/goose_bay
+          - type: string
+            enum:
+            - america/grand_turk
+            title: america/grand_turk
+          - type: string
+            enum:
+            - america/grenada
+            title: america/grenada
+          - type: string
+            enum:
+            - america/guadeloupe
+            title: america/guadeloupe
+          - type: string
+            enum:
+            - america/guatemala
+            title: america/guatemala
+          - type: string
+            enum:
+            - america/guayaquil
+            title: america/guayaquil
+          - type: string
+            enum:
+            - america/guyana
+            title: america/guyana
+          - type: string
+            enum:
+            - america/halifax
+            title: america/halifax
+          - type: string
+            enum:
+            - america/havana
+            title: america/havana
+          - type: string
+            enum:
+            - america/hermosillo
+            title: america/hermosillo
+          - type: string
+            enum:
+            - america/indiana/indianapolis
+            title: america/indiana/indianapolis
+          - type: string
+            enum:
+            - america/indiana/knox
+            title: america/indiana/knox
+          - type: string
+            enum:
+            - america/indiana/marengo
+            title: america/indiana/marengo
+          - type: string
+            enum:
+            - america/indiana/petersburg
+            title: america/indiana/petersburg
+          - type: string
+            enum:
+            - america/indiana/tell_city
+            title: america/indiana/tell_city
+          - type: string
+            enum:
+            - america/indiana/vevay
+            title: america/indiana/vevay
+          - type: string
+            enum:
+            - america/indiana/vincennes
+            title: america/indiana/vincennes
+          - type: string
+            enum:
+            - america/indiana/winamac
+            title: america/indiana/winamac
+          - type: string
+            enum:
+            - america/inuvik
+            title: america/inuvik
+          - type: string
+            enum:
+            - america/iqaluit
+            title: america/iqaluit
+          - type: string
+            enum:
+            - america/jamaica
+            title: america/jamaica
+          - type: string
+            enum:
+            - america/juneau
+            title: america/juneau
+          - type: string
+            enum:
+            - america/kentucky/louisville
+            title: america/kentucky/louisville
+          - type: string
+            enum:
+            - america/kentucky/monticello
+            title: america/kentucky/monticello
+          - type: string
+            enum:
+            - america/kralendijk
+            title: america/kralendijk
+          - type: string
+            enum:
+            - america/la_paz
+            title: america/la_paz
+          - type: string
+            enum:
+            - america/lima
+            title: america/lima
+          - type: string
+            enum:
+            - america/los_angeles
+            title: america/los_angeles
+          - type: string
+            enum:
+            - america/lower_princes
+            title: america/lower_princes
+          - type: string
+            enum:
+            - america/maceio
+            title: america/maceio
+          - type: string
+            enum:
+            - america/managua
+            title: america/managua
+          - type: string
+            enum:
+            - america/manaus
+            title: america/manaus
+          - type: string
+            enum:
+            - america/marigot
+            title: america/marigot
+          - type: string
+            enum:
+            - america/martinique
+            title: america/martinique
+          - type: string
+            enum:
+            - america/matamoros
+            title: america/matamoros
+          - type: string
+            enum:
+            - america/mazatlan
+            title: america/mazatlan
+          - type: string
+            enum:
+            - america/menominee
+            title: america/menominee
+          - type: string
+            enum:
+            - america/merida
+            title: america/merida
+          - type: string
+            enum:
+            - america/metlakatla
+            title: america/metlakatla
+          - type: string
+            enum:
+            - america/mexico_city
+            title: america/mexico_city
+          - type: string
+            enum:
+            - america/miquelon
+            title: america/miquelon
+          - type: string
+            enum:
+            - america/moncton
+            title: america/moncton
+          - type: string
+            enum:
+            - america/monterrey
+            title: america/monterrey
+          - type: string
+            enum:
+            - america/montevideo
+            title: america/montevideo
+          - type: string
+            enum:
+            - america/montserrat
+            title: america/montserrat
+          - type: string
+            enum:
+            - america/nassau
+            title: america/nassau
+          - type: string
+            enum:
+            - america/new_york
+            title: america/new_york
+          - type: string
+            enum:
+            - america/nome
+            title: america/nome
+          - type: string
+            enum:
+            - america/noronha
+            title: america/noronha
+          - type: string
+            enum:
+            - america/north_dakota/beulah
+            title: america/north_dakota/beulah
+          - type: string
+            enum:
+            - america/north_dakota/center
+            title: america/north_dakota/center
+          - type: string
+            enum:
+            - america/north_dakota/new_salem
+            title: america/north_dakota/new_salem
+          - type: string
+            enum:
+            - america/nuuk
+            title: america/nuuk
+          - type: string
+            enum:
+            - america/ojinaga
+            title: america/ojinaga
+          - type: string
+            enum:
+            - america/panama
+            title: america/panama
+          - type: string
+            enum:
+            - america/paramaribo
+            title: america/paramaribo
+          - type: string
+            enum:
+            - america/phoenix
+            title: america/phoenix
+          - type: string
+            enum:
+            - america/port-au-prince
+            title: america/port-au-prince
+          - type: string
+            enum:
+            - america/port_of_spain
+            title: america/port_of_spain
+          - type: string
+            enum:
+            - america/porto_velho
+            title: america/porto_velho
+          - type: string
+            enum:
+            - america/puerto_rico
+            title: america/puerto_rico
+          - type: string
+            enum:
+            - america/punta_arenas
+            title: america/punta_arenas
+          - type: string
+            enum:
+            - america/rankin_inlet
+            title: america/rankin_inlet
+          - type: string
+            enum:
+            - america/recife
+            title: america/recife
+          - type: string
+            enum:
+            - america/regina
+            title: america/regina
+          - type: string
+            enum:
+            - america/resolute
+            title: america/resolute
+          - type: string
+            enum:
+            - america/rio_branco
+            title: america/rio_branco
+          - type: string
+            enum:
+            - america/santarem
+            title: america/santarem
+          - type: string
+            enum:
+            - america/santiago
+            title: america/santiago
+          - type: string
+            enum:
+            - america/santo_domingo
+            title: america/santo_domingo
+          - type: string
+            enum:
+            - america/sao_paulo
+            title: america/sao_paulo
+          - type: string
+            enum:
+            - america/scoresbysund
+            title: america/scoresbysund
+          - type: string
+            enum:
+            - america/sitka
+            title: america/sitka
+          - type: string
+            enum:
+            - america/st_barthelemy
+            title: america/st_barthelemy
+          - type: string
+            enum:
+            - america/st_johns
+            title: america/st_johns
+          - type: string
+            enum:
+            - america/st_kitts
+            title: america/st_kitts
+          - type: string
+            enum:
+            - america/st_lucia
+            title: america/st_lucia
+          - type: string
+            enum:
+            - america/st_thomas
+            title: america/st_thomas
+          - type: string
+            enum:
+            - america/st_vincent
+            title: america/st_vincent
+          - type: string
+            enum:
+            - america/swift_current
+            title: america/swift_current
+          - type: string
+            enum:
+            - america/tegucigalpa
+            title: america/tegucigalpa
+          - type: string
+            enum:
+            - america/thule
+            title: america/thule
+          - type: string
+            enum:
+            - america/tijuana
+            title: america/tijuana
+          - type: string
+            enum:
+            - america/toronto
+            title: america/toronto
+          - type: string
+            enum:
+            - america/tortola
+            title: america/tortola
+          - type: string
+            enum:
+            - america/vancouver
+            title: america/vancouver
+          - type: string
+            enum:
+            - america/whitehorse
+            title: america/whitehorse
+          - type: string
+            enum:
+            - america/winnipeg
+            title: america/winnipeg
+          - type: string
+            enum:
+            - america/yakutat
+            title: america/yakutat
+          - type: string
+            enum:
+            - antarctica/casey
+            title: antarctica/casey
+          - type: string
+            enum:
+            - antarctica/davis
+            title: antarctica/davis
+          - type: string
+            enum:
+            - antarctica/dumontdurville
+            title: antarctica/dumontdurville
+          - type: string
+            enum:
+            - antarctica/macquarie
+            title: antarctica/macquarie
+          - type: string
+            enum:
+            - antarctica/mawson
+            title: antarctica/mawson
+          - type: string
+            enum:
+            - antarctica/mcmurdo
+            title: antarctica/mcmurdo
+          - type: string
+            enum:
+            - antarctica/palmer
+            title: antarctica/palmer
+          - type: string
+            enum:
+            - antarctica/rothera
+            title: antarctica/rothera
+          - type: string
+            enum:
+            - antarctica/syowa
+            title: antarctica/syowa
+          - type: string
+            enum:
+            - antarctica/troll
+            title: antarctica/troll
+          - type: string
+            enum:
+            - antarctica/vostok
+            title: antarctica/vostok
+          - type: string
+            enum:
+            - arctic/longyearbyen
+            title: arctic/longyearbyen
+          - type: string
+            enum:
+            - asia/aden
+            title: asia/aden
+          - type: string
+            enum:
+            - asia/almaty
+            title: asia/almaty
+          - type: string
+            enum:
+            - asia/amman
+            title: asia/amman
+          - type: string
+            enum:
+            - asia/anadyr
+            title: asia/anadyr
+          - type: string
+            enum:
+            - asia/aqtau
+            title: asia/aqtau
+          - type: string
+            enum:
+            - asia/aqtobe
+            title: asia/aqtobe
+          - type: string
+            enum:
+            - asia/ashgabat
+            title: asia/ashgabat
+          - type: string
+            enum:
+            - asia/atyrau
+            title: asia/atyrau
+          - type: string
+            enum:
+            - asia/baghdad
+            title: asia/baghdad
+          - type: string
+            enum:
+            - asia/bahrain
+            title: asia/bahrain
+          - type: string
+            enum:
+            - asia/baku
+            title: asia/baku
+          - type: string
+            enum:
+            - asia/bangkok
+            title: asia/bangkok
+          - type: string
+            enum:
+            - asia/barnaul
+            title: asia/barnaul
+          - type: string
+            enum:
+            - asia/beirut
+            title: asia/beirut
+          - type: string
+            enum:
+            - asia/bishkek
+            title: asia/bishkek
+          - type: string
+            enum:
+            - asia/brunei
+            title: asia/brunei
+          - type: string
+            enum:
+            - asia/chita
+            title: asia/chita
+          - type: string
+            enum:
+            - asia/colombo
+            title: asia/colombo
+          - type: string
+            enum:
+            - asia/damascus
+            title: asia/damascus
+          - type: string
+            enum:
+            - asia/dhaka
+            title: asia/dhaka
+          - type: string
+            enum:
+            - asia/dili
+            title: asia/dili
+          - type: string
+            enum:
+            - asia/dubai
+            title: asia/dubai
+          - type: string
+            enum:
+            - asia/dushanbe
+            title: asia/dushanbe
+          - type: string
+            enum:
+            - asia/famagusta
+            title: asia/famagusta
+          - type: string
+            enum:
+            - asia/gaza
+            title: asia/gaza
+          - type: string
+            enum:
+            - asia/hebron
+            title: asia/hebron
+          - type: string
+            enum:
+            - asia/ho_chi_minh
+            title: asia/ho_chi_minh
+          - type: string
+            enum:
+            - asia/hong_kong
+            title: asia/hong_kong
+          - type: string
+            enum:
+            - asia/hovd
+            title: asia/hovd
+          - type: string
+            enum:
+            - asia/irkutsk
+            title: asia/irkutsk
+          - type: string
+            enum:
+            - asia/jakarta
+            title: asia/jakarta
+          - type: string
+            enum:
+            - asia/jayapura
+            title: asia/jayapura
+          - type: string
+            enum:
+            - asia/jerusalem
+            title: asia/jerusalem
+          - type: string
+            enum:
+            - asia/kabul
+            title: asia/kabul
+          - type: string
+            enum:
+            - asia/kamchatka
+            title: asia/kamchatka
+          - type: string
+            enum:
+            - asia/karachi
+            title: asia/karachi
+          - type: string
+            enum:
+            - asia/kathmandu
+            title: asia/kathmandu
+          - type: string
+            enum:
+            - asia/khandyga
+            title: asia/khandyga
+          - type: string
+            enum:
+            - asia/kolkata
+            title: asia/kolkata
+          - type: string
+            enum:
+            - asia/krasnoyarsk
+            title: asia/krasnoyarsk
+          - type: string
+            enum:
+            - asia/kuala_lumpur
+            title: asia/kuala_lumpur
+          - type: string
+            enum:
+            - asia/kuching
+            title: asia/kuching
+          - type: string
+            enum:
+            - asia/kuwait
+            title: asia/kuwait
+          - type: string
+            enum:
+            - asia/macau
+            title: asia/macau
+          - type: string
+            enum:
+            - asia/magadan
+            title: asia/magadan
+          - type: string
+            enum:
+            - asia/makassar
+            title: asia/makassar
+          - type: string
+            enum:
+            - asia/manila
+            title: asia/manila
+          - type: string
+            enum:
+            - asia/muscat
+            title: asia/muscat
+          - type: string
+            enum:
+            - asia/nicosia
+            title: asia/nicosia
+          - type: string
+            enum:
+            - asia/novokuznetsk
+            title: asia/novokuznetsk
+          - type: string
+            enum:
+            - asia/novosibirsk
+            title: asia/novosibirsk
+          - type: string
+            enum:
+            - asia/omsk
+            title: asia/omsk
+          - type: string
+            enum:
+            - asia/oral
+            title: asia/oral
+          - type: string
+            enum:
+            - asia/phnom_penh
+            title: asia/phnom_penh
+          - type: string
+            enum:
+            - asia/pontianak
+            title: asia/pontianak
+          - type: string
+            enum:
+            - asia/pyongyang
+            title: asia/pyongyang
+          - type: string
+            enum:
+            - asia/qatar
+            title: asia/qatar
+          - type: string
+            enum:
+            - asia/qostanay
+            title: asia/qostanay
+          - type: string
+            enum:
+            - asia/qyzylorda
+            title: asia/qyzylorda
+          - type: string
+            enum:
+            - asia/riyadh
+            title: asia/riyadh
+          - type: string
+            enum:
+            - asia/sakhalin
+            title: asia/sakhalin
+          - type: string
+            enum:
+            - asia/samarkand
+            title: asia/samarkand
+          - type: string
+            enum:
+            - asia/seoul
+            title: asia/seoul
+          - type: string
+            enum:
+            - asia/shanghai
+            title: asia/shanghai
+          - type: string
+            enum:
+            - asia/singapore
+            title: asia/singapore
+          - type: string
+            enum:
+            - asia/srednekolymsk
+            title: asia/srednekolymsk
+          - type: string
+            enum:
+            - asia/taipei
+            title: asia/taipei
+          - type: string
+            enum:
+            - asia/tashkent
+            title: asia/tashkent
+          - type: string
+            enum:
+            - asia/tbilisi
+            title: asia/tbilisi
+          - type: string
+            enum:
+            - asia/tehran
+            title: asia/tehran
+          - type: string
+            enum:
+            - asia/thimphu
+            title: asia/thimphu
+          - type: string
+            enum:
+            - asia/tokyo
+            title: asia/tokyo
+          - type: string
+            enum:
+            - asia/tomsk
+            title: asia/tomsk
+          - type: string
+            enum:
+            - asia/ulaanbaatar
+            title: asia/ulaanbaatar
+          - type: string
+            enum:
+            - asia/urumqi
+            title: asia/urumqi
+          - type: string
+            enum:
+            - asia/ust-nera
+            title: asia/ust-nera
+          - type: string
+            enum:
+            - asia/vientiane
+            title: asia/vientiane
+          - type: string
+            enum:
+            - asia/vladivostok
+            title: asia/vladivostok
+          - type: string
+            enum:
+            - asia/yakutsk
+            title: asia/yakutsk
+          - type: string
+            enum:
+            - asia/yangon
+            title: asia/yangon
+          - type: string
+            enum:
+            - asia/yekaterinburg
+            title: asia/yekaterinburg
+          - type: string
+            enum:
+            - asia/yerevan
+            title: asia/yerevan
+          - type: string
+            enum:
+            - atlantic/azores
+            title: atlantic/azores
+          - type: string
+            enum:
+            - atlantic/bermuda
+            title: atlantic/bermuda
+          - type: string
+            enum:
+            - atlantic/canary
+            title: atlantic/canary
+          - type: string
+            enum:
+            - atlantic/cape_verde
+            title: atlantic/cape_verde
+          - type: string
+            enum:
+            - atlantic/faroe
+            title: atlantic/faroe
+          - type: string
+            enum:
+            - atlantic/madeira
+            title: atlantic/madeira
+          - type: string
+            enum:
+            - atlantic/reykjavik
+            title: atlantic/reykjavik
+          - type: string
+            enum:
+            - atlantic/south_georgia
+            title: atlantic/south_georgia
+          - type: string
+            enum:
+            - atlantic/st_helena
+            title: atlantic/st_helena
+          - type: string
+            enum:
+            - atlantic/stanley
+            title: atlantic/stanley
+          - type: string
+            enum:
+            - australia/adelaide
+            title: australia/adelaide
+          - type: string
+            enum:
+            - australia/brisbane
+            title: australia/brisbane
+          - type: string
+            enum:
+            - australia/broken_hill
+            title: australia/broken_hill
+          - type: string
+            enum:
+            - australia/darwin
+            title: australia/darwin
+          - type: string
+            enum:
+            - australia/eucla
+            title: australia/eucla
+          - type: string
+            enum:
+            - australia/hobart
+            title: australia/hobart
+          - type: string
+            enum:
+            - australia/lindeman
+            title: australia/lindeman
+          - type: string
+            enum:
+            - australia/lord_howe
+            title: australia/lord_howe
+          - type: string
+            enum:
+            - australia/melbourne
+            title: australia/melbourne
+          - type: string
+            enum:
+            - australia/perth
+            title: australia/perth
+          - type: string
+            enum:
+            - australia/sydney
+            title: australia/sydney
+          - type: string
+            enum:
+            - europe/amsterdam
+            title: europe/amsterdam
+          - type: string
+            enum:
+            - europe/andorra
+            title: europe/andorra
+          - type: string
+            enum:
+            - europe/astrakhan
+            title: europe/astrakhan
+          - type: string
+            enum:
+            - europe/athens
+            title: europe/athens
+          - type: string
+            enum:
+            - europe/belgrade
+            title: europe/belgrade
+          - type: string
+            enum:
+            - europe/berlin
+            title: europe/berlin
+          - type: string
+            enum:
+            - europe/bratislava
+            title: europe/bratislava
+          - type: string
+            enum:
+            - europe/brussels
+            title: europe/brussels
+          - type: string
+            enum:
+            - europe/bucharest
+            title: europe/bucharest
+          - type: string
+            enum:
+            - europe/budapest
+            title: europe/budapest
+          - type: string
+            enum:
+            - europe/busingen
+            title: europe/busingen
+          - type: string
+            enum:
+            - europe/chisinau
+            title: europe/chisinau
+          - type: string
+            enum:
+            - europe/copenhagen
+            title: europe/copenhagen
+          - type: string
+            enum:
+            - europe/dublin
+            title: europe/dublin
+          - type: string
+            enum:
+            - europe/gibraltar
+            title: europe/gibraltar
+          - type: string
+            enum:
+            - europe/guernsey
+            title: europe/guernsey
+          - type: string
+            enum:
+            - europe/helsinki
+            title: europe/helsinki
+          - type: string
+            enum:
+            - europe/isle_of_man
+            title: europe/isle_of_man
+          - type: string
+            enum:
+            - europe/istanbul
+            title: europe/istanbul
+          - type: string
+            enum:
+            - europe/jersey
+            title: europe/jersey
+          - type: string
+            enum:
+            - europe/kaliningrad
+            title: europe/kaliningrad
+          - type: string
+            enum:
+            - europe/kirov
+            title: europe/kirov
+          - type: string
+            enum:
+            - europe/kyiv
+            title: europe/kyiv
+          - type: string
+            enum:
+            - europe/lisbon
+            title: europe/lisbon
+          - type: string
+            enum:
+            - europe/ljubljana
+            title: europe/ljubljana
+          - type: string
+            enum:
+            - europe/london
+            title: europe/london
+          - type: string
+            enum:
+            - europe/luxembourg
+            title: europe/luxembourg
+          - type: string
+            enum:
+            - europe/madrid
+            title: europe/madrid
+          - type: string
+            enum:
+            - europe/malta
+            title: europe/malta
+          - type: string
+            enum:
+            - europe/mariehamn
+            title: europe/mariehamn
+          - type: string
+            enum:
+            - europe/minsk
+            title: europe/minsk
+          - type: string
+            enum:
+            - europe/monaco
+            title: europe/monaco
+          - type: string
+            enum:
+            - europe/moscow
+            title: europe/moscow
+          - type: string
+            enum:
+            - europe/oslo
+            title: europe/oslo
+          - type: string
+            enum:
+            - europe/paris
+            title: europe/paris
+          - type: string
+            enum:
+            - europe/podgorica
+            title: europe/podgorica
+          - type: string
+            enum:
+            - europe/prague
+            title: europe/prague
+          - type: string
+            enum:
+            - europe/riga
+            title: europe/riga
+          - type: string
+            enum:
+            - europe/rome
+            title: europe/rome
+          - type: string
+            enum:
+            - europe/samara
+            title: europe/samara
+          - type: string
+            enum:
+            - europe/san_marino
+            title: europe/san_marino
+          - type: string
+            enum:
+            - europe/sarajevo
+            title: europe/sarajevo
+          - type: string
+            enum:
+            - europe/saratov
+            title: europe/saratov
+          - type: string
+            enum:
+            - europe/simferopol
+            title: europe/simferopol
+          - type: string
+            enum:
+            - europe/skopje
+            title: europe/skopje
+          - type: string
+            enum:
+            - europe/sofia
+            title: europe/sofia
+          - type: string
+            enum:
+            - europe/stockholm
+            title: europe/stockholm
+          - type: string
+            enum:
+            - europe/tallinn
+            title: europe/tallinn
+          - type: string
+            enum:
+            - europe/tirane
+            title: europe/tirane
+          - type: string
+            enum:
+            - europe/ulyanovsk
+            title: europe/ulyanovsk
+          - type: string
+            enum:
+            - europe/vaduz
+            title: europe/vaduz
+          - type: string
+            enum:
+            - europe/vatican
+            title: europe/vatican
+          - type: string
+            enum:
+            - europe/vienna
+            title: europe/vienna
+          - type: string
+            enum:
+            - europe/vilnius
+            title: europe/vilnius
+          - type: string
+            enum:
+            - europe/volgograd
+            title: europe/volgograd
+          - type: string
+            enum:
+            - europe/warsaw
+            title: europe/warsaw
+          - type: string
+            enum:
+            - europe/zagreb
+            title: europe/zagreb
+          - type: string
+            enum:
+            - europe/zurich
+            title: europe/zurich
+          - type: string
+            enum:
+            - indian/antananarivo
+            title: indian/antananarivo
+          - type: string
+            enum:
+            - indian/chagos
+            title: indian/chagos
+          - type: string
+            enum:
+            - indian/christmas
+            title: indian/christmas
+          - type: string
+            enum:
+            - indian/cocos
+            title: indian/cocos
+          - type: string
+            enum:
+            - indian/comoro
+            title: indian/comoro
+          - type: string
+            enum:
+            - indian/kerguelen
+            title: indian/kerguelen
+          - type: string
+            enum:
+            - indian/mahe
+            title: indian/mahe
+          - type: string
+            enum:
+            - indian/maldives
+            title: indian/maldives
+          - type: string
+            enum:
+            - indian/mauritius
+            title: indian/mauritius
+          - type: string
+            enum:
+            - indian/mayotte
+            title: indian/mayotte
+          - type: string
+            enum:
+            - indian/reunion
+            title: indian/reunion
+          - type: string
+            enum:
+            - pacific/apia
+            title: pacific/apia
+          - type: string
+            enum:
+            - pacific/auckland
+            title: pacific/auckland
+          - type: string
+            enum:
+            - pacific/bougainville
+            title: pacific/bougainville
+          - type: string
+            enum:
+            - pacific/chatham
+            title: pacific/chatham
+          - type: string
+            enum:
+            - pacific/chuuk
+            title: pacific/chuuk
+          - type: string
+            enum:
+            - pacific/easter
+            title: pacific/easter
+          - type: string
+            enum:
+            - pacific/efate
+            title: pacific/efate
+          - type: string
+            enum:
+            - pacific/fakaofo
+            title: pacific/fakaofo
+          - type: string
+            enum:
+            - pacific/fiji
+            title: pacific/fiji
+          - type: string
+            enum:
+            - pacific/funafuti
+            title: pacific/funafuti
+          - type: string
+            enum:
+            - pacific/galapagos
+            title: pacific/galapagos
+          - type: string
+            enum:
+            - pacific/gambier
+            title: pacific/gambier
+          - type: string
+            enum:
+            - pacific/guadalcanal
+            title: pacific/guadalcanal
+          - type: string
+            enum:
+            - pacific/guam
+            title: pacific/guam
+          - type: string
+            enum:
+            - pacific/honolulu
+            title: pacific/honolulu
+          - type: string
+            enum:
+            - pacific/kanton
+            title: pacific/kanton
+          - type: string
+            enum:
+            - pacific/kiritimati
+            title: pacific/kiritimati
+          - type: string
+            enum:
+            - pacific/kosrae
+            title: pacific/kosrae
+          - type: string
+            enum:
+            - pacific/kwajalein
+            title: pacific/kwajalein
+          - type: string
+            enum:
+            - pacific/majuro
+            title: pacific/majuro
+          - type: string
+            enum:
+            - pacific/marquesas
+            title: pacific/marquesas
+          - type: string
+            enum:
+            - pacific/midway
+            title: pacific/midway
+          - type: string
+            enum:
+            - pacific/nauru
+            title: pacific/nauru
+          - type: string
+            enum:
+            - pacific/niue
+            title: pacific/niue
+          - type: string
+            enum:
+            - pacific/norfolk
+            title: pacific/norfolk
+          - type: string
+            enum:
+            - pacific/noumea
+            title: pacific/noumea
+          - type: string
+            enum:
+            - pacific/pago_pago
+            title: pacific/pago_pago
+          - type: string
+            enum:
+            - pacific/palau
+            title: pacific/palau
+          - type: string
+            enum:
+            - pacific/pitcairn
+            title: pacific/pitcairn
+          - type: string
+            enum:
+            - pacific/pohnpei
+            title: pacific/pohnpei
+          - type: string
+            enum:
+            - pacific/port_moresby
+            title: pacific/port_moresby
+          - type: string
+            enum:
+            - pacific/rarotonga
+            title: pacific/rarotonga
+          - type: string
+            enum:
+            - pacific/saipan
+            title: pacific/saipan
+          - type: string
+            enum:
+            - pacific/tahiti
+            title: pacific/tahiti
+          - type: string
+            enum:
+            - pacific/tarawa
+            title: pacific/tarawa
+          - type: string
+            enum:
+            - pacific/tongatapu
+            title: pacific/tongatapu
+          - type: string
+            enum:
+            - pacific/wake
+            title: pacific/wake
+          - type: string
+            enum:
+            - pacific/wallis
+            title: pacific/wallis
+          - type: string
+            enum:
+            - utc
+            title: utc
+        in: query
+      - name: latitude
+        description: Geolocation latitude. Pass a number between -90 to 90. Defaults to 0.
+        required: false
+        schema:
+          type: number
+          format: float
+          example: 37.7749
+          default: 0
+        in: query
+      - name: longitude
+        description: Geolocation longitude. Pass a number between -180 to 180. Defaults to 0.
+        required: false
+        schema:
+          type: number
+          format: float
+          example: -122.4194
+          default: 0
+        in: query
+      - name: accuracy
+        description: Geolocation accuracy in meters. Pass a number between 0 to 100000. Defaults to 0.
+        required: false
+        schema:
+          type: number
+          format: float
+          example: 100
+          default: 0
+        in: query
+      - name: touch
+        description: Enable touch support. Pass 0 for no touch, or 1 for touch enabled. Defaults to 0.
+        required: false
+        schema:
+          type: boolean
+          example: true
+          default: false
+        in: query
+      - name: permissions
+        description: Browser permissions to grant. Pass an array of permission names like ["geolocation", "camera", "microphone"]. Defaults to empty.
+        required: false
+        schema:
+          type: array
+          items:
+            title: BrowserPermission
+            type: string
+            oneOf:
+            - type: string
+              enum:
+              - geolocation
+              title: geolocation
+            - type: string
+              enum:
+              - camera
+              title: camera
+            - type: string
+              enum:
+              - microphone
+              title: microphone
+            - type: string
+              enum:
+              - notifications
+              title: notifications
+            - type: string
+              enum:
+              - midi
+              title: midi
+            - type: string
+              enum:
+              - push
+              title: push
+            - type: string
+              enum:
+              - clipboard-read
+              title: clipboard-read
+            - type: string
+              enum:
+              - clipboard-write
+              title: clipboard-write
+            - type: string
+              enum:
+              - payment-handler
+              title: payment-handler
+            - type: string
+              enum:
+              - usb
+              title: usb
+            - type: string
+              enum:
+              - bluetooth
+              title: bluetooth
+            - type: string
+              enum:
+              - accelerometer
+              title: accelerometer
+            - type: string
+              enum:
+              - gyroscope
+              title: gyroscope
+            - type: string
+              enum:
+              - magnetometer
+              title: magnetometer
+            - type: string
+              enum:
+              - ambient-light-sensor
+              title: ambient-light-sensor
+            - type: string
+              enum:
+              - background-sync
+              title: background-sync
+            - type: string
+              enum:
+              - persistent-storage
+              title: persistent-storage
+            - type: string
+              enum:
+              - screen-wake-lock
+              title: screen-wake-lock
+            - type: string
+              enum:
+              - web-share
+              title: web-share
+            - type: string
+              enum:
+              - xr-spatial-tracking
+              title: xr-spatial-tracking
+          example:
+          - geolocation
+          - notifications
+          default: []
+        in: query
+      - name: sleep
+        description: Wait time in seconds before taking the screenshot. Pass an integer between 0 to 10. Defaults to 0.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 3
+          default: 0
+        in: query
+      - name: width
+        description: Output image width. Pass 0 to use original width, or an integer between 1 to 2000. Defaults to 0 (original width).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 800
+          default: 0
+        in: query
+      - name: height
+        description: Output image height. Pass 0 to use original height, or an integer between 1 to 2000. Defaults to 0 (original height).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 600
+          default: 0
+        in: query
+      - name: quality
+        description: Screenshot quality. Pass an integer between 0 to 100. Defaults to keep existing image quality.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 85
+          default: -1
+        in: query
+      - name: output
+        description: Output format type (jpeg, jpg, png, gif and webp).
+        required: false
+        schema:
+          type: string
+          example: jpeg
+          title: ImageFormat
+          oneOf:
+          - type: string
+            enum:
+            - jpg
+            title: jpg
+          - type: string
+            enum:
+            - jpeg
+            title: jpeg
+          - type: string
+            enum:
+            - png
+            title: png
+          - type: string
+            enum:
+            - webp
+            title: webp
+          - type: string
+            enum:
+            - heic
+            title: heic
+          - type: string
+            enum:
+            - avif
+            title: avif
+          - type: string
+            enum:
+            - gif
+            title: gif
+        in: query
+components:
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

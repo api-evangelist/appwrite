@@ -1,0 +1,819 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Presences API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Presences
+  description: The Presences service allows you to track and manage real-time user presence in your project.
+paths:
+  /presences:
+    get:
+      summary: List presences
+      operationId: presencesList
+      tags:
+      - Presences
+      description: List presence logs. Expired entries are filtered out automatically.
+      responses:
+        '200':
+          description: Presences List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/presenceList'
+      deprecated: false
+      x-appwrite:
+        group: presences
+        demo: presences/list.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: presences.read
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: queries
+        description: Array of query strings generated using the Query class provided by the SDK.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: total
+        description: When set to false, the total count returned will be 0 and will not be calculated.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: true
+        in: query
+      - name: ttl
+        description: TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+  /presences/usage:
+    get:
+      summary: Get presence usage
+      operationId: presencesGetUsage
+      tags:
+      - Presences
+      description: Get presence usage metrics, including the current total of online users and historical online user counts for the selected time range.
+      responses:
+        '200':
+          description: UsagePresence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/usagePresence'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: presences/get-usage.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: presences.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: range
+        description: Date range.
+        required: false
+        schema:
+          type: string
+          example: 24h
+          title: UsageRange
+          oneOf:
+          - type: string
+            enum:
+            - 24h
+            title: Twenty Four Hours
+          - type: string
+            enum:
+            - 30d
+            title: Thirty Days
+          - type: string
+            enum:
+            - 90d
+            title: Ninety Days
+          default: 30d
+        in: query
+  /presences/{presenceId}:
+    get:
+      summary: Get presence
+      operationId: presencesGet
+      tags:
+      - Presences
+      description: Get a presence log by its unique ID. Entries whose `expiresAt` is in the past are treated as not found.
+      responses:
+        '200':
+          description: Presence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/presence'
+      deprecated: false
+      x-appwrite:
+        group: presences
+        demo: presences/get.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: presences.read
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: presenceId
+        description: Presence unique ID.
+        required: true
+        schema:
+          type: string
+          example: <PRESENCE_ID>
+        in: path
+    put:
+      summary: Upsert presence
+      operationId: presencesUpsert
+      tags:
+      - Presences
+      description: Create or update a presence log by its user ID.
+      responses:
+        '200':
+          description: Presence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/presence'
+      deprecated: false
+      x-appwrite:
+        group: presences
+        demo: presences/upsert.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: presences.write
+        platforms:
+        - client
+        - console
+        - server
+        packaging: false
+        public: true
+        methods:
+        - name: upsert
+          namespace: presences
+          platforms:
+          - client
+          - console
+          desc: Upsert presence
+          auth:
+            client:
+              Project: []
+            console:
+              Project: []
+          parameters:
+          - presenceId
+          - status
+          - permissions
+          - expiresAt
+          - metadata
+          required:
+          - presenceId
+          - status
+          responses:
+          - code: 200
+            model: '#/components/schemas/presence'
+          description: 'Create or update a presence log by its user ID.
+
+            '
+          demo: presences/upsert.md
+          public: true
+        - name: upsert
+          namespace: presences
+          platforms:
+          - server
+          desc: Upsert presence
+          auth:
+            server:
+              Project: []
+              Key: []
+          parameters:
+          - presenceId
+          - userId
+          - status
+          - permissions
+          - expiresAt
+          - metadata
+          required:
+          - presenceId
+          - userId
+          - status
+          responses:
+          - code: 200
+            model: '#/components/schemas/presence'
+          description: 'Create or update a presence log by its user ID.
+
+            '
+          demo: presences/upsert.md
+          public: true
+        auth:
+          client:
+            Project: []
+          console:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+      parameters:
+      - name: presenceId
+        description: Presence unique ID.
+        required: true
+        schema:
+          type: string
+          example: <PRESENCE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  description: User ID.
+                  type: string
+                  example: <USER_ID>
+                status:
+                  description: Presence status.
+                  type: string
+                  example: <STATUS>
+                permissions:
+                  description: An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: array
+                  example:
+                  - read("any")
+                  items:
+                    type: string
+                expiresAt:
+                  description: Presence expiry datetime.
+                  type: string
+                  example: '2020-10-15T06:38:00.000+00:00'
+                  format: datetime
+                metadata:
+                  description: Presence metadata object.
+                  type: object
+                  default: {}
+                  example: {}
+              required:
+              - status
+    patch:
+      summary: Update presence
+      operationId: presencesUpdate
+      tags:
+      - Presences
+      description: Update a presence log by its unique ID. Using the patch method you can pass only specific fields that will get updated.
+      responses:
+        '200':
+          description: Presence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/presence'
+      deprecated: false
+      x-appwrite:
+        group: presences
+        demo: presences/update.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: presences.write
+        platforms:
+        - client
+        - console
+        - server
+        packaging: false
+        public: true
+        methods:
+        - name: update
+          namespace: presences
+          platforms:
+          - client
+          - console
+          desc: Update presence
+          auth:
+            client:
+              Project: []
+            console:
+              Project: []
+          parameters:
+          - presenceId
+          - status
+          - expiresAt
+          - metadata
+          - permissions
+          - purge
+          required:
+          - presenceId
+          responses:
+          - code: 200
+            model: '#/components/schemas/presence'
+          description: 'Update a presence log by its unique ID. Using the patch method you can pass only specific fields that will get updated.
+
+            '
+          demo: presences/update.md
+          public: true
+        - name: update
+          namespace: presences
+          platforms:
+          - server
+          desc: Update presence
+          auth:
+            server:
+              Project: []
+              Key: []
+          parameters:
+          - presenceId
+          - userId
+          - status
+          - expiresAt
+          - metadata
+          - permissions
+          - purge
+          required:
+          - presenceId
+          - userId
+          responses:
+          - code: 200
+            model: '#/components/schemas/presence'
+          description: 'Update a presence log by its unique ID. Using the patch method you can pass only specific fields that will get updated.
+
+            '
+          demo: presences/update.md
+          public: true
+        auth:
+          client:
+            Project: []
+          console:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+      parameters:
+      - name: presenceId
+        description: Presence unique ID.
+        required: true
+        schema:
+          type: string
+          example: <PRESENCE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  description: User ID.
+                  type: string
+                  example: <USER_ID>
+                status:
+                  description: Presence status.
+                  type: string
+                  example: <STATUS>
+                expiresAt:
+                  description: Presence expiry datetime.
+                  type: string
+                  example: '2020-10-15T06:38:00.000+00:00'
+                  format: datetime
+                metadata:
+                  description: Presence metadata object.
+                  type: object
+                  default: {}
+                  example: {}
+                permissions:
+                  description: An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: array
+                  example:
+                  - read("any")
+                  items:
+                    type: string
+                purge:
+                  description: When true, purge cached responses used by list presences endpoint.
+                  type: boolean
+                  default: false
+                  example: false
+    delete:
+      summary: Delete presence
+      operationId: presencesDelete
+      tags:
+      - Presences
+      description: Delete a presence log by its unique ID.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: presences
+        demo: presences/delete.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: presences.write
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: presenceId
+        description: Presence unique ID.
+        required: true
+        schema:
+          type: string
+          example: <PRESENCE_ID>
+        in: path
+components:
+  schemas:
+    usagePresence:
+      description: UsagePresence
+      type: object
+      properties:
+        range:
+          type: string
+          description: Time range of the usage stats.
+          example: 30d
+        usersOnlineTotal:
+          type: integer
+          description: Current total number of online users.
+          format: int32
+          example: 0
+        presences:
+          type: array
+          description: Aggregated number of online users per period.
+          items:
+            $ref: '#/components/schemas/metric'
+          example: []
+      required:
+      - range
+      - usersOnlineTotal
+      - presences
+      example:
+        range: 30d
+        usersOnlineTotal: 0
+        presences: []
+    presence:
+      description: Presence
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Presence ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Presence creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Presence update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Presence permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        userId:
+          type: string
+          description: User ID.
+          example: 674af8f3e12a5f9ac0be
+        status:
+          type:
+          - string
+          - 'null'
+          description: Presence status.
+          example: online
+        source:
+          type: string
+          description: Presence source.
+          example: HTTP
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          description: Presence expiry date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Presence metadata.
+          example:
+            key: value
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - userId
+      - source
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        userId: 674af8f3e12a5f9ac0be
+        status: online
+        source: HTTP
+        expiresAt: '2020-10-15T06:38:00.000+00:00'
+        metadata:
+          key: value
+    metric:
+      description: Metric
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The value of this metric at the timestamp.
+          format: int32
+          example: 1
+        date:
+          type: string
+          description: The date at which this metric was aggregated in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - value
+      - date
+      example:
+        value: 1
+        date: '2020-10-15T06:38:00.000+00:00'
+    presenceList:
+      description: Presences List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of presences that matched your query.
+          format: int32
+          example: 5
+        presences:
+          type: array
+          description: List of presences.
+          items:
+            $ref: '#/components/schemas/presence'
+          example: []
+      required:
+      - total
+      - presences
+      example:
+        total: 5
+        presences: ''
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

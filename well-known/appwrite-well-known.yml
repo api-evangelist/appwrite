@@ -1,0 +1,168 @@
+generated: '2026-09-19'
+method: probed
+source: anonymous HTTPS GET of /.well-known/* on every host this record knows — the registrable domain
+  and www, the OpenAPI servers[] host (cloud.appwrite.io) and its regional form (fra.cloud.appwrite.io),
+  the hosted MCP host (mcp.appwrite.io), and the authorization server named in mcp.appwrite.io's oauth-protected-resource
+  document (fra.cloud.appwrite.io/v1/oauth2/console).
+provider: Appwrite
+providerId: appwrite
+checked: '2026-09-12'
+note: 'Appwrite serves no security.txt, api-catalog or ai-plugin.json on any host, and no A2A agent card
+  anywhere. What it does serve is an agent-discovery cluster on appwrite.io — an SEP-1649 MCP Server Card,
+  a Domain AI Catalog pointing at it, and an Agent Skills 0.2.0 discovery index — all three advertised
+  from https://appwrite.io/llms.txt rather than from a conventional /.well-known probe path. mcp.appwrite.io
+  publishes full RFC 8414 authorization-server metadata and an RFC 9728 protected-resource document; the
+  authorization server itself lives on a third host (fra.cloud.appwrite.io) and serves its own OIDC discovery
+  document and JWKS. Every 404 recorded below returned the site''s HTML SPA shell, not a document.
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
+hosts:
+- host: appwrite.io
+  documents:
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: appwrite-mcp-server-card.json
+    content_type: application/mcp-server-card+json
+    note: SEP-1649 MCP Server Card. name io.appwrite/mcp; remote streamable-http at https://mcp.appwrite.io.
+  - path: /.well-known/ai-catalog.json
+    status: 200
+    file: appwrite-ai-catalog.json
+    content_type: application/ai-catalog+json
+    note: Domain AI Catalog specVersion 1.0, one entry — urn:air:appwrite.io:mcp:appwrite.
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: appwrite-agent-skills-index.json
+    content_type: application/json
+    note: Agent Skills discovery 0.2.0 — 11 first-party skill-md entries hosted on raw.githubusercontent.com/appwrite/skills.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+- host: www.appwrite.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+- host: cloud.appwrite.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+- host: fra.cloud.appwrite.io
+  documents:
+  - path: /v1/oauth2/console/.well-known/openid-configuration
+    status: 200
+    file: appwrite-console-openid-configuration.json
+    note: OIDC discovery for the Appwrite console authorization server named by mcp.appwrite.io.
+  - path: /v1/oauth2/console/.well-known/oauth-authorization-server
+    status: 200
+    file: appwrite-console-openid-configuration.json
+    note: Same document served at the RFC 8414 path.
+  - path: /v1/oauth2/console/.well-known/jwks.json
+    status: 200
+    file: appwrite-console-jwks.json
+    note: One RS256 signing key.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /v1/oauth2/console/.well-known/oauth-authorization-server
+    status: 200
+    file: appwrite-fra-oauth-authorization-server.json
+    bytes: 5821
+  path_echo_control: passed
+- host: mcp.appwrite.io
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: appwrite-mcp-oauth-authorization-server.json
+    note: RFC 8414. issuer https://fra.cloud.appwrite.io/v1/oauth2/console; PAR, dynamic client registration,
+      device authorization grant, PKCE S256, 144 scopes.
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: appwrite-mcp-openid-configuration.json
+    note: Same metadata served at the OIDC discovery path.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: appwrite-mcp-oauth-protected-resource.json
+    note: RFC 9728. resource https://mcp.appwrite.io/; bearer_methods_supported [header]; 137 scopes.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  path_echo_control: passed
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.appwrite.io
+    path: /.well-known/oauth-protected-resource
+    file: appwrite-mcp-oauth-protected-resource.json
+  - host: https://fra.cloud.appwrite.io
+    path: /v1/oauth2/console/.well-known/oauth-authorization-server
+    file: appwrite-fra-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host

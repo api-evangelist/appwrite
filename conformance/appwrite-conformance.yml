@@ -1,0 +1,230 @@
+generated: '2026-09-12'
+method: probed
+source: >-
+  Live discovery documents fetched 2026-09-12 —
+  https://mcp.appwrite.io/.well-known/oauth-authorization-server,
+  https://mcp.appwrite.io/.well-known/oauth-protected-resource,
+  https://fra.cloud.appwrite.io/v1/oauth2/console/.well-known/openid-configuration,
+  https://appwrite.io/.well-known/mcp/server-card.json,
+  https://appwrite.io/.well-known/ai-catalog.json,
+  https://appwrite.io/.well-known/agent-skills/index.json —
+  plus openapi/_original/appwrite-open-api3-latest.json and the compliance pages under
+  https://appwrite.io/docs/advanced/security.
+provider: Appwrite
+providerId: appwrite
+note: >-
+  Everything marked conforms:true below was read off a document Appwrite serves, not off a marketing
+  claim. Where the only evidence is a prose statement on a docs page (the compliance regimes), that
+  is said plainly in the evidence line and the entry is marked claimed rather than machine-verified.
+conformance:
+  - id: openapi-3.0
+    name: OpenAPI 3.0.0
+    conforms: true
+    evidence: >-
+      https://github.com/appwrite/specs/blob/main/specs/latest/open-api3-latest.json — first-party,
+      openapi 3.0.0, 754 paths, 1,022 operations, 423 schemas, regenerated per release.
+  - id: graphql
+    name: GraphQL
+    conforms: true
+    evidence: https://appwrite.io/docs/apis/graphql — /v1/graphql and /v1/graphql/mutation mirror
+      every REST operation; introspection available unless disabled per project.
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence: >-
+      https://mcp.appwrite.io/.well-known/oauth-authorization-server — authorization_code and
+      refresh_token grants, authorization/token/revocation/introspection endpoints.
+  - id: oauth2-authorization-server-metadata
+    name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+    conforms: true
+    evidence: https://mcp.appwrite.io/.well-known/oauth-authorization-server returned HTTP 200 with a
+      complete metadata document (issuer https://fra.cloud.appwrite.io/v1/oauth2/console).
+  - id: oauth2-protected-resource-metadata
+    name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    conforms: true
+    evidence: >-
+      https://mcp.appwrite.io/.well-known/oauth-protected-resource returned HTTP 200; the MCP endpoint
+      also emits a conformant WWW-Authenticate challenge carrying resource_metadata and scope.
+  - id: oauth2-pkce
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence: code_challenge_methods_supported ["S256"] in the authorization server metadata.
+  - id: oauth2-dynamic-client-registration
+    name: OAuth 2.0 Dynamic Client Registration (RFC 7591)
+    conforms: true
+    evidence: registration_endpoint https://fra.cloud.appwrite.io/v1/oauth2/console/register.
+  - id: oauth2-par
+    name: Pushed Authorization Requests (RFC 9126)
+    conforms: true
+    evidence: pushed_authorization_request_endpoint .../par in the authorization server metadata.
+  - id: oauth2-device-grant
+    name: Device Authorization Grant (RFC 8628)
+    conforms: true
+    evidence: >-
+      grant_types_supported includes urn:ietf:params:oauth:grant-type:device_code and a
+      device_authorization_endpoint is published; shipped for the CLI on 2026-07-29.
+  - id: oauth2-token-revocation
+    name: OAuth 2.0 Token Revocation (RFC 7009)
+    conforms: true
+    evidence: revocation_endpoint .../revoke with client_secret_post, client_secret_basic and none.
+  - id: oauth2-token-introspection
+    name: OAuth 2.0 Token Introspection (RFC 7662)
+    conforms: true
+    evidence: introspection_endpoint .../introspect; the project scope project:oauth2.introspect exists.
+  - id: oauth2-rich-authorization-requests
+    name: Rich Authorization Requests (RFC 9396)
+    conforms: true
+    evidence: authorization_details_types_supported ["project","organization"], and every non-OIDC
+      scope is namespaced by one of those two types.
+  - id: oidc
+    name: OpenID Connect Core / Discovery
+    conforms: true
+    evidence: >-
+      https://fra.cloud.appwrite.io/v1/oauth2/console/.well-known/openid-configuration returned HTTP
+      200 with id_token response types, RS256 signing, a userinfo endpoint, an end_session endpoint
+      and a JWKS with one live key.
+  - id: jwks-rfc7517
+    name: JSON Web Key Set (RFC 7517)
+    conforms: true
+    evidence: https://fra.cloud.appwrite.io/v1/oauth2/console/.well-known/jwks.json — one RS256 RSA key.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence: >-
+      Hosted streamable-HTTP server at https://mcp.appwrite.io/ plus a stdio server on PyPI
+      (mcp-server-appwrite). See mcp/appwrite-mcp.yml.
+  - id: mcp-server-card-sep1649
+    name: MCP Server Card (SEP-1649)
+    conforms: true
+    evidence: >-
+      https://appwrite.io/.well-known/mcp/server-card.json returned HTTP 200 with content-type
+      application/mcp-server-card+json, validating against
+      https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json.
+  - id: ai-catalog
+    name: Domain AI Catalog
+    conforms: true
+    evidence: >-
+      https://appwrite.io/.well-known/ai-catalog.json returned HTTP 200, specVersion 1.0, one entry
+      urn:air:appwrite.io:mcp:appwrite.
+  - id: agent-skills
+    name: Agent Skills Open Standard (discovery 0.2.0)
+    conforms: true
+    evidence: >-
+      https://appwrite.io/.well-known/agent-skills/index.json returned HTTP 200 against
+      https://schemas.agentskills.io/discovery/0.2.0/schema.json with 11 first-party skills.
+  - id: llms-txt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      https://appwrite.io/llms.txt and https://appwrite.io/llms-full.txt both return HTTP 200; every
+      docs, blog, changelog and integration page has a .md twin.
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json returned 404 (HTML SPA shell) on
+      appwrite.io, www.appwrite.io, cloud.appwrite.io, fra.cloud.appwrite.io and mcp.appwrite.io.
+      Appwrite publishes no A2A agent card.
+  - id: rfc9457
+    name: RFC 9457 Problem Details
+    conforms: false
+    evidence: >-
+      Errors are application/json with a { message, type, code } envelope, not
+      application/problem+json. See errors/appwrite-problem-types.yml.
+  - id: rfc8594
+    name: RFC 8594 Sunset header
+    conforms: false
+    evidence: >-
+      A written deprecation policy exists at https://appwrite.io/docs/apis/release-policy but no
+      Sunset or Deprecation response header is emitted and no operation carries deprecated:true.
+  - id: idempotency-key
+    name: Idempotency-Key header
+    conforms: false
+    evidence: >-
+      No idempotency mechanism appears in the 1,022-operation spec or anywhere in Appwrite's docs.
+      See conventions/appwrite-conventions.yml.
+  - id: pagination
+    name: Documented pagination
+    conforms: true
+    evidence: >-
+      Both offset (Query.limit/Query.offset) and cursor (Query.cursorAfter/cursorBefore) pagination
+      are documented, with published guidance on when each is appropriate —
+      https://appwrite.io/docs/products/databases/tablesdb/pagination.
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      Appwrite publishes a real event surface (91 documented events, webhooks and a realtime
+      WebSocket) but no AsyncAPI document of its own. The AsyncAPI in this repo is API Evangelist's
+      description of Appwrite's realtime channels, not Appwrite's publication.
+  - id: webhook-signing
+    name: Signed webhooks
+    conforms: true
+    evidence: >-
+      X-Appwrite-Webhook-Signature carries base64(HMAC-SHA1(url + body, signature_key)) —
+      https://appwrite.io/docs/apis/webhooks. Note SHA-1, not SHA-256.
+  - id: s3-api
+    name: S3-compatible object storage API
+    conforms: true
+    evidence: >-
+      Announced 2026-09-03 — "use any S3 client with Appwrite" —
+      https://appwrite.io/blog/post/announcing-the-s3-api-use-any-s3-client-with-appwrite.
+  - id: e164
+    name: E.164 phone numbers
+    conforms: true
+    evidence: Mock phones and messaging targets require E.164 format —
+      https://appwrite.io/docs/partners/project/mock-phones.
+  - id: semver
+    name: Semantic Versioning
+    conforms: true
+    evidence: https://appwrite.io/docs/apis/release-policy — semver for SDKs and self-hosted releases.
+  - id: soc2
+    name: SOC 2 (Type I)
+    conforms: true
+    claimed: true
+    evidence: >-
+      https://appwrite.io/docs/advanced/security/soc2 — Appwrite states it is SOC 2 Type I compliant
+      against the 2017 TSP Section 100 security criteria. No attestation report or trust portal is
+      published; the claim is prose on a docs page, and SOC-2 is sold as an Enterprise add-on.
+  - id: hipaa
+    name: HIPAA
+    conforms: true
+    claimed: true
+    evidence: >-
+      https://appwrite.io/docs/advanced/security/hipaa — Appwrite acts as a Business Associate and has
+      offered self-serve BAA signing from the Console since 2026-06-10.
+  - id: gdpr
+    name: GDPR
+    conforms: true
+    claimed: true
+    evidence: https://appwrite.io/docs/advanced/security/gdpr — DPA published.
+  - id: ccpa
+    name: CCPA
+    conforms: true
+    claimed: true
+    evidence: https://appwrite.io/docs/advanced/security/ccpa
+  - id: pci
+    name: PCI DSS
+    conforms: partial
+    claimed: true
+    evidence: >-
+      https://appwrite.io/docs/advanced/security/pci — Appwrite does not handle card data itself; it
+      delegates payments to Stripe. Inherited compliance, not an Appwrite attestation.
+  - id: penetration-testing
+    name: Third-party penetration testing
+    conforms: true
+    claimed: true
+    evidence: >-
+      https://appwrite.io/docs/advanced/security/penetration-tests — periodic third-party pen tests
+      and vulnerability assessments; details in the Data Processing addendum of the DPA.
+domain_standard:
+  applicable: false
+  note: >-
+    Backend-as-a-service has no domain interchange standard to conform to — there is no SCIM/FHIR/
+    OpenRTB/ISO-20022 equivalent for "hosted application backend", and inventing one to fill the slot
+    would be fabrication. The standards Appwrite DOES implement are cross-cutting (OAuth/OIDC) and
+    agent-layer (MCP, SEP-1649, Agent Skills, llms.txt), and are scored above. The closest thing to a
+    domain signature is the S3-compatible storage API, recorded as its own entry.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

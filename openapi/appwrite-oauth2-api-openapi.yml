@@ -1,0 +1,1748 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Oauth2 API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: OAuth2
+  description: The OAuth2 service allows you to authorize apps and issue standards-based OAuth2 and OpenID Connect tokens.
+paths:
+  /oauth2/{project_id}/approve:
+    post:
+      summary: Approve OAuth2
+      operationId: oauth2Approve
+      tags:
+      - OAuth2
+      description: Approve an OAuth2 grant after the user gives consent. Returns the `redirectUrl` the end user should be sent to. The consent screen may optionally pass enriched `authorization_details` to record the concrete resources the user selected. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
+      responses:
+        '200':
+          description: OAuth2 Approve
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2Approve'
+      deprecated: false
+      x-appwrite:
+        group: authorization
+        demo: oauth2/approve.md
+        rate-limit: 10
+        rate-time: 60
+        rate-key: ip:{ip},userId:{userId}
+        scope: oauth2.write
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_id:
+                  description: Grant ID made during authorization, provided to consent screen in URL search params.
+                  type: string
+                  example: <GRANT_ID>
+                authorization_details:
+                  description: Enriched `authorization_details` the user consented to, replacing what the client requested. Each entry must use a `type` the project accepts. Optional; omit to keep the originally requested details.
+                  type: string
+                  default: ''
+                  example: <AUTHORIZATION_DETAILS>
+                scope:
+                  description: Space-separated scopes the user consented to. Must be a subset of the scopes originally requested; identity scopes such as `openid` are always retained. Optional; omit to keep the originally requested scopes.
+                  type: string
+                  default: ''
+                  example: <SCOPE>
+              required:
+              - grant_id
+  /oauth2/{project_id}/authorize:
+    get:
+      summary: OAuth2 Authorize
+      operationId: oauth2Authorize
+      tags:
+      - OAuth2
+      description: Begin the OAuth2 authorization flow. When called without a session, the user is redirected to the consent screen without grant ID. When called with a session, the redirect URL includes param for grant ID. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
+      responses:
+        '200':
+          description: OAuth2 Authorize
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2Authorize'
+      deprecated: false
+      x-appwrite:
+        group: authorization
+        demo: oauth2/authorize.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      - name: client_id
+        description: OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+        required: false
+        schema:
+          type: string
+          example: <CLIENT_ID>
+          default: ''
+        in: query
+      - name: redirect_uri
+        description: Redirect URI where visitor will be redirected after authorization, whether successful or not.
+        required: false
+        schema:
+          type: string
+          format: url
+          example: https://example.com
+          default: ''
+        in: query
+      - name: response_type
+        description: OAuth2 / OIDC response type. One of `code` (Authorization Code Flow), `id_token` (Implicit Flow, OIDC login only), or `code id_token` (Hybrid Flow).
+        required: false
+        schema:
+          type: string
+          example: ''
+          default: ''
+        in: query
+      - name: scope
+        description: 'Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.'
+        required: false
+        schema:
+          type: string
+          example: <SCOPE>
+          default: ''
+        in: query
+      - name: state
+        description: OAuth2 state. You receive this back in the redirect URI.
+        required: false
+        schema:
+          type: string
+          example: <STATE>
+          default: ''
+        in: query
+      - name: nonce
+        description: OIDC nonce parameter to prevent replay attacks. Required when response_type includes `id_token`.
+        required: false
+        schema:
+          type: string
+          example: <NONCE>
+          default: ''
+        in: query
+      - name: code_challenge
+        description: PKCE code challenge. Required when OAuth2 app is public.
+        required: false
+        schema:
+          type: string
+          example: <CODE_CHALLENGE>
+          default: ''
+        in: query
+      - name: code_challenge_method
+        description: PKCE code challenge method. Required when OAuth2 app is public.
+        required: false
+        schema:
+          type: string
+          example: s256
+          default: ''
+        in: query
+      - name: prompt
+        description: 'OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.'
+        required: false
+        schema:
+          type: string
+          example: <PROMPT>
+          default: ''
+        in: query
+      - name: max_age
+        description: OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+        in: query
+      - name: authorization_details
+        description: Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+        required: false
+        schema:
+          type: string
+          example: <AUTHORIZATION_DETAILS>
+          default: ''
+        in: query
+      - name: resource
+        description: RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+        required: false
+        schema:
+          type: string
+          default: []
+        in: query
+      - name: audience
+        description: Compatibility alias for a single OAuth2 resource indicator URI.
+        required: false
+        schema:
+          type: string
+          example: <AUDIENCE>
+          default: ''
+        in: query
+      - name: request_uri
+        description: OAuth2 authorization request handle returned by the pushed authorization request endpoint.
+        required: false
+        schema:
+          type: string
+          example: <REQUEST_URI>
+          default: ''
+        in: query
+    post:
+      summary: OAuth2 Authorize
+      operationId: oauth2AuthorizePost
+      tags:
+      - OAuth2
+      description: Begin the OAuth2 authorization flow. When called without a session, the user is redirected to the consent screen without grant ID. When called with a session, the redirect URL includes param for grant ID. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
+      responses:
+        '200':
+          description: OAuth2 Authorize
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2Authorize'
+      deprecated: false
+      x-appwrite:
+        group: authorization
+        demo: oauth2/authorize.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  description: OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+                  type: string
+                  default: ''
+                  example: <CLIENT_ID>
+                redirect_uri:
+                  description: Redirect URI where visitor will be redirected after authorization, whether successful or not.
+                  type: string
+                  default: ''
+                  example: https://example.com
+                  format: url
+                response_type:
+                  description: OAuth2 / OIDC response type. One of `code` (Authorization Code Flow), `id_token` (Implicit Flow, OIDC login only), or `code id_token` (Hybrid Flow).
+                  type: string
+                  default: ''
+                  example: ''
+                scope:
+                  description: 'Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.'
+                  type: string
+                  default: ''
+                  example: <SCOPE>
+                state:
+                  description: OAuth2 state. You receive this back in the redirect URI.
+                  type: string
+                  default: ''
+                  example: <STATE>
+                nonce:
+                  description: OIDC nonce parameter to prevent replay attacks. Required when response_type includes `id_token`.
+                  type: string
+                  default: ''
+                  example: <NONCE>
+                code_challenge:
+                  description: PKCE code challenge. Required when OAuth2 app is public.
+                  type: string
+                  default: ''
+                  example: <CODE_CHALLENGE>
+                code_challenge_method:
+                  description: PKCE code challenge method. Required when OAuth2 app is public.
+                  type: string
+                  default: ''
+                  example: s256
+                prompt:
+                  description: 'OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.'
+                  type: string
+                  default: ''
+                  example: <PROMPT>
+                max_age:
+                  description: OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 0
+                  format: int32
+                authorization_details:
+                  description: Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+                  type: string
+                  default: ''
+                  example: <AUTHORIZATION_DETAILS>
+                resource:
+                  description: RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+                  type: string
+                  default: []
+                audience:
+                  description: Compatibility alias for a single OAuth2 resource indicator URI.
+                  type: string
+                  default: ''
+                  example: <AUDIENCE>
+                request_uri:
+                  description: OAuth2 authorization request handle returned by the pushed authorization request endpoint.
+                  type: string
+                  default: ''
+                  example: <REQUEST_URI>
+  /oauth2/{project_id}/device_authorization:
+    post:
+      summary: OAuth2 Device Authorization
+      operationId: oauth2CreateDeviceAuthorization
+      tags:
+      - OAuth2
+      description: Start the OAuth2 Device Authorization Grant. Returns the device code, user code, verification URL, expiration, and polling interval.
+      responses:
+        '200':
+          description: OAuth2 Device Authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2DeviceAuthorization'
+      deprecated: false
+      x-appwrite:
+        group: authorization
+        demo: oauth2/create-device-authorization.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  description: OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+                  type: string
+                  default: ''
+                  example: <CLIENT_ID>
+                scope:
+                  description: 'Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.'
+                  type: string
+                  default: ''
+                  example: <SCOPE>
+                authorization_details:
+                  description: Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+                  type: string
+                  default: ''
+                  example: <AUTHORIZATION_DETAILS>
+                resource:
+                  description: RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+                  type: string
+                  default: []
+                audience:
+                  description: Compatibility alias for a single OAuth2 resource indicator URI.
+                  type: string
+                  default: ''
+                  example: <AUDIENCE>
+  /oauth2/{project_id}/grants:
+    post:
+      summary: Create OAuth2 Grant
+      operationId: oauth2CreateGrant
+      tags:
+      - OAuth2
+      description: Exchange a device flow user code for an OAuth2 grant. The authenticated user is bound to the pending grant. Pass the returned grant ID to the get grant endpoint to render the consent screen, then to the approve or reject endpoint to complete the flow.
+      responses:
+        '201':
+          description: OAuth2 Grant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2Grant'
+      deprecated: false
+      x-appwrite:
+        group: grants
+        demo: oauth2/create-grant.md
+        rate-limit: 10
+        rate-time: 60
+        rate-key: ip:{ip},userId:{userId}
+        scope: oauth2.write
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_code:
+                  description: User code displayed on the device.
+                  type: string
+                  example: <USER_CODE>
+              required:
+              - user_code
+  /oauth2/{project_id}/grants/{grant_id}:
+    get:
+      summary: Get OAuth2 Grant
+      operationId: oauth2GetGrant
+      tags:
+      - OAuth2
+      description: Get an OAuth2 grant by its ID. Used by the consent screen to display the details of the authorization the user is being asked to approve. A grant can only be read by the user it belongs to, or by server SDK.
+      responses:
+        '200':
+          description: OAuth2 Grant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2Grant'
+      deprecated: false
+      x-appwrite:
+        group: grants
+        demo: oauth2/get-grant.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: ip:{ip},userId:{userId}
+        scope: oauth2.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client that created grant during authorization exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      - name: grant_id
+        description: Grant ID made during authorization, provided to consent screen in URL search params.
+        required: true
+        schema:
+          type: string
+          example: <GRANT_ID>
+        in: path
+  /oauth2/{project_id}/logout:
+    get:
+      summary: OAuth2 Logout
+      operationId: oauth2Logout
+      tags:
+      - OAuth2
+      description: OpenID Connect RP-Initiated Logout. Ends the user session and revokes the tokens issued to the app identified by the `id_token_hint`, then redirects the user to `post_logout_redirect_uri` when it matches a URI registered on the app.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: tokens
+        demo: oauth2/logout.md
+        rate-limit: 10
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+      security:
+      - ProjectPath: []
+        Session: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      - name: id_token_hint
+        description: ID Token previously issued to the app, used as proof of the logout request. Required to end the session; signature and issuer are validated while expiry is ignored.
+        required: false
+        schema:
+          type: string
+          example: <ID_TOKEN_HINT>
+          default: ''
+        in: query
+      - name: logout_hint
+        description: Hint about the user that is logging out. Accepted for OIDC compatibility.
+        required: false
+        schema:
+          type: string
+          example: <LOGOUT_HINT>
+          default: ''
+        in: query
+      - name: client_id
+        description: OAuth2 client ID. When both `client_id` and `id_token_hint` are provided, they must identify the same app.
+        required: false
+        schema:
+          type: string
+          example: <CLIENT_ID>
+          default: ''
+        in: query
+      - name: post_logout_redirect_uri
+        description: URI to redirect the user to after logout. Must exactly match a URI registered in the app's `postLogoutRedirectUris`.
+        required: false
+        schema:
+          type: string
+          format: url
+          example: https://example.com
+          default: ''
+        in: query
+      - name: state
+        description: Opaque value passed back unchanged in the `state` query param of the post-logout redirect.
+        required: false
+        schema:
+          type: string
+          example: <STATE>
+          default: ''
+        in: query
+      - name: ui_locales
+        description: Preferred languages for any logout UI, as space-separated BCP47 tags. Accepted for OIDC compatibility.
+        required: false
+        schema:
+          type: string
+          example: <UI_LOCALES>
+          default: ''
+        in: query
+    post:
+      summary: OAuth2 Logout
+      operationId: oauth2LogoutPost
+      tags:
+      - OAuth2
+      description: OpenID Connect RP-Initiated Logout. Ends the user session and revokes the tokens issued to the app identified by the `id_token_hint`, then redirects the user to `post_logout_redirect_uri` when it matches a URI registered on the app.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: tokens
+        demo: oauth2/logout.md
+        rate-limit: 10
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+      security:
+      - ProjectPath: []
+        Session: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_token_hint:
+                  description: ID Token previously issued to the app, used as proof of the logout request. Required to end the session; signature and issuer are validated while expiry is ignored.
+                  type: string
+                  default: ''
+                  example: <ID_TOKEN_HINT>
+                logout_hint:
+                  description: Hint about the user that is logging out. Accepted for OIDC compatibility.
+                  type: string
+                  default: ''
+                  example: <LOGOUT_HINT>
+                client_id:
+                  description: OAuth2 client ID. When both `client_id` and `id_token_hint` are provided, they must identify the same app.
+                  type: string
+                  default: ''
+                  example: <CLIENT_ID>
+                post_logout_redirect_uri:
+                  description: URI to redirect the user to after logout. Must exactly match a URI registered in the app's `postLogoutRedirectUris`.
+                  type: string
+                  default: ''
+                  example: https://example.com
+                  format: url
+                state:
+                  description: Opaque value passed back unchanged in the `state` query param of the post-logout redirect.
+                  type: string
+                  default: ''
+                  example: <STATE>
+                ui_locales:
+                  description: Preferred languages for any logout UI, as space-separated BCP47 tags. Accepted for OIDC compatibility.
+                  type: string
+                  default: ''
+                  example: <UI_LOCALES>
+  /oauth2/{project_id}/organizations:
+    get:
+      summary: OAuth2 List Accessible Organizations
+      operationId: oauth2ListOrganizations
+      tags:
+      - OAuth2
+      description: List the organizations the OAuth2 access token can access. Resolves the token's `organization` authorization details, expanding the `*` wildcard into the concrete set of organizations the user can see.
+      responses:
+        '200':
+          description: OAuth2 accessible organizations list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2OrganizationList'
+      deprecated: false
+      x-appwrite:
+        group: platform
+        demo: oauth2/list-organizations.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: oauth2.organizations.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: project_id
+        description: Project ID of the console project the OAuth2 access token was issued for.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      - name: limit
+        description: Maximum number of organizations to return. Between 1 and 5000.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 25
+        in: query
+      - name: offset
+        description: Number of organizations to skip before returning results. Used for pagination.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+      - name: search
+        description: 'Search term to filter your list results. Max length: 256 chars.'
+        required: false
+        schema:
+          type: string
+          example: <SEARCH>
+          default: ''
+        in: query
+  /oauth2/{project_id}/par:
+    post:
+      summary: OAuth2 PAR
+      operationId: oauth2CreatePAR
+      tags:
+      - OAuth2
+      description: Store an OAuth2 authorization request server-side and receive a short-lived request_uri handle for the authorize endpoint.
+      responses:
+        '201':
+          description: OAuth2 PAR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2PAR'
+      deprecated: false
+      x-appwrite:
+        group: authorization
+        demo: oauth2/create-par.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  description: OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+                  type: string
+                  example: <CLIENT_ID>
+                redirect_uri:
+                  description: Redirect URI where visitor will be redirected after authorization, whether successful or not.
+                  type: string
+                  example: https://example.com
+                  format: url
+                response_type:
+                  description: OAuth2 / OIDC response type.
+                  type: string
+                  example: code
+                scope:
+                  description: 'Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.'
+                  type: string
+                  default: ''
+                  example: <SCOPE>
+                state:
+                  description: OAuth2 state. You receive this back in the redirect URI.
+                  type: string
+                  default: ''
+                  example: <STATE>
+                nonce:
+                  description: OIDC nonce parameter to prevent replay attacks. Required when response_type includes `id_token`.
+                  type: string
+                  default: ''
+                  example: <NONCE>
+                code_challenge:
+                  description: PKCE code challenge. Required when OAuth2 app is public.
+                  type: string
+                  default: ''
+                  example: <CODE_CHALLENGE>
+                code_challenge_method:
+                  description: PKCE code challenge method. Required when OAuth2 app is public.
+                  type: string
+                  default: ''
+                  example: s256
+                prompt:
+                  description: 'OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.'
+                  type: string
+                  default: ''
+                  example: <PROMPT>
+                max_age:
+                  description: OIDC max_age parameter for customization of consent screen.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 0
+                  format: int32
+                authorization_details:
+                  description: Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+                  type: string
+                  default: ''
+                  example: <AUTHORIZATION_DETAILS>
+                resource:
+                  description: RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+                  type: string
+                  default: []
+                audience:
+                  description: Compatibility alias for a single OAuth2 resource indicator URI.
+                  type: string
+                  default: ''
+                  example: <AUDIENCE>
+              required:
+              - client_id
+              - redirect_uri
+              - response_type
+  /oauth2/{project_id}/projects:
+    get:
+      summary: OAuth2 List Accessible Projects
+      operationId: oauth2ListProjects
+      tags:
+      - OAuth2
+      description: List the projects the OAuth2 access token can access. Resolves the token's `project` authorization details, expanding the `*` wildcard into the concrete set of projects the user can see.
+      responses:
+        '200':
+          description: OAuth2 accessible projects list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2ProjectList'
+      deprecated: false
+      x-appwrite:
+        group: platform
+        demo: oauth2/list-projects.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: oauth2.projects.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: project_id
+        description: Project ID of the console project the OAuth2 access token was issued for.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      - name: limit
+        description: Maximum number of projects to return. Between 1 and 5000.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 25
+        in: query
+      - name: offset
+        description: Number of projects to skip before returning results. Used for pagination.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+      - name: search
+        description: 'Search term to filter your list results. Max length: 256 chars.'
+        required: false
+        schema:
+          type: string
+          example: <SEARCH>
+          default: ''
+        in: query
+  /oauth2/{project_id}/reject:
+    post:
+      summary: Reject OAuth2
+      operationId: oauth2Reject
+      tags:
+      - OAuth2
+      description: Reject an OAuth2 grant when the user denies consent. Returns the `redirectUrl` the end user should be sent to with an `access_denied` error. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
+      responses:
+        '200':
+          description: OAuth2 Reject
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2Reject'
+      deprecated: false
+      x-appwrite:
+        group: authorization
+        demo: oauth2/reject.md
+        rate-limit: 10
+        rate-time: 60
+        rate-key: ip:{ip},userId:{userId}
+        scope: oauth2.write
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_id:
+                  description: Grant ID made during authorization, provided to consent screen in URL search params.
+                  type: string
+                  example: <GRANT_ID>
+              required:
+              - grant_id
+  /oauth2/{project_id}/revoke:
+    post:
+      summary: OAuth2 Revoke
+      operationId: oauth2Revoke
+      tags:
+      - OAuth2
+      description: Revoke an OAuth2 access token or refresh token.
+      responses:
+        '200':
+          description: File
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: tokens
+        demo: oauth2/revoke.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  description: The access or refresh token to revoke.
+                  type: string
+                  example: <TOKEN>
+                token_type_hint:
+                  description: Type of token to revoke (access_token or refresh_token).
+                  type: string
+                  default: ''
+                  example: access_token
+                client_id:
+                  description: OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+                  type: string
+                  default: ''
+                  example: <CLIENT_ID>
+                client_secret:
+                  description: OAuth2 client secret. Required for confidential apps; omitted for public apps.
+                  type: string
+                  default: ''
+                  example: <CLIENT_SECRET>
+              required:
+              - token
+  /oauth2/{project_id}/token:
+    post:
+      summary: OAuth2 Token
+      operationId: oauth2CreateToken
+      tags:
+      - OAuth2
+      description: Exchange an OAuth2 authorization code, refresh token, or device code for access and refresh tokens.
+      responses:
+        '200':
+          description: OAuth2 Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauth2Token'
+      deprecated: false
+      x-appwrite:
+        group: tokens
+        demo: oauth2/create-token.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            ProjectPath: []
+          client:
+            ProjectPath: []
+          server:
+            ProjectPath: []
+            Session: []
+      security:
+      - ProjectPath: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: project_id
+        description: Project ID in which OAuth2 client exists.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  description: 'OAuth2 grant type. Can be one of: `authorization_code`, `refresh_token`, `urn:ietf:params:oauth:grant-type:device_code`.'
+                  type: string
+                  example: <GRANT_TYPE>
+                code:
+                  description: Authorization code to be exchanged for access and refresh tokens. Required for `authorization_code` grant type.
+                  type: string
+                  default: ''
+                  example: <CODE>
+                refresh_token:
+                  description: Refresh token to be exchanged for a new access and refresh tokens. Required for `refresh_token` grant type.
+                  type: string
+                  default: ''
+                  example: <REFRESH_TOKEN>
+                device_code:
+                  description: Device code obtained from the device authorization endpoint. Required for `urn:ietf:params:oauth:grant-type:device_code` grant type.
+                  type: string
+                  default: ''
+                  example: <DEVICE_CODE>
+                client_id:
+                  description: OAuth2 client ID. Either a registered app ID or an HTTPS client ID metadata document URL.
+                  type: string
+                  default: ''
+                  example: <CLIENT_ID>
+                client_secret:
+                  description: OAuth2 client secret. Required for confidential apps.
+                  type: string
+                  default: ''
+                  example: <CLIENT_SECRET>
+                code_verifier:
+                  description: PKCE code verifier. Required for public apps.
+                  type: string
+                  default: ''
+                  example: <CODE_VERIFIER>
+                redirect_uri:
+                  description: Redirect URI. Required for `authorization_code` grant type.
+                  type: string
+                  default: ''
+                  example: https://example.com
+                  format: url
+                resource:
+                  description: RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
+                  type: string
+                  default: []
+                audience:
+                  description: Compatibility alias for a single OAuth2 resource indicator URI.
+                  type: string
+                  default: ''
+                  example: <AUDIENCE>
+              required:
+              - grant_type
+components:
+  schemas:
+    oauth2DeviceAuthorization:
+      description: OAuth2 Device Authorization
+      type: object
+      properties:
+        device_code:
+          type: string
+          description: Device verification code used by the client to poll the token endpoint.
+          example: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
+        user_code:
+          type: string
+          description: Short code the end user enters on the verification page.
+          example: ABCD-EFGH
+        verification_uri:
+          type: string
+          description: URL where the end user enters the user code.
+          example: https://cloud.appwrite.io/console/oauth2/device
+        verification_uri_complete:
+          type: string
+          description: Verification URL with the user code prefilled as a query parameter.
+          example: https://cloud.appwrite.io/console/oauth2/device?user_code=ABCD-EFGH
+        expires_in:
+          type: integer
+          description: Lifetime of the device code and user code in seconds.
+          format: int32
+          example: 900
+        interval:
+          type: integer
+          description: Minimum polling interval for the token endpoint in seconds.
+          format: int32
+          example: 5
+      required:
+      - device_code
+      - user_code
+      - verification_uri
+      - verification_uri_complete
+      - expires_in
+      - interval
+      example:
+        device_code: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
+        user_code: ABCD-EFGH
+        verification_uri: https://cloud.appwrite.io/console/oauth2/device
+        verification_uri_complete: https://cloud.appwrite.io/console/oauth2/device?user_code=ABCD-EFGH
+        expires_in: 900
+        interval: 5
+    oauth2Grant:
+      description: OAuth2 Grant
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Grant ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Grant creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Grant update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: ID of the user the grant belongs to.
+          example: 5e5ea5c16897e
+        appId:
+          type: string
+          description: ID of the OAuth2 client (app) the grant was requested for.
+          example: 5e5ea5c16897e
+        scopes:
+          type: array
+          description: Requested OAuth2 scopes the user is being asked to consent to.
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+        resources:
+          type: array
+          description: Requested RFC 8707 resource indicators the user is being asked to consent to.
+          items:
+            type: string
+          example:
+          - https://api.example.com/
+        authorizationDetails:
+          type: string
+          description: Requested authorization_details the user is being asked to consent to, as a JSON string. Each entry has a `type` plus project-defined fields.
+          example: '[{"type":"calendar","identifier":"primary","actions":["read_events","create_event"]}]'
+        prompt:
+          type: string
+          description: 'OIDC prompt directive the consent screen should honor. Space-separated list of: login, consent, select_account.'
+          example: login
+        redirectUri:
+          type: string
+          description: Redirect URI the user will be sent to after the flow completes.
+          example: https://example.com/callback
+        authTime:
+          type: integer
+          description: Unix timestamp of when the user last authenticated.
+          format: int32
+          example: 1592981250
+        expire:
+          type: string
+          description: Grant expiration time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - userId
+      - appId
+      - scopes
+      - resources
+      - authorizationDetails
+      - prompt
+      - redirectUri
+      - authTime
+      - expire
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5ea5c16897e
+        appId: 5e5ea5c16897e
+        scopes:
+        - openid
+        - email
+        - profile
+        resources:
+        - https://api.example.com/
+        authorizationDetails: '[{"type":"calendar","identifier":"primary","actions":["read_events","create_event"]}]'
+        prompt: login
+        redirectUri: https://example.com/callback
+        authTime: 1592981250
+        expire: '2020-10-15T06:38:00.000+00:00'
+    oauth2Approve:
+      description: OAuth2 Approve
+      type: object
+      properties:
+        redirectUrl:
+          type: string
+          description: URL the end user should be redirected to after the grant is approved, carrying the authorization `code` and/or `id_token` along with the original `state`.
+          example: https://example.com/callback?code=abcde&state=fghij
+      required:
+      - redirectUrl
+      example:
+        redirectUrl: https://example.com/callback?code=abcde&state=fghij
+    oauth2Organization:
+      description: OAuth2 Organization
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Organization ID.
+          example: 5e5ea5c16897e
+      required:
+      - $id
+      example:
+        $id: 5e5ea5c16897e
+    oauth2PAR:
+      description: OAuth2 PAR
+      type: object
+      properties:
+        request_uri:
+          type: string
+          description: Authorization request handle to pass to the authorize endpoint.
+          example: urn:appwrite:oauth2:request:5e5ea5c16897e
+        expires_in:
+          type: integer
+          description: Lifetime of the authorization request handle in seconds.
+          format: int32
+          example: 600
+      required:
+      - request_uri
+      - expires_in
+      example:
+        request_uri: urn:appwrite:oauth2:request:5e5ea5c16897e
+        expires_in: 600
+    oauth2Token:
+      description: OAuth2 Token
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: OAuth2 access token.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
+        token_type:
+          type: string
+          description: OAuth2 token type.
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token lifetime in seconds.
+          format: int32
+          example: 3600
+        refresh_token:
+          type: string
+          description: OAuth2 refresh token.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+        scope:
+          type: string
+          description: Space-separated scopes granted to the access token.
+          example: openid email profile
+        authorization_details:
+          type:
+          - string
+          - 'null'
+          description: Granted RFC 9396 authorization details as a JSON string.
+          example: '[{"type":"calendar","identifier":"primary","actions":["read_events"]}]'
+        id_token:
+          type:
+          - string
+          - 'null'
+          description: OpenID Connect ID token. Returned when the `openid` scope is granted.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      - refresh_token
+      - scope
+      example:
+        access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
+        token_type: Bearer
+        expires_in: 3600
+        refresh_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+        scope: openid email profile
+        authorization_details: '[{"type":"calendar","identifier":"primary","actions":["read_events"]}]'
+        id_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
+    oauth2Authorize:
+      description: OAuth2 Authorize
+      type: object
+      properties:
+        grantId:
+          type: string
+          description: OAuth2 grant ID. Set when the user must give explicit consent; pass it to the approve or reject endpoint. Empty when a redirect URL is returned instead.
+          example: 5e5ea5c16897e
+        redirectUrl:
+          type: string
+          description: URL the end user should be redirected to when the flow can complete without consent. Empty when consent is still required.
+          example: https://example.com/callback?code=abcde&state=fghij
+      required:
+      - grantId
+      - redirectUrl
+      example:
+        grantId: 5e5ea5c16897e
+        redirectUrl: https://example.com/callback?code=abcde&state=fghij
+    oauth2OrganizationList:
+      description: OAuth2 accessible organizations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of organizations that matched your query.
+          format: int32
+          example: 5
+        organizations:
+          type: array
+          description: List of organizations.
+          items:
+            $ref: '#/components/schemas/oauth2Organization'
+          example: []
+      required:
+      - total
+      - organizations
+      example:
+        total: 5
+        organizations: ''
+    oauth2ProjectList:
+      description: OAuth2 accessible projects list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of projects that matched your query.
+          format: int32
+          example: 5
+        projects:
+          type: array
+          description: List of projects.
+          items:
+            $ref: '#/components/schemas/oauth2Project'
+          example: []
+      required:
+      - total
+      - projects
+      example:
+        total: 5
+        projects: ''
+    oauth2Reject:
+      description: OAuth2 Reject
+      type: object
+      properties:
+        redirectUrl:
+          type: string
+          description: URL the end user should be redirected to after the grant is rejected, carrying an `access_denied` error.
+          example: https://example.com/callback?error=access_denied&state=fghij
+      required:
+      - redirectUrl
+      example:
+        redirectUrl: https://example.com/callback?error=access_denied&state=fghij
+    oauth2Project:
+      description: OAuth2 Project
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Project ID.
+          example: 5e5ea5c16897e
+        region:
+          type: string
+          description: Region ID the project is deployed in.
+          example: fra
+        endpoint:
+          type: string
+          description: API endpoint of the region the project is deployed in. Empty when the region has no public hostname configured.
+          example: https://fra.cloud.appwrite.io/v1
+      required:
+      - $id
+      - region
+      - endpoint
+      example:
+        $id: 5e5ea5c16897e
+        region: fra
+        endpoint: https://fra.cloud.appwrite.io/v1
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

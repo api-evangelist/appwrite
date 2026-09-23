@@ -1,0 +1,89 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://appwrite.io/docs/partners/project/mock-phones, https://appwrite.io/docs/advanced/security/dev-keys,
+  https://appwrite.io/docs/advanced/security/rate-limits and https://appwrite.io/docs/tooling/command-line/commands
+  — read 2026-09-12 — cross-checked against openapi/_original/appwrite-open-api3-latest.json.
+provider: Appwrite
+providerId: appwrite
+has_sandbox: partial
+summary: >-
+  Appwrite ships NO separate sandbox environment and no test-mode key prefix. There is one endpoint,
+  one key namespace, and one set of data — a call against Appwrite Cloud is always a real call. What
+  Appwrite does publish is a set of narrower test affordances: project-level mock phone numbers with
+  fixed OTP codes, dev keys that lift client rate limits during development, self-hosting the whole
+  server locally, and `appwrite run` for local project execution. An agent should treat every
+  Appwrite write as production.
+test_vs_live:
+  separate_environment: false
+  key_prefixes: none
+  mode_header: none
+  note: >-
+    Unlike Stripe's sk_test_/sk_live_ split, an Appwrite API key has no mode. Isolation is achieved
+    by using a separate Appwrite project (or a separate self-hosted instance) for development — the
+    X-Appwrite-Project header is the only thing separating environments.
+mechanisms:
+  - name: Mock phone numbers
+    kind: fixture
+    description: >-
+      Register fictional E.164 phone numbers against the project with a fixed six-digit verification
+      code. When a tester signs in with a registered number, the registered code works in place of a
+      real SMS — so phone-auth flows run in CI, demo accounts and app-store review without sending an
+      SMS or paying provider fees.
+    constraints:
+      - Numbers must be E.164 format.
+      - Verification codes are exactly six digits.
+      - Stored on the project document, so they are per-project.
+      - Appwrite advises using fictional ranges such as North American 555 numbers.
+    operations:
+      - projectListMockPhones
+      - projectCreateMockPhone
+      - projectGetMockPhone
+      - projectUpdateMockPhone
+      - projectDeleteMockPhone
+    scopes:
+      read: project:mocks.read
+      write: project:mocks.write
+    docs: https://appwrite.io/docs/partners/project/mock-phones
+    example_values_note: >-
+      Appwrite's own documentation uses +15555550100 with code 123456 as the illustrative pair. That
+      is a documentation example, not a working credential on any project — mock phones only exist
+      once you register them on your own project.
+  - name: Dev keys
+    kind: rate-limit bypass
+    description: >-
+      A project secret sent as the X-Appwrite-Dev-Key header that lets a client app bypass the client
+      rate limits while developing and testing. Never for production — it exposes the app to abuse.
+    status: creation paused
+    status_note: >-
+      Appwrite paused the creation of new dev keys on 2026-07-22 and states dev keys will be removed.
+      Existing keys still work; new projects cannot mint one. This is the single biggest change to
+      Appwrite's testing story and it is a removal, not an addition.
+    docs: https://appwrite.io/docs/advanced/security/dev-keys
+  - name: Self-hosting
+    kind: local environment
+    description: >-
+      Appwrite is BSD-3-Clause open source and runs locally under Docker Compose, which is the
+      closest thing to a full sandbox: a disposable instance with its own data, keys and endpoint.
+      Self-hosted releases trail Cloud by roughly two months.
+    docs: https://appwrite.io/docs/advanced/self-hosting
+  - name: appwrite run
+    kind: local execution
+    description: Run project resources locally through the CLI for development and quick debugging.
+    docs: https://appwrite.io/docs/tooling/command-line/commands
+  - name: Mock controller error type
+    kind: test hook
+    description: >-
+      The API reserves the error type `general_mock` (400) for "general errors thrown by the mock
+      controller used for testing" — an internal test surface, not a documented consumer feature.
+    reference: errors/appwrite-problem-types.yml
+absent:
+  - No test/live key mode.
+  - No hosted sandbox endpoint.
+  - No test clock or time simulation.
+  - No seeded fixture dataset.
+  - No published test card numbers (Appwrite is not a payments API; billing runs through Stripe).
+  - No webhook event replay or trigger tool — webhooks are exercised by performing the real action.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

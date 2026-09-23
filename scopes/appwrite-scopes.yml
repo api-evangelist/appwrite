@@ -1,0 +1,756 @@
+generated: '2026-09-12'
+method: probed
+source: https://mcp.appwrite.io/.well-known/oauth-authorization-server (HTTP 200, RFC 8414) and https://mcp.appwrite.io/.well-known/oauth-protected-resource
+  (HTTP 200, RFC 9728), fetched anonymously 2026-09-12; confirmed identical at https://fra.cloud.appwrite.io/v1/oauth2/console/.well-known/openid-configuration
+docs: https://appwrite.io/docs/partners/project/api-keys#scopes
+provider: Appwrite
+providerId: appwrite
+authorization_server: https://fra.cloud.appwrite.io/v1/oauth2/console
+flows:
+  authorization_code: true
+  refresh_token: true
+  device_code: true
+  pkce:
+  - S256
+  pushed_authorization_requests: https://fra.cloud.appwrite.io/v1/oauth2/console/par
+  dynamic_client_registration: https://fra.cloud.appwrite.io/v1/oauth2/console/register
+  client_id_metadata_document_supported: true
+  authorization_details_types_supported:
+  - project
+  - organization
+note: 'These are the scopes Appwrite ACTUALLY publishes, read off its own discovery documents rather than transcribed
+  from a docs table. The set is RAR-shaped: outside the four OIDC scopes, every scope is namespaced by an authorization-details
+  type — `project:` or `organization:` — matching the authorization_details_types_supported array. The authorization-server
+  document lists 144 scopes and the protected-resource document 130; the difference is 14 project-policy and console-only
+  scopes the MCP resource does not request. The same scope names appear as API-key scopes in the Appwrite Console.'
+scope_count: 144
+scope_count_authorization_server: 144
+scope_count_protected_resource: 130
+groups:
+  project: 122
+  organization: 17
+  openid: 5
+scopes:
+- name: all
+  group: openid
+  description: Full access across every resource the token subject can reach.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: email
+  group: openid
+  description: 'Standard OpenID Connect scope: email.'
+  on_authorization_server: true
+  on_protected_resource: true
+- name: openid
+  group: openid
+  description: 'Standard OpenID Connect scope: openid.'
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:all
+  group: organization
+  description: Full access to every organization resource.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:devKeys.read
+  group: organization
+  description: Read access to devKeys within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: organization:devKeys.write
+  group: organization
+  description: Write access to devKeys within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: organization:domains.read
+  group: organization
+  description: Read access to domains within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:domains.write
+  group: organization
+  description: Write access to domains within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:keys.read
+  group: organization
+  description: Read access to keys within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: organization:keys.write
+  group: organization
+  description: Write access to keys within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: organization:organization.installations.read
+  group: organization
+  description: Read access to organization.installations within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:organization.installations.write
+  group: organization
+  description: Write access to organization.installations within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:organization.keys.read
+  group: organization
+  description: Read access to organization.keys within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:organization.keys.write
+  group: organization
+  description: Write access to organization.keys within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:organization.memberships.read
+  group: organization
+  description: Read access to organization.memberships within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:organization.memberships.write
+  group: organization
+  description: Write access to organization.memberships within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:organization.read
+  group: organization
+  description: Read access to organization within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:organization.write
+  group: organization
+  description: Write access to organization within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:projects.read
+  group: organization
+  description: Read access to projects within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: organization:projects.write
+  group: organization
+  description: Write access to projects within the organization authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: phone
+  group: openid
+  description: 'Standard OpenID Connect scope: phone.'
+  on_authorization_server: true
+  on_protected_resource: true
+- name: profile
+  group: openid
+  description: 'Standard OpenID Connect scope: profile.'
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:all
+  group: project
+  description: Full access to every project resource.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:apps.read
+  group: project
+  description: Read access to apps within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:apps.write
+  group: project
+  description: Write access to apps within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:archives.read
+  group: project
+  description: Read access to archives within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:archives.write
+  group: project
+  description: Write access to archives within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:assistant.read
+  group: project
+  description: Read access to assistant within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:attributes.read
+  group: project
+  description: Read access to attributes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:attributes.write
+  group: project
+  description: Write access to attributes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:avatars.read
+  group: project
+  description: Read access to avatars within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:backups.policies.read
+  group: project
+  description: Read access to backups.policies within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:backups.policies.write
+  group: project
+  description: Write access to backups.policies within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:buckets.read
+  group: project
+  description: Read access to buckets within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:buckets.write
+  group: project
+  description: Write access to buckets within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:collections.read
+  group: project
+  description: Read access to collections within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:collections.write
+  group: project
+  description: Write access to collections within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:columns.read
+  group: project
+  description: Read access to columns within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:columns.write
+  group: project
+  description: Write access to columns within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:databases.read
+  group: project
+  description: Read access to databases within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:databases.write
+  group: project
+  description: Write access to databases within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documents.read
+  group: project
+  description: Read access to documents within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:documents.write
+  group: project
+  description: Write access to documents within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:documentsdb.collections.read
+  group: project
+  description: Read access to documentsdb.collections within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documentsdb.collections.write
+  group: project
+  description: Write access to documentsdb.collections within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documentsdb.documents.read
+  group: project
+  description: Read access to documentsdb.documents within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documentsdb.documents.write
+  group: project
+  description: Write access to documentsdb.documents within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documentsdb.indexes.read
+  group: project
+  description: Read access to documentsdb.indexes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documentsdb.indexes.write
+  group: project
+  description: Write access to documentsdb.indexes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documentsdb.read
+  group: project
+  description: Read access to documentsdb within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:documentsdb.write
+  group: project
+  description: Write access to documentsdb within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:domains.read
+  group: project
+  description: Read access to domains within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:domains.write
+  group: project
+  description: Write access to domains within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:embeddings.write
+  group: project
+  description: Write access to embeddings within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:events.read
+  group: project
+  description: Read access to events within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:execution.read
+  group: project
+  description: Read access to execution within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:execution.write
+  group: project
+  description: Write access to execution within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:executions.read
+  group: project
+  description: Read access to executions within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:executions.write
+  group: project
+  description: Write access to executions within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:files.read
+  group: project
+  description: Read access to files within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:files.write
+  group: project
+  description: Write access to files within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:functions.read
+  group: project
+  description: Read access to functions within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:functions.write
+  group: project
+  description: Write access to functions within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:health.read
+  group: project
+  description: Read access to health within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:indexes.read
+  group: project
+  description: Read access to indexes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:indexes.write
+  group: project
+  description: Write access to indexes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:insights.read
+  group: project
+  description: Read access to insights within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:insights.write
+  group: project
+  description: Write access to insights within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:keys.read
+  group: project
+  description: Read access to keys within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:keys.write
+  group: project
+  description: Write access to keys within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:locale.read
+  group: project
+  description: Read access to locale within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:log.read
+  group: project
+  description: Read access to log within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:log.write
+  group: project
+  description: Write access to log within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:messages.read
+  group: project
+  description: Read access to messages within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:messages.write
+  group: project
+  description: Write access to messages within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:migrations.read
+  group: project
+  description: Read access to migrations within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:migrations.write
+  group: project
+  description: Write access to migrations within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:mocks.read
+  group: project
+  description: Read access to mocks within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:mocks.write
+  group: project
+  description: Write access to mocks within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:oauth2.introspect
+  group: project
+  description: Introspect access to oauth2 within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:oauth2.read
+  group: project
+  description: Read access to oauth2 within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:oauth2.write
+  group: project
+  description: Write access to oauth2 within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:platforms.read
+  group: project
+  description: Read access to platforms within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:platforms.write
+  group: project
+  description: Write access to platforms within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:policies.read
+  group: project
+  description: Read access to policies within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:policies.write
+  group: project
+  description: Write access to policies within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: false
+- name: project:presences.read
+  group: project
+  description: Read access to presences within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:presences.write
+  group: project
+  description: Write access to presences within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:project.oauth2.read
+  group: project
+  description: Read access to project.oauth2 within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:project.oauth2.write
+  group: project
+  description: Write access to project.oauth2 within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:project.policies.read
+  group: project
+  description: Read access to project.policies within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:project.policies.write
+  group: project
+  description: Write access to project.policies within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:project.read
+  group: project
+  description: Read access to project within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:project.write
+  group: project
+  description: Write access to project within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:providers.read
+  group: project
+  description: Read access to providers within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:providers.write
+  group: project
+  description: Write access to providers within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:proxy.invalidations.write
+  group: project
+  description: Write access to proxy.invalidations within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:reports.read
+  group: project
+  description: Read access to reports within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:reports.write
+  group: project
+  description: Write access to reports within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:restorations.read
+  group: project
+  description: Read access to restorations within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:restorations.write
+  group: project
+  description: Write access to restorations within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:rows.read
+  group: project
+  description: Read access to rows within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:rows.write
+  group: project
+  description: Write access to rows within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:rules.read
+  group: project
+  description: Read access to rules within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:rules.write
+  group: project
+  description: Write access to rules within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:schedules.read
+  group: project
+  description: Read access to schedules within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:schedules.write
+  group: project
+  description: Write access to schedules within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:sessions.read
+  group: project
+  description: Read access to sessions within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:sessions.write
+  group: project
+  description: Write access to sessions within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:sites.read
+  group: project
+  description: Read access to sites within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:sites.write
+  group: project
+  description: Write access to sites within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:stages.read
+  group: project
+  description: Read access to stages within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:stages.write
+  group: project
+  description: Write access to stages within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:subscribers.read
+  group: project
+  description: Read access to subscribers within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:subscribers.write
+  group: project
+  description: Write access to subscribers within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:tables.read
+  group: project
+  description: Read access to tables within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:tables.write
+  group: project
+  description: Write access to tables within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:targets.read
+  group: project
+  description: Read access to targets within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:targets.write
+  group: project
+  description: Write access to targets within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:teams.read
+  group: project
+  description: Read access to teams within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:teams.write
+  group: project
+  description: Write access to teams within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:templates.read
+  group: project
+  description: Read access to templates within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:templates.write
+  group: project
+  description: Write access to templates within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:tokens.read
+  group: project
+  description: Read access to tokens within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:tokens.write
+  group: project
+  description: Write access to tokens within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:topics.read
+  group: project
+  description: Read access to topics within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:topics.write
+  group: project
+  description: Write access to topics within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:usage.read
+  group: project
+  description: Read access to usage within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:users.read
+  group: project
+  description: Read access to users within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:users.write
+  group: project
+  description: Write access to users within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vcs.read
+  group: project
+  description: Read access to vcs within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vcs.write
+  group: project
+  description: Write access to vcs within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.collections.read
+  group: project
+  description: Read access to vectorsdb.collections within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.collections.write
+  group: project
+  description: Write access to vectorsdb.collections within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.documents.read
+  group: project
+  description: Read access to vectorsdb.documents within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.documents.write
+  group: project
+  description: Write access to vectorsdb.documents within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.indexes.read
+  group: project
+  description: Read access to vectorsdb.indexes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.indexes.write
+  group: project
+  description: Write access to vectorsdb.indexes within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.read
+  group: project
+  description: Read access to vectorsdb within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:vectorsdb.write
+  group: project
+  description: Write access to vectorsdb within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:wafRules.read
+  group: project
+  description: Read access to wafRules within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:wafRules.write
+  group: project
+  description: Write access to wafRules within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:webhooks.read
+  group: project
+  description: Read access to webhooks within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+- name: project:webhooks.write
+  group: project
+  description: Write access to webhooks within the project authorization detail type.
+  on_authorization_server: true
+  on_protected_resource: true
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

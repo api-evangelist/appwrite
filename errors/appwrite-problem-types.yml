@@ -1,0 +1,872 @@
+generated: '2026-09-12'
+method: searched
+source: https://appwrite.io/docs/apis/response-codes (read via https://appwrite.io/llms-full.txt, 2026-09-12)
+provider: Appwrite
+providerId: appwrite
+format: custom
+format_note: 'Appwrite does NOT serve RFC 9457 application/problem+json. Its error envelope is a plain JSON object
+  with three fields — message, type, code — served as application/json, where `code` repeats the HTTP status and
+  `type` is a stable machine-readable slug. That slug is the useful part: it is what lets a client distinguish the
+  many different 400s from each other, and it is the field an agent should branch on rather than the status code.'
+envelope:
+  content_type: application/json
+  fields:
+  - name: message
+    type: string
+    description: Human-readable explanation of the failure.
+  - name: type
+    type: string
+    description: Stable machine-readable error type slug, e.g. argument_invalid.
+  - name: code
+    type: integer
+    description: Repeats the HTTP status code.
+  example:
+    message: 'Invalid id: Parameter must be a valid number'
+    type: argument_invalid
+    code: 400
+http_status_codes:
+- status: 200
+  reason: OK
+  description: Success!
+- status: 201
+  reason: Created
+  description: The requested resource has been created successfully.
+- status: 202
+  reason: Accepted
+  description: The requested change has been accepted for processing but has not been completed.
+- status: 204
+  reason: No Content
+  description: The server has successfully fulfilled the request and that there is no additional content to send
+    in the response payload body. This status will usually return on successful delete operations.
+- status: 301
+  reason: Moved Permanently
+  description: The URL of the requested resource has been changed permanently. The new URL is given in the response.
+- status: 304
+  reason: Not Modified
+  description: There was no new data to return.
+- status: 400
+  reason: Bad Request
+  description: The request was invalid or cannot be otherwise served. An accompanying error message will explain
+    further. Requests with wrong or invalid input will yield this response.
+- status: 401
+  reason: Unauthorized
+  description: Missing or incorrect authentication credentials can happen when the API key or user permission is
+    not sufficient.
+- status: 403
+  reason: Forbidden
+  description: The request is understood, but it has been refused, or access is not allowed. An accompanying error
+    message will explain why. Make sure to register your app in your project's dashboard platform list.
+- status: 404
+  reason: Not Found
+  description: The URI requested is invalid or the resource requested, such as a user, does not exist.
+- status: 409
+  reason: Conflict
+  description: This response is sent when a request conflicts with the current state of the server. This status
+    code will usually appear when you're trying to create an already existing resource.
+- status: 413
+  reason: Payload Too Large
+  description: This indicates that the request entity is larger than limits defined by server. This status code
+    will usually appear happen when uploading a file or function that is too large
+- status: 416
+  reason: Invalid Range
+  description: Invalid value in the range or content-range headers. Usually returned while uploading or downloading
+    files using the range header but the provided range value is not valid.
+- status: 429
+  reason: Too Many Requests
+  description: Returned in when a request cannot be served due to the application's rate limit having been exhausted
+    for the resource. See [Rate Limits](/docs/advanced/security/rate-limits).
+- status: 500
+  reason: Internal Server Error
+  description: Something is broken. Contact our [team](/support), or raise a [GitHub issue](https://github.com/appwrite/appwrite/issues/new).
+- status: 501
+  reason: Not Implemented
+  description: The feature is not implemented. Usually returned when the project owner has disabled an auth method
+    or an entire service.
+- status: 503
+  reason: Service Unavailable
+  description: The Appwrite servers are up but overloaded with requests. Try again later.
+- status: 504
+  reason: Gateway timeout
+  description: The Appwrite servers are up, but the request couldn't be serviced due to some failure within the
+    stack. Try again later.
+error_type_count: 137
+categories:
+  Platform: 40
+  Authentication: 36
+  Databases: 26
+  Storage: 12
+  Functions: 13
+  Migrations: 3
+  Avatars: 5
+  GraphQL: 2
+problem_types:
+- type: general_mock
+  status: 400
+  category: Platform
+  title: General errors thrown by the mock controller used for testing.
+  description: General errors thrown by the mock controller used for testing.
+- type: general_argument_invalid
+  status: 400
+  category: Platform
+  title: The request contains one or more invalid arguments. Please refer to the endpoint documentation.
+  description: The request contains one or more invalid arguments. Please refer to the endpoint documentation.
+- type: general_query_limit_exceeded
+  status: 400
+  category: Platform
+  title: Query limit exceeded for the current column. Usage of more than 100 query values on a single column is
+    prohibited.
+  description: Query limit exceeded for the current column. Usage of more than 100 query values on a single column
+    is prohibited.
+- type: general_query_invalid
+  status: 400
+  category: Platform
+  title: The query's syntax is invalid. Please check the query and try again.
+  description: The query's syntax is invalid. Please check the query and try again.
+- type: general_cursor_not_found
+  status: 400
+  category: Platform
+  title: The cursor is invalid. This can happen if the item represented by the cursor has been deleted.
+  description: The cursor is invalid. This can happen if the item represented by the cursor has been deleted.
+- type: general_provider_failure
+  status: 400
+  category: Platform
+  title: VCS (Version Control System) provider failed to process the request. We believe this is an error with the
+    VCS provider. Try again, or contact support for more information.
+  description: VCS (Version Control System) provider failed to process the request. We believe this is an error
+    with the VCS provider. Try again, or contact support for more information.
+- type: project_unknown
+  status: 400
+  category: Platform
+  title: The project ID is either missing or not valid. Please check the value of the `X-Appwrite-Project` header
+    to ensure the correct project ID is being used.
+  description: The project ID is either missing or not valid. Please check the value of the `X-Appwrite-Project`
+    header to ensure the correct project ID is being used.
+- type: project_invalid_success_url
+  status: 400
+  category: Platform
+  title: Invalid redirect URL for OAuth success.
+  description: Invalid redirect URL for OAuth success.
+- type: project_invalid_failure_url
+  status: 400
+  category: Platform
+  title: Invalid redirect URL for OAuth failure.
+  description: Invalid redirect URL for OAuth failure.
+- type: project_reserved_project
+  status: 400
+  category: Platform
+  title: The project ID is reserved. Please choose another project ID.
+  description: The project ID is reserved. Please choose another project ID.
+- type: project_smtp_config_invalid
+  status: 400
+  category: Platform
+  title: Provided SMTP config is invalid. Please check the configured values and try again.
+  description: Provided SMTP config is invalid. Please check the configured values and try again.
+- type: project_key_expired
+  status: 401
+  category: Platform
+  title: The project key has expired. Please generate a new key using the Appwrite console.
+  description: The project key has expired. Please generate a new key using the Appwrite console.
+- type: rule_verification_failed
+  status: 401
+  category: Platform
+  title: Domain verification failed. Please check if your DNS records are correct and try again.
+  description: Domain verification failed. Please check if your DNS records are correct and try again.
+- type: project_template_default_deletion
+  status: 401
+  category: Platform
+  title: You can't delete default template. If you are trying to reset your template changes, you can ignore this
+    error as it's already been reset.
+  description: You can't delete default template. If you are trying to reset your template changes, you can ignore
+    this error as it's already been reset.
+- type: general_unknown_origin
+  status: 403
+  category: Platform
+  title: The request originated from an unknown origin. If you trust this domain, please list it as a trusted platform
+    in the Appwrite console.
+  description: The request originated from an unknown origin. If you trust this domain, please list it as a trusted
+    platform in the Appwrite console.
+- type: general_access_forbidden
+  status: 401
+  category: Platform
+  title: Access to this API is forbidden.
+  description: Access to this API is forbidden.
+- type: general_unauthorized_scope
+  status: 401
+  category: Platform
+  title: The current user or API key does not have the required scopes to access the requested resource.
+  description: The current user or API key does not have the required scopes to access the requested resource.
+- type: general_route_not_found
+  status: 404
+  category: Platform
+  title: The requested route was not found. Please refer to the API docs and try again.
+  description: The requested route was not found. Please refer to the API docs and try again.
+- type: webhook_not_found
+  status: 404
+  category: Platform
+  title: Webhook with the requested ID could not be found.
+  description: Webhook with the requested ID could not be found.
+- type: rule_resource_not_found
+  status: 404
+  category: Platform
+  title: Resource could not be found. Please check if the `resourceId` and `resourceType` are correct, or if the
+    resource actually exists.
+  description: Resource could not be found. Please check if the `resourceId` and `resourceType` are correct, or
+    if the resource actually exists.
+- type: rule_not_found
+  status: 404
+  category: Platform
+  title: Rule with the requested ID could not be found. Please check if the ID provided is correct or if the rule
+    actually exists.
+  description: Rule with the requested ID could not be found. Please check if the ID provided is correct or if the
+    rule actually exists.
+- type: key_not_found
+  status: 404
+  category: Platform
+  title: Key with the requested ID could not be found.
+  description: Key with the requested ID could not be found.
+- type: platform_not_found
+  status: 404
+  category: Platform
+  title: Platform with the requested ID could not be found.
+  description: Platform with the requested ID could not be found.
+- type: project_not_found
+  status: 404
+  category: Platform
+  title: Project with the requested ID could not be found. Please check the value of the `X-Appwrite-Project` header
+    to ensure the correct project ID is being used.
+  description: Project with the requested ID could not be found. Please check the value of the `X-Appwrite-Project`
+    header to ensure the correct project ID is being used.
+- type: router_host_not_found
+  status: 404
+  category: Platform
+  title: Host is not trusted. This could occur because you have not configured a custom domain. Add a custom domain
+    to your project first and try again.
+  description: Host is not trusted. This could occur because you have not configured a custom domain. Add a custom
+    domain to your project first and try again.
+- type: general_not_implemented
+  status: 405
+  category: Platform
+  title: This method was not fully implemented yet. If you believe this is a mistake, please upgrade your Appwrite
+    server version.
+  description: This method was not fully implemented yet. If you believe this is a mistake, please upgrade your
+    Appwrite server version.
+- type: project_already_exists
+  status: 409
+  category: Platform
+  title: Project with the requested ID already exists. Try again with a different ID or use `unique()` to generate
+    a unique ID.
+  description: Project with the requested ID already exists. Try again with a different ID or use `unique()` to
+    generate a unique ID.
+- type: rule_already_exists
+  status: 409
+  category: Platform
+  title: Domain is already used. Please try again with a different domain.
+  description: Domain is already used. Please try again with a different domain.
+- type: project_provider_disabled
+  status: 412
+  category: Platform
+  title: The chosen OAuth provider is disabled. You can enable the OAuth provider using the Appwrite console.
+  description: The chosen OAuth provider is disabled. You can enable the OAuth provider using the Appwrite console.
+- type: general_rate_limit_exceeded
+  status: 429
+  category: Platform
+  title: Rate limit for the current endpoint has been exceeded. Please try again after some time.
+  description: Rate limit for the current endpoint has been exceeded. Please try again after some time.
+- type: general_unknown
+  status: 500
+  category: Platform
+  title: An unknown error has occurred. Please check the logs for more information.
+  description: An unknown error has occurred. Please check the logs for more information.
+- type: general_server_error
+  status: 500
+  category: Platform
+  title: An internal server error occurred.
+  description: An internal server error occurred.
+- type: general_protocol_unsupported
+  status: 500
+  category: Platform
+  title: The request cannot be fulfilled with the current protocol. Please check the value of the `_APP_OPTIONS_FORCE_HTTPS`
+    environment variable.
+  description: The request cannot be fulfilled with the current protocol. Please check the value of the `_APP_OPTIONS_FORCE_HTTPS`
+    environment variable.
+- type: general_codes_disabled
+  status: 500
+  category: Platform
+  title: Invitation codes are disabled on this server. Please contact the server administrator.
+  description: Invitation codes are disabled on this server. Please contact the server administrator.
+- type: router_domain_not_configured
+  status: 500
+  category: Platform
+  title: '`_APP_DOMAIN`, `_APP_DOMAIN_TARGET`, and `_APP_DOMAIN_FUNCTIONS` environment variables have not been configured.
+    Please configure the domain environment variables before accessing '
+  description: '`_APP_DOMAIN`, `_APP_DOMAIN_TARGET`, and `_APP_DOMAIN_FUNCTIONS` environment variables have not
+    been configured. Please configure the domain environment variables before accessing the Appwrite Console via
+    any IP address or hostname other than localhost. This value could be an IP like 203.0.113.0 or a hostname like
+    example.com.'
+- type: general_usage_disabled
+  status: 501
+  category: Platform
+  title: Usage stats is not configured. Please check the value of the `_APP_USAGE_STATS` environment variable of
+    your Appwrite server.
+  description: Usage stats is not configured. Please check the value of the `_APP_USAGE_STATS` environment variable
+    of your Appwrite server.
+- type: project_provider_unsupported
+  status: 501
+  category: Platform
+  title: The chosen OAuth provider is unsupported. Please check the Create OAuth2 Session docs for the complete
+    list of supported OAuth providers.
+  description: The chosen OAuth provider is unsupported. Please check the Create OAuth2 Session docs for the complete
+    list of supported OAuth providers.
+- type: general_service_disabled
+  status: 503
+  category: Platform
+  title: The requested service is disabled. You can enable the service from the Appwrite console.
+  description: The requested service is disabled. You can enable the service from the Appwrite console.
+- type: general_smtp_disabled
+  status: 503
+  category: Platform
+  title: SMTP is disabled on your Appwrite instance. You can learn more about setting up SMTP in our docs.
+  description: SMTP is disabled on your Appwrite instance. You can learn more about setting up SMTP in our docs.
+- type: general_phone_disabled
+  status: 503
+  category: Platform
+  title: Phone provider is not configured. Please check the `_APP_SMS_PROVIDER` environment variable of your Appwrite
+    server.
+  description: Phone provider is not configured. Please check the `_APP_SMS_PROVIDER` environment variable of your
+    Appwrite server.
+- type: user_password_mismatch
+  status: 400
+  category: Authentication
+  title: Passwords do not match. Please check the password and confirm password.
+  description: Passwords do not match. Please check the password and confirm password.
+- type: password_recently_used
+  status: 400
+  category: Authentication
+  title: The password you are trying to use is similar to your previous password. For your security, please choose
+    a different password and try again.
+  description: The password you are trying to use is similar to your previous password. For your security, please
+    choose a different password and try again.
+- type: password_personal_data
+  status: 400
+  category: Authentication
+  title: The password you are trying to use contains references to your name, email, phone or userID. For your security,
+    please choose a different password and try again.
+  description: The password you are trying to use contains references to your name, email, phone or userID. For
+    your security, please choose a different password and try again.
+- type: user_phone_not_found
+  status: 400
+  category: Authentication
+  title: The current user does not have a phone number associated with their account.
+  description: The current user does not have a phone number associated with their account.
+- type: user_missing_id
+  status: 400
+  category: Authentication
+  title: Missing ID from OAuth2 provider.
+  description: Missing ID from OAuth2 provider.
+- type: user_oauth2_bad_request
+  status: 400
+  category: Authentication
+  title: OAuth2 provider rejected the bad request.
+  description: OAuth2 provider rejected the bad request.
+- type: user_jwt_invalid
+  status: 401
+  category: Authentication
+  title: The JWT token is invalid. Please check the value of the `X-Appwrite-JWT` header to ensure the correct token
+    is being used.
+  description: The JWT token is invalid. Please check the value of the `X-Appwrite-JWT` header to ensure the correct
+    token is being used.
+- type: user_blocked
+  status: 401
+  category: Authentication
+  title: The current user has been blocked. You can unblock the user by making a request to the User API's "Update
+    User Status" endpoint or in the Appwrite Console's Auth section.
+  description: The current user has been blocked. You can unblock the user by making a request to the User API's
+    "Update User Status" endpoint or in the Appwrite Console's Auth section.
+- type: user_invalid_token
+  status: 401
+  category: Authentication
+  title: Invalid token passed in the request.
+  description: Invalid token passed in the request.
+- type: user_email_not_whitelisted
+  status: 401
+  category: Authentication
+  title: Console registration is restricted to specific emails. Contact your administrator for more information.
+  description: Console registration is restricted to specific emails. Contact your administrator for more information.
+- type: user_invalid_code
+  status: 401
+  category: Authentication
+  title: The specified code is not valid. Contact your administrator for more information.
+  description: The specified code is not valid. Contact your administrator for more information.
+- type: user_ip_not_whitelisted
+  status: 401
+  category: Authentication
+  title: Console registration is restricted to specific IPs. Contact your administrator for more information.
+  description: Console registration is restricted to specific IPs. Contact your administrator for more information.
+- type: user_invalid_credentials
+  status: 401
+  category: Authentication
+  title: Invalid credentials. Please check the email and password.
+  description: Invalid credentials. Please check the email and password.
+- type: user_anonymous_console_prohibited
+  status: 401
+  category: Authentication
+  title: Anonymous users cannot be created for the console project.
+  description: Anonymous users cannot be created for the console project.
+- type: user_session_already_exists
+  status: 401
+  category: Authentication
+  title: Creation of anonymous users is prohibited when a session is active.
+  description: Creation of anonymous users is prohibited when a session is active.
+- type: user_unauthorized
+  status: 401
+  category: Authentication
+  title: The current user is not authorized to perform the requested action.
+  description: The current user is not authorized to perform the requested action.
+- type: user_oauth2_unauthorized
+  status: 401
+  category: Authentication
+  title: OAuth2 provider rejected the unauthorized request.
+  description: OAuth2 provider rejected the unauthorized request.
+- type: team_invalid_secret
+  status: 401
+  category: Authentication
+  title: The team invitation secret is invalid. Please request a new invitation and try again.
+  description: The team invitation secret is invalid. Please request a new invitation and try again.
+- type: team_invite_mismatch
+  status: 401
+  category: Authentication
+  title: The invite does not belong to the current user.
+  description: The invite does not belong to the current user.
+- type: user_not_found
+  status: 404
+  category: Authentication
+  title: User with the requested ID could not be found.
+  description: User with the requested ID could not be found.
+- type: user_session_not_found
+  status: 404
+  category: Authentication
+  title: The current user session could not be found.
+  description: The current user session could not be found.
+- type: user_identity_not_found
+  status: 404
+  category: Authentication
+  title: The identity could not be found. Please sign in with OAuth provider to create identity first.
+  description: The identity could not be found. Please sign in with OAuth provider to create identity first.
+- type: team_not_found
+  status: 404
+  category: Authentication
+  title: Team with the requested ID could not be found.
+  description: Team with the requested ID could not be found.
+- type: team_invite_not_found
+  status: 404
+  category: Authentication
+  title: The requested team invitation could not be found.
+  description: The requested team invitation could not be found.
+- type: team_membership_mismatch
+  status: 404
+  category: Authentication
+  title: The membership ID does not belong to the team ID.
+  description: The membership ID does not belong to the team ID.
+- type: membership_not_found
+  status: 404
+  category: Authentication
+  title: Membership with the requested ID could not be found.
+  description: Membership with the requested ID could not be found.
+- type: user_already_exists
+  status: 409
+  category: Authentication
+  title: A user with the same id, email, or phone already exists in this project.
+  description: A user with the same id, email, or phone already exists in this project.
+- type: user_email_already_exists
+  status: 409
+  category: Authentication
+  title: A user with the same email already exists in the current project.
+  description: A user with the same email already exists in the current project.
+- type: user_phone_already_exists
+  status: 409
+  category: Authentication
+  title: A user with the same phone number already exists in the current project.
+  description: A user with the same phone number already exists in the current project.
+- type: team_invite_already_exists
+  status: 409
+  category: Authentication
+  title: User has already been invited or is already a member of this team
+  description: User has already been invited or is already a member of this team
+- type: team_already_exists
+  status: 409
+  category: Authentication
+  title: Team with requested ID already exists. Please choose a different ID and try again.
+  description: Team with requested ID already exists. Please choose a different ID and try again.
+- type: membership_already_confirmed
+  status: 409
+  category: Authentication
+  title: Membership is already confirmed.
+  description: Membership is already confirmed.
+- type: user_password_reset_required
+  status: 412
+  category: Authentication
+  title: The current user requires a password reset.
+  description: The current user requires a password reset.
+- type: user_oauth2_provider_error
+  status: 424
+  category: Authentication
+  title: OAuth2 provider returned some error.
+  description: OAuth2 provider returned some error.
+- type: user_count_exceeded
+  status: 501
+  category: Authentication
+  title: The current project has exceeded the maximum number of users. Please check your user limit in the Appwrite
+    console.
+  description: The current project has exceeded the maximum number of users. Please check your user limit in the
+    Appwrite console.
+- type: user_auth_method_unsupported
+  status: 501
+  category: Authentication
+  title: The requested authentication method is either disabled or unsupported. Please check the supported authentication
+    methods in the Appwrite console.
+  description: The requested authentication method is either disabled or unsupported. Please check the supported
+    authentication methods in the Appwrite console.
+- type: table_limit_exceeded
+  status: 400
+  category: Databases
+  title: The maximum number of tables has been reached.
+  description: The maximum number of tables has been reached.
+- type: row_invalid_structure
+  status: 400
+  category: Databases
+  title: The row structure is invalid. Please ensure the columns match the table definition.
+  description: The row structure is invalid. Please ensure the columns match the table definition.
+- type: row_missing_data
+  status: 400
+  category: Databases
+  title: The row data is missing. Try again with row data populated.
+  description: The row data is missing. Try again with row data populated.
+- type: row_missing_payload
+  status: 400
+  category: Databases
+  title: The row data and permissions are missing. You must provide either row data or permissions to be updated.
+  description: The row data and permissions are missing. You must provide either row data or permissions to be updated.
+- type: column_unknown
+  status: 400
+  category: Databases
+  title: The column required for the index could not be found. Please confirm all your columns are in the available
+    state.
+  description: The column required for the index could not be found. Please confirm all your columns are in the
+    available state.
+- type: column_not_available
+  status: 400
+  category: Databases
+  title: The requested column is not yet available. Please try again later.
+  description: The requested column is not yet available. Please try again later.
+- type: column_format_unsupported
+  status: 400
+  category: Databases
+  title: The requested column format is not supported.
+  description: The requested column format is not supported.
+- type: column_default_unsupported
+  status: 400
+  category: Databases
+  title: Default values cannot be set for array or required columns.
+  description: Default values cannot be set for array or required columns.
+- type: column_limit_exceeded
+  status: 400
+  category: Databases
+  title: The maximum number of columns has been reached.
+  description: The maximum number of columns has been reached.
+- type: column_value_invalid
+  status: 400
+  category: Databases
+  title: The column value is invalid. Please check the type, range and value of the column.
+  description: The column value is invalid. Please check the type, range and value of the column.
+- type: column_type_invalid
+  status: 400
+  category: Databases
+  title: The column type is invalid.
+  description: The column type is invalid.
+- type: index_limit_exceeded
+  status: 400
+  category: Databases
+  title: The maximum number of indexes has been reached.
+  description: The maximum number of indexes has been reached.
+- type: index_invalid
+  status: 400
+  category: Databases
+  title: Index invalid.
+  description: Index invalid.
+- type: row_delete_restricted
+  status: 403
+  category: Databases
+  title: Row cannot be deleted because it is referenced by another row.
+  description: Row cannot be deleted because it is referenced by another row.
+- type: execution_not_found
+  status: 404
+  category: Databases
+  title: Execution with the requested ID could not be found.
+  description: Execution with the requested ID could not be found.
+- type: database_not_found
+  status: 404
+  category: Databases
+  title: Database not found
+  description: Database not found
+- type: table_not_found
+  status: 404
+  category: Databases
+  title: Table with the requested ID could not be found.
+  description: Table with the requested ID could not be found.
+- type: row_not_found
+  status: 404
+  category: Databases
+  title: Row with the requested ID could not be found.
+  description: Row with the requested ID could not be found.
+- type: column_not_found
+  status: 404
+  category: Databases
+  title: Column with the requested ID could not be found.
+  description: Column with the requested ID could not be found.
+- type: index_not_found
+  status: 404
+  category: Databases
+  title: Index with the requested ID could not be found.
+  description: Index with the requested ID could not be found.
+- type: database_already_exists
+  status: 409
+  category: Databases
+  title: Database already exists
+  description: Database already exists
+- type: table_already_exists
+  status: 409
+  category: Databases
+  title: A table with the requested ID already exists. Try again with a different ID or use `unique()` to generate
+    a unique ID.
+  description: A table with the requested ID already exists. Try again with a different ID or use `unique()` to
+    generate a unique ID.
+- type: row_already_exists
+  status: 409
+  category: Databases
+  title: Row with the requested ID already exists. Try again with a different ID or use `unique()` to generate a
+    unique ID.
+  description: Row with the requested ID already exists. Try again with a different ID or use `unique()` to generate
+    a unique ID.
+- type: row_update_conflict
+  status: 409
+  category: Databases
+  title: Remote row is newer than local.
+  description: Remote row is newer than local.
+- type: column_already_exists
+  status: 409
+  category: Databases
+  title: Column with the requested ID already exists. Try again with a different ID or use `unique()` to generate
+    a unique ID.
+  description: Column with the requested ID already exists. Try again with a different ID or use `unique()` to generate
+    a unique ID.
+- type: index_already_exists
+  status: 409
+  category: Databases
+  title: Index with the requested ID already exists. Try again with a different ID or use `unique()` to generate
+    a unique ID.
+  description: Index with the requested ID already exists. Try again with a different ID or use `unique()` to generate
+    a unique ID.
+- type: storage_device_not_found
+  status: 400
+  category: Storage
+  title: The requested storage device could not be found.
+  description: The requested storage device could not be found.
+- type: storage_file_empty
+  status: 400
+  category: Storage
+  title: Empty file passed to the endpoint.
+  description: Empty file passed to the endpoint.
+- type: storage_file_type_unsupported
+  status: 400
+  category: Storage
+  title: The given file extension is not supported.
+  description: The given file extension is not supported.
+- type: storage_invalid_file_size
+  status: 400
+  category: Storage
+  title: The file size is either not valid or exceeds the maximum allowed size. Please check the file or the value
+    of the `_APP_STORAGE_LIMIT` environment variable.
+  description: The file size is either not valid or exceeds the maximum allowed size. Please check the file or the
+    value of the `_APP_STORAGE_LIMIT` environment variable.
+- type: storage_invalid_content_range
+  status: 400
+  category: Storage
+  title: The content range is invalid. Please check the value of the `Content-Range` header.
+  description: The content range is invalid. Please check the value of the `Content-Range` header.
+- type: storage_invalid_appwrite_id
+  status: 400
+  category: Storage
+  title: The value for `x-appwrite-id` header is invalid. Please check the value of the `x-appwrite-id` header is
+    a valid id and not `unique()`.
+  description: The value for `x-appwrite-id` header is invalid. Please check the value of the `x-appwrite-id` header
+    is a valid id and not `unique()`.
+- type: storage_invalid_file
+  status: 403
+  category: Storage
+  title: The uploaded file is invalid. Please check the file and try again.
+  description: The uploaded file is invalid. Please check the file and try again.
+- type: storage_file_not_found
+  status: 404
+  category: Storage
+  title: The requested file could not be found.
+  description: The requested file could not be found.
+- type: storage_bucket_not_found
+  status: 404
+  category: Storage
+  title: Storage bucket with the requested ID could not be found.
+  description: Storage bucket with the requested ID could not be found.
+- type: storage_file_already_exists
+  status: 409
+  category: Storage
+  title: A storage file with the requested ID already exists.
+  description: A storage file with the requested ID already exists.
+- type: storage_bucket_already_exists
+  status: 409
+  category: Storage
+  title: A storage bucket with the requested ID already exists. Try again with a different ID or use `unique()`
+    to generate a unique ID.
+  description: A storage bucket with the requested ID already exists. Try again with a different ID or use `unique()`
+    to generate a unique ID.
+- type: storage_invalid_range
+  status: 416
+  category: Storage
+  title: The requested range is not satisfiable. Please check the value of the `Range` header.
+  description: The requested range is not satisfiable. Please check the value of the `Range` header.
+- type: build_not_ready
+  status: 400
+  category: Functions
+  title: Build with the requested ID is building and not ready for execution.
+  description: Build with the requested ID is building and not ready for execution.
+- type: build_in_progress
+  status: 400
+  category: Functions
+  title: Build with the requested ID is already in progress. Please wait before you can retry.
+  description: Build with the requested ID is already in progress. Please wait before you can retry.
+- type: installation_not_found
+  status: 404
+  category: Functions
+  title: Installation with the requested ID could not be found. Check to see if the ID is correct, or create the
+    installation.
+  description: Installation with the requested ID could not be found. Check to see if the ID is correct, or create
+    the installation.
+- type: provider_repository_not_found
+  status: 404
+  category: Functions
+  title: VCS (Version Control System) repository with the requested ID could not be found. Check to see if the ID
+    is correct, and if it belongs to installationId you provided.
+  description: VCS (Version Control System) repository with the requested ID could not be found. Check to see if
+    the ID is correct, and if it belongs to installationId you provided.
+- type: repository_not_found
+  status: 404
+  category: Functions
+  title: Repository with the requested ID could not be found. Check to see if the ID is correct, or create the repository.
+  description: Repository with the requested ID could not be found. Check to see if the ID is correct, or create
+    the repository.
+- type: function_not_found
+  status: 404
+  category: Functions
+  title: Function with the requested ID could not be found.
+  description: Function with the requested ID could not be found.
+- type: function_runtime_unsupported
+  status: 404
+  category: Functions
+  title: The requested runtime is either inactive or unsupported. Please check the value of the `_APP_FUNCTIONS_RUNTIMES`
+    environment variable.
+  description: The requested runtime is either inactive or unsupported. Please check the value of the `_APP_FUNCTIONS_RUNTIMES`
+    environment variable.
+- type: function_runtime_unsupported
+  status: 404
+  category: Functions
+  title: Entrypoint for your Appwrite Function is missing. Please specify it when making deployment or update the
+    entrypoint under your function's "Settings" > "Configuration" > "Entrypoint
+  description: Entrypoint for your Appwrite Function is missing. Please specify it when making deployment or update
+    the entrypoint under your function's "Settings" > "Configuration" > "Entrypoint".
+- type: build_not_found
+  status: 404
+  category: Functions
+  title: Build with the requested ID could not be found.
+  description: Build with the requested ID could not be found.
+- type: deployment_not_found
+  status: 404
+  category: Functions
+  title: Deployment with the requested ID could not be found.
+  description: Deployment with the requested ID could not be found.
+- type: variable_not_found
+  status: 404
+  category: Functions
+  title: Variable with the requested ID could not be found.
+  description: Variable with the requested ID could not be found.
+- type: provider_contribution_conflict
+  status: 409
+  category: Functions
+  title: External contribution is already authorized.
+  description: External contribution is already authorized.
+- type: variable_already_exists
+  status: 409
+  category: Functions
+  title: Variable with the same ID already exists in this project. Try again with a different ID.
+  description: Variable with the same ID already exists in this project. Try again with a different ID.
+- type: migration_not_found
+  status: 404
+  category: Migrations
+  title: Migration with the requested ID could not be found. Please verify that the provided ID is correct and try
+    again.
+  description: Migration with the requested ID could not be found. Please verify that the provided ID is correct
+    and try again.
+- type: migration_already_exists
+  status: 409
+  category: Migrations
+  title: Migration with the requested ID already exists. Try again with a different ID.
+  description: Migration with the requested ID already exists. Try again with a different ID.
+- type: migration_in_progress
+  status: 409
+  category: Migrations
+  title: Migration is already in progress. You can check the status of the migration in your Appwrite Console's
+    "Settings" > "Migrations".
+  description: Migration is already in progress. You can check the status of the migration in your Appwrite Console's
+    "Settings" > "Migrations".
+- type: avatar_set_not_found
+  status: 404
+  category: Avatars
+  title: The requested avatar set could not be found.
+  description: The requested avatar set could not be found.
+- type: avatar_not_found
+  status: 404
+  category: Avatars
+  title: The request avatar could not be found.
+  description: The request avatar could not be found.
+- type: avatar_image_not_found
+  status: 404
+  category: Avatars
+  title: The requested image was not found at the URL.
+  description: The requested image was not found at the URL.
+- type: avatar_remote_url_failed
+  status: 404
+  category: Avatars
+  title: Failed to fetch favicon from the requested URL.
+  description: Failed to fetch favicon from the requested URL.
+- type: avatar_icon_not_found
+  status: 404
+  category: Avatars
+  title: The requested favicon could not be found.
+  description: The requested favicon could not be found.
+- type: graphql_no_query
+  status: 400
+  category: GraphQL
+  title: Param "query" is not optional.
+  description: Param "query" is not optional.
+- type: graphql_too_many_queries
+  status: 400
+  category: GraphQL
+  title: Too many queries.
+  description: Too many queries.
+remediation_note: 'Appwrite documents two client-side practices alongside the table: surface user-friendly messages
+  keyed on `type` rather than echoing `message`, and treat 429 as a signal to back off and cache rather than retry
+  immediately — see rate-limits/appwrite-rate-limits.yml for the headers that carry the reset time.'
+related:
+  rate_limits: rate-limits/appwrite-rate-limits.yml
+  conventions: conventions/appwrite-conventions.yml
+  docs: https://appwrite.io/docs/apis/response-codes
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

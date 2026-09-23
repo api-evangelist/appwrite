@@ -1,0 +1,1357 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Usage API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Usage
+  description: ''
+paths:
+  /usage/events:
+    get:
+      summary: List usage events
+      operationId: usageListEvents
+      tags:
+      - Usage
+      description: 'Aggregate usage event metrics. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
+
+
+        **Two response shapes**:
+
+        - Omit `interval` for a flat top-N table — one point per dimension combination, no time axis. Useful for "top 10 paths by bandwidth in the last 7 days".
+
+        - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one point per (time bucket × dimension combination).
+
+
+        `dimensions[]` breaks each point down by one or more attributes (service, path, status, country, …). `queries[]` filters the underlying events using the standard Utopia query syntax — `equal("path", ["/v1/storage/files"])`, `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `startsWith("path", ["/v1/storage"])`, `equal("status", ["200", "201"])`, `isNotNull("resourceId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `contains`, `startsWith`, `endsWith`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N by aggregated value. When `startAt` is omitted, the default window adapts to `interval` (or 7d when interval is omitted).'
+      responses:
+        '200':
+          description: usageEventList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/usageEventList'
+      deprecated: false
+      x-appwrite:
+        group: events
+        demo: usage/list-events.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: projectId:{project.$id}
+        scope:
+        - usage.read
+        - account
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: metrics
+        description: 'One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=executions` or `metrics[]=executions&metrics[]=executions.compute` for stacked charts. On console: `metrics[]=affiliates.clicks`.'
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            anyOf:
+            - title: UsageEventMetric
+              type: string
+              oneOf:
+              - type: string
+                enum:
+                - network.requests
+                title: network.requests
+              - type: string
+                enum:
+                - network.inbound
+                title: network.inbound
+              - type: string
+                enum:
+                - network.outbound
+                title: network.outbound
+              - type: string
+                enum:
+                - webhooks.events.sent
+                title: webhooks.events.sent
+              - type: string
+                enum:
+                - webhooks.events.failed
+                title: webhooks.events.failed
+              - type: string
+                enum:
+                - auth.method.phone
+                title: auth.method.phone
+              - type: string
+                enum:
+                - messages.sent
+                title: messages.sent
+              - type: string
+                enum:
+                - messages.sms.sent
+                title: messages.sms.sent
+              - type: string
+                enum:
+                - executions
+                title: executions
+              - type: string
+                enum:
+                - executions.compute
+                title: executions.compute
+              - type: string
+                enum:
+                - executions.mbSeconds
+                title: executions.mbSeconds
+              - type: string
+                enum:
+                - functions.executions
+                title: functions.executions
+              - type: string
+                enum:
+                - sites.executions
+                title: sites.executions
+              - type: string
+                enum:
+                - functions.executions.compute
+                title: functions.executions.compute
+              - type: string
+                enum:
+                - sites.executions.compute
+                title: sites.executions.compute
+              - type: string
+                enum:
+                - functions.executions.mbSeconds
+                title: functions.executions.mbSeconds
+              - type: string
+                enum:
+                - sites.executions.mbSeconds
+                title: sites.executions.mbSeconds
+              - type: string
+                enum:
+                - builds
+                title: builds
+              - type: string
+                enum:
+                - builds.success
+                title: builds.success
+              - type: string
+                enum:
+                - builds.failed
+                title: builds.failed
+              - type: string
+                enum:
+                - builds.compute
+                title: builds.compute
+              - type: string
+                enum:
+                - builds.compute.success
+                title: builds.compute.success
+              - type: string
+                enum:
+                - builds.compute.failed
+                title: builds.compute.failed
+              - type: string
+                enum:
+                - builds.mbSeconds
+                title: builds.mbSeconds
+              - type: string
+                enum:
+                - functions.builds.mbSeconds
+                title: functions.builds.mbSeconds
+              - type: string
+                enum:
+                - sites.builds.mbSeconds
+                title: sites.builds.mbSeconds
+              - type: string
+                enum:
+                - databases.operations.reads
+                title: databases.operations.reads
+              - type: string
+                enum:
+                - databases.operations.writes
+                title: databases.operations.writes
+              - type: string
+                enum:
+                - documentsdb.databases.operations.reads
+                title: documentsdb.databases.operations.reads
+              - type: string
+                enum:
+                - documentsdb.databases.operations.writes
+                title: documentsdb.databases.operations.writes
+              - type: string
+                enum:
+                - vectorsdb.databases.operations.reads
+                title: vectorsdb.databases.operations.reads
+              - type: string
+                enum:
+                - vectorsdb.databases.operations.writes
+                title: vectorsdb.databases.operations.writes
+              - type: string
+                enum:
+                - files.imagesTransformed
+                title: files.imagesTransformed
+              - type: string
+                enum:
+                - avatars.screenshotsGenerated
+                title: avatars.screenshotsGenerated
+              - type: string
+                enum:
+                - realtime.messages.sent
+                title: realtime.messages.sent
+              - type: string
+                enum:
+                - realtime.inbound
+                title: realtime.inbound
+              - type: string
+                enum:
+                - realtime.outbound
+                title: realtime.outbound
+              - type: string
+                enum:
+                - embeddings.text
+                title: embeddings.text
+              - type: string
+                enum:
+                - embeddings.text.totalTokens
+                title: embeddings.text.totalTokens
+              - type: string
+                enum:
+                - embeddings.text.totalDuration
+                title: embeddings.text.totalDuration
+              - type: string
+                enum:
+                - embeddings.text.totalErrors
+                title: embeddings.text.totalErrors
+              - type: string
+                enum:
+                - waf.requests.denied
+                title: waf.requests.denied
+              - type: string
+                enum:
+                - waf.requests.challenged
+                title: waf.requests.challenged
+              - type: string
+                enum:
+                - waf.requests.rateLimited
+                title: waf.requests.rateLimited
+              - type: string
+                enum:
+                - waf.requests.redirected
+                title: waf.requests.redirected
+              - type: string
+                enum:
+                - waf.requests.challengeSolved
+                title: waf.requests.challengeSolved
+              - type: string
+                enum:
+                - waf.challenge.solveTimeMs
+                title: waf.challenge.solveTimeMs
+              - type: string
+                enum:
+                - affiliates.clicks
+                title: affiliates.clicks
+              - type: string
+                enum:
+                - affiliates.signups
+                title: affiliates.signups
+              - type: string
+                enum:
+                - affiliates.conversions
+                title: affiliates.conversions
+              - type: string
+                enum:
+                - dedicatedDatabases.inbound
+                title: dedicatedDatabases.inbound
+              - type: string
+                enum:
+                - dedicatedDatabases.outbound
+                title: dedicatedDatabases.outbound
+              - type: string
+                enum:
+                - dedicatedDatabases.compute
+                title: dedicatedDatabases.compute
+            - type: string
+        in: query
+      - name: queries
+        description: 'Up to 10 filter queries in Utopia syntax. Allowed attributes, also published as the `UsageEventDimension` enum: path, method, status, service, resourceType, resourceId, teamId, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion, isp, autonomousSystemNumber, autonomousSystemOrganization, connectionType, connectionUsageType, connectionOrganization. Allowed methods: equal, notEqual, contains, startsWith, endsWith, isNull, isNotNull. Example: `queries[]=equal("resourceType", ["bucket"])`.'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: interval
+        description: 'Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.'
+        required: false
+        schema:
+          type: string
+          example: 1m
+          title: UsageInterval
+          oneOf:
+          - type: string
+            enum:
+            - 1m
+            title: One Minute
+          - type: string
+            enum:
+            - 15m
+            title: Fifteen Minutes
+          - type: string
+            enum:
+            - 30m
+            title: Thirty Minutes
+          - type: string
+            enum:
+            - 1h
+            title: One Hour
+          - type: string
+            enum:
+            - 1d
+            title: One Day
+        in: query
+      - name: dimensions
+        description: 'Break-down dimensions (max 10). Allowed: path, method, status, service, resourceType, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion, teamId, resourceId, isp, autonomousSystemNumber, autonomousSystemOrganization, connectionType, connectionUsageType, connectionOrganization.'
+        required: false
+        schema:
+          type: array
+          items:
+            title: UsageEventDimension
+            type: string
+            oneOf:
+            - type: string
+              enum:
+              - path
+              title: path
+            - type: string
+              enum:
+              - method
+              title: method
+            - type: string
+              enum:
+              - status
+              title: status
+            - type: string
+              enum:
+              - service
+              title: service
+            - type: string
+              enum:
+              - resourceType
+              title: resourceType
+            - type: string
+              enum:
+              - country
+              title: country
+            - type: string
+              enum:
+              - continentCode
+              title: continentCode
+            - type: string
+              enum:
+              - city
+              title: city
+            - type: string
+              enum:
+              - region
+              title: region
+            - type: string
+              enum:
+              - hostname
+              title: hostname
+            - type: string
+              enum:
+              - ip
+              title: ip
+            - type: string
+              enum:
+              - osName
+              title: osName
+            - type: string
+              enum:
+              - clientType
+              title: clientType
+            - type: string
+              enum:
+              - clientName
+              title: clientName
+            - type: string
+              enum:
+              - deviceName
+              title: deviceName
+            - type: string
+              enum:
+              - sdk
+              title: sdk
+            - type: string
+              enum:
+              - sdkVersion
+              title: sdkVersion
+            - type: string
+              enum:
+              - teamId
+              title: teamId
+            - type: string
+              enum:
+              - resourceId
+              title: resourceId
+            - type: string
+              enum:
+              - isp
+              title: isp
+            - type: string
+              enum:
+              - autonomousSystemNumber
+              title: autonomousSystemNumber
+            - type: string
+              enum:
+              - autonomousSystemOrganization
+              title: autonomousSystemOrganization
+            - type: string
+              enum:
+              - connectionType
+              title: connectionType
+            - type: string
+              enum:
+              - connectionUsageType
+              title: connectionUsageType
+            - type: string
+              enum:
+              - connectionOrganization
+              title: connectionOrganization
+          default: []
+        in: query
+      - name: startAt
+        description: Range start in ISO 8601. Defaults adapt to interval (7d for the no-interval aggregate).
+        required: false
+        schema:
+          type: string
+          format: datetime
+          example: '2020-10-15T06:38:00.000+00:00'
+          default: ''
+        in: query
+      - name: endAt
+        description: Range end in ISO 8601. Defaults to the current time.
+        required: false
+        schema:
+          type: string
+          format: datetime
+          example: '2020-10-15T06:38:00.000+00:00'
+          default: ''
+        in: query
+      - name: orderBy
+        description: 'Column to order by. Allowed: time, value. Default time when an interval is set; otherwise value.'
+        required: false
+        schema:
+          type: string
+          example: time
+          title: UsageOrderBy
+          oneOf:
+          - type: string
+            enum:
+            - time
+            title: time
+          - type: string
+            enum:
+            - value
+            title: value
+          default: time
+        in: query
+      - name: orderDir
+        description: 'Sort direction: asc or desc. Default desc — paired with the default limit, returns the most recent / highest-value groups first.'
+        required: false
+        schema:
+          type: string
+          example: asc
+          title: UsageOrderDirection
+          oneOf:
+          - type: string
+            enum:
+            - asc
+            title: asc
+          - type: string
+            enum:
+            - desc
+            title: desc
+          default: desc
+        in: query
+      - name: limit
+        description: Maximum rows to return (1-5000).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 500
+        in: query
+      - name: offset
+        description: Pagination offset (0-100000).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+  /usage/gauges:
+    get:
+      summary: List usage gauges
+      operationId: usageListGauges
+      tags:
+      - Usage
+      description: 'Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each point carries the latest snapshot in its interval via `argMax(value, time)`. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
+
+
+        A metric with no stored samples in the window returns an empty `points[]`. A metric that really did read zero returns a point whose `value` is `0`, so "no such series" and "a genuine zero" are different answers.
+
+
+        **Two response shapes**:
+
+        - Omit `interval` for a flat top-N table — `argMax(value, time)` per dimension combination over the whole window, no time axis. Useful for "top 10 resources by current storage".
+
+        - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one snapshot per (time bucket × dimension combination).
+
+
+        `dimensions[]` breaks each point down further. Supported on gauges: `resourceId`, `teamId`, `service`, `resourceType`, `ordinal`. `service` and `resourceType` enable per-service / per-resource-type panels (e.g. storage-by-service: group `files.storage`, `deployments.storage`, `builds.storage`, `databases.storage` by `service`). `ordinal` separates per-node series for multi-node resources such as dedicated databases. It is a stable per-node identity, not a role — ordinal 0 is the first member created, and a failover can leave the primary on any ordinal, so read the role from the database''s replicas endpoint rather than inferring it here. `queries[]` filters the underlying rows using the standard Utopia query syntax — `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `equal("teamId", ["team_x"])`, `equal("ordinal", ["0"])`, `isNotNull("teamId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
+
+
+        `aggregate` selects how the samples in a bucket are combined: `last` (default) is the latest reading — correct for a snapshot such as storage — while `max` is the highest reading. Use `max` for a sampled level series: peak concurrent realtime connections is `metrics[]=realtime.connections&aggregate=max`, at whatever `interval` the chart needs, since the peak of a set of samples is just the max of their per-bucket maxima. `realtime.connections` is served only here - it is a concurrency level, not a countable event, so `/v1/usage/events` rejects it.'
+      responses:
+        '200':
+          description: usageGaugeList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/usageGaugeList'
+      deprecated: false
+      x-appwrite:
+        group: gauges
+        demo: usage/list-gauges.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: projectId:{project.$id}
+        scope: usage.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: metrics
+        description: 'One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=files.storage` or `metrics[]=files.storage&metrics[]=deployments.storage` for stacked charts.'
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            anyOf:
+            - title: UsageGaugeMetric
+              type: string
+              oneOf:
+              - type: string
+                enum:
+                - teams
+                title: teams
+              - type: string
+                enum:
+                - users
+                title: users
+              - type: string
+                enum:
+                - messages
+                title: messages
+              - type: string
+                enum:
+                - sessions
+                title: sessions
+              - type: string
+                enum:
+                - databases
+                title: databases
+              - type: string
+                enum:
+                - collections
+                title: collections
+              - type: string
+                enum:
+                - documents
+                title: documents
+              - type: string
+                enum:
+                - databases.storage
+                title: databases.storage
+              - type: string
+                enum:
+                - documentsdb.databases
+                title: documentsdb.databases
+              - type: string
+                enum:
+                - documentsdb.collections
+                title: documentsdb.collections
+              - type: string
+                enum:
+                - documentsdb.documents
+                title: documentsdb.documents
+              - type: string
+                enum:
+                - documentsdb.databases.storage
+                title: documentsdb.databases.storage
+              - type: string
+                enum:
+                - vectorsdb.databases
+                title: vectorsdb.databases
+              - type: string
+                enum:
+                - vectorsdb.collections
+                title: vectorsdb.collections
+              - type: string
+                enum:
+                - vectorsdb.documents
+                title: vectorsdb.documents
+              - type: string
+                enum:
+                - vectorsdb.databases.storage
+                title: vectorsdb.databases.storage
+              - type: string
+                enum:
+                - buckets
+                title: buckets
+              - type: string
+                enum:
+                - files
+                title: files
+              - type: string
+                enum:
+                - files.storage
+                title: files.storage
+              - type: string
+                enum:
+                - sites
+                title: sites
+              - type: string
+                enum:
+                - functions
+                title: functions
+              - type: string
+                enum:
+                - deployments
+                title: deployments
+              - type: string
+                enum:
+                - deployments.storage
+                title: deployments.storage
+              - type: string
+                enum:
+                - builds
+                title: builds
+              - type: string
+                enum:
+                - builds.storage
+                title: builds.storage
+              - type: string
+                enum:
+                - users.mau
+                title: users.mau
+              - type: string
+                enum:
+                - users.dau
+                title: users.dau
+              - type: string
+                enum:
+                - users.wau
+                title: users.wau
+              - type: string
+                enum:
+                - webhooks
+                title: webhooks
+              - type: string
+                enum:
+                - platforms
+                title: platforms
+              - type: string
+                enum:
+                - providers
+                title: providers
+              - type: string
+                enum:
+                - topics
+                title: topics
+              - type: string
+                enum:
+                - targets
+                title: targets
+              - type: string
+                enum:
+                - keys
+                title: keys
+              - type: string
+                enum:
+                - domains
+                title: domains
+              - type: string
+                enum:
+                - realtime.connections
+                title: realtime.connections
+              - type: string
+                enum:
+                - backups.policies
+                title: backups.policies
+              - type: string
+                enum:
+                - backups.storage
+                title: backups.storage
+              - type: string
+                enum:
+                - dedicatedDatabases.storage
+                title: dedicatedDatabases.storage
+              - type: string
+                enum:
+                - dedicatedDatabases.connections
+                title: dedicatedDatabases.connections
+              - type: string
+                enum:
+                - dedicatedDatabases.cpu
+                title: dedicatedDatabases.cpu
+              - type: string
+                enum:
+                - dedicatedDatabases.memory
+                title: dedicatedDatabases.memory
+              - type: string
+                enum:
+                - dedicatedDatabases.qps
+                title: dedicatedDatabases.qps
+              - type: string
+                enum:
+                - dedicatedDatabases.iopsRead
+                title: dedicatedDatabases.iopsRead
+              - type: string
+                enum:
+                - dedicatedDatabases.iopsWrite
+                title: dedicatedDatabases.iopsWrite
+              - type: string
+                enum:
+                - apps
+                title: apps
+              - type: string
+                enum:
+                - apps.users
+                title: apps.users
+              - type: string
+                enum:
+                - apps.installations
+                title: apps.installations
+            - type: string
+        in: query
+      - name: queries
+        description: 'Up to 10 filter queries in Utopia syntax. Allowed attributes, also published as the `UsageGaugeDimension` enum: service, resourceType, resourceId, teamId, ordinal. Allowed methods: equal, notEqual, isNull, isNotNull. Example: `queries[]=equal("resourceType", ["bucket"])`.'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: interval
+        description: 'Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.'
+        required: false
+        schema:
+          type: string
+          example: 1m
+          title: UsageInterval
+          oneOf:
+          - type: string
+            enum:
+            - 1m
+            title: One Minute
+          - type: string
+            enum:
+            - 15m
+            title: Fifteen Minutes
+          - type: string
+            enum:
+            - 30m
+            title: Thirty Minutes
+          - type: string
+            enum:
+            - 1h
+            title: One Hour
+          - type: string
+            enum:
+            - 1d
+            title: One Day
+        in: query
+      - name: dimensions
+        description: 'Break-down dimensions. Allowed: resourceId, teamId, service, resourceType, ordinal.'
+        required: false
+        schema:
+          type: array
+          items:
+            title: UsageGaugeDimension
+            type: string
+            oneOf:
+            - type: string
+              enum:
+              - resourceId
+              title: resourceId
+            - type: string
+              enum:
+              - teamId
+              title: teamId
+            - type: string
+              enum:
+              - service
+              title: service
+            - type: string
+              enum:
+              - resourceType
+              title: resourceType
+            - type: string
+              enum:
+              - ordinal
+              title: ordinal
+          default: []
+        in: query
+      - name: startAt
+        description: Range start in ISO 8601. Defaults to endAt - 7d.
+        required: false
+        schema:
+          type: string
+          format: datetime
+          example: '2020-10-15T06:38:00.000+00:00'
+          default: ''
+        in: query
+      - name: endAt
+        description: Range end in ISO 8601. Defaults to the current time.
+        required: false
+        schema:
+          type: string
+          format: datetime
+          example: '2020-10-15T06:38:00.000+00:00'
+          default: ''
+        in: query
+      - name: orderBy
+        description: 'Column to order by. Allowed: time, value. Default time.'
+        required: false
+        schema:
+          type: string
+          example: time
+          title: UsageOrderBy
+          oneOf:
+          - type: string
+            enum:
+            - time
+            title: time
+          - type: string
+            enum:
+            - value
+            title: value
+          default: time
+        in: query
+      - name: orderDir
+        description: 'Sort direction: asc or desc. Default desc — paired with the default limit, this returns the most recent groups first. Pass asc for chronological charting.'
+        required: false
+        schema:
+          type: string
+          example: asc
+          title: UsageOrderDirection
+          oneOf:
+          - type: string
+            enum:
+            - asc
+            title: asc
+          - type: string
+            enum:
+            - desc
+            title: desc
+          default: desc
+        in: query
+      - name: limit
+        description: Maximum rows to return (1-5000).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 500
+        in: query
+      - name: offset
+        description: Pagination offset (0-100000).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+      - name: aggregate
+        description: 'How to combine the samples in each bucket. `last` (default) returns the latest reading — the right answer for a snapshot such as storage. `max` returns the highest reading, which is what a sampled level series needs: peak concurrent realtime connections is the max of `realtime.connections` over the window.'
+        required: false
+        schema:
+          type: string
+          example: last
+          default: last
+        in: query
+components:
+  schemas:
+    usageDataPoint:
+      description: usageDataPoint
+      type: object
+      properties:
+        time:
+          type:
+          - string
+          - 'null'
+          description: Bucket start timestamp in ISO 8601. Omitted for flat dimension aggregates.
+          example: '2026-04-09T12:00:00.000+00:00'
+        value:
+          type: number
+          description: Aggregated value for the point.
+          format: double
+          example: 5000
+        path:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `path`.
+          example: /v1/storage/files
+        method:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `method`.
+          example: POST
+        status:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `status`.
+          example: '201'
+        service:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `service`.
+          example: storage
+        country:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `country`.
+          example: us
+        region:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `region`.
+          example: default
+        hostname:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `hostname`.
+          example: app.example.com
+        ip:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `ip`.
+          example: 192.0.2.44
+        osName:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `osName`.
+          example: iOS
+        clientType:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `clientType`.
+          example: browser
+        clientName:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `clientName`.
+          example: Chrome
+        sdk:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `sdk`.
+          example: web
+        sdkVersion:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `sdkVersion`.
+          example: 14.0.0
+        deviceName:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `deviceName`.
+          example: smartphone
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `resourceId`.
+          example: abc123
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `resourceType`.
+          example: bucket
+        ordinal:
+          type:
+          - string
+          - 'null'
+          description: Value when broken down by `ordinal`.
+          example: '0'
+        continentCode:
+          type:
+          - string
+          - 'null'
+          description: Continent code when broken down by `continentCode`.
+          example: NA
+        city:
+          type:
+          - string
+          - 'null'
+          description: City name when broken down by `city`.
+          example: Mountain View
+        subdivisions:
+          type:
+          - string
+          - 'null'
+          description: Region/state chain when broken down by `subdivisions`.
+          example: California
+        isp:
+          type:
+          - string
+          - 'null'
+          description: Internet service provider when broken down by `isp`.
+          example: Google
+        autonomousSystemNumber:
+          type:
+          - string
+          - 'null'
+          description: Autonomous System Number (ASN) when broken down by `autonomousSystemNumber`.
+          example: '15169'
+        autonomousSystemOrganization:
+          type:
+          - string
+          - 'null'
+          description: Organization owning the ASN when broken down by `autonomousSystemOrganization`.
+          example: GOOGLE
+        connectionType:
+          type:
+          - string
+          - 'null'
+          description: Connection type when broken down by `connectionType`.
+          example: cable
+        connectionUsageType:
+          type:
+          - string
+          - 'null'
+          description: Connection usage type when broken down by `connectionUsageType`.
+          example: residential
+        connectionOrganization:
+          type:
+          - string
+          - 'null'
+          description: Registered organization of the IP when broken down by `connectionOrganization`.
+          example: Google LLC
+        teamId:
+          type:
+          - string
+          - 'null'
+          description: Owning team ID when broken down by `teamId`.
+          example: team_abc
+      required:
+      - value
+      example:
+        time: '2026-04-09T12:00:00.000+00:00'
+        value: 5000
+        path: /v1/storage/files
+        method: POST
+        status: '201'
+        service: storage
+        country: us
+        region: default
+        hostname: app.example.com
+        ip: 192.0.2.44
+        osName: iOS
+        clientType: browser
+        clientName: Chrome
+        sdk: web
+        sdkVersion: 14.0.0
+        deviceName: smartphone
+        resourceId: abc123
+        resourceType: bucket
+        ordinal: '0'
+        continentCode: NA
+        city: Mountain View
+        subdivisions: California
+        isp: Google
+        autonomousSystemNumber: '15169'
+        autonomousSystemOrganization: GOOGLE
+        connectionType: cable
+        connectionUsageType: residential
+        connectionOrganization: Google LLC
+        teamId: team_abc
+    usageMetric:
+      description: usageMetric
+      type: object
+      properties:
+        metric:
+          type: string
+          description: Metric key this series describes.
+          example: files.storage
+        points:
+          type: array
+          description: Data points in the requested order.
+          items:
+            $ref: '#/components/schemas/usageDataPoint'
+          example: []
+      required:
+      - metric
+      - points
+      example:
+        metric: files.storage
+        points: ''
+    usageGaugeList:
+      description: usageGaugeList
+      type: object
+      properties:
+        interval:
+          type: string
+          description: Requested interval, or an empty string for a flat aggregate.
+          example: 1h
+        metrics:
+          type: array
+          description: One series per requested gauge metric.
+          items:
+            $ref: '#/components/schemas/usageMetric'
+          example: []
+      required:
+      - interval
+      - metrics
+      example:
+        interval: 1h
+        metrics: ''
+    usageEventList:
+      description: usageEventList
+      type: object
+      properties:
+        interval:
+          type: string
+          description: Requested interval, or an empty string for a flat aggregate.
+          example: 1h
+        metrics:
+          type: array
+          description: One series per requested event metric.
+          items:
+            $ref: '#/components/schemas/usageMetric'
+          example: []
+      required:
+      - interval
+      - metrics
+      example:
+        interval: 1h
+        metrics: ''
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

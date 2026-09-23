@@ -1,0 +1,930 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Locale API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Locale
+  description: The Locale service allows you to customize your app based on your users' location.
+paths:
+  /locale:
+    get:
+      summary: Get user locale
+      operationId: localeGet
+      tags:
+      - Locale
+      description: 'Get the current user location based on IP. Returns an object with user country code, country name, continent name, continent code, ip address and suggested currency. You can use the locale header to get the data in a supported language.
+
+
+        (IP Geolocation by DB-IP)'
+      responses:
+        '200':
+          description: Locale
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/locale'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/get.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+  /locale/codes:
+    get:
+      summary: List locale codes
+      operationId: localeListCodes
+      tags:
+      - Locale
+      description: List of all locale codes in ISO 639-1.
+      responses:
+        '200':
+          description: Locale codes list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/localeCodeList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/list-codes.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+  /locale/continents:
+    get:
+      summary: List continents
+      operationId: localeListContinents
+      tags:
+      - Locale
+      description: List of all continents. You can use the locale header to get the data in a supported language.
+      responses:
+        '200':
+          description: Continents List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/continentList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/list-continents.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+  /locale/countries:
+    get:
+      summary: List countries
+      operationId: localeListCountries
+      tags:
+      - Locale
+      description: List of all countries. You can use the locale header to get the data in a supported language.
+      responses:
+        '200':
+          description: Countries List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/countryList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/list-countries.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+  /locale/countries/eu:
+    get:
+      summary: List EU countries
+      operationId: localeListCountriesEU
+      tags:
+      - Locale
+      description: List of all countries that are currently members of the EU. You can use the locale header to get the data in a supported language.
+      responses:
+        '200':
+          description: Countries List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/countryList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/list-countries-eu.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+  /locale/countries/phones:
+    get:
+      summary: List countries phone codes
+      operationId: localeListCountriesPhones
+      tags:
+      - Locale
+      description: List of all countries phone codes. You can use the locale header to get the data in a supported language.
+      responses:
+        '200':
+          description: Phones List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/phoneList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/list-countries-phones.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+  /locale/currencies:
+    get:
+      summary: List currencies
+      operationId: localeListCurrencies
+      tags:
+      - Locale
+      description: List of all currencies, including currency symbol, name, plural, and decimal digits for all major and minor currencies. You can use the locale header to get the data in a supported language.
+      responses:
+        '200':
+          description: Currencies List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/currencyList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/list-currencies.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+  /locale/languages:
+    get:
+      summary: List languages
+      operationId: localeListLanguages
+      tags:
+      - Locale
+      description: List of all languages classified by ISO 639-1 including 2-letter code, name in English, and name in the respective language.
+      responses:
+        '200':
+          description: Languages List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/languageList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: locale/list-languages.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: locale.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+components:
+  schemas:
+    localeCode:
+      description: LocaleCode
+      type: object
+      properties:
+        code:
+          type: string
+          description: Locale codes in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+          example: en-us
+        name:
+          type: string
+          description: Locale name
+          example: US
+      required:
+      - code
+      - name
+      example:
+        code: en-us
+        name: US
+    locale:
+      description: Locale
+      type: object
+      properties:
+        ip:
+          type: string
+          description: User IP address.
+          example: 127.0.0.1
+        countryCode:
+          type: string
+          description: Country code in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) two-character format
+          example: US
+        country:
+          type: string
+          description: Country name. This field support localization.
+          example: United States
+        continentCode:
+          type: string
+          description: Continent code. A two character continent code "AF" for Africa, "AN" for Antarctica, "AS" for Asia, "EU" for Europe, "NA" for North America, "OC" for Oceania, and "SA" for South America.
+          example: NA
+        continent:
+          type: string
+          description: Continent name. This field support localization.
+          example: North America
+        eu:
+          type: boolean
+          description: True if country is part of the European Union.
+          example: false
+        currency:
+          type: string
+          description: Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
+          example: USD
+        city:
+          type:
+          - string
+          - 'null'
+          description: City
+          example: Kathmandu
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: Name of timezone
+          example: Asia/Kathmandu
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: Postal code
+          example: '44600'
+        latitude:
+          type:
+          - number
+          - 'null'
+          description: Latitude
+          format: double
+          example: 82.345
+        longitude:
+          type:
+          - number
+          - 'null'
+          description: Longitude
+          format: double
+          example: 82.345
+        autonomousSystemNumber:
+          type:
+          - string
+          - 'null'
+          description: Autonomous System Number (ASN) of the IP
+          example: '15169'
+        autonomousSystemOrganization:
+          type:
+          - string
+          - 'null'
+          description: Organization that owns the ASN
+          example: GOOGLE
+        isp:
+          type:
+          - string
+          - 'null'
+          description: Internet service provider of the IP
+          example: Google
+        connectionType:
+          type:
+          - string
+          - 'null'
+          description: Connection type of the IP (e.g. cable, cellular, corporate)
+          example: cable
+        connectionUsageType:
+          type:
+          - string
+          - 'null'
+          description: User type classification of the IP (e.g. residential, business, hosting)
+          example: residential
+        connectionOrganization:
+          type:
+          - string
+          - 'null'
+          description: Registered organization of the IP
+          example: Google LLC
+      required:
+      - ip
+      - countryCode
+      - country
+      - continentCode
+      - continent
+      - eu
+      - currency
+      example:
+        ip: 127.0.0.1
+        countryCode: US
+        country: United States
+        continentCode: NA
+        continent: North America
+        eu: false
+        currency: USD
+        city: Kathmandu
+        timeZone: Asia/Kathmandu
+        postalCode: '44600'
+        latitude: '82.345'
+        longitude: '82.345'
+        autonomousSystemNumber: '15169'
+        autonomousSystemOrganization: GOOGLE
+        isp: Google
+        connectionType: cable
+        connectionUsageType: residential
+        connectionOrganization: Google LLC
+    currencyList:
+      description: Currencies List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of currencies that matched your query.
+          format: int32
+          example: 5
+        currencies:
+          type: array
+          description: List of currencies.
+          items:
+            $ref: '#/components/schemas/currency'
+          example: []
+      required:
+      - total
+      - currencies
+      example:
+        total: 5
+        currencies: ''
+    currency:
+      description: Currency
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Currency symbol.
+          example: $
+        name:
+          type: string
+          description: Currency name.
+          example: US dollar
+        symbolNative:
+          type: string
+          description: Currency native symbol.
+          example: $
+        decimalDigits:
+          type: integer
+          description: Number of decimal digits.
+          format: int32
+          example: 2
+        rounding:
+          type: number
+          description: Currency digit rounding.
+          format: double
+          example: 0
+        code:
+          type: string
+          description: Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format.
+          example: USD
+        namePlural:
+          type: string
+          description: Currency plural name
+          example: US dollars
+      required:
+      - symbol
+      - name
+      - symbolNative
+      - decimalDigits
+      - rounding
+      - code
+      - namePlural
+      example:
+        symbol: $
+        name: US dollar
+        symbolNative: $
+        decimalDigits: 2
+        rounding: 0
+        code: USD
+        namePlural: US dollars
+    phoneList:
+      description: Phones List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of phones that matched your query.
+          format: int32
+          example: 5
+        phones:
+          type: array
+          description: List of phones.
+          items:
+            $ref: '#/components/schemas/phone'
+          example: []
+      required:
+      - total
+      - phones
+      example:
+        total: 5
+        phones: ''
+    localeCodeList:
+      description: Locale codes list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of localeCodes that matched your query.
+          format: int32
+          example: 5
+        localeCodes:
+          type: array
+          description: List of localeCodes.
+          items:
+            $ref: '#/components/schemas/localeCode'
+          example: []
+      required:
+      - total
+      - localeCodes
+      example:
+        total: 5
+        localeCodes: ''
+    countryList:
+      description: Countries List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of countries that matched your query.
+          format: int32
+          example: 5
+        countries:
+          type: array
+          description: List of countries.
+          items:
+            $ref: '#/components/schemas/country'
+          example: []
+      required:
+      - total
+      - countries
+      example:
+        total: 5
+        countries: ''
+    country:
+      description: Country
+      type: object
+      properties:
+        name:
+          type: string
+          description: Country name.
+          example: United States
+        code:
+          type: string
+          description: Country two-character ISO 3166-1 alpha code.
+          example: US
+      required:
+      - name
+      - code
+      example:
+        name: United States
+        code: US
+    continentList:
+      description: Continents List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of continents that matched your query.
+          format: int32
+          example: 5
+        continents:
+          type: array
+          description: List of continents.
+          items:
+            $ref: '#/components/schemas/continent'
+          example: []
+      required:
+      - total
+      - continents
+      example:
+        total: 5
+        continents: ''
+    continent:
+      description: Continent
+      type: object
+      properties:
+        name:
+          type: string
+          description: Continent name.
+          example: Europe
+        code:
+          type: string
+          description: Continent two letter code.
+          example: EU
+      required:
+      - name
+      - code
+      example:
+        name: Europe
+        code: EU
+    language:
+      description: Language
+      type: object
+      properties:
+        name:
+          type: string
+          description: Language name.
+          example: Italian
+        code:
+          type: string
+          description: Language two-character ISO 639-1 codes.
+          example: it
+        nativeName:
+          type: string
+          description: Language native name.
+          example: Italiano
+      required:
+      - name
+      - code
+      - nativeName
+      example:
+        name: Italian
+        code: it
+        nativeName: Italiano
+    languageList:
+      description: Languages List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of languages that matched your query.
+          format: int32
+          example: 5
+        languages:
+          type: array
+          description: List of languages.
+          items:
+            $ref: '#/components/schemas/language'
+          example: []
+      required:
+      - total
+      - languages
+      example:
+        total: 5
+        languages: ''
+    phone:
+      description: Phone
+      type: object
+      properties:
+        code:
+          type: string
+          description: Phone code.
+          example: '+1'
+        countryCode:
+          type: string
+          description: Country two-character ISO 3166-1 alpha code.
+          example: US
+        countryName:
+          type: string
+          description: Country name.
+          example: United States
+      required:
+      - code
+      - countryCode
+      - countryName
+      example:
+        code: '+1'
+        countryCode: US
+        countryName: United States
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

@@ -1,0 +1,135 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://appwrite.io/docs/tooling/command-line/installation,
+  https://appwrite.io/docs/tooling/command-line/commands,
+  https://appwrite.io/docs/tooling/command-line/non-interactive and
+  https://github.com/appwrite/sdk-for-cli — read 2026-09-12.
+provider: Appwrite
+providerId: appwrite
+name: Appwrite CLI
+binary: appwrite
+repository: https://github.com/appwrite/sdk-for-cli
+docs: https://appwrite.io/docs/tooling/command-line/installation
+version: 27.3.0
+published: '2026-09-02'
+implementation: Go
+implementation_note: >-
+  The CLI was rewritten in Go and announced 2026-08-11. It still ships through npm as well as native
+  package managers and a standalone binary, so `npm install -g appwrite-cli` installs a Go binary.
+scope_note: >-
+  This is not a thin deploy wrapper. Appwrite states the CLI has a command for every Server API
+  endpoint, so it doubles as a Server SDK — which makes it a legitimate agent surface in its own
+  right, and the reason Appwrite ships a dedicated appwrite-cli agent skill.
+install:
+  - method: npm
+    command: npm install -g appwrite-cli
+    package: https://www.npmjs.com/package/appwrite-cli
+  - method: homebrew
+    command: brew install appwrite
+    platform: macOS
+  - method: shell script
+    command: curl -sL https://appwrite.io/cli/install.sh | bash
+    platform: macOS, Linux
+  - method: powershell
+    command: iwr -useb https://appwrite.io/cli/install.ps1 | iex
+    platform: Windows
+  - method: scoop
+    command: scoop install https://raw.githubusercontent.com/appwrite/sdk-for-cli/master/scoop/appwrite.config.json
+    platform: Windows
+  - method: standalone binary
+    url: https://github.com/appwrite/sdk-for-cli/releases/latest
+    note: Dependency-free, platform independent, language agnostic.
+syntax: appwrite [COMMAND] [OPTIONS]
+command_groups:
+  - group: General
+    commands:
+      - name: client
+        description: Configure the CLI (endpoint, project, key).
+      - name: locale
+        description: Customize your app based on your users' location.
+      - name: graphql
+        description: Query and mutate any resource type through the GraphQL endpoint.
+      - name: types
+        description: Generate type definitions from your Appwrite database schema.
+      - name: generate
+        description: Generate a type-safe SDK tailored to your project, detecting the project language.
+  - group: Account
+    commands:
+      - name: login
+        description: Authenticate the CLI with a console account.
+      - name: logout
+        description: Log out of your Appwrite account.
+      - name: register
+        description: Print a link to register an Appwrite account.
+      - name: whoami
+        description: Show the currently logged-in user.
+  - group: Deployment
+    commands:
+      - name: init
+        description: Create and initialize projects, functions, tables, buckets, teams and messaging topics.
+      - name: pull
+        description: Pull project, functions, tables, buckets, teams and messaging topics down locally.
+      - name: push
+        description: Push functions, tables, buckets, teams and topics up to Appwrite.
+      - name: run
+        description: Run projects locally for development and debugging.
+  - group: Project services
+    commands:
+      - name: account
+        description: Authenticate and manage a user account.
+      - name: users
+        description: Manage project users.
+      - name: teams
+        description: Group users and share read/write access to project resources.
+      - name: databases
+        description: Create structured tables of rows; query and filter lists of rows.
+      - name: functions
+        description: View, create and manage Appwrite Functions.
+      - name: messaging
+        description: Send, create, edit and delete messages.
+      - name: storage
+        description: Manage project files.
+      - name: avatars
+        description: Utilities for images, icons and avatars.
+global_flags:
+  - flag: -v, --version
+    description: Output the version number.
+  - flag: -V, --verbose
+    description: Show the complete error log.
+  - flag: -j, --json
+    description: Output JSON instead of the default table rendering.
+  - flag: -f, --force
+    description: Confirm all warnings, including destructive push/pull operations.
+  - flag: -a, --all
+    description: Select every available resource on push/pull.
+  - flag: --id [id...]
+    description: Pass a list of ids for a given action.
+  - flag: --report
+    description: Generate a GitHub error-reporting link on failure.
+  - flag: --console [--open]
+    description: Print (or open) a direct Console link for the resource.
+  - flag: -h, --help
+    description: Display help for a command.
+key_flows:
+  - name: Project configuration
+    detail: >-
+      appwrite.config.json holds the project definition. init/pull/push/run support multi-file
+      configuration via an `includes` field that moves resource arrays into separate JSON files
+      (announced 2026-05-06).
+  - name: Non-interactive CI/CD
+    detail: >-
+      Authenticate without a browser and run push/pull unattended; browser-based login and OAuth
+      device authorization were added 2026-07-29.
+    docs: https://appwrite.io/docs/tooling/command-line/non-interactive
+  - name: Type and SDK generation
+    detail: >-
+      `appwrite types <dir>` emits type definitions from the database schema; `appwrite generate`
+      emits a project-tailored type-safe SDK.
+  - name: List query flags
+    detail: Filter, sort and pagination flags on list commands (added 2026-04-28).
+agent_skill: skills/appwrite-cli/SKILL.md
+packages: packages/appwrite-packages.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

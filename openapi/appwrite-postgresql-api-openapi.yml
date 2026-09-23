@@ -1,0 +1,4077 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Postgresql API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Postgresql
+  description: ''
+paths:
+  /postgresql:
+    get:
+      summary: List databases
+      operationId: postgresqlList
+      tags:
+      - Postgresql
+      description: List all dedicated databases. Results support pagination.
+      responses:
+        '200':
+          description: Dedicated databases list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseList'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/list.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: queries
+        description: Array of query strings.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+    post:
+      summary: Create database
+      operationId: postgresqlCreate
+      tags:
+      - Postgresql
+      description: Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
+      responses:
+        '201':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/create.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                databaseId:
+                  description: Database ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+                  type: string
+                  example: <DATABASE_ID>
+                  x-appwrite:
+                    idGenerator: ID.unique
+                name:
+                  description: 'Database display name. Max length: 128 chars.'
+                  type: string
+                  example: <NAME>
+                version:
+                  description: Database engine version. Defaults to latest for selected engine.
+                  type:
+                  - string
+                  - 'null'
+                  example: '17'
+                specification:
+                  description: Specification identifier. Drives the allocated CPU, memory, storage, storage class, and connection ceiling.
+                  type: string
+                  default: s-1vcpu-1gb
+                  example: <SPECIFICATION>
+                replicas:
+                  description: Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+                  type: integer
+                  default: 0
+                  example: 0
+                  format: int32
+                syncMode:
+                  description: 'Replication sync mode preference. Allowed values: async, sync, quorum.'
+                  type:
+                  - string
+                  - 'null'
+                  example: async
+                networkIdleTimeoutSeconds:
+                  description: Connection idle timeout in seconds.
+                  type: integer
+                  default: 900
+                  example: 60
+                  format: int32
+                networkIPAllowlist:
+                  description: IP addresses/CIDR ranges allowed to connect.
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                idleTimeoutMinutes:
+                  description: Minutes of inactivity before container scales to zero.
+                  type: integer
+                  default: 15
+                  example: 5
+                  format: int32
+                pitr:
+                  description: Enable point-in-time recovery (PITR). Continuously archives changes so the database can be restored to any moment within the retention window.
+                  type: boolean
+                  default: true
+                  example: false
+                pitrRetentionDays:
+                  description: Number of days to retain PITR data.
+                  type: integer
+                  default: 7
+                  example: 1
+                  format: int32
+                storageAutoscaling:
+                  description: Enable automatic storage expansion when usage exceeds threshold.
+                  type: boolean
+                  default: true
+                  example: false
+                storageAutoscalingThresholdPercent:
+                  description: Storage usage percentage (50-95) that triggers automatic expansion.
+                  type: integer
+                  default: 85
+                  example: 50
+                  format: int32
+                storageAutoscalingMaxGb:
+                  description: Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 0
+                  format: int32
+              required:
+              - databaseId
+              - name
+  /postgresql/specifications:
+    get:
+      summary: List specifications
+      operationId: postgresqlListSpecifications
+      tags:
+      - Postgresql
+      description: List the dedicated database specifications available on the current plan. Each specification reports its resource limits, its own prices and overage rates, and whether it is enabled for the organization.
+      responses:
+        '200':
+          description: SpecificationList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseSpecificationList'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/list-specifications.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+  /postgresql/{databaseId}:
+    get:
+      summary: Get database
+      operationId: postgresqlGet
+      tags:
+      - Postgresql
+      description: Get a dedicated database by its unique ID. Returns the database configuration and current status.
+      responses:
+        '200':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/get.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+    patch:
+      summary: Update database
+      operationId: postgresqlUpdate
+      tags:
+      - Postgresql
+      description: Update a dedicated database configuration. All changes are applied with zero downtime. Specification changes (cpu, memory, storage) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
+      responses:
+        '200':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/update.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Database display name.
+                  type:
+                  - string
+                  - 'null'
+                  example: <NAME>
+                status:
+                  description: 'Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.'
+                  type:
+                  - string
+                  - 'null'
+                  example: ready
+                specification:
+                  description: Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
+                  type:
+                  - string
+                  - 'null'
+                  example: <SPECIFICATION>
+                replicas:
+                  description: Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 0
+                  format: int32
+                syncMode:
+                  description: 'Replication sync mode preference. Allowed values: async, sync, quorum.'
+                  type:
+                  - string
+                  - 'null'
+                  example: async
+                networkIdleTimeoutSeconds:
+                  description: Connection idle timeout in seconds (60-86400).
+                  type:
+                  - integer
+                  - 'null'
+                  example: 60
+                  format: int32
+                networkIPAllowlist:
+                  description: IP addresses/CIDR ranges allowed to connect.
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                idleTimeoutMinutes:
+                  description: Minutes before container scales to zero.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 5
+                  format: int32
+                pitr:
+                  description: Enable or disable point-in-time recovery (PITR).
+                  type:
+                  - boolean
+                  - 'null'
+                  example: false
+                pitrRetentionDays:
+                  description: Days to retain PITR data.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 1
+                  format: int32
+                storageAutoscaling:
+                  description: Enable automatic storage expansion when usage exceeds threshold.
+                  type:
+                  - boolean
+                  - 'null'
+                  example: false
+                storageAutoscalingThresholdPercent:
+                  description: Storage usage percentage (50-95) that triggers automatic expansion.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 50
+                  format: int32
+                storageAutoscalingMaxGb:
+                  description: Maximum storage size in GB for autoscaling. 0 means no limit.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 0
+                  format: int32
+                metricsTraceSampleRate:
+                  description: Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
+                  type:
+                  - number
+                  - 'null'
+                  format: float
+                metricsSlowQueryLogThresholdMs:
+                  description: Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 0
+                  format: int32
+                sqlApiEnabled:
+                  description: Enable the SQL API sidecar for this database.
+                  type:
+                  - boolean
+                  - 'null'
+                  example: false
+                sqlApiAllowedStatements:
+                  description: 'Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.'
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                sqlApiMaxRows:
+                  description: Maximum rows returned per SQL API execution (1-1000000).
+                  type:
+                  - integer
+                  - 'null'
+                  example: 1
+                  format: int32
+                sqlApiMaxBytes:
+                  description: Maximum serialised SQL API result payload in bytes (1024-104857600).
+                  type:
+                  - integer
+                  - 'null'
+                  example: 1024
+                  format: int32
+                sqlApiTimeoutSeconds:
+                  description: Per-call SQL API execution timeout in seconds (1-300).
+                  type:
+                  - integer
+                  - 'null'
+                  example: 1
+                  format: int32
+    delete:
+      summary: Delete database
+      operationId: postgresqlDelete
+      tags:
+      - Postgresql
+      description: Delete a dedicated database. This action is irreversible. The database status will be set to 'deleting' and all resources will be cleaned up. Deletion is allowed from any state, and repeating the call re-dispatches the cleanup.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/delete.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /postgresql/{databaseId}/backups:
+    get:
+      summary: List backups
+      operationId: postgresqlListBackups
+      tags:
+      - Postgresql
+      description: List all backups for a dedicated database. Results can be filtered by status and type.
+      responses:
+        '200':
+          description: BackupList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseBackupList'
+      deprecated: false
+      x-appwrite:
+        group: backups
+        demo: postgresql/list-backups.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: queries
+        description: 'Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, type, databaseId'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+    post:
+      summary: Create backup
+      operationId: postgresqlCreateBackup
+      tags:
+      - Postgresql
+      description: Create a manual backup of a dedicated database. The backup will be created asynchronously and its status can be checked via the get backup endpoint.
+      responses:
+        '202':
+          description: Backup
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseBackup'
+      deprecated: false
+      x-appwrite:
+        group: backups
+        demo: postgresql/create-backup.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  description: 'Backup type: full or incremental.'
+                  type: string
+                  default: full
+                  example: full
+  /postgresql/{databaseId}/backups/policies:
+    get:
+      summary: List backup policies
+      operationId: postgresqlListBackupPolicies
+      tags:
+      - Postgresql
+      description: List scheduled backup policies for a dedicated database.
+      responses:
+        '200':
+          description: Backup policy list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backupPolicyList'
+      deprecated: false
+      x-appwrite:
+        group: policies
+        demo: postgresql/list-backup-policies.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: queries
+        description: Array of query strings generated using the Query class provided by the SDK.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+    post:
+      summary: Create backup policy
+      operationId: postgresqlCreateBackupPolicy
+      tags:
+      - Postgresql
+      description: Create a scheduled backup policy for a dedicated database.
+      responses:
+        '201':
+          description: backup
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backupPolicy'
+      deprecated: false
+      x-appwrite:
+        group: policies
+        demo: postgresql/create-backup-policy.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                policyId:
+                  description: Policy ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+                  type: string
+                  example: <POLICY_ID>
+                  x-appwrite:
+                    idGenerator: ID.unique
+                name:
+                  description: 'Policy name. Max length: 128 chars.'
+                  type: string
+                  example: <NAME>
+                schedule:
+                  description: Schedule CRON syntax.
+                  type: string
+                retention:
+                  description: Days to keep backups before deletion.
+                  type: integer
+                  example: 1
+                  format: int32
+                type:
+                  description: 'Backup type: full or incremental.'
+                  type: string
+                  default: full
+                  example: full
+                enabled:
+                  description: Is policy enabled? When disabled, no backups will be taken.
+                  type: boolean
+                  default: true
+                  example: false
+              required:
+              - policyId
+              - name
+              - schedule
+              - retention
+  /postgresql/{databaseId}/backups/policies/{policyId}:
+    get:
+      summary: Get backup policy
+      operationId: postgresqlGetBackupPolicy
+      tags:
+      - Postgresql
+      description: Get a scheduled backup policy for a dedicated database.
+      responses:
+        '200':
+          description: backup
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backupPolicy'
+      deprecated: false
+      x-appwrite:
+        group: policies
+        demo: postgresql/get-backup-policy.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: policyId
+        description: Policy ID.
+        required: true
+        schema:
+          type: string
+          example: <POLICY_ID>
+        in: path
+    patch:
+      summary: Update backup policy
+      operationId: postgresqlUpdateBackupPolicy
+      tags:
+      - Postgresql
+      description: Update a scheduled backup policy for a dedicated database.
+      responses:
+        '200':
+          description: backup
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/backupPolicy'
+      deprecated: false
+      x-appwrite:
+        group: policies
+        demo: postgresql/update-backup-policy.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: policyId
+        description: Policy ID.
+        required: true
+        schema:
+          type: string
+          example: <POLICY_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: 'Policy name. Max length: 128 chars.'
+                  type:
+                  - string
+                  - 'null'
+                  example: <NAME>
+                schedule:
+                  description: Schedule CRON syntax.
+                  type: string
+                retention:
+                  description: Days to keep backups before deletion.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 1
+                  format: int32
+                enabled:
+                  description: Is policy enabled? When disabled, no backups will be taken.
+                  type:
+                  - boolean
+                  - 'null'
+                  example: false
+    delete:
+      summary: Delete backup policy
+      operationId: postgresqlDeleteBackupPolicy
+      tags:
+      - Postgresql
+      description: Delete a scheduled backup policy for a dedicated database. Backups already taken by the policy are kept until their retention expires.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: policies
+        demo: postgresql/delete-backup-policy.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: policyId
+        description: Policy ID.
+        required: true
+        schema:
+          type: string
+          example: <POLICY_ID>
+        in: path
+  /postgresql/{databaseId}/backups/storage:
+    put:
+      summary: Update backup storage
+      operationId: postgresqlUpdateBackupStorage
+      tags:
+      - Postgresql
+      description: Configure off-cluster backup storage for a dedicated database. Supports S3, GCS, and Azure Blob Storage destinations. Backups will be stored to the configured destination in addition to on-cluster storage.
+      responses:
+        '200':
+          description: BackupStorageConfig
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseBackupStorage'
+      deprecated: false
+      x-appwrite:
+        group: backups
+        demo: postgresql/update-backup-storage.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  description: 'Storage provider for off-cluster backups. Allowed values: s3 (Amazon S3 or S3-compatible), gcs (Google Cloud Storage), azure (Azure Blob Storage).'
+                  type: string
+                  example: s3
+                bucket:
+                  description: Storage bucket or container name.
+                  type: string
+                  example: <BUCKET>
+                region:
+                  description: Storage region.
+                  type: string
+                  default: ''
+                  example: <REGION>
+                prefix:
+                  description: Object key prefix for backups.
+                  type: string
+                  default: backups/
+                  example: <PREFIX>
+                endpoint:
+                  description: Custom endpoint for S3-compatible storage (e.g. MinIO).
+                  type: string
+                  default: ''
+                  example: <ENDPOINT>
+                accessKey:
+                  description: Access key or client ID for authentication.
+                  type: string
+                  example: <ACCESS_KEY>
+                secretKey:
+                  description: Secret key or service account JSON for authentication.
+                  type: string
+                  example: <SECRET_KEY>
+              required:
+              - provider
+              - bucket
+              - accessKey
+              - secretKey
+  /postgresql/{databaseId}/backups/{backupId}:
+    get:
+      summary: Get backup
+      operationId: postgresqlGetBackup
+      tags:
+      - Postgresql
+      description: Get details of a specific database backup including its status, size, and timestamps.
+      responses:
+        '200':
+          description: Backup
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseBackup'
+      deprecated: false
+      x-appwrite:
+        group: backups
+        demo: postgresql/get-backup.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: backupId
+        description: Backup ID.
+        required: true
+        schema:
+          type: string
+          example: <BACKUP_ID>
+        in: path
+    delete:
+      summary: Delete backup
+      operationId: postgresqlDeleteBackup
+      tags:
+      - Postgresql
+      description: Delete a database backup. This will permanently remove the backup from storage and cannot be undone.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: backups
+        demo: postgresql/delete-backup.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: backupId
+        description: Backup ID.
+        required: true
+        schema:
+          type: string
+          example: <BACKUP_ID>
+        in: path
+  /postgresql/{databaseId}/branches:
+    get:
+      summary: List branches
+      operationId: postgresqlListBranches
+      tags:
+      - Postgresql
+      description: List all ephemeral branches for a dedicated database. Returns branch metadata including ID, name, namespace, and expiration time.
+      responses:
+        '200':
+          description: BranchList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseBranchList'
+      deprecated: false
+      x-appwrite:
+        group: branches
+        demo: postgresql/list-branches.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+    post:
+      summary: Create branch
+      operationId: postgresqlCreateBranch
+      tags:
+      - Postgresql
+      description: Create an ephemeral database branch from the primary via PVC snapshot. The branch is a full copy of the database at the current point in time, useful for testing schema migrations or running experiments without affecting production data. Branches expire after the configured TTL (default 24 hours). The branch is created asynchronously.
+      responses:
+        '202':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: branches
+        demo: postgresql/create-branch.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branchId:
+                  description: Branch ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+                  type: string
+                  default: ''
+                  example: <BRANCH_ID>
+                  x-appwrite:
+                    idGenerator: ID.unique
+                ttl:
+                  description: 'Time-to-live in seconds before the branch expires. Min 300 (5 min), max 604800 (7 days). Default: 86400 (24h).'
+                  type: integer
+                  default: 86400
+                  example: 300
+                  format: int32
+  /postgresql/{databaseId}/branches/{branchId}:
+    delete:
+      summary: Delete branch
+      operationId: postgresqlDeleteBranch
+      tags:
+      - Postgresql
+      description: Delete an ephemeral database branch. This removes the branch namespace, its PVC, and the associated VolumeSnapshot. The deletion runs asynchronously and is irreversible.
+      responses:
+        '202':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: branches
+        demo: postgresql/delete-branch.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: branchId
+        description: Branch ID.
+        required: true
+        schema:
+          type: string
+          example: <BRANCH_ID>
+        in: path
+  /postgresql/{databaseId}/credentials:
+    patch:
+      summary: Update credentials
+      operationId: postgresqlUpdateCredentials
+      tags:
+      - Postgresql
+      description: Queue a rotation of the primary connection credentials for a dedicated database. A hibernated database is woken by the worker before rotation. List database operations until the returned operation reaches a terminal status, then fetch the database again for the refreshed connection string.
+      responses:
+        '202':
+          description: Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseOperation'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/update-credentials.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /postgresql/{databaseId}/executions:
+    post:
+      summary: Create execution
+      operationId: postgresqlCreateExecution
+      tags:
+      - Postgresql
+      description: 'Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database''s configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.'
+      responses:
+        '200':
+          description: Execution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseExecution'
+      deprecated: false
+      x-appwrite:
+        group: executions
+        demo: postgresql/create-execution.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sql:
+                  description: SQL statement to execute. Exactly one statement per request.
+                  type: string
+                  example: <SQL>
+                bindings:
+                  description: Optional bound parameters. Pass either a positional list or a name => value map matching the placeholder style used in the SQL.
+                  type:
+                  - object
+                  - 'null'
+                  default: {}
+                  example: {}
+                timeoutSeconds:
+                  description: Per-call execution timeout override. Must be less than or equal to the database's configured sqlApiTimeoutSeconds.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 1
+                  format: int32
+              required:
+              - sql
+  /postgresql/{databaseId}/extensions:
+    get:
+      summary: List extensions
+      operationId: postgresqlListExtensions
+      tags:
+      - Postgresql
+      description: List installed and available extensions for a PostgreSQL database.
+      responses:
+        '200':
+          description: Extensions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseExtensions'
+      deprecated: false
+      x-appwrite:
+        group: extensions
+        demo: postgresql/list-extensions.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+    post:
+      summary: Create extension
+      operationId: postgresqlCreateExtension
+      tags:
+      - Postgresql
+      description: Install a database extension. Only available for PostgreSQL databases. The install runs asynchronously; poll the extensions list endpoint for status.
+      responses:
+        '202':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: extensions
+        demo: postgresql/create-extension.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Extension name (e.g., pgvector, postgis, uuid-ossp).
+                  type: string
+                  example: <NAME>
+              required:
+              - name
+  /postgresql/{databaseId}/extensions/{extensionName}:
+    delete:
+      summary: Delete extension
+      operationId: postgresqlDeleteExtension
+      tags:
+      - Postgresql
+      description: Uninstall a database extension from a PostgreSQL database. The uninstall runs asynchronously; poll the extensions list endpoint for status.
+      responses:
+        '202':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: extensions
+        demo: postgresql/delete-extension.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: extensionName
+        description: Extension name to uninstall.
+        required: true
+        schema:
+          type: string
+          example: <EXTENSION_NAME>
+        in: path
+  /postgresql/{databaseId}/failovers:
+    post:
+      summary: Create failover
+      operationId: postgresqlCreateFailover
+      tags:
+      - Postgresql
+      description: Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
+      responses:
+        '202':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: failovers
+        demo: postgresql/create-failover.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetReplicaId:
+                  description: Target replica ID to promote. If not specified, the healthiest replica is selected.
+                  type:
+                  - string
+                  - 'null'
+                  example: <TARGET_REPLICA_ID>
+  /postgresql/{databaseId}/maintenance:
+    patch:
+      summary: Update maintenance
+      operationId: postgresqlUpdateMaintenance
+      tags:
+      - Postgresql
+      description: Update the maintenance window for a dedicated database. Maintenance operations like minor version upgrades will be performed during this window.
+      responses:
+        '200':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/update-maintenance.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                day:
+                  description: 'Day of the week for the maintenance window. Allowed values: sun, mon, tue, wed, thu, fri, sat.'
+                  type: string
+                  example: sun
+                hourUtc:
+                  description: Hour in UTC (0-23) for maintenance window start.
+                  type: integer
+                  example: 0
+                  format: int32
+              required:
+              - day
+              - hourUtc
+  /postgresql/{databaseId}/migrations:
+    post:
+      summary: Create migration
+      operationId: postgresqlCreateMigration
+      tags:
+      - Postgresql
+      description: Migrate a database between shared and dedicated types. Shared to dedicated provisions an always-on dedicated instance; dedicated to shared converts to a serverless instance that scales to zero when idle. Data is copied to the target with a brief read-only window during cutover.
+      responses:
+        '200':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: migrations
+        demo: postgresql/create-migration.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetType:
+                  description: 'Target database type to migrate to. Allowed values: shared (serverless, scales to zero when idle), dedicated (always-on with persistent resources).'
+                  type: string
+                  example: shared
+                specification:
+                  description: Target specification to provision when migrating to dedicated. Ignored for shared. Defaults to the database's current specification.
+                  type:
+                  - string
+                  - 'null'
+                  example: <SPECIFICATION>
+              required:
+              - targetType
+  /postgresql/{databaseId}/operations:
+    get:
+      summary: List operations
+      operationId: postgresqlListOperations
+      tags:
+      - Postgresql
+      description: List the lifecycle operations recorded for a dedicated database, newest first. Every provision, update, restore, backup and replication action is recorded here with its outcome, including an attempt that was abandoned because another worker took over the database.
+      responses:
+        '200':
+          description: OperationList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseOperationList'
+      deprecated: false
+      x-appwrite:
+        group: operations
+        demo: postgresql/list-operations.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: status
+        description: Filter by operation status.
+        required: false
+        schema:
+          type: string
+          example: queued
+        in: query
+      - name: limit
+        description: Maximum number of operations to return.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 25
+        in: query
+      - name: offset
+        description: Number of operations to skip.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+  /postgresql/{databaseId}/pitr:
+    get:
+      summary: Get PITR
+      operationId: postgresqlGetPitr
+      tags:
+      - Postgresql
+      description: Get available point-in-time recovery windows for a dedicated database. Returns the earliest and latest recovery points.
+      responses:
+        '200':
+          description: PITRWindows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabasePITRWindows'
+      deprecated: false
+      x-appwrite:
+        group: pitr
+        demo: postgresql/get-pitr.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /postgresql/{databaseId}/pooler:
+    get:
+      summary: Get pooler
+      operationId: postgresqlGetPooler
+      tags:
+      - Postgresql
+      description: Get the connection pooler configuration for a dedicated database. Returns pooler mode, max connections, and pool size settings.
+      responses:
+        '200':
+          description: PoolerConfig
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabasePooler'
+      deprecated: false
+      x-appwrite:
+        group: pooler
+        demo: postgresql/get-pooler.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+    patch:
+      summary: Update pooler
+      operationId: postgresqlUpdatePooler
+      tags:
+      - Postgresql
+      description: Update the connection pooler configuration for a dedicated database. Configure pool mode, max connections, and pool sizes.
+      responses:
+        '200':
+          description: PoolerConfig
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabasePooler'
+      deprecated: false
+      x-appwrite:
+        group: pooler
+        demo: postgresql/update-pooler.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mode:
+                  description: 'Connection pool mode. Allowed values: transaction, session. Transaction mode returns connections to the pool after each transaction; session mode holds connections for the entire session lifetime.'
+                  type:
+                  - string
+                  - 'null'
+                  example: transaction
+                maxConnections:
+                  description: Client-connection ceiling the pooler accepts. Supported on MySQL and MariaDB only; the PostgreSQL pooler has no client cap, so set networkMaxConnections on the database instead.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 10
+                  format: int32
+                defaultPoolSize:
+                  description: Default pool size per user.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 1
+                  format: int32
+                readWriteSplitting:
+                  description: Route SELECTs to HA replicas, writes and locked reads to the primary. Defaults to true when HA is enabled.
+                  type:
+                  - boolean
+                  - 'null'
+                  example: false
+                poolerCpuRequest:
+                  description: Pooler sidecar CPU request override (Kubernetes quantity, e.g. "250m" or "1"). Leave null for the proportional default (5% of DB CPU, floor 100m).
+                  type:
+                  - string
+                  - 'null'
+                  example: <POOLER_CPU_REQUEST>
+                poolerCpuLimit:
+                  description: Pooler sidecar CPU limit override (Kubernetes quantity, e.g. "500m" or "1"). Leave null for the proportional default (10% of DB CPU, floor 200m). Changing this field rolls the database pod.
+                  type:
+                  - string
+                  - 'null'
+                  example: <POOLER_CPU_LIMIT>
+                poolerMemoryRequest:
+                  description: Pooler sidecar memory request override (Kubernetes quantity, e.g. "128Mi" or "1Gi"). Leave null for the proportional default (7.5% of DB memory, floor 64Mi).
+                  type:
+                  - string
+                  - 'null'
+                  example: <POOLER_MEMORY_REQUEST>
+                poolerMemoryLimit:
+                  description: Pooler sidecar memory limit override (Kubernetes quantity, e.g. "256Mi" or "1Gi"). Leave null for the proportional default (15% of DB memory, floor 128Mi). Changing this field rolls the database pod.
+                  type:
+                  - string
+                  - 'null'
+                  example: <POOLER_MEMORY_LIMIT>
+  /postgresql/{databaseId}/replicas:
+    get:
+      summary: Get replicas
+      operationId: postgresqlGetReplicas
+      tags:
+      - Postgresql
+      description: Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
+      responses:
+        '200':
+          description: Replicas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseReplicas'
+      deprecated: false
+      x-appwrite:
+        group: replicas
+        demo: postgresql/get-replicas.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /postgresql/{databaseId}/restorations:
+    get:
+      summary: List restorations
+      operationId: postgresqlListRestorations
+      tags:
+      - Postgresql
+      description: List all restorations for a dedicated database. Results can be filtered by status and type.
+      responses:
+        '200':
+          description: Dedicated database restorations list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseRestorationList'
+      deprecated: false
+      x-appwrite:
+        group: restorations
+        demo: postgresql/list-restorations.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: status
+        description: Filter by restoration status.
+        required: false
+        schema:
+          type: string
+          example: pending
+        in: query
+      - name: type
+        description: Filter by restoration type.
+        required: false
+        schema:
+          type: string
+          example: backup
+        in: query
+      - name: limit
+        description: Maximum number of restorations to return.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 25
+        in: query
+      - name: offset
+        description: Number of restorations to skip.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+    post:
+      summary: Create restoration
+      operationId: postgresqlCreateRestoration
+      tags:
+      - Postgresql
+      description: Restore a database from a backup or to a specific point in time (PITR). For backup restoration, provide a backupId. For PITR, provide a targetTime as an ISO 8601 datetime. PITR requires the database to have PITR enabled and is only available for enterprise databases.
+      responses:
+        '202':
+          description: Restoration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseRestoration'
+      deprecated: false
+      x-appwrite:
+        group: restorations
+        demo: postgresql/create-restoration.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  description: 'Restoration type. Allowed values: backup, pitr. Use "backup" to restore from a specific backup, or "pitr" for point-in-time recovery.'
+                  type: string
+                  default: backup
+                  example: backup
+                backupId:
+                  description: Backup ID to restore from (required for backup type).
+                  type:
+                  - string
+                  - 'null'
+                  example: <BACKUP_ID>
+                targetDatabaseId:
+                  description: Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version.
+                  type:
+                  - string
+                  - 'null'
+                  example: <TARGET_DATABASE_ID>
+                targetTime:
+                  description: Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
+                  type:
+                  - string
+                  - 'null'
+                  example: '2020-10-15T06:38:00.000+00:00'
+                  format: datetime
+  /postgresql/{databaseId}/restorations/{restorationId}:
+    get:
+      summary: Get restoration
+      operationId: postgresqlGetRestoration
+      tags:
+      - Postgresql
+      description: Get details of a specific database restoration including its status, type, and timestamps.
+      responses:
+        '200':
+          description: Restoration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseRestoration'
+      deprecated: false
+      x-appwrite:
+        group: restorations
+        demo: postgresql/get-restoration.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: restorationId
+        description: Restoration ID.
+        required: true
+        schema:
+          type: string
+          example: <RESTORATION_ID>
+        in: path
+  /postgresql/{databaseId}/status:
+    get:
+      summary: Get status
+      operationId: postgresqlGetStatus
+      tags:
+      - Postgresql
+      description: Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/databaseStatus'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/get-status.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /postgresql/{databaseId}/upgrades:
+    post:
+      summary: Create upgrade
+      operationId: postgresqlCreateUpgrade
+      tags:
+      - Postgresql
+      description: Upgrade a dedicated database to a new engine version. Uses blue-green deployment for zero-downtime cutover.
+      responses:
+        '200':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: postgresql
+        demo: postgresql/create-upgrade.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetVersion:
+                  description: Target engine version to upgrade to.
+                  type: string
+                  example: <TARGET_VERSION>
+              required:
+              - targetVersion
+components:
+  schemas:
+    dedicatedDatabaseSpecificationList:
+      description: SpecificationList
+      type: object
+      properties:
+        specifications:
+          type: array
+          description: List of dedicated database specifications.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseSpecification'
+          example: []
+        total:
+          type: integer
+          description: Total number of specifications.
+          format: int32
+          example: 9
+      required:
+      - specifications
+      - total
+      example:
+        specifications: []
+        total: 9
+    dedicatedDatabaseExecution:
+      description: Execution
+      type: object
+      properties:
+        rows:
+          type: array
+          description: Result rows as a list of column-name => value maps. Empty for non-returning statements.
+          items:
+            type: object
+          example:
+          - id: 1
+            name: example
+        rowCount:
+          type: integer
+          description: Number of rows returned (for SELECT) or affected (for INSERT/UPDATE/DELETE).
+          format: int32
+          example: 1
+        columns:
+          type: array
+          description: Column metadata in result-set order.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseExecutionColumn'
+          example: []
+        durationMs:
+          type: integer
+          description: Server-side execution time in milliseconds.
+          format: int32
+          example: 12
+        truncated:
+          type: boolean
+          description: True when the configured row or byte cap was hit and the result was truncated.
+          example: false
+        bytes:
+          type: integer
+          description: Serialised payload size in bytes.
+          format: int32
+          example: 1024
+      required:
+      - rows
+      - rowCount
+      - columns
+      - durationMs
+      - truncated
+      - bytes
+      example:
+        rows:
+        - id: 1
+          name: example
+        rowCount: 1
+        columns: []
+        durationMs: 12
+        truncated: false
+        bytes: 1024
+    dedicatedDatabaseBranch:
+      description: Branch
+      type: object
+      properties:
+        branchId:
+          type: string
+          description: Branch identifier.
+          example: a1b2c3d4
+        branchName:
+          type: string
+          description: Branch name.
+          example: branch-a1b2c3d4
+        namespace:
+          type: string
+          description: Kubernetes namespace where the branch is deployed.
+          example: db-myproject-mydb-branch-a1b2c3d4
+        expiresAt:
+          type: integer
+          description: Unix timestamp when the branch expires.
+          format: int32
+          example: 1711411200
+        host:
+          type: string
+          description: Branch hostname for direct connections.
+          example: db-myproject-mydb-a1b2c3d4.fra.appwrite.center
+        port:
+          type: integer
+          description: Branch port. Null until the backing reports one.
+          format: int32
+          example: 5432
+        database:
+          type: string
+          description: Advertised catalog the client connects to. MySQL/MariaDB use default; Postgres uses the routing label.
+          example: db-myproject-mydb-a1b2c3d4
+        username:
+          type: string
+          description: Database username. Shared with the parent database.
+          example: appwrite
+        password:
+          type: string
+          description: Database password. Shared with the parent database.
+          example: '********'
+        ssl:
+          type: boolean
+          description: Whether SSL is required.
+          example: false
+        engine:
+          type: string
+          description: 'Database engine. Possible values: postgresql, mysql, mongodb.'
+          example: postgresql
+        connectionString:
+          type: string
+          description: Full connection string for the branch.
+          example: postgresql://appwrite:****@db-myproject-mydb-a1b2c3d4.fra.appwrite.center:5432/db-myproject-mydb-a1b2c3d4?sslmode=require
+      required:
+      - branchId
+      - branchName
+      - namespace
+      - expiresAt
+      - host
+      - port
+      - database
+      - username
+      - password
+      - ssl
+      - engine
+      - connectionString
+      example:
+        branchId: a1b2c3d4
+        branchName: branch-a1b2c3d4
+        namespace: db-myproject-mydb-branch-a1b2c3d4
+        expiresAt: 1711411200
+        host: db-myproject-mydb-a1b2c3d4.fra.appwrite.center
+        port: 5432
+        database: db-myproject-mydb-a1b2c3d4
+        username: appwrite
+        password: '********'
+        ssl: false
+        engine: postgresql
+        connectionString: postgresql://appwrite:****@db-myproject-mydb-a1b2c3d4.fra.appwrite.center:5432/db-myproject-mydb-a1b2c3d4?sslmode=require
+    backupPolicy:
+      description: backup
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Backup policy ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Backup policy name.
+          example: Hourly backups
+        $createdAt:
+          type: string
+          description: Policy creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Policy update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        services:
+          type: array
+          description: The services that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this policy should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this policy should backup a single resource.
+          example: database
+        retention:
+          type: integer
+          description: How many days to keep the backup before it will be automatically deleted.
+          format: int32
+          example: 7
+        schedule:
+          type: string
+          description: Policy backup schedule in CRON format.
+          example: 0 * * * *
+        type:
+          type: string
+          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).'
+          example: full
+        enabled:
+          type: boolean
+          description: Is this policy enabled.
+          example: true
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - services
+      - resources
+      - retention
+      - schedule
+      - type
+      - enabled
+      example:
+        $id: 5e5ea5c16897e
+        name: Hourly backups
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
+        retention: 7
+        schedule: 0 * * * *
+        type: full
+        enabled: true
+    dedicatedDatabaseBranchList:
+      description: BranchList
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of branches.
+          format: int32
+          example: 2
+        branches:
+          type: array
+          description: List of branches.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseBranch'
+          example: []
+      required:
+      - total
+      - branches
+      example:
+        total: 2
+        branches: []
+    dedicatedDatabaseSpecification:
+      description: Specification
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Specification slug. Use this value when creating a dedicated database.
+          example: s-2vcpu-2gb
+        name:
+          type: string
+          description: Human readable specification name.
+          example: Standard
+        price:
+          type: number
+          description: Monthly price of the specification in USD.
+          format: double
+          example: 20
+        storageOverageRate:
+          type: number
+          description: Price per GB of storage above the included amount, per month, in USD.
+          format: double
+          example: 0.125
+        bandwidthOverageRate:
+          type: number
+          description: Price per GB of bandwidth above the included amount, per month, in USD.
+          format: double
+          example: 0.08
+        replicaRate:
+          type: number
+          description: High availability replica price as a fraction of the specification price.
+          format: double
+          example: 1
+        pitrRate:
+          type: number
+          description: Point-in-time recovery price as a fraction of the specification price.
+          format: double
+          example: 0.2
+        cpu:
+          type: integer
+          description: Allocated CPU in millicores.
+          format: int32
+          example: 2000
+        memory:
+          type: integer
+          description: Allocated memory in MB.
+          format: int32
+          example: 2048
+        maxConnections:
+          type: integer
+          description: Maximum number of concurrent connections.
+          format: int32
+          example: 200
+        includedStorage:
+          type: integer
+          description: Included storage in GB before overage charges apply.
+          format: int32
+          example: 25
+        includedBandwidth:
+          type: integer
+          description: Included bandwidth in GB before overage charges apply.
+          format: int32
+          example: 200
+        enabled:
+          type: boolean
+          description: Whether the specification is available on the current plan.
+          example: true
+      required:
+      - slug
+      - name
+      - price
+      - storageOverageRate
+      - bandwidthOverageRate
+      - replicaRate
+      - pitrRate
+      - cpu
+      - memory
+      - maxConnections
+      - includedStorage
+      - includedBandwidth
+      - enabled
+      example:
+        slug: s-2vcpu-2gb
+        name: Standard
+        price: 20
+        storageOverageRate: 0.125
+        bandwidthOverageRate: 0.08
+        replicaRate: 1
+        pitrRate: 0.2
+        cpu: 2000
+        memory: 2048
+        maxConnections: 200
+        includedStorage: 25
+        includedBandwidth: 200
+        enabled: true
+    dedicatedDatabasePITRWindows:
+      description: PITRWindows
+      type: object
+      properties:
+        earliest:
+          type: string
+          description: Earliest available recovery point.
+          example: '2020-10-15T06:38:00.000+00:00'
+        latest:
+          type: string
+          description: Latest available recovery point.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - earliest
+      - latest
+      example:
+        earliest: '2020-10-15T06:38:00.000+00:00'
+        latest: '2020-10-15T06:38:00.000+00:00'
+    dedicatedDatabaseBackup:
+      description: Backup
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Backup ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Backup creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        databaseId:
+          type: string
+          description: Database ID this backup belongs to.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: 5e5ea5c16897e
+        policyId:
+          type: string
+          description: Backup policy ID when the backup was created by a schedule.
+          example: 5e5ea5c16897e
+        trigger:
+          type: string
+          description: 'Backup trigger. Possible values: manual, schedule.'
+          example: schedule
+        type:
+          type: string
+          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup), wal (write-ahead log continuous archival).'
+          example: full
+        requestedType:
+          type: string
+          description: Backup type that was requested. Differs from `type` when the backend could not run the requested type and took a different one instead, in which case `fallbackReason` explains why. Empty for backups taken before the requested type was recorded.
+          example: incremental
+        fallbackReason:
+          type: string
+          description: Why the backend ran a different backup type than the one requested. Empty when the backup ran as requested.
+          example: 'PostgreSQL incremental backups are not offered because they cannot be restored: archived WAL is physical and cannot replay onto a logically-restored base. A full backup was taken instead; use a point-in-time restore (targetTime) to recover to a moment between fulls.'
+        status:
+          type: string
+          description: 'Backup status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error), verified (integrity check passed).'
+          example: completed
+        sizeBytes:
+          type: integer
+          description: Backup size in bytes.
+          format: int32
+          example: 1073741824
+        startedAt:
+          type:
+          - string
+          - 'null'
+          description: Backup start time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        completedAt:
+          type:
+          - string
+          - 'null'
+          description: Backup completion time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        verifiedAt:
+          type:
+          - string
+          - 'null'
+          description: Backup verification time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          description: Backup expiration time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        logPosition:
+          type:
+          - string
+          - 'null'
+          description: 'Transaction-log position the backup anchors at, in the engine''s own notation: PostgreSQL `{walSegment}|{lsn}`, MySQL and MariaDB `{binlogFile}|{offset}`, MongoDB `{seconds}|{increment}`. Empty when the backup recorded no position, which is the case for backup types that carry none.'
+          example: 000000010000000000000003|0/3000148
+        error:
+          type: string
+          description: Error message if backup failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - databaseId
+      - projectId
+      - policyId
+      - trigger
+      - type
+      - requestedType
+      - fallbackReason
+      - status
+      - sizeBytes
+      - error
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        databaseId: 5e5ea5c16897e
+        projectId: 5e5ea5c16897e
+        policyId: 5e5ea5c16897e
+        trigger: schedule
+        type: full
+        requestedType: incremental
+        fallbackReason: 'PostgreSQL incremental backups are not offered because they cannot be restored: archived WAL is physical and cannot replay onto a logically-restored base. A full backup was taken instead; use a point-in-time restore (targetTime) to recover to a moment between fulls.'
+        status: completed
+        sizeBytes: 1073741824
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        completedAt: '2020-10-15T06:38:00.000+00:00'
+        verifiedAt: '2020-10-15T06:38:00.000+00:00'
+        expiresAt: '2020-10-15T06:38:00.000+00:00'
+        logPosition: 000000010000000000000003|0/3000148
+        error: ''
+    dedicatedDatabaseBackupStorage:
+      description: BackupStorageConfig
+      type: object
+      properties:
+        provider:
+          type: string
+          description: 'Storage provider. Possible values: s3 (Amazon S3 or S3-compatible), gcs (Google Cloud Storage), azure (Azure Blob Storage).'
+          example: s3
+        bucket:
+          type: string
+          description: Storage bucket or container name.
+          example: my-backup-bucket
+        region:
+          type: string
+          description: Storage region.
+          example: us-east-1
+        prefix:
+          type: string
+          description: Object key prefix for backups.
+          example: backups/
+        endpoint:
+          type: string
+          description: Custom endpoint for S3-compatible storage.
+          example: https://minio.example.com
+      required:
+      - provider
+      - bucket
+      - region
+      - prefix
+      - endpoint
+      example:
+        provider: s3
+        bucket: my-backup-bucket
+        region: us-east-1
+        prefix: backups/
+        endpoint: https://minio.example.com
+    dedicatedDatabaseOperation:
+      description: Operation
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Operation ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Operation creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        databaseId:
+          type: string
+          description: Database ID the operation ran against.
+          example: 5e5ea5c16897e
+        type:
+          type: string
+          description: Operation type, such as provision, update, credentials-update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
+          example: update
+        status:
+          type: string
+          description: 'Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).'
+          example: completed
+        attempts:
+          type: integer
+          description: Number of times this operation has been attempted.
+          format: int32
+          example: 1
+        requestedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation was requested, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation started, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        completedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation reached a terminal state, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        errorCode:
+          type: string
+          description: Machine-readable failure code. `Interrupted` marks an attempt that ended before its outcome could be confirmed.
+          example: Interrupted
+        errorMessage:
+          type: string
+          description: Failure message if the operation failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - databaseId
+      - type
+      - status
+      - attempts
+      - errorCode
+      - errorMessage
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        databaseId: 5e5ea5c16897e
+        type: update
+        status: completed
+        attempts: 1
+        requestedAt: '2020-10-15T06:38:00.000+00:00'
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        completedAt: '2020-10-15T06:38:00.000+00:00'
+        errorCode: Interrupted
+        errorMessage: ''
+    dedicatedDatabaseExecutionColumn:
+      description: ExecutionColumn
+      type: object
+      properties:
+        name:
+          type: string
+          description: Column name as returned by the database.
+          example: id
+        type:
+          type: string
+          description: Engine-specific column type (e.g. int4, text, timestamptz).
+          example: int4
+      required:
+      - name
+      - type
+      example:
+        name: id
+        type: int4
+    backupPolicyList:
+      description: Backup policy list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of policies that matched your query.
+          format: int32
+          example: 5
+        policies:
+          type: array
+          description: List of policies.
+          items:
+            $ref: '#/components/schemas/backupPolicy'
+          example: []
+      required:
+      - total
+      - policies
+      example:
+        total: 5
+        policies: ''
+    dedicatedDatabasePooler:
+      description: PoolerConfig
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether connection pooling is enabled.
+          example: true
+        mode:
+          type: string
+          description: 'Connection pool mode. Possible values: transaction (releases connections back to pool after each transaction), session (holds connections for the entire client session).'
+          example: transaction
+        maxConnections:
+          type: integer
+          description: Client-connection ceiling the pooler accepts. Enforced on MySQL and MariaDB; on PostgreSQL the pooler has no client cap, so this reports the database's advertised networkMaxConnections and cannot be set here.
+          format: int32
+          example: 200
+        defaultPoolSize:
+          type: integer
+          description: Default pool size per user.
+          format: int32
+          example: 25
+        port:
+          type: integer
+          description: Pooler listening port.
+          format: int32
+          example: 6432
+        readWriteSplitting:
+          type: boolean
+          description: Whether SELECTs are routed to HA replicas while writes and locked reads stay on the primary. Active only when HA is enabled.
+          example: true
+        poolerCpuRequest:
+          type: string
+          description: Effective CPU request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (5% of DB CPU, floor 100m) unless overridden.
+          example: 100m
+        poolerCpuLimit:
+          type: string
+          description: Effective CPU limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (10% of DB CPU, floor 200m) unless overridden.
+          example: 200m
+        poolerMemoryRequest:
+          type: string
+          description: Effective memory request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (7.5% of DB memory, floor 64Mi) unless overridden.
+          example: 64Mi
+        poolerMemoryLimit:
+          type: string
+          description: Effective memory limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (15% of DB memory, floor 128Mi) unless overridden.
+          example: 128Mi
+      required:
+      - enabled
+      - mode
+      - maxConnections
+      - defaultPoolSize
+      - port
+      - readWriteSplitting
+      - poolerCpuRequest
+      - poolerCpuLimit
+      - poolerMemoryRequest
+      - poolerMemoryLimit
+      example:
+        enabled: true
+        mode: transaction
+        maxConnections: 200
+        defaultPoolSize: 25
+        port: 6432
+        readWriteSplitting: true
+        poolerCpuRequest: 100m
+        poolerCpuLimit: 200m
+        poolerMemoryRequest: 64Mi
+        poolerMemoryLimit: 128Mi
+    dedicatedDatabaseRestoration:
+      description: Restoration
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Restoration ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Restoration creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        databaseId:
+          type: string
+          description: Database ID being restored into.
+          example: 5e5ea5c16897e
+        sourceDatabaseId:
+          type: string
+          description: Source database ID when restoring a backup into another database.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: 5e5ea5c16897e
+        backupId:
+          type: string
+          description: Backup ID used for restoration (null for PITR).
+          example: 5e5ea5c16897e
+        type:
+          type: string
+          description: 'Restoration type. Possible values: backup (restore from a specific backup snapshot), pitr (point-in-time recovery to a specific timestamp).'
+          example: backup
+        status:
+          type: string
+          description: 'Restoration status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error).'
+          example: completed
+        targetTime:
+          type: string
+          description: Target time for PITR restoration in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        startedAt:
+          type: string
+          description: Restoration start time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        completedAt:
+          type: string
+          description: Restoration completion time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        error:
+          type: string
+          description: Error message if restoration failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - databaseId
+      - sourceDatabaseId
+      - projectId
+      - backupId
+      - type
+      - status
+      - targetTime
+      - startedAt
+      - completedAt
+      - error
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        databaseId: 5e5ea5c16897e
+        sourceDatabaseId: 5e5ea5c16897e
+        projectId: 5e5ea5c16897e
+        backupId: 5e5ea5c16897e
+        type: backup
+        status: completed
+        targetTime: '2020-10-15T06:38:00.000+00:00'
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        completedAt: '2020-10-15T06:38:00.000+00:00'
+        error: ''
+    databaseStatusVolume:
+      description: Volume
+      type: object
+      properties:
+        path:
+          type: string
+          description: Mount path of the volume.
+          example: /var/lib/postgresql/data
+        usedPercent:
+          type: string
+          description: Percentage of storage used.
+          example: 45%
+        available:
+          type: string
+          description: Available storage space.
+          example: 55GB
+        mounted:
+          type: boolean
+          description: Whether the volume is mounted.
+          example: true
+      required:
+      - path
+      - usedPercent
+      - available
+      - mounted
+      example:
+        path: /var/lib/postgresql/data
+        usedPercent: 45%
+        available: 55GB
+        mounted: true
+    postgresExtension:
+      description: Postgres extension
+      type: object
+      properties:
+        key:
+          type: string
+          description: Extension key used with CREATE EXTENSION.
+          example: vector
+        name:
+          type: string
+          description: Human-readable extension name.
+          example: pgvector
+        description:
+          type: string
+          description: Short description of what the extension provides.
+          example: Vector data type and similarity search for embeddings.
+        category:
+          type: string
+          description: Category the extension belongs to.
+          example: search
+      required:
+      - key
+      - name
+      - description
+      - category
+      example:
+        key: vector
+        name: pgvector
+        description: Vector data type and similarity search for embeddings.
+        category: search
+    databaseStatus:
+      description: Status
+      type: object
+      properties:
+        health:
+          type: string
+          description: 'Overall health status: healthy, degraded, unhealthy, or unknown when nothing could be measured.'
+          example: healthy
+        ready:
+          type: boolean
+          description: Whether the database is ready to accept connections.
+          example: true
+        engine:
+          type: string
+          description: 'Database engine: postgresql, mysql, or mongodb.'
+          example: postgresql
+        version:
+          type: string
+          description: Database engine version.
+          example: '17'
+        uptime:
+          type: integer
+          description: Database uptime in seconds.
+          format: int32
+          example: 86400
+        connections:
+          type: object
+          description: Connection statistics.
+          example:
+            current: 12
+            max: 100
+          allOf:
+          - $ref: '#/components/schemas/databaseStatusConnections'
+        syncMode:
+          type: string
+          description: 'Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.'
+          example: async
+        effectiveSyncMode:
+          type:
+          - string
+          - 'null'
+          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read.
+          example: async
+        syncDegraded:
+          type: boolean
+          description: Whether the enforced replication is weaker than the requested syncMode.
+          example: false
+        syncAcknowledgements:
+          type: integer
+          description: Number of standby acknowledgements the primary waits for before a write is committed.
+          format: int32
+          example: 1
+        syncStandbyCount:
+          type: integer
+          description: Number of standbys registered with the primary for synchronous replication.
+          format: int32
+          example: 2
+        syncStateConfirmed:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
+          example: true
+        replicas:
+          type: array
+          description: List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
+          items:
+            $ref: '#/components/schemas/databaseStatusReplica'
+          example:
+          - index: 0
+            role: primary
+            healthy: true
+            replicating: null
+            lagSeconds: null
+          - index: 1
+            role: replica
+            healthy: true
+            replicating: true
+            lagSeconds: 0.2
+        volumes:
+          type: array
+          description: Storage volume information.
+          items:
+            $ref: '#/components/schemas/databaseStatusVolume'
+          example:
+          - data:
+              path: /var/lib/postgresql/data
+              usedPercent: 45%
+              available: 55GB
+              mounted: true
+      required:
+      - health
+      - ready
+      - engine
+      - version
+      - uptime
+      - connections
+      - syncMode
+      - syncDegraded
+      - syncAcknowledgements
+      - syncStandbyCount
+      - replicas
+      - volumes
+      example:
+        health: healthy
+        ready: true
+        engine: postgresql
+        version: '17'
+        uptime: 86400
+        connections:
+          current: 12
+          max: 100
+        syncMode: async
+        effectiveSyncMode: async
+        syncDegraded: false
+        syncAcknowledgements: 1
+        syncStandbyCount: 2
+        syncStateConfirmed: true
+        replicas:
+        - index: 0
+          role: primary
+          healthy: true
+          replicating: null
+          lagSeconds: null
+        - index: 1
+          role: replica
+          healthy: true
+          replicating: true
+          lagSeconds: 0.2
+        volumes:
+          data:
+            path: /var/lib/postgresql/data
+            usedPercent: 45%
+            available: 55GB
+            mounted: true
+    dedicatedDatabaseList:
+      description: Dedicated databases list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of databases that matched your query.
+          format: int32
+          example: 5
+        databases:
+          type: array
+          description: List of databases.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabase'
+          example: []
+      required:
+      - total
+      - databases
+      example:
+        total: 5
+        databases: ''
+    databaseStatusConnections:
+      description: Connections
+      type: object
+      properties:
+        current:
+          type: integer
+          description: Current number of active connections.
+          format: int32
+          example: 12
+        max:
+          type: integer
+          description: The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
+          format: int32
+          example: 100
+      required:
+      - current
+      - max
+      example:
+        current: 12
+        max: 100
+    dedicatedDatabaseMember:
+      description: Member
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Member identifier.
+          example: '1'
+        role:
+          type: string
+          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology and this member has not been probed, so no member can be named the write target).'
+          example: replica
+        status:
+          type: string
+          description: 'Member pod status. Possible values: pending (configured but absent from the backend topology, so nothing is bringing it up), provisioning (pod missing or Pending), starting (Running but not Ready), active (Running and Ready), failed (Failed phase or CrashLoopBackOff container), or the lowercased pod phase reported by the cluster.'
+          example: active
+        replicating:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not active, or whose probe did not answer, has none yet. False is a reading and null is the absence of one, so the two are not interchangeable. Read it beside lagSeconds before expecting a failover that names no target to find a promotable standby: a member streaming at a known lag is one, and a member reporting null is not evidence either way.'
+          example: true
+        lagSeconds:
+          type:
+          - number
+          - 'null'
+          description: 'Replication lag in seconds. Null when the lag is not known: a primary has none to report, and a member the backend has not probed has none yet. Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
+          format: double
+          example: 0.5
+      required:
+      - $id
+      - role
+      - status
+      example:
+        $id: '1'
+        role: replica
+        status: active
+        replicating: true
+        lagSeconds: 0.5
+    dedicatedDatabase:
+      description: DedicatedDatabase
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Dedicated database ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Database creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Database update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        projectId:
+          type: string
+          description: Project ID that owns this database.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Database display name.
+          example: My Production Database
+        api:
+          type: string
+          description: 'Product API that owns this database: tablesdb, documentsdb, vectorsdb, mysql, postgresql, or mongodb.'
+          example: postgresql
+        engine:
+          type: string
+          description: 'Database engine: postgresql, mysql, or mongodb. Null until the backing reports one.'
+          example: postgresql
+        version:
+          type: string
+          description: Database engine version.
+          example: '16'
+        specification:
+          type: string
+          description: Specification identifier.
+          example: s-2vcpu-2gb
+        backend:
+          type: string
+          description: 'Database backend provider. Possible values: edge.'
+          example: edge
+        hostname:
+          type: string
+          description: Database hostname for connections.
+          example: db-myproject-mydb.fra.appwrite.center
+        connectionPort:
+          type: integer
+          description: Database port for connections. Derived from the engine when the backing has not reported one yet.
+          format: int32
+          example: 5432
+        connectionUser:
+          type: string
+          description: Database username for connections.
+          example: appwrite_user
+        connectionPassword:
+          type: string
+          description: Database password for connections.
+          example: ••••••••
+        credentialGeneration:
+          type: integer
+          description: Committed generation of the primary connection credentials. Null until the rotation contract has been initialized.
+          format: int32
+          example: 1
+        connectionString:
+          type: string
+          description: Full database connection string (URI format).
+          example: postgresql://user:pass@db-myproject-mydb.fra.appwrite.center:5432/postgres?sslmode=require
+        ssl:
+          type: boolean
+          description: Whether SSL/TLS is required for client connections.
+          example: true
+        status:
+          type: string
+          description: 'Database status. Possible values: provisioning, ready, inactive, paused, failed, deleted, restoring, scaling.'
+          example: ready
+        containerStatus:
+          type: string
+          description: 'Container status for lifecycle-managed database runtimes: active, inactive, or failed (a wake was declined because the backing namespace is gone).'
+          example: active
+        lastAccessedAt:
+          type:
+          - string
+          - 'null'
+          description: Last activity timestamp in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        idleUntil:
+          type:
+          - string
+          - 'null'
+          description: Display-only timestamp when the database is expected to be considered idle (ISO 8601 format). Derived from last activity; lifecycle transitions are driven by lifecycleState.
+          example: '2020-10-15T06:38:00.000+00:00'
+        lifecycleState:
+          type: string
+          description: 'Idle-lifecycle state of the database. Possible values: active, warm, cold, hibernated.'
+          example: active
+        idleTimeoutMinutes:
+          type: integer
+          description: Minutes of inactivity before container scales to zero.
+          format: int32
+          example: 15
+        cpu:
+          type: integer
+          description: CPU allocated in millicores.
+          format: int32
+          example: 2000
+        memory:
+          type: integer
+          description: Memory allocated in MB.
+          format: int32
+          example: 4096
+        storage:
+          type: integer
+          description: Storage allocated in GB.
+          format: int32
+          example: 100
+        storageStatus:
+          type: string
+          description: 'Storage resize status. Possible values: idle (no resize in flight), resizing (the volume is growing towards storageTargetGb).'
+          example: resizing
+        storageTargetGb:
+          type: integer
+          description: Size in GB the volume is growing towards while storageStatus is resizing. 0 when no resize is in flight.
+          format: int32
+          example: 120
+        storageResizeStartedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the in-flight storage resize started, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        storageClass:
+          type: string
+          description: Storage class. Currently always 'ssd'; DigitalOcean exposes a single block-storage class.
+          example: ssd
+        storageMaxGb:
+          type: integer
+          description: Maximum storage allowed in GB. 0 means use system default.
+          format: int32
+          example: 100
+        nodePool:
+          type: string
+          description: Kubernetes node pool where the database is scheduled.
+          example: db-pool-4vcpu-8gb
+        replicas:
+          type: integer
+          description: Number of high availability replicas. High availability is enabled when greater than 0.
+          format: int32
+          example: 2
+        syncMode:
+          type: string
+          description: 'Replication sync mode: async, sync, or quorum.'
+          example: async
+        networkMaxConnections:
+          type: integer
+          description: Maximum concurrent client connections. This is the limit a client pool may reach; the engine's own max_connections reported by the status endpoint is a smaller backend limit the pooler multiplexes onto and does not constrain a client pool.
+          format: int32
+          example: 500
+        networkIdleTimeoutSeconds:
+          type: integer
+          description: Connection idle timeout in seconds.
+          format: int32
+          example: 900
+        networkIPAllowlist:
+          type: array
+          description: IP addresses/CIDR ranges allowed to connect.
+          items:
+            type: string
+          example:
+          - 10.0.0.0/8
+          - 192.168.1.0/24
+        backupEnabled:
+          type: boolean
+          description: Whether automatic backups are enabled.
+          example: true
+        pitr:
+          type: boolean
+          description: Whether point-in-time recovery is enabled.
+          example: true
+        pitrRetentionDays:
+          type: integer
+          description: Number of days to retain PITR data.
+          format: int32
+          example: 14
+        storageAutoscaling:
+          type: boolean
+          description: Whether automatic storage expansion is enabled.
+          example: true
+        storageAutoscalingThresholdPercent:
+          type: integer
+          description: Storage usage percentage that triggers automatic expansion.
+          format: int32
+          example: 85
+        storageAutoscalingMaxGb:
+          type: integer
+          description: Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
+          format: int32
+          example: 30
+        maintenanceWindowDay:
+          type: string
+          description: 'Day of the week for the maintenance window. Possible values: sun, mon, tue, wed, thu, fri, sat.'
+          example: sun
+        maintenanceWindowHourUtc:
+          type: integer
+          description: Hour in UTC (0-23) when the maintenance window starts.
+          format: int32
+          example: 3
+        metricsEnabled:
+          type: boolean
+          description: Whether metrics collection is enabled.
+          example: false
+        sqlApiEnabled:
+          type: boolean
+          description: Whether the SQL API sidecar is enabled for this database.
+          example: true
+        sqlApiAllowedStatements:
+          type: array
+          description: 'Statement types accepted by the SQL API. Defaults to read/write DML only; DDL/DCL types (CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE) are opt-in per database. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.'
+          items:
+            type: string
+          example:
+          - SELECT
+        sqlApiMaxRows:
+          type: integer
+          description: Maximum rows returned per SQL API execution. Results larger than this are truncated.
+          format: int32
+          example: 10000
+        sqlApiMaxBytes:
+          type: integer
+          description: Maximum serialised SQL API result payload in bytes. Results larger than this are truncated.
+          format: int32
+          example: 10485760
+        sqlApiTimeoutSeconds:
+          type: integer
+          description: Maximum server-side SQL API execution time in seconds before the query is cancelled.
+          format: int32
+          example: 30
+        error:
+          type: string
+          description: Error message if status is failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - projectId
+      - name
+      - api
+      - engine
+      - version
+      - specification
+      - backend
+      - hostname
+      - connectionPort
+      - connectionUser
+      - connectionPassword
+      - credentialGeneration
+      - connectionString
+      - ssl
+      - status
+      - containerStatus
+      - lifecycleState
+      - idleTimeoutMinutes
+      - cpu
+      - memory
+      - storage
+      - storageStatus
+      - storageTargetGb
+      - storageClass
+      - storageMaxGb
+      - nodePool
+      - replicas
+      - syncMode
+      - networkMaxConnections
+      - networkIdleTimeoutSeconds
+      - networkIPAllowlist
+      - backupEnabled
+      - pitr
+      - pitrRetentionDays
+      - storageAutoscaling
+      - storageAutoscalingThresholdPercent
+      - storageAutoscalingMaxGb
+      - maintenanceWindowDay
+      - maintenanceWindowHourUtc
+      - metricsEnabled
+      - sqlApiEnabled
+      - sqlApiAllowedStatements
+      - sqlApiMaxRows
+      - sqlApiMaxBytes
+      - sqlApiTimeoutSeconds
+      - error
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        projectId: 5e5ea5c16897e
+        name: My Production Database
+        api: postgresql
+        engine: postgresql
+        version: '16'
+        specification: s-2vcpu-2gb
+        backend: edge
+        hostname: db-myproject-mydb.fra.appwrite.center
+        connectionPort: 5432
+        connectionUser: appwrite_user
+        connectionPassword: ••••••••
+        credentialGeneration: 1
+        connectionString: postgresql://user:pass@db-myproject-mydb.fra.appwrite.center:5432/postgres?sslmode=require
+        ssl: true
+        status: ready
+        containerStatus: active
+        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        idleUntil: '2020-10-15T06:38:00.000+00:00'
+        lifecycleState: active
+        idleTimeoutMinutes: 15
+        cpu: 2000
+        memory: 4096
+        storage: 100
+        storageStatus: resizing
+        storageTargetGb: 120
+        storageResizeStartedAt: '2020-10-15T06:38:00.000+00:00'
+        storageClass: ssd
+        storageMaxGb: 100
+        nodePool: db-pool-4vcpu-8gb
+        replicas: 2
+        syncMode: async
+        networkMaxConnections: 500
+        networkIdleTimeoutSeconds: 900
+        networkIPAllowlist:
+        - 10.0.0.0/8
+        - 192.168.1.0/24
+        backupEnabled: true
+        pitr: true
+        pitrRetentionDays: 14
+        storageAutoscaling: true
+        storageAutoscalingThresholdPercent: 85
+        storageAutoscalingMaxGb: 30
+        maintenanceWindowDay: sun
+        maintenanceWindowHourUtc: 3
+        metricsEnabled: false
+        sqlApiEnabled: true
+        sqlApiAllowedStatements: SELECT
+        sqlApiMaxRows: 10000
+        sqlApiMaxBytes: 10485760
+        sqlApiTimeoutSeconds: 30
+        error: ''
+    databaseStatusReplica:
+      description: Replica
+      type: object
+      properties:
+        index:
+          type: integer
+          description: 'Member index within the database. Read `role` for which member accepts writes: a failover moves the primary without renumbering the indexes.'
+          format: int32
+          example: 0
+        role:
+          type: string
+          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology, so no member can be named the write target).'
+          example: primary
+        healthy:
+          type: boolean
+          description: Whether the replica is healthy.
+          example: true
+        replicating:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not healthy, or whose probe did not answer, has none yet. `healthy` is a reachability probe of the member itself and says nothing about replication, so a healthy member may still not be replicating.'
+          example: true
+        lagSeconds:
+          type:
+          - number
+          - 'null'
+          description: 'Replication lag in seconds (null for primary). Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
+          format: double
+          example: 0.2
+      required:
+      - index
+      - role
+      - healthy
+      example:
+        index: 0
+        role: primary
+        healthy: true
+        replicating: true
+        lagSeconds: 0.2
+    dedicatedDatabaseBackupList:
+      description: BackupList
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of backups.
+          format: int32
+          example: 5
+        backups:
+          type: array
+          description: List of backups.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseBackup'
+          example: []
+      required:
+      - total
+      - backups
+      example:
+        total: 5
+        backups: []
+    dedicatedDatabaseReplicas:
+      description: Replicas
+      type: object
+      properties:
+        replicas:
+          type: integer
+          description: Number of configured replicas. Zero means high availability is disabled.
+          format: int32
+          example: 2
+        syncMode:
+          type: string
+          description: 'Requested replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm). This is what was asked for; compare it with effectiveSyncMode for what the primary is enforcing.'
+          example: async
+        effectiveSyncMode:
+          type:
+          - string
+          - 'null'
+          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read. A value below the requested syncMode means writes are being acknowledged with weaker durability than configured.
+          example: async
+        syncDegraded:
+          type: boolean
+          description: Whether the enforced replication is weaker than the requested syncMode.
+          example: false
+        syncAcknowledgements:
+          type: integer
+          description: Number of standby acknowledgements the primary waits for before a write is committed. Zero means writes are acknowledged locally.
+          format: int32
+          example: 1
+        syncStandbyCount:
+          type: integer
+          description: Number of standbys registered with the primary for synchronous replication.
+          format: int32
+          example: 2
+        syncStateConfirmed:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
+          example: true
+        members:
+          type: array
+          description: Per-pod statuses for the primary and every replica.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseMember'
+          example: []
+      required:
+      - replicas
+      - syncMode
+      - syncDegraded
+      - syncAcknowledgements
+      - syncStandbyCount
+      - members
+      example:
+        replicas: 2
+        syncMode: async
+        effectiveSyncMode: async
+        syncDegraded: false
+        syncAcknowledgements: 1
+        syncStandbyCount: 2
+        syncStateConfirmed: true
+        members: []
+    dedicatedDatabaseExtensions:
+      description: Extensions
+      type: object
+      properties:
+        installed:
+          type: array
+          description: List of installed extensions.
+          items:
+            type: string
+          example:
+          - pgvector
+          - uuid-ossp
+        available:
+          type: array
+          description: List of available extensions that can be installed.
+          items:
+            type: string
+          example:
+          - postgis
+          - pg_trgm
+        metadata:
+          type: array
+          description: Curated metadata (display name, description, category) for each available extension.
+          items:
+            $ref: '#/components/schemas/postgresExtension'
+          example: []
+      required:
+      - installed
+      - available
+      - metadata
+      example:
+        installed:
+        - pgvector
+        - uuid-ossp
+        available:
+        - postgis
+        - pg_trgm
+        metadata: []
+    dedicatedDatabaseRestorationList:
+      description: Dedicated database restorations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of restorations that matched your query.
+          format: int32
+          example: 5
+        restorations:
+          type: array
+          description: List of restorations.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseRestoration'
+          example: []
+      required:
+      - total
+      - restorations
+      example:
+        total: 5
+        restorations: ''
+    dedicatedDatabaseOperationList:
+      description: OperationList
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of operations.
+          format: int32
+          example: 5
+        operations:
+          type: array
+          description: List of operations.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseOperation'
+          example: []
+      required:
+      - total
+      - operations
+      example:
+        total: 5
+        operations: ''
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

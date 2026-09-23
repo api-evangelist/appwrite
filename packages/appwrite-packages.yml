@@ -1,0 +1,228 @@
+generated: '2026-09-12'
+method: searched
+source: registry metadata endpoints queried unauthenticated on 2026-09-12 — registry.npmjs.org,
+  pypi.org/pypi/<pkg>/json, rubygems.org/api/v1/gems, crates.io/api/v1/crates,
+  api.nuget.org, repo1.maven.org maven-metadata.xml, pub.dev/api/packages,
+  proxy.golang.org/<module>/@latest, packagist.org — cross-checked against
+  https://appwrite.io/docs/sdks and the appwrite/* GitHub release feeds.
+provider: Appwrite
+providerId: appwrite
+package_count: 19
+official_count: 19
+note: >-
+  Every package below is first-party: each is published from an appwrite/sdk-for-* repository in the
+  Appwrite GitHub organisation and listed on https://appwrite.io/docs/sdks. Appwrite cut a coordinated
+  release across the whole SDK fleet on 2026-09-02 alongside the Appwrite 2.0 API, with a second wave on
+  2026-09-07 — no first-party SDK is stale against the API it wraps. Two currency traps worth recording:
+  search.maven.org reports io.appwrite:sdk-for-android at 8.1.0/2025-05, which is WRONG — the authoritative
+  repo1.maven.org maven-metadata.xml says 27.2.0/2026-09-07; and proxy.golang.org answers
+  github.com/appwrite/sdk-for-go with v1.0.0 because the live module is the /v7 major path. The Swift
+  and Apple SDKs distribute only through Swift Package Manager, which has no versioned metadata endpoint,
+  so their versions are read from the GitHub release tag instead.
+packages:
+  - name: appwrite
+    registry: npm
+    url: https://www.npmjs.com/package/appwrite
+    repository: https://github.com/appwrite/sdk-for-web
+    language: JavaScript/TypeScript
+    platform: Web (browser)
+    kind: client-sdk
+    official: true
+    version: 27.0.0
+    published: '2026-09-07'
+  - name: node-appwrite
+    registry: npm
+    url: https://www.npmjs.com/package/node-appwrite
+    repository: https://github.com/appwrite/sdk-for-node
+    language: JavaScript/TypeScript
+    platform: Node.js / Deno
+    kind: server-sdk
+    official: true
+    version: 29.0.0
+    published: '2026-09-02'
+  - name: react-native-appwrite
+    registry: npm
+    url: https://www.npmjs.com/package/react-native-appwrite
+    repository: https://github.com/appwrite/sdk-for-react-native
+    language: JavaScript/TypeScript
+    platform: React Native
+    kind: client-sdk
+    official: true
+    version: 0.35.0
+    published: '2026-09-07'
+  - name: '@appwrite.io/react'
+    registry: npm
+    url: https://www.npmjs.com/package/@appwrite.io/react
+    repository: https://github.com/appwrite/sdk-for-react
+    language: JavaScript/TypeScript
+    platform: React
+    kind: client-library
+    official: true
+    version: 0.1.0
+    published: '2026-06-24'
+    note: The Appwrite React library, announced 2026-06-26. Still 0.x and the only first-party package
+      that has not shipped since the 2.0 API wave.
+  - name: '@appwrite.io/console'
+    registry: npm
+    url: https://www.npmjs.com/package/@appwrite.io/console
+    repository: https://github.com/appwrite/sdk-for-console
+    language: JavaScript/TypeScript
+    platform: Web (browser)
+    kind: console-sdk
+    official: true
+    version: 16.0.0
+    published: '2026-08-05'
+    note: Generated against the console platform surface of the API, not the client or server surface.
+  - name: appwrite-cli
+    registry: npm
+    url: https://www.npmjs.com/package/appwrite-cli
+    repository: https://github.com/appwrite/sdk-for-cli
+    language: Go (distributed via npm and standalone binaries)
+    platform: CLI
+    kind: cli
+    official: true
+    version: 27.3.0
+    published: '2026-09-02'
+    note: The CLI was rewritten in Go (announced 2026-08-11) but still ships through npm as well as
+      Homebrew, Scoop and a standalone binary. See cli/appwrite-cli.yml.
+  - name: appwrite
+    registry: pypi
+    url: https://pypi.org/project/appwrite/
+    repository: https://github.com/appwrite/sdk-for-python
+    language: Python
+    platform: Server
+    kind: server-sdk
+    official: true
+    version: 24.0.0
+    published: '2026-09-02'
+  - name: mcp-server-appwrite
+    registry: pypi
+    url: https://pypi.org/project/mcp-server-appwrite/
+    repository: https://github.com/appwrite/mcp
+    language: Python
+    platform: MCP (stdio)
+    kind: mcp-server
+    official: true
+    version: 0.10.9
+    published: '2026-09-12'
+    note: The local/self-hosted MCP server, run with `uvx mcp-server-appwrite`. Distinct from the hosted
+      remote endpoint at https://mcp.appwrite.io — see mcp/appwrite-mcp.yml.
+  - name: appwrite
+    registry: rubygems
+    url: https://rubygems.org/gems/appwrite
+    repository: https://github.com/appwrite/sdk-for-ruby
+    language: Ruby
+    platform: Server
+    kind: server-sdk
+    official: true
+    version: 28.0.0
+    published: '2026-09-02'
+  - name: appwrite
+    registry: crates.io
+    url: https://crates.io/crates/appwrite
+    repository: https://github.com/appwrite/sdk-for-rust
+    language: Rust
+    platform: Server
+    kind: server-sdk
+    official: true
+    version: 0.14.0
+    published: '2026-09-02'
+  - name: appwrite/appwrite
+    registry: packagist
+    url: https://packagist.org/packages/appwrite/appwrite
+    repository: https://github.com/appwrite/sdk-for-php
+    language: PHP
+    platform: Server
+    kind: server-sdk
+    official: true
+    version: 26.1.1
+    published: '2026-09-10'
+  - name: Appwrite
+    registry: nuget
+    url: https://www.nuget.org/packages/Appwrite
+    repository: https://github.com/appwrite/sdk-for-dotnet
+    language: C# / .NET
+    platform: Server
+    kind: server-sdk
+    official: true
+    version: 8.0.0
+    published: '2026-09-02'
+  - name: io.appwrite:sdk-for-android
+    registry: maven-central
+    url: https://repo1.maven.org/maven2/io/appwrite/sdk-for-android/
+    repository: https://github.com/appwrite/sdk-for-android
+    language: Kotlin/Java
+    platform: Android
+    kind: client-sdk
+    official: true
+    version: 27.2.0
+    published: '2026-09-07'
+  - name: io.appwrite:sdk-for-kotlin
+    registry: maven-central
+    url: https://repo1.maven.org/maven2/io/appwrite/sdk-for-kotlin/
+    repository: https://github.com/appwrite/sdk-for-kotlin
+    language: Kotlin
+    platform: JVM server
+    kind: server-sdk
+    official: true
+    version: 22.0.0
+    published: '2026-09-02'
+  - name: appwrite
+    registry: pub.dev
+    url: https://pub.dev/packages/appwrite
+    repository: https://github.com/appwrite/sdk-for-flutter
+    language: Dart
+    platform: Flutter
+    kind: client-sdk
+    official: true
+    version: 26.2.0
+    published: '2026-09-07'
+  - name: dart_appwrite
+    registry: pub.dev
+    url: https://pub.dev/packages/dart_appwrite
+    repository: https://github.com/appwrite/sdk-for-dart
+    language: Dart
+    platform: Server
+    kind: server-sdk
+    official: true
+    version: 29.0.0
+    published: '2026-09-02'
+  - name: github.com/appwrite/sdk-for-go/v7
+    registry: go-modules
+    url: https://pkg.go.dev/github.com/appwrite/sdk-for-go/v7
+    repository: https://github.com/appwrite/sdk-for-go
+    language: Go
+    platform: Server
+    kind: server-sdk
+    official: true
+    version: v7.3.0
+    published: '2026-09-11'
+    note: proxy.golang.org answers the unversioned module path github.com/appwrite/sdk-for-go with a
+      stale v1.0.0 (2026-03-03). The live module is the /v7 major path recorded here.
+  - name: appwrite/sdk-for-swift
+    registry: swift-package-manager
+    url: https://github.com/appwrite/sdk-for-swift
+    repository: https://github.com/appwrite/sdk-for-swift
+    language: Swift
+    platform: Server / cross-platform Swift
+    kind: server-sdk
+    official: true
+    version: 22.0.0
+    published: '2026-09-02'
+    note: Distributed only through Swift Package Manager, which exposes no versioned metadata endpoint —
+      version and date read from the GitHub release tag.
+  - name: appwrite/sdk-for-apple
+    registry: swift-package-manager
+    url: https://github.com/appwrite/sdk-for-apple
+    repository: https://github.com/appwrite/sdk-for-apple
+    language: Swift
+    platform: iOS / macOS / watchOS / tvOS
+    kind: client-sdk
+    official: true
+    version: 19.0.0
+    published: '2026-09-07'
+    note: Distributed only through Swift Package Manager, which exposes no versioned metadata endpoint —
+      version and date read from the GitHub release tag.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

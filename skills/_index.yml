@@ -1,0 +1,140 @@
+generated: '2026-09-12'
+method: searched
+source: https://appwrite.io/.well-known/agent-skills/index.json + https://github.com/appwrite/skills (cloned verbatim
+  2026-09-12)
+provider: Appwrite
+providerId: appwrite
+specification: Agent Skills Open Standard
+discovery:
+  index: https://appwrite.io/.well-known/agent-skills/index.json
+  schema: https://schemas.agentskills.io/discovery/0.2.0/schema.json
+  repository: https://github.com/appwrite/skills
+  install: npx skills add appwrite/skills
+  docs: https://appwrite.io/docs/tooling/ai/skills
+note: These are PROVIDER-AUTHORED skills, saved verbatim — API Evangelist wrote none of them. Appwrite publishes
+  one skill per SDK plus one for the CLI, and advertises the set from a machine-readable discovery index on its
+  own domain. A prior round of this repo carried a clone of github.com/appwrite/skills under its former name appwrite/agent-skills,
+  pinned at API version 1.9.x; that clone was replaced with the current set.
+skill_count: 11
+skills:
+- name: appwrite-cli
+  file: skills/appwrite-cli/SKILL.md
+  description: Appwrite CLI skill. Use when managing Appwrite projects from the command line. Covers installation,
+    login, project initialization, multi-file project configuration, deploying functions/sites/tables/buckets/teams/webhooks/topics,
+    flag-based list queries, non-interactive CI/CD mode, and generating type-safe SDKs.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-cli/SKILL.md
+  frontmatter_description: How to use the Appwrite CLI well. Covers when to use appwrite.config.json vs `appwrite
+    client`, pull/push vs one-shot service calls, type-safe SDK and model generation, query flags, CI auth, Cloud
+    regional endpoints, function/site variables, and traps that `--help` will not mention. Does not catalog commands
+    — run `appwrite <command> --help` for flags. Use whenever running `appwrite`, deploying or
+- name: appwrite-dart
+  file: skills/appwrite-dart/SKILL.md
+  description: Appwrite Dart SDK skill. Use when building Flutter apps (mobile, web, desktop) or server-side Dart
+    applications with Appwrite. Covers client-side auth (email, OAuth), database queries, file uploads with native
+    file handling, real-time subscriptions, and server-side admin via API keys for user management, database administration,
+    storage, and functions.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-dart/SKILL.md
+  frontmatter_description: Appwrite Dart SDK skill. Use when building Flutter apps (mobile, web, desktop) or server-side
+    Dart applications with Appwrite. Covers client-side auth (email, OAuth), database queries, file uploads with
+    native file handling, real-time subscriptions, and server-side admin via API keys for user management, database
+    administration, storage, and functions.
+- name: appwrite-dotnet
+  file: skills/appwrite-dotnet/SKILL.md
+  description: Appwrite .NET SDK skill. Use when building server-side C# or .NET applications with Appwrite, including
+    ASP.NET and Blazor integrations. Covers user management, database/table CRUD, file storage, and functions via
+    API keys.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-dotnet/SKILL.md
+  frontmatter_description: Appwrite .NET SDK skill. Use when building server-side C# or .NET applications with Appwrite,
+    including ASP.NET and Blazor integrations. Covers user management, database/table CRUD, file storage, and functions
+    via API keys.
+- name: appwrite-go
+  file: skills/appwrite-go/SKILL.md
+  description: Appwrite Go SDK skill. Use when building server-side Go applications with Appwrite. Covers user management,
+    database/table CRUD, file storage, and functions via API keys. Uses per-service packages and functional options
+    pattern.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-go/SKILL.md
+  frontmatter_description: Appwrite Go SDK skill. Use when building server-side Go applications with Appwrite. Covers
+    user management, database/table CRUD, file storage, and functions via API keys. Uses per-service packages and
+    functional options pattern.
+- name: appwrite-kotlin
+  file: skills/appwrite-kotlin/SKILL.md
+  description: Appwrite Kotlin SDK skill. Use when building native Android apps or server-side Kotlin/JVM backends
+    with Appwrite. Covers client-side auth (email, OAuth with Activity integration), database queries, file uploads,
+    real-time subscriptions with coroutine support, and server-side admin via API keys for user management, database
+    administration, storage, and functions.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-kotlin/SKILL.md
+  frontmatter_description: Appwrite Kotlin SDK skill. Use when building native Android apps or server-side Kotlin/JVM
+    backends with Appwrite. Covers client-side auth (email, OAuth with Activity integration), database queries,
+    file uploads, real-time subscriptions with coroutine support, and server-side admin via API keys for user management,
+    database administration, storage, and functions.
+- name: appwrite-php
+  file: skills/appwrite-php/SKILL.md
+  description: Appwrite PHP SDK skill. Use when building server-side PHP applications with Appwrite, including Laravel
+    and Symfony integrations. Covers user management, database/table CRUD, file storage, and functions via API keys.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-php/SKILL.md
+  frontmatter_description: Appwrite PHP SDK skill. Use when building server-side PHP applications with Appwrite,
+    including Laravel and Symfony integrations. Covers user management, database/table CRUD, file storage, and functions
+    via API keys.
+- name: appwrite-python
+  file: skills/appwrite-python/SKILL.md
+  description: Appwrite Python SDK skill. Use when building server-side Python applications with Appwrite, including
+    Django, Flask, and FastAPI integrations. Covers user management, database/table CRUD, file storage, and functions
+    via API keys.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-python/SKILL.md
+  frontmatter_description: Appwrite Python SDK skill. Use when building server-side Python applications with Appwrite,
+    including Django, Flask, and FastAPI integrations. Covers user management, database/table CRUD, file storage,
+    and functions via API keys.
+- name: appwrite-ruby
+  file: skills/appwrite-ruby/SKILL.md
+  description: Appwrite Ruby SDK skill. Use when building server-side Ruby applications with Appwrite, including
+    Rails and Sinatra integrations. Covers user management, database/table CRUD, file storage, and functions via
+    API keys.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-ruby/SKILL.md
+  frontmatter_description: Appwrite Ruby SDK skill. Use when building server-side Ruby applications with Appwrite,
+    including Rails and Sinatra integrations. Covers user management, database/table CRUD, file storage, and functions
+    via API keys.
+- name: appwrite-rust
+  file: skills/appwrite-rust/SKILL.md
+  description: Appwrite Rust SDK skill. Use when building server-side Rust applications with Appwrite. Covers async
+    client setup with API keys, user management, TablesDB database/table/row operations, file storage, function
+    executions, permissions, queries, and error handling. Uses the crates.io `appwrite` package and Tokio.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-rust/SKILL.md
+  frontmatter_description: Appwrite Rust SDK skill. Use when building server-side Rust applications with Appwrite.
+    Covers async client setup with API keys, user management, TablesDB database/table/row operations, file storage,
+    function executions, permissions, queries, and error handling. Uses the crates.io `appwrite` package and Tokio.
+- name: appwrite-swift
+  file: skills/appwrite-swift/SKILL.md
+  description: Appwrite Swift SDK skill. Use when building native iOS, macOS, watchOS, or tvOS apps, or server-side
+    Swift applications with Appwrite. Covers client-side auth (email, OAuth), database queries, file uploads, real-time
+    subscriptions with async/await, and server-side admin via API keys for user management, database administration,
+    storage, and functions.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-swift/SKILL.md
+  frontmatter_description: Appwrite Swift SDK skill. Use when building native iOS, macOS, watchOS, or tvOS apps,
+    or server-side Swift applications with Appwrite. Covers client-side auth (email, OAuth), database queries, file
+    uploads, real-time subscriptions with async/await, and server-side admin via API keys for user management, database
+    administration, storage, and functions.
+- name: appwrite-typescript
+  file: skills/appwrite-typescript/SKILL.md
+  description: Appwrite TypeScript SDK skill. Use when building browser-based JavaScript/TypeScript apps, React
+    Native mobile apps, or server-side Node.js/Deno backends with Appwrite. Covers client-side auth (email, OAuth,
+    anonymous), database queries, file uploads, real-time subscriptions, and server-side admin via API keys for
+    user management, database administration, storage, and functions.
+  type: skill-md
+  source: https://raw.githubusercontent.com/appwrite/skills/main/skills/appwrite-typescript/SKILL.md
+  frontmatter_description: Appwrite TypeScript SDK skill. Use when building browser-based JavaScript/TypeScript
+    apps, React Native mobile apps, or server-side Node.js/Deno backends with Appwrite. Covers client-side auth
+    (email, OAuth, anonymous), database queries, file uploads, real-time subscriptions, and server-side admin via
+    API keys for user management, database administration, storage, and functions.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

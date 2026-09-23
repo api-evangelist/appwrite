@@ -1,0 +1,135 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://appwrite.io/docs/apis/release-policy, https://appwrite.io/docs/advanced/billing/uptime-sla,
+  https://appwrite.io/docs/advanced/billing/support-sla, https://appwrite.io/docs/advanced/security/dev-keys,
+  https://appwrite.io/changelog, https://github.com/appwrite/appwrite/releases and
+  https://status.appwrite.online/ — read 2026-09-12.
+provider: Appwrite
+providerId: appwrite
+versioning:
+  api:
+    scheme: URI path prefix
+    current: v1
+    mechanism: Every endpoint is served under /v1. The prefix is reserved for breaking changes and
+      has not moved since Appwrite 0.x.
+    support: 3 latest API versions receive maintenance support
+    extended_security_support: 10 years
+    backward_compatibility: >-
+      Any new Appwrite version retains backward compatibility for every API version still under
+      maintenance support.
+  product:
+    scheme: semver
+    current: 2.0.0
+    cloud_vs_self_hosted: >-
+      Cloud receives features first; self-hosted releases typically follow about two months later.
+      Appwrite 2.0 shipped to self-hosted on 2026-09-07.
+    minor_cadence: one minor release per quarter, plus patch releases for bugs and security
+    support: latest major version >= 1.x.x
+    extended_security_support: 10 years
+  sdks:
+    scheme: semver
+    support: last 5 major versions of each SDK
+    extended_security_support: 10 years
+    detail: packages/appwrite-packages.yml
+  runtimes:
+    support: 24 months minimum from initial release
+    extended_security_support: per language/OS vendor
+    docs: https://appwrite.io/docs/products/functions/runtimes
+deprecation:
+  policy_published: true
+  policy_url: https://appwrite.io/docs/apis/release-policy
+  phases:
+    - name: Support
+      scope: Continued bug fixes and security updates.
+    - name: Extended security support
+      scope: Security updates only.
+  headers:
+    sunset: false
+    deprecation: false
+    note: >-
+      Appwrite publishes a written deprecation and support policy but does NOT emit RFC 8594
+      Sunset or Deprecation response headers, and no operation in the 1,022-operation spec carries
+      `deprecated: true`. Deprecations are announced in the changelog and in the docs page for the
+      affected feature, which a human reads and an agent does not.
+  notice: >-
+    Appwrite states it gives early notice and introduces breaking changes slowly, and continues to
+    support the last five major SDK versions specifically to give developers time to adjust.
+  announced_deprecations:
+    - item: Dev keys
+      status: creation paused
+      announced: '2026-07-22'
+      detail: >-
+        Creation of new dev keys is paused and dev keys will be removed. Dev keys were the documented
+        way for a client app to bypass rate limits in development (X-Appwrite-Dev-Key header).
+      docs: https://appwrite.io/docs/advanced/security/dev-keys
+    - item: Credential minting by API keys and JWTs
+      status: removed
+      announced: '2026-08-17'
+      detail: API keys and JWTs can no longer mint further credentials.
+      docs: https://appwrite.io/changelog/entry/2026-08-17
+    - item: Legacy Databases API
+      status: superseded
+      detail: >-
+        The `databases` service (70 operations) is superseded by TablesDB, DocumentsDB and VectorsDB
+        in Appwrite 2.0 and is described as "the legacy Databases API" in the MCP server's own flag
+        list. It is not marked deprecated in the spec and is still shipped.
+deprecated_operations:
+  count: 0
+  note: >-
+    Derived from openapi/_original/appwrite-open-api3-latest.json — no operation carries a
+    `deprecated: true` flag.
+sla:
+  published: true
+  uptime:
+    url: https://appwrite.io/docs/advanced/billing/uptime-sla
+    commitments:
+      - plan: Free
+        uptime: null
+        note: No uptime commitment.
+      - plan: Pro
+        uptime: '99.5%'
+        allowed_monthly_downtime: ~3.6 hours
+      - plan: Scale
+        uptime: '99.9%'
+        allowed_monthly_downtime: ~43.2 minutes
+      - plan: Enterprise
+        uptime: '99.95%'
+        allowed_monthly_downtime: ~21.6 minutes
+    service_credits:
+      - band: below commitment but >= 99%
+        credit: 10% of monthly fee
+      - band: below 99% but >= 95%
+        credit: 25% of monthly fee
+      - band: below 95%
+        credit: 50% of monthly fee
+    claim_window: 30 days from the incident, via a support ticket in the Appwrite Console
+    scope_note: >-
+      Uptime is measured only for the Appwrite services an organization actively uses; an outage in
+      an unused service does not count as downtime.
+  support:
+    url: https://appwrite.io/docs/advanced/billing/support-sla
+status_page:
+  url: https://status.appwrite.online/
+  http_status: 200
+  checked: '2026-09-12'
+changelog:
+  url: https://appwrite.io/changelog
+  markdown: https://appwrite.io/changelog.md
+  releases: https://github.com/appwrite/appwrite/releases
+  detail: changelog/appwrite-changelog.yml
+data_lifecycle:
+  - item: Paused free projects
+    rule: Free projects pause after a week of inactivity and are deleted 90 days later.
+    announced: '2026-06-29'
+  - item: Deployment retention
+    rule: Functions and Sites deployments are retained per a configurable retention setting.
+    announced: '2026-05-15'
+  - item: Backup retention
+    rule: Every database is provisioned with a default backup policy; 7-day retention on Pro,
+      configurable per policy.
+  - item: Enterprise log retention
+    rule: 90-day log retention with custom backup policies on Enterprise.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

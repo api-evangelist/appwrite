@@ -1,0 +1,850 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Regions API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Regions
+  description: ''
+paths:
+  /regions/cache:
+    delete:
+      summary: Purge platform manager cache resource from network regions
+      operationId: regionsDeleteCache
+      tags:
+      - Regions
+      description: Purges platform manager cache resource from network regions.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: regions/delete-cache.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - manager
+        packaging: false
+        public: true
+        auth:
+          manager: []
+      security:
+      - Project: []
+      parameters:
+      - name: documentId
+        description: Document ID.
+        required: false
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+          default: ''
+        in: query
+      - name: collectionId
+        description: CollectionID.
+        required: false
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+          default: ''
+        in: query
+      - name: region
+        description: Project Region.
+        required: false
+        schema:
+          type: string
+          example: fra
+          title: Region
+          oneOf:
+          - type: string
+            enum:
+            - fra
+            title: fra
+          - type: string
+            enum:
+            - nyc
+            title: nyc
+          - type: string
+            enum:
+            - syd
+            title: syd
+          - type: string
+            enum:
+            - sfo
+            title: sfo
+          - type: string
+            enum:
+            - sgp
+            title: sgp
+          - type: string
+            enum:
+            - tor
+            title: tor
+        in: query
+      - name: cache
+        description: Cache target.
+        required: false
+        schema:
+          type: string
+          example: cache
+          title: CacheTarget
+          oneOf:
+          - type: string
+            enum:
+            - cache
+            title: cache
+          - type: string
+            enum:
+            - timelimit
+            title: timelimit
+          - type: string
+            enum:
+            - locks
+            title: locks
+          - type: string
+            enum:
+            - pubsub
+            title: pubsub
+          - type: string
+            enum:
+            - queue
+            title: queue
+          - type: string
+            enum:
+            - all
+            title: all
+          default: cache
+        in: query
+      - name: all
+        description: Clear the entire selected cache target.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: false
+        in: query
+      - name: database
+        description: Database cache scope.
+        required: false
+        schema:
+          type: string
+          example: console
+          title: CacheDatabase
+          oneOf:
+          - type: string
+            enum:
+            - console
+            title: console
+          - type: string
+            enum:
+            - project
+            title: project
+          - type: string
+            enum:
+            - logs
+            title: logs
+          default: console
+        in: query
+      - name: projectId
+        description: Project ID for project or logs database cache.
+        required: false
+        schema:
+          type: string
+          example: <PROJECT_ID>
+          default: ''
+        in: query
+      - name: json
+        description: Return JSON instead of 204.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: false
+        in: query
+  /regions/deployments/{deploymentId}/runtime:
+    get:
+      summary: Get the runtime information by deployment ID
+      operationId: regionsGetDeploymentRuntime
+      tags:
+      - Regions
+      description: Retrieves runtime information for a deployment by deployment ID.
+      responses:
+        '200':
+          description: Runtime
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managerRuntime'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: regions/get-deployment-runtime.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: projectId
+        description: Project ID
+        required: false
+        schema:
+          type: string
+          example: <PROJECT_ID>
+          default: ''
+        in: query
+      - name: deploymentId
+        description: Deployment ID
+        required: true
+        schema:
+          type: string
+          example: <DEPLOYMENT_ID>
+        in: path
+  /regions/events:
+    post:
+      summary: Queue an event in the given region
+      operationId: regionsCreateEvent
+      tags:
+      - Regions
+      description: Queues an event in the given region using CloudEvents specification.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: regions/create-event.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                specversion:
+                  description: CloudEvents spec version
+                  type: string
+                  default: '1.0'
+                  example: <SPECVERSION>
+                type:
+                  description: Event type that maps to worker. e.g. v1-stats-usage
+                  type: string
+                  example: <TYPE>
+                source:
+                  description: Event source. e.g. imagine
+                  type: string
+                  default: ''
+                  example: <SOURCE>
+                subject:
+                  description: Subject of the event, i.e. projectId
+                  type: string
+                  example: <SUBJECT>
+                id:
+                  description: Unique event ID
+                  type: string
+                  default: ''
+                  example: <ID>
+                time:
+                  description: Event timestamp in RFC3339 format
+                  type: string
+                  default: ''
+                  example: <TIME>
+                datacontenttype:
+                  description: Content type of data
+                  type: string
+                  default: application/json
+                  example: <DATACONTENTTYPE>
+                data:
+                  description: 'Event data containing metrics. e.g. {"metrics": [...]}'
+                  type: object
+                  default: {}
+                  example: {}
+              required:
+              - type
+              - subject
+              - data
+  /regions/events/execution:
+    post:
+      summary: Create a new execution for a function or site
+      operationId: regionsCreateExecution
+      tags:
+      - Regions
+      description: Creates a new execution record for a function or site.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: regions/create-execution.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  description: Project ID
+                  type: string
+                  default: ''
+                  example: <PROJECT_ID>
+                deploymentId:
+                  description: Deployment ID
+                  type: string
+                  example: <DEPLOYMENT_ID>
+                responseStatusCode:
+                  description: Response status code
+                  type: integer
+                  example: 100
+                  format: int32
+                responseHeaders:
+                  description: Response headers
+                  type: object
+                  default: {}
+                  example: {}
+                responseSize:
+                  description: Response size in bytes
+                  type: integer
+                  format: int32
+                requestPath:
+                  description: Request path
+                  type: string
+                  example: <REQUEST_PATH>
+                requestMethod:
+                  description: Request method
+                  type: string
+                  example: get
+                  title: RequestMethod
+                  oneOf:
+                  - type: string
+                    enum:
+                    - get
+                    title: get
+                  - type: string
+                    enum:
+                    - post
+                    title: post
+                  - type: string
+                    enum:
+                    - put
+                    title: put
+                  - type: string
+                    enum:
+                    - patch
+                    title: patch
+                  - type: string
+                    enum:
+                    - delete
+                    title: delete
+                  - type: string
+                    enum:
+                    - options
+                    title: options
+                  - type: string
+                    enum:
+                    - head
+                    title: head
+                requestHeaders:
+                  description: Request headers
+                  type: object
+                  default: {}
+                  example: {}
+                requestSize:
+                  description: Request size in bytes
+                  type: integer
+                  format: int32
+                errors:
+                  description: Errors
+                  type: string
+                  example: <ERRORS>
+                logs:
+                  description: Logs
+                  type: string
+                  example: <LOGS>
+                duration:
+                  description: Execution duration in seconds
+                  type: number
+                  format: float
+                hostname:
+                  description: Request hostname (edge-only)
+                  type: string
+                  default: ''
+                  example: <HOSTNAME>
+                userAgent:
+                  description: Request user-agent (edge-only)
+                  type: string
+                  default: ''
+                  example: <USER_AGENT>
+                country:
+                  description: ISO 3166-1 alpha-2 country (edge-only)
+                  type: string
+                  default: ''
+                  example: <COUNTRY>
+                ip:
+                  description: Request client IP (edge-only)
+                  type: string
+                  default: ''
+                  example: <IP>
+                service:
+                  description: Service name (edge-only)
+                  type: string
+                  default: ''
+                  example: <SERVICE>
+              required:
+              - deploymentId
+              - responseStatusCode
+              - responseHeaders
+              - responseSize
+              - requestPath
+              - requestMethod
+              - requestHeaders
+              - requestSize
+              - errors
+              - logs
+              - duration
+  /regions/project:
+    delete:
+      summary: Delete project from network regions
+      operationId: regionsDeleteProject
+      tags:
+      - Regions
+      description: Deletes a project from network regions.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: regions/delete-project.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - manager
+        packaging: false
+        public: true
+        auth:
+          manager: []
+      security:
+      - Project: []
+      parameters:
+      - name: projectId
+        description: Project ID.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: query
+  /regions/usage:
+    post:
+      summary: Push usage stats to stats usage queue
+      operationId: regionsCreateUsage
+      tags:
+      - Regions
+      description: Pushes usage statistics to the stats usage queue.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: regions/create-usage.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - manager
+        packaging: false
+        public: true
+        auth:
+          manager: []
+      security:
+      - Project: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usage:
+                  description: 'Usage stats as a JSON string. Array of entries with projectId, metrics, and timestamp. eg: [{"projectId": "123", "metrics": [{"key": "requests", "value": 1}], "timestamp": "2021-01-01 00:00:00"}]'
+                  type: string
+                  example: <USAGE>
+              required:
+              - usage
+components:
+  schemas:
+    managerRuntime:
+      description: Runtime
+      type: object
+      properties:
+        deploymentId:
+          type: string
+          description: Deployment ID of function
+          example: fid8jx6ws45jana098ab7
+        variables:
+          type: object
+          additionalProperties: true
+          description: Environment variables for the function execution
+          example:
+            API_KEY: your-api-key
+            DEBUG: 'true'
+        headers:
+          type: object
+          additionalProperties: true
+          description: Headers for the function execution
+          example:
+            X-Appwrite-Key: your-api-key
+            DEBUG: 'true'
+        scopes:
+          type:
+          - array
+          - 'null'
+          description: Scopes for the dyanmic key passed in function execution
+          items:
+            type: string
+          example:
+          - users.read
+          - users.write
+        execute:
+          type:
+          - array
+          - 'null'
+          description: Allowed groups for the function execution
+          items:
+            type: string
+          example:
+          - any
+          - guest
+        timeout:
+          type: integer
+          description: Function timeout in seconds.
+          format: int32
+          example: 0
+        source:
+          type: string
+          description: Build source path
+          example: ''
+        entrypoint:
+          type: string
+          description: Build entrypoint file
+          example: ''
+        version:
+          type: string
+          description: Function version.
+          example: v4
+        cpus:
+          type: number
+          description: Function CPU count.
+          format: double
+          example: 0.5
+        memory:
+          type: integer
+          description: Function memory limit in MB.
+          format: int32
+          example: 512
+        logging:
+          type: boolean
+          description: Function logging.
+          example: true
+        image:
+          type: string
+          description: Runtime image name.
+          example: ''
+        command:
+          type: string
+          description: Function runtime command.
+          example: nohup helpers/start.sh "node index.js"
+        tags:
+          type:
+          - object
+          - 'null'
+          description: Edge cache invalidation tags derived from the runtime.
+          allOf:
+          - $ref: '#/components/schemas/managerTags'
+      required:
+      - deploymentId
+      - timeout
+      - source
+      - entrypoint
+      - version
+      - cpus
+      - memory
+      - logging
+      - image
+      - command
+      example:
+        deploymentId: fid8jx6ws45jana098ab7
+        variables: '{"API_KEY":"your-api-key","DEBUG":"true"}'
+        headers: '{"X-Appwrite-Key":"your-api-key","DEBUG":"true"}'
+        scopes: '["users.read","users.write"]'
+        execute: '["any","guest"]'
+        timeout: 0
+        source: ''
+        entrypoint: ''
+        version: v4
+        cpus: 0.5
+        memory: 512
+        logging: true
+        image: ''
+        command: nohup helpers/start.sh "node index.js"
+        tags: ''
+    managerTags:
+      description: Tags
+      type: object
+      properties:
+        project:
+          type:
+          - string
+          - 'null'
+          description: Project cache tag.
+          example: 5e5ea5c16897e
+        team:
+          type:
+          - string
+          - 'null'
+          description: Team cache tag.
+          example: 5e5ea5c16897f
+        deployment:
+          type:
+          - string
+          - 'null'
+          description: Deployment cache tag.
+          example: 5e5ea5c168981
+        domain:
+          type:
+          - string
+          - 'null'
+          description: Domain cache tag.
+          example: function.example.com
+        resource:
+          type:
+          - string
+          - 'null'
+          description: Resource type cache tag.
+          example: function
+        function:
+          type:
+          - string
+          - 'null'
+          description: Function cache tag.
+          example: 5e5ea5c168980
+        site:
+          type:
+          - string
+          - 'null'
+          description: Site cache tag.
+          example: 5e5ea5c168980
+      example:
+        project: 5e5ea5c16897e
+        team: 5e5ea5c16897f
+        deployment: 5e5ea5c168981
+        domain: function.example.com
+        resource: function
+        function: 5e5ea5c168980
+        site: 5e5ea5c168980
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

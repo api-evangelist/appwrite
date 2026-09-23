@@ -1,0 +1,6432 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Console API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Console
+  description: The Console service allows you to interact with console relevant information.
+paths:
+  /console/campaigns/{campaignId}:
+    get:
+      summary: Get campaign details
+      operationId: consoleGetCampaign
+      tags:
+      - Console
+      description: Receive the details of a campaign using its ID.
+      responses:
+        '201':
+          description: Campaign
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/campaign'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/get-campaign.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: campaignId
+        description: ID of the campaign
+        required: true
+        schema:
+          type: string
+          example: <CAMPAIGN_ID>
+        in: path
+  /console/coupons/{couponId}:
+    get:
+      summary: Get coupon details
+      operationId: consoleGetCoupon
+      tags:
+      - Console
+      description: Get the details of a coupon using it's coupon ID.
+      responses:
+        '201':
+          description: Coupon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/get-coupon.md
+        rate-limit: 50
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: couponId
+        description: ID of the coupon
+        required: true
+        schema:
+          type: string
+          example: <COUPON_ID>
+        in: path
+  /console/databases:
+    get:
+      summary: List databases
+      operationId: consoleListDatabases
+      tags:
+      - Console
+      description: Get a list of all the project's databases. You can use the query params to filter your results. This returns every database across all types and product APIs in a single call.
+      responses:
+        '200':
+          description: Databases List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/databaseList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/list-databases.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: queries
+        description: 'Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: search
+        description: 'Search term to filter your list results. Max length: 256 chars.'
+        required: false
+        schema:
+          type: string
+          example: <SEARCH>
+          default: ''
+        in: query
+      - name: total
+        description: When set to false, the total count returned will be 0 and will not be calculated.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: true
+        in: query
+  /console/oauth2-providers:
+    get:
+      summary: List OAuth2 providers
+      operationId: consoleListOAuth2Providers
+      tags:
+      - Console
+      description: List all OAuth2 providers supported by the Appwrite server, along with the parameters required to configure each provider. The response excludes mock providers but includes sandbox providers.
+      responses:
+        '200':
+          description: Console OAuth2 Providers List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consoleOAuth2ProviderList'
+      deprecated: false
+      x-appwrite:
+        group: console
+        demo: console/list-o-auth-2-providers.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+  /console/plans:
+    get:
+      summary: Get plans
+      operationId: consoleGetPlans
+      tags:
+      - Console
+      description: Return a list of all available plans.
+      responses:
+        '200':
+          description: Billing plan list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/billingPlanList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/get-plans.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: projects.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: platform
+        description: Platform type
+        required: false
+        schema:
+          type: string
+          example: appwrite
+          title: Platform
+          oneOf:
+          - type: string
+            enum:
+            - appwrite
+            title: appwrite
+          - type: string
+            enum:
+            - imagine
+            title: imagine
+          default: appwrite
+        in: query
+  /console/plans/{planId}:
+    get:
+      summary: Get plan
+      operationId: consoleGetPlan
+      tags:
+      - Console
+      description: Get the details of a plan using its plan ID.
+      responses:
+        '200':
+          description: billingPlan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/billingPlan'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/get-plan.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: projects.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: planId
+        description: Plan id
+        required: true
+        schema:
+          type: string
+          example: <PLAN_ID>
+        in: path
+  /console/postgres-extensions:
+    get:
+      summary: List Postgres extensions
+      operationId: consoleListPostgresExtensions
+      tags:
+      - Console
+      description: Get the catalog of Postgres extensions that can be installed on a dedicated Postgres database.
+      responses:
+        '200':
+          description: Postgres extensions list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postgresExtensionList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/list-postgres-extensions.md
+        rate-limit: 100
+        rate-time: 3600
+        rate-key: ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+  /console/programs/{programId}:
+    get:
+      summary: Get program details
+      operationId: consoleGetProgram
+      tags:
+      - Console
+      description: Receive the details of a program using its ID.
+      responses:
+        '201':
+          description: Program
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/program'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/get-program.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: teams.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: programId
+        description: ID of the program
+        required: true
+        schema:
+          type: string
+          example: <PROGRAM_ID>
+        in: path
+  /console/programs/{programId}/memberships:
+    post:
+      summary: Create program membership
+      operationId: consoleCreateProgramMembership
+      tags:
+      - Console
+      description: Create a new membership for an account to a program.
+      responses:
+        '200':
+          description: Organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/organization'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/create-program-membership.md
+        rate-limit: 10
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: teams.write
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: programId
+        description: ID of the program
+        required: true
+        schema:
+          type: string
+          example: <PROGRAM_ID>
+        in: path
+  /console/regions:
+    get:
+      summary: List Regions
+      operationId: consoleListRegions
+      tags:
+      - Console
+      description: Get all available regions for the console.
+      responses:
+        '200':
+          description: Regions list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consoleRegionList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/list-regions.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: projects.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+  /console/resources:
+    get:
+      summary: Check resource ID availability
+      operationId: consoleGetResource
+      tags:
+      - Console
+      description: Check if a resource ID is available.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/get-resource.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: userId:{userId}, url:{url}
+        scope: rules.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: value
+        description: Resource value.
+        required: true
+        schema:
+          type: string
+          example: <VALUE>
+        in: query
+      - name: type
+        description: Resource type.
+        required: true
+        schema:
+          type: string
+          example: rules
+          title: ConsoleResourceType
+          oneOf:
+          - type: string
+            enum:
+            - rules
+            title: rules
+        in: query
+  /console/scopes/organization:
+    get:
+      summary: List organization scopes
+      operationId: consoleListOrganizationScopes
+      tags:
+      - Console
+      description: List all scopes available for organization API keys, along with a description for each scope.
+      responses:
+        '200':
+          description: Console Key Scopes List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consoleKeyScopeList'
+      deprecated: false
+      x-appwrite:
+        group: console
+        demo: console/list-organization-scopes.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+  /console/scopes/project:
+    get:
+      summary: List project scopes
+      operationId: consoleListProjectScopes
+      tags:
+      - Console
+      description: List all scopes available for project API keys, along with a description for each scope.
+      responses:
+        '200':
+          description: Console Key Scopes List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consoleKeyScopeList'
+      deprecated: false
+      x-appwrite:
+        group: console
+        demo: console/list-project-scopes.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+  /console/sources:
+    post:
+      summary: Create source
+      operationId: consoleCreateSource
+      tags:
+      - Console
+      description: Create a new source.
+      responses:
+        '201':
+          description: Any
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/any'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/create-source.md
+        rate-limit: 50
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ref:
+                  description: Ref param
+                  type:
+                  - string
+                  - 'null'
+                  example: <REF>
+                referrer:
+                  description: Referrer
+                  type:
+                  - string
+                  - 'null'
+                  example: https://example.com
+                  format: url
+                utmSource:
+                  description: Utm source
+                  type:
+                  - string
+                  - 'null'
+                  example: <UTM_SOURCE>
+                utmCampaign:
+                  description: Utm campaign
+                  type:
+                  - string
+                  - 'null'
+                  example: <UTM_CAMPAIGN>
+                utmMedium:
+                  description: Utm medium
+                  type:
+                  - string
+                  - 'null'
+                  example: <UTM_MEDIUM>
+  /console/suggestions/columns:
+    get:
+      summary: Get column suggestions with size limits for a table, using database context and…
+      operationId: consoleSuggestColumns
+      tags:
+      - Console
+      description: Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
+      responses:
+        '200':
+          description: Columns List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/columnList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/suggest-columns.md
+        rate-limit: 10
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: query
+      - name: tableId
+        description: Table ID.
+        required: true
+        schema:
+          type: string
+          example: <TABLE_ID>
+        in: query
+      - name: context
+        description: Optional user provided context to refine suggestions.
+        required: false
+        schema:
+          type: string
+          example: <CONTEXT>
+        in: query
+      - name: min
+        description: Minimum number of suggestions to generate.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 3
+        in: query
+      - name: max
+        description: Maximum number of suggestions to generate.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 7
+        in: query
+  /console/suggestions/indexes:
+    get:
+      summary: Get index suggestions for table columns, using database context
+      operationId: consoleSuggestIndexes
+      tags:
+      - Console
+      description: Suggests database indexes for table columns based on the provided table structure and existing columns. The API will also analyze the table's column types, names, and patterns to recommend optimal indexes that improve query performance for common database operations like filtering, sorting, and searching.
+      responses:
+        '200':
+          description: Column Indexes List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/columnIndexList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/suggest-indexes.md
+        rate-limit: 10
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: query
+      - name: tableId
+        description: Table ID.
+        required: true
+        schema:
+          type: string
+          example: <TABLE_ID>
+        in: query
+      - name: min
+        description: Minimum number of suggestions to generate.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 1
+        in: query
+      - name: max
+        description: Maximum number of suggestions to generate.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 4
+        in: query
+  /console/suggestions/queries:
+    get:
+      summary: Get query suggestions for a list resource from free-text intent
+      operationId: consoleSuggestQueries
+      tags:
+      - Console
+      description: Suggest valid Appwrite query JSON objects for a supported list resource from free-text user intent. The endpoint picks a validator based on `resource` — for system resources it uses the static validator and its allowed attributes, and for user-owned table rows it loads the table schema and validates against those attributes at request time. The returned queries are guaranteed to parse and pass the relevant queries validator.
+      responses:
+        '200':
+          description: Any
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/any'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/suggest-queries.md
+        rate-limit: 10
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: resource
+        description: Resource to generate queries for.
+        required: true
+        schema:
+          type: string
+          example: activities
+          title: QuerySuggestionResource
+          oneOf:
+          - type: string
+            enum:
+            - activities
+            title: activities
+          - type: string
+            enum:
+            - activityevents
+            title: activity_events
+          - type: string
+            enum:
+            - archives
+            title: archives
+          - type: string
+            enum:
+            - credits
+            title: credits
+          - type: string
+            enum:
+            - dnsrecords
+            title: dns_records
+          - type: string
+            enum:
+            - domains
+            title: domains
+          - type: string
+            enum:
+            - invoices
+            title: invoices
+          - type: string
+            enum:
+            - paymentmethods
+            title: payment_methods
+          - type: string
+            enum:
+            - policies
+            title: policies
+          - type: string
+            enum:
+            - projects
+            title: projects
+          - type: string
+            enum:
+            - restorations
+            title: restorations
+          - type: string
+            enum:
+            - teamaggregations
+            title: team_aggregations
+          - type: string
+            enum:
+            - teams
+            title: teams
+          - type: string
+            enum:
+            - databases
+            title: databases
+          - type: string
+            enum:
+            - tables
+            title: tables
+          - type: string
+            enum:
+            - rows
+            title: rows
+          - type: string
+            enum:
+            - schedules
+            title: schedules
+          - type: string
+            enum:
+            - platforms
+            title: platforms
+          - type: string
+            enum:
+            - keys
+            title: keys
+          - type: string
+            enum:
+            - devkeys
+            title: dev_keys
+          - type: string
+            enum:
+            - webhooks
+            title: webhooks
+          - type: string
+            enum:
+            - notifications
+            title: notifications
+          - type: string
+            enum:
+            - certificates
+            title: certificates
+          - type: string
+            enum:
+            - realtime
+            title: realtime
+          - type: string
+            enum:
+            - rules
+            title: rules
+          - type: string
+            enum:
+            - installations
+            title: installations
+          - type: string
+            enum:
+            - repositories
+            title: repositories
+          - type: string
+            enum:
+            - vcscomments
+            title: vcs_comments
+          - type: string
+            enum:
+            - vcscommentlocks
+            title: vcs_comment_locks
+          - type: string
+            enum:
+            - reports
+            title: reports
+          - type: string
+            enum:
+            - insights
+            title: insights
+          - type: string
+            enum:
+            - users
+            title: users
+          - type: string
+            enum:
+            - cache
+            title: cache
+          - type: string
+            enum:
+            - tokens
+            title: tokens
+          - type: string
+            enum:
+            - authenticators
+            title: authenticators
+          - type: string
+            enum:
+            - challenges
+            title: challenges
+          - type: string
+            enum:
+            - sessions
+            title: sessions
+          - type: string
+            enum:
+            - identities
+            title: identities
+          - type: string
+            enum:
+            - memberships
+            title: memberships
+          - type: string
+            enum:
+            - buckets
+            title: buckets
+          - type: string
+            enum:
+            - providers
+            title: providers
+          - type: string
+            enum:
+            - messages
+            title: messages
+          - type: string
+            enum:
+            - topics
+            title: topics
+          - type: string
+            enum:
+            - subscribers
+            title: subscribers
+          - type: string
+            enum:
+            - targets
+            title: targets
+          - type: string
+            enum:
+            - presencelogs
+            title: presence_logs
+          - type: string
+            enum:
+            - companies
+            title: companies
+          - type: string
+            enum:
+            - billingaddresses
+            title: billing_addresses
+          - type: string
+            enum:
+            - billingaggregations
+            title: billing_aggregations
+          - type: string
+            enum:
+            - billingaggregationresources
+            title: billing_aggregation_resources
+          - type: string
+            enum:
+            - billingteamprojectaggregations
+            title: billing_team_project_aggregations
+          - type: string
+            enum:
+            - billingteamaggregations_v2
+            title: billing_team_aggregations_v2
+          - type: string
+            enum:
+            - billingteamaggregationresources
+            title: billing_team_aggregation_resources
+          - type: string
+            enum:
+            - billinginvoices_v2
+            title: billing_invoices_v2
+          - type: string
+            enum:
+            - billingaddons
+            title: billing_addons
+          - type: string
+            enum:
+            - alerts
+            title: alerts
+          - type: string
+            enum:
+            - payments
+            title: payments
+          - type: string
+            enum:
+            - billingdiscounts
+            title: billing_discounts
+          - type: string
+            enum:
+            - resourcesdeleted
+            title: resources_deleted
+          - type: string
+            enum:
+            - sources
+            title: sources
+          - type: string
+            enum:
+            - deals
+            title: deals
+          - type: string
+            enum:
+            - blocks
+            title: blocks
+          - type: string
+            enum:
+            - threats
+            title: threats
+          - type: string
+            enum:
+            - feedbacks
+            title: feedbacks
+          - type: string
+            enum:
+            - disputes
+            title: disputes
+          - type: string
+            enum:
+            - wafrules
+            title: waf_rules
+          - type: string
+            enum:
+            - sh_installations
+            title: sh_installations
+          - type: string
+            enum:
+            - migrationdatabases
+            title: migration_databases
+          - type: string
+            enum:
+            - migrationprojects
+            title: migration_projects
+          - type: string
+            enum:
+            - affiliatelinks
+            title: affiliate_links
+          - type: string
+            enum:
+            - affiliatereferrals
+            title: affiliate_referrals
+          - type: string
+            enum:
+            - affiliaterewards
+            title: affiliate_rewards
+          - type: string
+            enum:
+            - apps
+            title: apps
+          - type: string
+            enum:
+            - appsecrets
+            title: app_secrets
+          - type: string
+            enum:
+            - appinstallations
+            title: app_installations
+          - type: string
+            enum:
+            - appkeys
+            title: app_keys
+          - type: string
+            enum:
+            - oauth2grants
+            title: oauth2_grants
+          - type: string
+            enum:
+            - oauth2consents
+            title: oauth2_consents
+          - type: string
+            enum:
+            - oauth2tokens
+            title: oauth2_tokens
+          - type: string
+            enum:
+            - attributes
+            title: attributes
+          - type: string
+            enum:
+            - indexes
+            title: indexes
+          - type: string
+            enum:
+            - functions
+            title: functions
+          - type: string
+            enum:
+            - sites
+            title: sites
+          - type: string
+            enum:
+            - deployments
+            title: deployments
+          - type: string
+            enum:
+            - executions
+            title: executions
+          - type: string
+            enum:
+            - variables
+            title: variables
+          - type: string
+            enum:
+            - migrations
+            title: migrations
+          - type: string
+            enum:
+            - resourcetokens
+            title: resource_tokens
+          - type: string
+            enum:
+            - transactions
+            title: transactions
+          - type: string
+            enum:
+            - transactionlogs
+            title: transaction_logs
+          - type: string
+            enum:
+            - stats
+            title: stats
+          - type: string
+            enum:
+            - dedicateddatabases
+            title: dedicated_databases
+          - type: string
+            enum:
+            - dedicateddatabaseconfigs
+            title: dedicated_database_configs
+          - type: string
+            enum:
+            - dedicateddatabaseruntimes
+            title: dedicated_database_runtimes
+          - type: string
+            enum:
+            - dedicateddatabaseoperations
+            title: dedicated_database_operations
+          - type: string
+            enum:
+            - dedicateddatabasebackups
+            title: dedicated_database_backups
+          - type: string
+            enum:
+            - dedicateddatabaserestorations
+            title: dedicated_database_restorations
+          - type: string
+            enum:
+            - dedicateddatabasebranches
+            title: dedicated_database_branches
+        in: query
+      - name: input
+        description: Natural language query intent used to generate filters/sorting/pagination.
+        required: true
+        schema:
+          type: string
+          example: <INPUT>
+        in: query
+      - name: databaseId
+        description: Database ID. Required when resource is `tables` or `rows`.
+        required: false
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: query
+      - name: tableId
+        description: Table ID. Required when resource is `rows`.
+        required: false
+        schema:
+          type: string
+          example: <TABLE_ID>
+        in: query
+  /console/templates/email/{templateId}:
+    get:
+      summary: Get email template
+      operationId: consoleGetEmailTemplate
+      tags:
+      - Console
+      description: Get the Appwrite built-in default email template for the specified type and locale. Always returns the unmodified default, ignoring any custom project overrides.
+      responses:
+        '200':
+          description: EmailTemplate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/emailTemplate'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: console/get-email-template.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: public
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+      parameters:
+      - name: templateId
+        description: 'Email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession'
+        required: true
+        schema:
+          type: string
+          example: verification
+          title: ProjectEmailTemplateId
+          oneOf:
+          - type: string
+            enum:
+            - verification
+            title: verification
+          - type: string
+            enum:
+            - magicSession
+            title: magicSession
+          - type: string
+            enum:
+            - recovery
+            title: recovery
+          - type: string
+            enum:
+            - invitation
+            title: invitation
+          - type: string
+            enum:
+            - mfaChallenge
+            title: mfaChallenge
+          - type: string
+            enum:
+            - sessionAlert
+            title: sessionAlert
+          - type: string
+            enum:
+            - otpSession
+            title: otpSession
+        in: path
+      - name: locale
+        description: Template locale. If left empty, the fallback locale (en) will be used.
+        required: false
+        schema:
+          type: string
+          example: af
+          title: ProjectEmailTemplateLocale
+          oneOf:
+          - type: string
+            enum:
+            - af
+            title: af
+          - type: string
+            enum:
+            - ar-ae
+            title: ar-ae
+          - type: string
+            enum:
+            - ar-bh
+            title: ar-bh
+          - type: string
+            enum:
+            - ar-dz
+            title: ar-dz
+          - type: string
+            enum:
+            - ar-eg
+            title: ar-eg
+          - type: string
+            enum:
+            - ar-iq
+            title: ar-iq
+          - type: string
+            enum:
+            - ar-jo
+            title: ar-jo
+          - type: string
+            enum:
+            - ar-kw
+            title: ar-kw
+          - type: string
+            enum:
+            - ar-lb
+            title: ar-lb
+          - type: string
+            enum:
+            - ar-ly
+            title: ar-ly
+          - type: string
+            enum:
+            - ar-ma
+            title: ar-ma
+          - type: string
+            enum:
+            - ar-om
+            title: ar-om
+          - type: string
+            enum:
+            - ar-qa
+            title: ar-qa
+          - type: string
+            enum:
+            - ar-sa
+            title: ar-sa
+          - type: string
+            enum:
+            - ar-sy
+            title: ar-sy
+          - type: string
+            enum:
+            - ar-tn
+            title: ar-tn
+          - type: string
+            enum:
+            - ar-ye
+            title: ar-ye
+          - type: string
+            enum:
+            - as
+            title: as
+          - type: string
+            enum:
+            - az
+            title: az
+          - type: string
+            enum:
+            - be
+            title: be
+          - type: string
+            enum:
+            - bg
+            title: bg
+          - type: string
+            enum:
+            - bh
+            title: bh
+          - type: string
+            enum:
+            - bn
+            title: bn
+          - type: string
+            enum:
+            - bs
+            title: bs
+          - type: string
+            enum:
+            - ca
+            title: ca
+          - type: string
+            enum:
+            - cs
+            title: cs
+          - type: string
+            enum:
+            - cy
+            title: cy
+          - type: string
+            enum:
+            - da
+            title: da
+          - type: string
+            enum:
+            - de
+            title: de
+          - type: string
+            enum:
+            - de-at
+            title: de-at
+          - type: string
+            enum:
+            - de-ch
+            title: de-ch
+          - type: string
+            enum:
+            - de-li
+            title: de-li
+          - type: string
+            enum:
+            - de-lu
+            title: de-lu
+          - type: string
+            enum:
+            - el
+            title: el
+          - type: string
+            enum:
+            - en
+            title: en
+          - type: string
+            enum:
+            - en-au
+            title: en-au
+          - type: string
+            enum:
+            - en-bz
+            title: en-bz
+          - type: string
+            enum:
+            - en-ca
+            title: en-ca
+          - type: string
+            enum:
+            - en-gb
+            title: en-gb
+          - type: string
+            enum:
+            - en-ie
+            title: en-ie
+          - type: string
+            enum:
+            - en-jm
+            title: en-jm
+          - type: string
+            enum:
+            - en-nz
+            title: en-nz
+          - type: string
+            enum:
+            - en-tt
+            title: en-tt
+          - type: string
+            enum:
+            - en-us
+            title: en-us
+          - type: string
+            enum:
+            - en-za
+            title: en-za
+          - type: string
+            enum:
+            - eo
+            title: eo
+          - type: string
+            enum:
+            - es
+            title: es
+          - type: string
+            enum:
+            - es-ar
+            title: es-ar
+          - type: string
+            enum:
+            - es-bo
+            title: es-bo
+          - type: string
+            enum:
+            - es-cl
+            title: es-cl
+          - type: string
+            enum:
+            - es-co
+            title: es-co
+          - type: string
+            enum:
+            - es-cr
+            title: es-cr
+          - type: string
+            enum:
+            - es-do
+            title: es-do
+          - type: string
+            enum:
+            - es-ec
+            title: es-ec
+          - type: string
+            enum:
+            - es-gt
+            title: es-gt
+          - type: string
+            enum:
+            - es-hn
+            title: es-hn
+          - type: string
+            enum:
+            - es-mx
+            title: es-mx
+          - type: string
+            enum:
+            - es-ni
+            title: es-ni
+          - type: string
+            enum:
+            - es-pa
+            title: es-pa
+          - type: string
+            enum:
+            - es-pe
+            title: es-pe
+          - type: string
+            enum:
+            - es-pr
+            title: es-pr
+          - type: string
+            enum:
+            - es-py
+            title: es-py
+          - type: string
+            enum:
+            - es-sv
+            title: es-sv
+          - type: string
+            enum:
+            - es-uy
+            title: es-uy
+          - type: string
+            enum:
+            - es-ve
+            title: es-ve
+          - type: string
+            enum:
+            - et
+            title: et
+          - type: string
+            enum:
+            - eu
+            title: eu
+          - type: string
+            enum:
+            - fa
+            title: fa
+          - type: string
+            enum:
+            - fi
+            title: fi
+          - type: string
+            enum:
+            - fo
+            title: fo
+          - type: string
+            enum:
+            - fr
+            title: fr
+          - type: string
+            enum:
+            - fr-be
+            title: fr-be
+          - type: string
+            enum:
+            - fr-ca
+            title: fr-ca
+          - type: string
+            enum:
+            - fr-ch
+            title: fr-ch
+          - type: string
+            enum:
+            - fr-lu
+            title: fr-lu
+          - type: string
+            enum:
+            - ga
+            title: ga
+          - type: string
+            enum:
+            - gd
+            title: gd
+          - type: string
+            enum:
+            - he
+            title: he
+          - type: string
+            enum:
+            - hi
+            title: hi
+          - type: string
+            enum:
+            - hr
+            title: hr
+          - type: string
+            enum:
+            - hu
+            title: hu
+          - type: string
+            enum:
+            - id
+            title: id
+          - type: string
+            enum:
+            - is
+            title: is
+          - type: string
+            enum:
+            - it
+            title: it
+          - type: string
+            enum:
+            - it-ch
+            title: it-ch
+          - type: string
+            enum:
+            - ja
+            title: ja
+          - type: string
+            enum:
+            - ji
+            title: ji
+          - type: string
+            enum:
+            - ko
+            title: ko
+          - type: string
+            enum:
+            - ku
+            title: ku
+          - type: string
+            enum:
+            - lt
+            title: lt
+          - type: string
+            enum:
+            - lv
+            title: lv
+          - type: string
+            enum:
+            - mk
+            title: mk
+          - type: string
+            enum:
+            - ml
+            title: ml
+          - type: string
+            enum:
+            - ms
+            title: ms
+          - type: string
+            enum:
+            - mt
+            title: mt
+          - type: string
+            enum:
+            - nb
+            title: nb
+          - type: string
+            enum:
+            - ne
+            title: ne
+          - type: string
+            enum:
+            - nl
+            title: nl
+          - type: string
+            enum:
+            - nl-be
+            title: nl-be
+          - type: string
+            enum:
+            - nn
+            title: nn
+          - type: string
+            enum:
+            - 'no'
+            title: 'no'
+          - type: string
+            enum:
+            - pa
+            title: pa
+          - type: string
+            enum:
+            - pl
+            title: pl
+          - type: string
+            enum:
+            - pt
+            title: pt
+          - type: string
+            enum:
+            - pt-br
+            title: pt-br
+          - type: string
+            enum:
+            - rm
+            title: rm
+          - type: string
+            enum:
+            - ro
+            title: ro
+          - type: string
+            enum:
+            - ro-md
+            title: ro-md
+          - type: string
+            enum:
+            - ru
+            title: ru
+          - type: string
+            enum:
+            - ru-md
+            title: ru-md
+          - type: string
+            enum:
+            - sb
+            title: sb
+          - type: string
+            enum:
+            - sk
+            title: sk
+          - type: string
+            enum:
+            - sl
+            title: sl
+          - type: string
+            enum:
+            - sq
+            title: sq
+          - type: string
+            enum:
+            - sr
+            title: sr
+          - type: string
+            enum:
+            - sv
+            title: sv
+          - type: string
+            enum:
+            - sv-fi
+            title: sv-fi
+          - type: string
+            enum:
+            - th
+            title: th
+          - type: string
+            enum:
+            - tn
+            title: tn
+          - type: string
+            enum:
+            - tr
+            title: tr
+          - type: string
+            enum:
+            - ts
+            title: ts
+          - type: string
+            enum:
+            - ua
+            title: ua
+          - type: string
+            enum:
+            - ur
+            title: ur
+          - type: string
+            enum:
+            - ve
+            title: ve
+          - type: string
+            enum:
+            - vi
+            title: vi
+          - type: string
+            enum:
+            - xh
+            title: xh
+          - type: string
+            enum:
+            - zh-cn
+            title: zh-cn
+          - type: string
+            enum:
+            - zh-hk
+            title: zh-hk
+          - type: string
+            enum:
+            - zh-sg
+            title: zh-sg
+          - type: string
+            enum:
+            - zh-tw
+            title: zh-tw
+          - type: string
+            enum:
+            - zu
+            title: zu
+        in: query
+  /console/variables:
+    get:
+      summary: Get variables
+      operationId: consoleVariables
+      tags:
+      - Console
+      description: Get all Environment Variables that are relevant for the console.
+      responses:
+        '200':
+          description: Console Variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consoleVariables'
+      deprecated: false
+      x-appwrite:
+        group: console
+        demo: console/variables.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: projects.read
+        platforms:
+        - console
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+      security:
+      - Project: []
+components:
+  schemas:
+    postgresExtensionList:
+      description: Postgres extensions list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of extensions that matched your query.
+          format: int32
+          example: 5
+        extensions:
+          type: array
+          description: List of extensions.
+          items:
+            $ref: '#/components/schemas/postgresExtension'
+          example: []
+      required:
+      - total
+      - extensions
+      example:
+        total: 5
+        extensions: ''
+    columnUrl:
+      description: ColumnURL
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: githubUrl
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: String format.
+          example: url
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: https://example.com
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: githubUrl
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: url
+        default: https://example.com
+    billingPlanDedicatedDatabaseLimits:
+      description: dedicatedDatabaseLimits
+      type: object
+      properties:
+        minCpu:
+          type:
+          - integer
+          - 'null'
+          description: Minimum CPU allocation in millicores.
+          format: int32
+          example: 125
+        maxCpu:
+          type:
+          - integer
+          - 'null'
+          description: Maximum CPU allocation in millicores.
+          format: int32
+          example: 32000
+        minMemoryMb:
+          type:
+          - integer
+          - 'null'
+          description: Minimum memory allocation in megabytes.
+          format: int32
+          example: 128
+        maxMemoryMb:
+          type:
+          - integer
+          - 'null'
+          description: Maximum memory allocation in megabytes.
+          format: int32
+          example: 262144
+        minStorageGb:
+          type:
+          - integer
+          - 'null'
+          description: Minimum storage allocation in gigabytes.
+          format: int32
+          example: 1
+        maxStorageGb:
+          type:
+          - integer
+          - 'null'
+          description: Maximum storage allocation in gigabytes.
+          format: int32
+          example: 16384
+        maxReplicas:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of high-availability replicas per dedicated database.
+          format: int32
+          example: 5
+        maxConnections:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of client connections.
+          format: int32
+          example: 10000
+        maxIpAllowlistSize:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of entries allowed in the IP allowlist.
+          format: int32
+          example: 100
+        maxExtensions:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of database extensions that can be enabled.
+          format: int32
+          example: 50
+        maxBackupRetentionDays:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of days a backup can be retained.
+          format: int32
+          example: 365
+        maxPitrRetentionDays:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of days of point-in-time recovery data that can be retained.
+          format: int32
+          example: 35
+        maxSqlApiMaxRows:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of rows a single SQL API query can return.
+          format: int32
+          example: 1000000
+        maxSqlApiMaxBytes:
+          type:
+          - integer
+          - 'null'
+          description: Maximum response size in bytes for a single SQL API query.
+          format: int32
+          example: 104857600
+        maxSqlApiTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          description: Maximum execution time in seconds for a single SQL API query.
+          format: int32
+          example: 300
+        maxSqlApiAllowedStatements:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of SQL statement types that can be permitted through the SQL API.
+          format: int32
+          example: 10
+        allowedSqlStatements:
+          type:
+          - array
+          - 'null'
+          description: SQL statement types permitted through the SQL API.
+          items:
+            type: string
+          example:
+          - select
+          - insert
+          - update
+          - delete
+          - explain
+        allowedStorageClasses:
+          type:
+          - array
+          - 'null'
+          description: Storage classes available for dedicated databases.
+          items:
+            type: string
+          example:
+          - ssd
+        allowedSyncModes:
+          type:
+          - array
+          - 'null'
+          description: Replica synchronization modes available for dedicated databases.
+          items:
+            type: string
+          example:
+          - async
+          - sync
+          - quorum
+      example:
+        minCpu: 125
+        maxCpu: 32000
+        minMemoryMb: 128
+        maxMemoryMb: 262144
+        minStorageGb: 1
+        maxStorageGb: 16384
+        maxReplicas: 5
+        maxConnections: 10000
+        maxIpAllowlistSize: 100
+        maxExtensions: 50
+        maxBackupRetentionDays: 365
+        maxPitrRetentionDays: 35
+        maxSqlApiMaxRows: 1000000
+        maxSqlApiMaxBytes: 104857600
+        maxSqlApiTimeoutSeconds: 300
+        maxSqlApiAllowedStatements: 10
+        allowedSqlStatements:
+        - select
+        - insert
+        - update
+        - delete
+        - explain
+        allowedStorageClasses:
+        - ssd
+        allowedSyncModes:
+        - async
+        - sync
+        - quorum
+    billingPlanSupportedAddons:
+      description: BillingPlanSupportedAddons
+      type: object
+      properties:
+        baa:
+          type: boolean
+          description: Whether the plan supports BAA (Business Associate Agreement) addon
+          example: true
+        premiumGeoDB:
+          type: boolean
+          description: Whether the plan supports Premium Geo DB addon (project-level)
+          example: true
+        premiumGeoDBOrg:
+          type: boolean
+          description: Whether the plan supports Premium Geo DB addon (organization-level)
+          example: true
+      required:
+      - baa
+      - premiumGeoDB
+      - premiumGeoDBOrg
+      example:
+        baa: true
+        premiumGeoDB: true
+        premiumGeoDBOrg: true
+    usageBillingPlan:
+      description: usageBillingPlan
+      type: object
+      properties:
+        bandwidth:
+          type: object
+          description: Bandwidth additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        executions:
+          type: object
+          description: Executions additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        member:
+          type:
+          - object
+          - 'null'
+          description: Member additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtime:
+          type: object
+          description: Realtime additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtimeMessages:
+          type: object
+          description: Realtime messages additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtimeBandwidth:
+          type:
+          - object
+          - 'null'
+          description: Realtime bandwidth additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        storage:
+          type: object
+          description: Storage additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        users:
+          type: object
+          description: User additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        GBHours:
+          type: object
+          description: GBHour additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        imageTransformations:
+          type: object
+          description: Image transformation additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        credits:
+          type:
+          - object
+          - 'null'
+          description: Credits additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+      required:
+      - bandwidth
+      - executions
+      - realtime
+      - realtimeMessages
+      - storage
+      - users
+      - GBHours
+      - imageTransformations
+      example:
+        bandwidth: null
+        executions: null
+        member: null
+        realtime: null
+        realtimeMessages: null
+        realtimeBandwidth: null
+        storage: null
+        users: null
+        GBHours: null
+        imageTransformations: null
+        credits: null
+    columnText:
+      description: ColumnText
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this column is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: default
+        encrypt: false
+    billingPlanAddonDetails:
+      description: Details
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: Is the addon supported in the plan?
+          example: true
+        planIncluded:
+          type: integer
+          description: Addon plan included value
+          format: int32
+          example: 1
+        limit:
+          type: integer
+          description: Addon limit
+          format: int32
+          example: 5
+        type:
+          type: string
+          description: Addon type
+          example: numeric
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
+      required:
+      - supported
+      - planIncluded
+      - limit
+      - type
+      - price
+      - value
+      - invoiceDesc
+      example:
+        supported: true
+        planIncluded: 1
+        limit: 5
+        type: numeric
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
+    backupPolicy:
+      description: backup
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Backup policy ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Backup policy name.
+          example: Hourly backups
+        $createdAt:
+          type: string
+          description: Policy creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Policy update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        services:
+          type: array
+          description: The services that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this policy should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this policy should backup a single resource.
+          example: database
+        retention:
+          type: integer
+          description: How many days to keep the backup before it will be automatically deleted.
+          format: int32
+          example: 7
+        schedule:
+          type: string
+          description: Policy backup schedule in CRON format.
+          example: 0 * * * *
+        type:
+          type: string
+          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).'
+          example: full
+        enabled:
+          type: boolean
+          description: Is this policy enabled.
+          example: true
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - services
+      - resources
+      - retention
+      - schedule
+      - type
+      - enabled
+      example:
+        $id: 5e5ea5c16897e
+        name: Hourly backups
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
+        retention: 7
+        schedule: 0 * * * *
+        type: full
+        enabled: true
+    columnPoint:
+      description: ColumnPoint
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - array
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example:
+          - 0
+          - 0
+          items:
+            type: number
+            format: double
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default:
+        - 0
+        - 0
+    billingPlanAddon:
+      description: Addon
+      type: object
+      properties:
+        seats:
+          type:
+          - object
+          - 'null'
+          description: Addon seats
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+        projects:
+          type:
+          - object
+          - 'null'
+          description: Addon projects
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+      example:
+        seats: null
+        projects: null
+    columnRelationship:
+      description: ColumnRelationship
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        relatedTable:
+          type: string
+          description: The ID of the related table.
+          example: table
+        relationType:
+          type: string
+          description: The type of the relationship.
+          example: oneToOne|oneToMany|manyToOne|manyToMany
+        twoWay:
+          type: boolean
+          description: Is the relationship two-way?
+          example: false
+        twoWayKey:
+          type: string
+          description: The key of the two-way relationship.
+          example: string
+        onDelete:
+          type: string
+          description: How deleting the parent document will propagate to child documents.
+          example: restrict|cascade|setNull
+        side:
+          type: string
+          description: Whether this is the parent or child side of the relationship
+          example: parent|child
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - relatedTable
+      - relationType
+      - twoWay
+      - twoWayKey
+      - onDelete
+      - side
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        relatedTable: table
+        relationType: oneToOne|oneToMany|manyToOne|manyToMany
+        twoWay: false
+        twoWayKey: string
+        onDelete: restrict|cascade|setNull
+        side: parent|child
+    columnLongtext:
+      description: ColumnLongtext
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this column is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: default
+        encrypt: false
+    coupon:
+      description: Coupon
+      type: object
+      properties:
+        $id:
+          type: string
+          description: coupon ID
+          example: NEWBONUS
+        code:
+          type: string
+          description: coupon ID
+          example: NEWBONUS
+        credits:
+          type: number
+          description: Provided credit amount
+          format: double
+          example: 50
+        expiration:
+          type: string
+          description: Coupon expiration time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        validity:
+          type: integer
+          description: Credit validity in days.
+          format: int32
+          example: 180
+        campaign:
+          type: string
+          description: Campaign the coupon is associated with`.
+          example: AppwriteHeroes
+        status:
+          type: string
+          description: Status of the coupon. Can be one of `disabled`, `active` or `expired`.
+          example: disabled
+        onlyNewOrgs:
+          type: boolean
+          description: If the coupon is only valid for new organizations or not.
+          example: true
+      required:
+      - $id
+      - code
+      - credits
+      - expiration
+      - validity
+      - campaign
+      - status
+      - onlyNewOrgs
+      example:
+        $id: NEWBONUS
+        code: NEWBONUS
+        credits: 50
+        expiration: '2020-10-15T06:38:00.000+00:00'
+        validity: 180
+        campaign: AppwriteHeroes
+        status: disabled
+        onlyNewOrgs: true
+    additionalResource:
+      description: AdditionalResource
+      type: object
+      properties:
+        name:
+          type: string
+          description: Resource name
+          example: ''
+        unit:
+          type: string
+          description: Resource unit
+          example: GB
+        currency:
+          type: string
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
+      required:
+      - name
+      - unit
+      - currency
+      - price
+      - value
+      - invoiceDesc
+      example:
+        name: ''
+        unit: GB
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
+    consoleKeyScope:
+      description: Console Key Scope
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Scope ID.
+          example: users.read
+        description:
+          type: string
+          description: Scope description.
+          example: Access to read your project's users
+        category:
+          type: string
+          description: Scope category.
+          example: Auth
+        deprecated:
+          type: boolean
+          description: Scope is deprecated.
+          example: true
+      required:
+      - $id
+      - description
+      - category
+      - deprecated
+      example:
+        $id: users.read
+        description: Access to read your project's users
+        category: Auth
+        deprecated: true
+    billingPlan:
+      description: billingPlan
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Plan ID.
+          example: tier-0
+        name:
+          type: string
+          description: Plan name
+          example: Hobby
+        desc:
+          type: string
+          description: Plan description
+          example: Hobby plan
+        order:
+          type: integer
+          description: Plan order
+          format: int32
+          example: 0
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 25
+        trial:
+          type: integer
+          description: Trial days
+          format: int32
+          example: 14
+        bandwidth:
+          type: integer
+          description: Bandwidth
+          format: int32
+          example: 25
+        storage:
+          type: integer
+          description: Storage
+          format: int32
+          example: 25
+        imageTransformations:
+          type: integer
+          description: Image Transformations
+          format: int32
+          example: 100
+        screenshotsGenerated:
+          type: integer
+          description: Screenshots generated
+          format: int32
+          example: 50
+        members:
+          type:
+          - integer
+          - 'null'
+          description: Members
+          format: int32
+          example: 25
+        webhooks:
+          type: integer
+          description: Webhooks
+          format: int32
+          example: 25
+        wafRules:
+          type: integer
+          description: Maximum WAF rules per project
+          format: int32
+          example: 2
+        projects:
+          type: integer
+          description: Projects
+          format: int32
+          example: 2
+        platforms:
+          type: integer
+          description: Platforms
+          format: int32
+          example: 3
+        users:
+          type: integer
+          description: Users
+          format: int32
+          example: 25
+        teams:
+          type: integer
+          description: Teams
+          format: int32
+          example: 25
+        databases:
+          type: integer
+          description: Databases
+          format: int32
+          example: 25
+        databasesReads:
+          type: integer
+          description: Database reads per month
+          format: int32
+          example: 500000
+        databasesWrites:
+          type: integer
+          description: Database writes per month
+          format: int32
+          example: 250000
+        databasesBatchSize:
+          type: integer
+          description: Database batch size limit
+          format: int32
+          example: 100
+        buckets:
+          type: integer
+          description: Buckets
+          format: int32
+          example: 25
+        fileSize:
+          type: integer
+          description: File size
+          format: int32
+          example: 25
+        functions:
+          type: integer
+          description: Functions
+          format: int32
+          example: 25
+        sites:
+          type: integer
+          description: Sites
+          format: int32
+          example: 1
+        executions:
+          type: integer
+          description: Function executions
+          format: int32
+          example: 25
+        executionsRetentionCount:
+          type: integer
+          description: Rolling max executions retained per function/site
+          format: int32
+          example: 10000
+        GBHours:
+          type: integer
+          description: GB hours for functions
+          format: int32
+          example: 100
+        realtime:
+          type: integer
+          description: Realtime connections
+          format: int32
+          example: 25
+        realtimeMessages:
+          type: integer
+          description: Realtime messages
+          format: int32
+          example: 100000
+        messages:
+          type: integer
+          description: Messages per month
+          format: int32
+          example: 1000
+        topics:
+          type: integer
+          description: Topics for messaging
+          format: int32
+          example: 1
+        authPhone:
+          type: integer
+          description: SMS authentications per month
+          format: int32
+          example: 10
+        domains:
+          type: integer
+          description: Custom domains
+          format: int32
+          example: 5
+        activityLogs:
+          type:
+          - integer
+          - 'null'
+          description: Activity log days
+          format: int32
+          example: 7
+        usageLogs:
+          type: integer
+          description: Usage history days
+          format: int32
+          example: 30
+        usageLogsIntervals:
+          type:
+          - array
+          - 'null'
+          description: Usage log time intervals allowed for this plan (e.g. 15m, 1h, 1d).
+          items:
+            type: string
+          example:
+          - 15m
+          - 1h
+          - 1d
+        usageAggregateOnlyMetrics:
+          type:
+          - array
+          - 'null'
+          description: Metrics this plan only records as a total. They cannot be broken down by dimension or filtered, because the stored events cover a fraction of the real traffic.
+          items:
+            type: string
+          example:
+          - network.requests
+          - network.inbound
+          - network.outbound
+        projectInactivityDays:
+          type: integer
+          description: Number of days of console inactivity before a project is paused. 0 means pausing is disabled.
+          format: int32
+          example: 7
+        alertLimit:
+          type: integer
+          description: Alert threshold percentage
+          format: int32
+          example: 80
+        usage:
+          type: object
+          description: Additional resources
+          allOf:
+          - $ref: '#/components/schemas/usageBillingPlan'
+        addons:
+          type: object
+          description: Addons
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddon'
+        budgetCapEnabled:
+          type: boolean
+          description: Budget cap enabled or disabled.
+          example: true
+        customSmtp:
+          type: boolean
+          description: Custom SMTP
+          example: true
+        emailBranding:
+          type: boolean
+          description: Appwrite branding in email
+          example: true
+        requiresPaymentMethod:
+          type: boolean
+          description: Does plan require payment method
+          example: true
+        requiresBillingAddress:
+          type: boolean
+          description: Does plan require billing address
+          example: true
+        isAvailable:
+          type: boolean
+          description: Is the billing plan available
+          example: true
+        selfService:
+          type: boolean
+          description: Can user change the plan themselves
+          example: true
+        premiumSupport:
+          type: boolean
+          description: Does plan enable premium support
+          example: true
+        budgeting:
+          type: boolean
+          description: Does plan support budget cap
+          example: true
+        supportsMockNumbers:
+          type: boolean
+          description: Does plan support mock numbers
+          example: true
+        supportsOrganizationRoles:
+          type: boolean
+          description: Does plan support organization roles
+          example: true
+        supportsCredits:
+          type: boolean
+          description: Does plan support credit
+          example: true
+        supportsDedicatedDatabases:
+          type: boolean
+          description: Does plan support dedicated databases.
+          example: true
+        supportsDisposableEmailValidation:
+          type: boolean
+          description: Does plan support blocking disposable email addresses.
+          example: true
+        supportsCanonicalEmailValidation:
+          type: boolean
+          description: Does plan support requiring canonical email addresses.
+          example: true
+        supportsFreeEmailValidation:
+          type: boolean
+          description: Does plan support blocking free email addresses.
+          example: true
+        supportsCorporateEmailValidation:
+          type: boolean
+          description: Does plan support restricting sign-ups to corporate email addresses only.
+          example: true
+        supportsProjectSpecificRoles:
+          type: boolean
+          description: Does plan support project-specific member roles.
+          example: true
+        backupsEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Does plan support backup policies.
+          example: true
+        usagePerProject:
+          type: boolean
+          description: Whether usage addons are calculated per project.
+          example: true
+        supportedAddons:
+          type: object
+          description: Supported addons for this plan
+          allOf:
+          - $ref: '#/components/schemas/billingPlanSupportedAddons'
+        backupPolicies:
+          type:
+          - integer
+          - 'null'
+          description: How many policies does plan support
+          format: int32
+          example: 1
+        deploymentSize:
+          type: integer
+          description: Maximum function and site deployment size in MB
+          format: int32
+          example: 30
+        buildSize:
+          type: integer
+          description: Maximum function and site deployment size in MB
+          format: int32
+          example: 2000
+        databasesAllowEncrypt:
+          type: boolean
+          description: Does the plan support encrypted string attributes or not.
+          example: false
+        limits:
+          type:
+          - object
+          - 'null'
+          description: Plan specific limits
+          allOf:
+          - $ref: '#/components/schemas/billingPlanLimits'
+        group:
+          description: Group of this billing plan for variants
+          example: pro
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - starter
+            title: starter
+          - type: string
+            enum:
+            - pro
+            title: pro
+          - type: string
+            enum:
+            - scale
+            title: scale
+        program:
+          type:
+          - object
+          - 'null'
+          description: Details of the program this plan is a part of.
+          allOf:
+          - $ref: '#/components/schemas/program'
+        databaseComputeCredit:
+          type: number
+          description: Included monthly dedicated-database compute credit in USD. Resets each billing cycle with no roll-over.
+          format: double
+          example: 10
+        dedicatedDatabases:
+          type:
+          - object
+          - 'null'
+          description: Dedicated database limits available to this plan.
+          allOf:
+          - $ref: '#/components/schemas/billingPlanDedicatedDatabaseLimits'
+      required:
+      - $id
+      - name
+      - desc
+      - order
+      - price
+      - trial
+      - bandwidth
+      - storage
+      - imageTransformations
+      - screenshotsGenerated
+      - webhooks
+      - wafRules
+      - projects
+      - platforms
+      - users
+      - teams
+      - databases
+      - databasesReads
+      - databasesWrites
+      - databasesBatchSize
+      - buckets
+      - fileSize
+      - functions
+      - sites
+      - executions
+      - executionsRetentionCount
+      - GBHours
+      - realtime
+      - realtimeMessages
+      - messages
+      - topics
+      - authPhone
+      - domains
+      - usageLogs
+      - projectInactivityDays
+      - alertLimit
+      - usage
+      - addons
+      - budgetCapEnabled
+      - customSmtp
+      - emailBranding
+      - requiresPaymentMethod
+      - requiresBillingAddress
+      - isAvailable
+      - selfService
+      - premiumSupport
+      - budgeting
+      - supportsMockNumbers
+      - supportsOrganizationRoles
+      - supportsCredits
+      - supportsDedicatedDatabases
+      - supportsDisposableEmailValidation
+      - supportsCanonicalEmailValidation
+      - supportsFreeEmailValidation
+      - supportsCorporateEmailValidation
+      - supportsProjectSpecificRoles
+      - usagePerProject
+      - supportedAddons
+      - deploymentSize
+      - buildSize
+      - databasesAllowEncrypt
+      - group
+      - databaseComputeCredit
+      example:
+        $id: tier-0
+        name: Hobby
+        desc: Hobby plan
+        order: 0
+        price: 25
+        trial: 14
+        bandwidth: 25
+        storage: 25
+        imageTransformations: 100
+        screenshotsGenerated: 50
+        members: 25
+        webhooks: 25
+        wafRules: 2
+        projects: 2
+        platforms: 3
+        users: 25
+        teams: 25
+        databases: 25
+        databasesReads: 500000
+        databasesWrites: 250000
+        databasesBatchSize: 100
+        buckets: 25
+        fileSize: 25
+        functions: 25
+        sites: 1
+        executions: 25
+        executionsRetentionCount: 10000
+        GBHours: 100
+        realtime: 25
+        realtimeMessages: 100000
+        messages: 1000
+        topics: 1
+        authPhone: 10
+        domains: 5
+        activityLogs: 7
+        usageLogs: 30
+        usageLogsIntervals:
+        - 15m
+        - 1h
+        - 1d
+        usageAggregateOnlyMetrics:
+        - network.requests
+        - network.inbound
+        - network.outbound
+        projectInactivityDays: 7
+        alertLimit: 80
+        usage: null
+        addons: null
+        budgetCapEnabled: true
+        customSmtp: true
+        emailBranding: true
+        requiresPaymentMethod: true
+        requiresBillingAddress: true
+        isAvailable: true
+        selfService: true
+        premiumSupport: true
+        budgeting: true
+        supportsMockNumbers: true
+        supportsOrganizationRoles: true
+        supportsCredits: true
+        supportsDedicatedDatabases: true
+        supportsDisposableEmailValidation: true
+        supportsCanonicalEmailValidation: true
+        supportsFreeEmailValidation: true
+        supportsCorporateEmailValidation: true
+        supportsProjectSpecificRoles: true
+        backupsEnabled: true
+        usagePerProject: true
+        supportedAddons: null
+        backupPolicies: 1
+        deploymentSize: 30
+        buildSize: 2000
+        databasesAllowEncrypt: false
+        limits: null
+        group: pro
+        program: null
+        databaseComputeCredit: 10
+        dedicatedDatabases: null
+    columnEmail:
+      description: ColumnEmail
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: userEmail
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: String format.
+          example: email
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: default@example.com
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: userEmail
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: email
+        default: default@example.com
+    organization:
+      description: Organization
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Team creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Team update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Team name.
+          example: VIP
+        total:
+          type: integer
+          description: Total number of team members.
+          format: int32
+          example: 7
+        prefs:
+          type: object
+          description: Team preferences as a key-value object
+          example:
+            theme: pink
+            timezone: UTC
+          allOf:
+          - $ref: '#/components/schemas/preferences'
+        billingBudget:
+          type:
+          - integer
+          - 'null'
+          description: Project budget limit. Null when no budget is set.
+          format: int32
+          example: 50
+        budgetAlerts:
+          type: array
+          description: Project budget limit
+          items:
+            type: integer
+            format: int32
+          example:
+          - 50
+          - 75
+        billingPlan:
+          type: string
+          description: Organization's billing plan ID.
+          example: tier-1
+        billingPlanId:
+          type: string
+          description: Organization's billing plan ID.
+          example: tier-1
+        billingPlanDetails:
+          type: object
+          description: Organization's billing plan.
+          allOf:
+          - $ref: '#/components/schemas/billingPlan'
+        billingEmail:
+          type: string
+          description: Billing email set for the organization.
+          example: billing@org.example
+        billingStartDate:
+          type: string
+          description: Billing cycle start date.
+          example: '2020-10-15T06:38:00.000+00:00'
+        billingCurrentInvoiceDate:
+          type: string
+          description: Current invoice cycle start date.
+          example: '2020-10-15T06:38:00.000+00:00'
+        billingNextInvoiceDate:
+          type: string
+          description: Next invoice cycle start date.
+          example: '2020-10-15T06:38:00.000+00:00'
+        billingTrialStartDate:
+          type:
+          - string
+          - 'null'
+          description: Start date of trial.
+          example: '2020-10-15T06:38:00.000+00:00'
+        billingTrialDays:
+          type: integer
+          description: Number of trial days.
+          format: int32
+          example: 14
+        billingAggregationId:
+          type: string
+          description: Current active aggregation id.
+          example: adbc3de4rddfsd
+        billingInvoiceId:
+          type: string
+          description: Current active aggregation id.
+          example: adbc3de4rddfsd
+        paymentMethodId:
+          type: string
+          description: Default payment method.
+          example: adbc3de4rddfsd
+        billingAddressId:
+          type:
+          - string
+          - 'null'
+          description: Default payment method.
+          example: adbc3de4rddfsd
+        backupPaymentMethodId:
+          type:
+          - string
+          - 'null'
+          description: Backup payment method.
+          example: adbc3de4rddfsd
+        status:
+          type: string
+          description: Team status.
+          example: active
+        remarks:
+          type:
+          - string
+          - 'null'
+          description: Remarks on team status.
+          example: Pending initial payment
+        agreementBAA:
+          type:
+          - string
+          - 'null'
+          description: Organization agreements
+          example: ''
+        programManagerName:
+          type:
+          - string
+          - 'null'
+          description: Program manager's name.
+          example: ''
+        programManagerCalendar:
+          type:
+          - string
+          - 'null'
+          description: Program manager's calendar link.
+          example: ''
+        programDiscordChannelName:
+          type:
+          - string
+          - 'null'
+          description: Program's discord channel name.
+          example: ''
+        programDiscordChannelUrl:
+          type:
+          - string
+          - 'null'
+          description: Program's discord channel URL.
+          example: ''
+        billingLimits:
+          type:
+          - object
+          - 'null'
+          description: Billing limits reached
+          allOf:
+          - $ref: '#/components/schemas/billingLimits'
+        billingPlanDowngrade:
+          type:
+          - string
+          - 'null'
+          description: Billing plan selected for downgrade.
+          example: tier-1
+        billingTaxId:
+          type:
+          - string
+          - 'null'
+          description: Tax Id
+          example: ''
+        markedForDeletion:
+          type: boolean
+          description: Marked for deletion
+        platform:
+          type: string
+          description: Product with which the organization is associated (appwrite or imagine)
+          example: imagine
+        projects:
+          type: array
+          description: Selected projects
+          items:
+            type: string
+          example: []
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - total
+      - prefs
+      - budgetAlerts
+      - billingPlan
+      - billingPlanId
+      - billingPlanDetails
+      - billingEmail
+      - billingStartDate
+      - billingCurrentInvoiceDate
+      - billingNextInvoiceDate
+      - billingTrialDays
+      - billingAggregationId
+      - billingInvoiceId
+      - paymentMethodId
+      - status
+      - markedForDeletion
+      - platform
+      - projects
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: VIP
+        total: 7
+        prefs:
+          theme: pink
+          timezone: UTC
+        billingBudget: 50
+        budgetAlerts:
+        - 50
+        - 75
+        billingPlan: tier-1
+        billingPlanId: tier-1
+        billingPlanDetails: null
+        billingEmail: billing@org.example
+        billingStartDate: '2020-10-15T06:38:00.000+00:00'
+        billingCurrentInvoiceDate: '2020-10-15T06:38:00.000+00:00'
+        billingNextInvoiceDate: '2020-10-15T06:38:00.000+00:00'
+        billingTrialStartDate: '2020-10-15T06:38:00.000+00:00'
+        billingTrialDays: 14
+        billingAggregationId: adbc3de4rddfsd
+        billingInvoiceId: adbc3de4rddfsd
+        paymentMethodId: adbc3de4rddfsd
+        billingAddressId: adbc3de4rddfsd
+        backupPaymentMethodId: adbc3de4rddfsd
+        status: active
+        remarks: Pending initial payment
+        agreementBAA: ''
+        programManagerName: ''
+        programManagerCalendar: ''
+        programDiscordChannelName: ''
+        programDiscordChannelUrl: ''
+        billingLimits: ''
+        billingPlanDowngrade: tier-1
+        billingTaxId: ''
+        markedForDeletion: ''
+        platform: imagine
+        projects: ''
+    consoleOAuth2Provider:
+      description: Console OAuth2 Provider
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        parameters:
+          type: array
+          description: List of parameters required to configure this OAuth2 provider.
+          items:
+            $ref: '#/components/schemas/consoleOAuth2ProviderParameter'
+          example: []
+      required:
+      - $id
+      - parameters
+      example:
+        $id: github
+        parameters: ''
+    columnIndexList:
+      description: Column Indexes List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of indexes that matched your query.
+          format: int32
+          example: 5
+        indexes:
+          type: array
+          description: List of indexes.
+          items:
+            $ref: '#/components/schemas/columnIndex'
+          example: []
+      required:
+      - total
+      - indexes
+      example:
+        total: 5
+        indexes: ''
+    emailTemplate:
+      description: EmailTemplate
+      type: object
+      properties:
+        templateId:
+          type: string
+          description: Template type
+          example: verification
+        locale:
+          type: string
+          description: Template locale
+          example: en_us
+        message:
+          type: string
+          description: Template message
+          example: Click on the link to verify your account.
+        senderName:
+          type: string
+          description: Name of the sender
+          example: My User
+        senderEmail:
+          type: string
+          description: Email of the sender
+          example: mail@appwrite.io
+        replyToEmail:
+          type: string
+          description: Reply to email address
+          example: emails@appwrite.io
+        replyToName:
+          type: string
+          description: Reply to name
+          example: Support Team
+        subject:
+          type: string
+          description: Email subject
+          example: Please verify your email address
+      required:
+      - templateId
+      - locale
+      - message
+      - senderName
+      - senderEmail
+      - replyToEmail
+      - replyToName
+      - subject
+      example:
+        templateId: verification
+        locale: en_us
+        message: Click on the link to verify your account.
+        senderName: My User
+        senderEmail: mail@appwrite.io
+        replyToEmail: emails@appwrite.io
+        replyToName: Support Team
+        subject: Please verify your email address
+    consoleVariables:
+      description: Console Variables
+      type: object
+      properties:
+        _APP_DOMAIN_TARGET_CNAME:
+          type: string
+          description: CNAME target for your Appwrite custom domains.
+          example: appwrite.io
+        _APP_DOMAIN_TARGET_A:
+          type: string
+          description: A target for your Appwrite custom domains.
+          example: 127.0.0.1
+        _APP_COMPUTE_BUILD_TIMEOUT:
+          type: integer
+          description: Maximum build timeout in seconds.
+          format: int32
+          example: 900
+        _APP_DOMAIN_TARGET_AAAA:
+          type: string
+          description: AAAA target for your Appwrite custom domains.
+          example: ::1
+        _APP_DOMAIN_TARGET_CAA:
+          type: string
+          description: CAA target for your Appwrite custom domains.
+          example: digicert.com
+        _APP_STORAGE_LIMIT:
+          type: integer
+          description: Maximum file size allowed for file upload in bytes.
+          format: int32
+          example: 30000000
+        _APP_COMPUTE_SIZE_LIMIT:
+          type: integer
+          description: Maximum file size allowed for deployment in bytes.
+          format: int32
+          example: 30000000
+        _APP_USAGE_STATS:
+          type: string
+          description: Defines if usage stats are enabled. This value is set to 'enabled' by default, to disable the usage stats set the value to 'disabled'.
+          example: enabled
+        _APP_VCS_ENABLED:
+          type: boolean
+          description: Defines if VCS (Version Control System) is enabled.
+          example: true
+        _APP_VCS_PROVIDERS:
+          type: array
+          description: List of configured VCS providers.
+          items:
+            type: string
+          example:
+          - github
+        _APP_VCS_PROVIDERS_WITH_REPOSITORY_CREATION:
+          type: array
+          description: List of configured VCS providers that support repository creation.
+          items:
+            type: string
+          example:
+          - github
+        _APP_VCS_PROVIDERS_WITH_PUBLIC_REPOSITORIES:
+          type: array
+          description: List of configured VCS providers that can host public repositories.
+          items:
+            type: string
+          example:
+          - github
+        _APP_DOMAIN_ENABLED:
+          type: boolean
+          description: Defines if main domain is configured. If so, custom domains can be created.
+          example: true
+        _APP_ASSISTANT_ENABLED:
+          type: boolean
+          description: Defines if AI assistant is enabled.
+          example: true
+        _APP_DOMAIN_SITES:
+          type: string
+          description: A comma separated list of domains to use for site URLs.
+          example: sites.localhost,sites.example.com
+        _APP_DOMAIN_FUNCTIONS:
+          type: string
+          description: A domain to use for function URLs.
+          example: functions.localhost
+        _APP_OPTIONS_FORCE_HTTPS:
+          type: string
+          description: Defines if HTTPS is enforced for all requests.
+          example: enabled
+        _APP_DOMAINS_NAMESERVERS:
+          type: string
+          description: Comma-separated list of nameservers.
+          example: ns1.example.com,ns2.example.com
+        _APP_DB_ADAPTER:
+          type: string
+          description: Database adapter in use.
+          example: mysql
+        supportForRelationships:
+          type: boolean
+          description: Whether the database adapter supports relationships.
+          example: true
+        supportForOperators:
+          type: boolean
+          description: Whether the database adapter supports operators.
+          example: true
+        supportForSpatials:
+          type: boolean
+          description: Whether the database adapter supports spatial attributes.
+          example: true
+        supportForSpatialIndexNull:
+          type: boolean
+          description: Whether the database adapter supports spatial indexes on nullable columns.
+          example: false
+        supportForFulltextWildcard:
+          type: boolean
+          description: Whether the database adapter supports fulltext wildcard search.
+          example: true
+        supportForMultipleFulltextIndexes:
+          type: boolean
+          description: Whether the database adapter supports multiple fulltext indexes per collection.
+          example: true
+        supportForAttributeResizing:
+          type: boolean
+          description: Whether the database adapter supports resizing attributes.
+          example: true
+        supportForSchemas:
+          type: boolean
+          description: Whether the database adapter supports fixed schemas with row width limits.
+          example: true
+        maxIndexLength:
+          type: integer
+          description: Maximum index length supported by the database adapter.
+          format: int32
+          example: 768
+        supportForIntegerIds:
+          type: boolean
+          description: Whether the database adapter uses integer sequence IDs.
+          example: true
+        _APP_CONSOLE_EMAIL_VERIFICATION:
+          type: string
+          description: Whether email verification for console users is required. Can be "true" or "false".
+          example: 'true'
+      required:
+      - _APP_DOMAIN_TARGET_CNAME
+      - _APP_DOMAIN_TARGET_A
+      - _APP_COMPUTE_BUILD_TIMEOUT
+      - _APP_DOMAIN_TARGET_AAAA
+      - _APP_DOMAIN_TARGET_CAA
+      - _APP_STORAGE_LIMIT
+      - _APP_COMPUTE_SIZE_LIMIT
+      - _APP_USAGE_STATS
+      - _APP_VCS_ENABLED
+      - _APP_VCS_PROVIDERS
+      - _APP_VCS_PROVIDERS_WITH_REPOSITORY_CREATION
+      - _APP_VCS_PROVIDERS_WITH_PUBLIC_REPOSITORIES
+      - _APP_DOMAIN_ENABLED
+      - _APP_ASSISTANT_ENABLED
+      - _APP_DOMAIN_SITES
+      - _APP_DOMAIN_FUNCTIONS
+      - _APP_OPTIONS_FORCE_HTTPS
+      - _APP_DOMAINS_NAMESERVERS
+      - _APP_DB_ADAPTER
+      - supportForRelationships
+      - supportForOperators
+      - supportForSpatials
+      - supportForSpatialIndexNull
+      - supportForFulltextWildcard
+      - supportForMultipleFulltextIndexes
+      - supportForAttributeResizing
+      - supportForSchemas
+      - maxIndexLength
+      - supportForIntegerIds
+      - _APP_CONSOLE_EMAIL_VERIFICATION
+      example:
+        _APP_DOMAIN_TARGET_CNAME: appwrite.io
+        _APP_DOMAIN_TARGET_A: 127.0.0.1
+        _APP_COMPUTE_BUILD_TIMEOUT: 900
+        _APP_DOMAIN_TARGET_AAAA: ::1
+        _APP_DOMAIN_TARGET_CAA: digicert.com
+        _APP_STORAGE_LIMIT: '30000000'
+        _APP_COMPUTE_SIZE_LIMIT: '30000000'
+        _APP_USAGE_STATS: enabled
+        _APP_VCS_ENABLED: true
+        _APP_VCS_PROVIDERS:
+        - github
+        _APP_VCS_PROVIDERS_WITH_REPOSITORY_CREATION:
+        - github
+        _APP_VCS_PROVIDERS_WITH_PUBLIC_REPOSITORIES:
+        - github
+        _APP_DOMAIN_ENABLED: true
+        _APP_ASSISTANT_ENABLED: true
+        _APP_DOMAIN_SITES: sites.localhost,sites.example.com
+        _APP_DOMAIN_FUNCTIONS: functions.localhost
+        _APP_OPTIONS_FORCE_HTTPS: enabled
+        _APP_DOMAINS_NAMESERVERS: ns1.example.com,ns2.example.com
+        _APP_DB_ADAPTER: mysql
+        supportForRelationships: true
+        supportForOperators: true
+        supportForSpatials: true
+        supportForSpatialIndexNull: false
+        supportForFulltextWildcard: true
+        supportForMultipleFulltextIndexes: true
+        supportForAttributeResizing: true
+        supportForSchemas: true
+        maxIndexLength: 768
+        supportForIntegerIds: true
+        _APP_CONSOLE_EMAIL_VERIFICATION: 'true'
+    columnList:
+      description: Columns List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of columns in the given table.
+          format: int32
+          example: 5
+        columns:
+          type: array
+          description: List of columns.
+          items:
+            anyOf:
+            - allOf:
+              - $ref: '#/components/schemas/columnBoolean'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - boolean
+            - allOf:
+              - $ref: '#/components/schemas/columnBigint'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - bigint
+            - allOf:
+              - $ref: '#/components/schemas/columnInteger'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - integer
+            - allOf:
+              - $ref: '#/components/schemas/columnFloat'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - double
+            - allOf:
+              - $ref: '#/components/schemas/columnEmail'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - email
+            - allOf:
+              - $ref: '#/components/schemas/columnEnum'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - enum
+            - allOf:
+              - $ref: '#/components/schemas/columnUrl'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - url
+            - allOf:
+              - $ref: '#/components/schemas/columnIp'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - ip
+            - allOf:
+              - $ref: '#/components/schemas/columnDatetime'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - datetime
+            - allOf:
+              - $ref: '#/components/schemas/columnRelationship'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - relationship
+            - allOf:
+              - $ref: '#/components/schemas/columnPoint'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - point
+            - allOf:
+              - $ref: '#/components/schemas/columnLine'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - linestring
+            - allOf:
+              - $ref: '#/components/schemas/columnPolygon'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - polygon
+            - allOf:
+              - $ref: '#/components/schemas/columnVarchar'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - varchar
+            - allOf:
+              - $ref: '#/components/schemas/columnText'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - text
+            - allOf:
+              - $ref: '#/components/schemas/columnMediumtext'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - mediumtext
+            - allOf:
+              - $ref: '#/components/schemas/columnLongtext'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - longtext
+            - allOf:
+              - $ref: '#/components/schemas/columnString'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - string
+          example: []
+      required:
+      - total
+      - columns
+      example:
+        total: 5
+        columns: ''
+    columnDatetime:
+      description: ColumnDatetime
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: birthDay
+        type:
+          type: string
+          description: Column type.
+          example: datetime
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: ISO 8601 format.
+          example: datetime
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Only null is optional
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: birthDay
+        type: datetime
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: datetime
+        default: '2020-10-15T06:38:00.000+00:00'
+    database:
+      description: Database
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Database ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Database name.
+          example: My Database
+        $createdAt:
+          type: string
+          description: Database creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Database update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        enabled:
+          type: boolean
+          description: If database is enabled. Can be 'enabled' or 'disabled'. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
+          example: false
+        type:
+          description: Database type.
+          example: legacy
+          title: DatabaseType
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - legacy
+            title: legacy
+          - type: string
+            enum:
+            - tablesdb
+            title: tablesdb
+          - type: string
+            enum:
+            - documentsdb
+            title: documentsdb
+          - type: string
+            enum:
+            - vectorsdb
+            title: vectorsdb
+          - type: string
+            enum:
+            - mysql
+            title: mysql
+          - type: string
+            enum:
+            - postgresql
+            title: postgresql
+          - type: string
+            enum:
+            - mongodb
+            title: mongodb
+        status:
+          description: Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
+          readOnly: true
+          example: ready
+          title: DatabaseStatus
+          type:
+          - string
+          - 'null'
+          oneOf:
+          - type: string
+            enum:
+            - provisioning
+            title: provisioning
+          - type: string
+            enum:
+            - ready
+            title: ready
+          - type: string
+            enum:
+            - inactive
+            title: inactive
+          - type: string
+            enum:
+            - paused
+            title: paused
+          - type: string
+            enum:
+            - failed
+            title: failed
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - deleted
+            title: deleted
+          - type: string
+            enum:
+            - restoring
+            title: restoring
+          - type: string
+            enum:
+            - scaling
+            title: scaling
+          - type: string
+            enum:
+            - upgrading
+            title: upgrading
+          - type: string
+            enum:
+            - migrating
+            title: migrating
+          - type: string
+            enum:
+            - pausing
+            title: pausing
+          - type: string
+            enum:
+            - resuming
+            title: resuming
+          - type: string
+            enum:
+            - failing-over
+            title: failing-over
+        engine:
+          type:
+          - string
+          - 'null'
+          description: 'Underlying engine of the dedicated backing: postgresql, mysql, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.'
+          readOnly: true
+          example: postgresql
+        specification:
+          type:
+          - string
+          - 'null'
+          description: Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
+          readOnly: true
+          example: s-2vcpu-2gb
+        replicas:
+          type:
+          - integer
+          - 'null'
+          description: Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
+          format: int32
+          readOnly: true
+          example: 0
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message when the dedicated backing failed. Null when the database has no dedicated backing or has not failed.
+          readOnly: true
+          example: ''
+        containerStatus:
+          type:
+          - string
+          - 'null'
+          description: 'Container status of the dedicated backing: active, inactive, or failed (a wake was declined because the backing namespace is gone). Null when the database has no dedicated backing or the runtime has not reported one.'
+          readOnly: true
+          example: active
+        lifecycleState:
+          type:
+          - string
+          - 'null'
+          description: 'Idle-lifecycle state of the dedicated backing: active, warm, cold, or hibernated. Null when the database has no dedicated backing or the runtime has not reported one.'
+          readOnly: true
+          example: active
+        policies:
+          type:
+          - array
+          - 'null'
+          description: Database backup policies.
+          items:
+            $ref: '#/components/schemas/backupPolicy'
+          example: []
+        archives:
+          type:
+          - array
+          - 'null'
+          description: Database backup archives.
+          items:
+            $ref: '#/components/schemas/backupArchive'
+          example: []
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - enabled
+      - type
+      example:
+        $id: 5e5ea5c16897e
+        name: My Database
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        enabled: false
+        type: legacy
+        status: ready
+        engine: postgresql
+        specification: s-2vcpu-2gb
+        replicas: 0
+        error: ''
+        containerStatus: active
+        lifecycleState: active
+        policies: {}
+        archives: {}
+    columnIndex:
+      description: Index
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Index ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Index creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Index update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        key:
+          type: string
+          description: Index Key.
+          example: index1
+        type:
+          type: string
+          description: Index type.
+          example: primary
+        status:
+          type: string
+          description: 'Index status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an index.
+          example: string
+        columns:
+          type: array
+          description: Index columns.
+          items:
+            type: string
+          example: []
+        lengths:
+          type: array
+          description: Index columns length.
+          items:
+            type: integer
+            format: int32
+          example: []
+        orders:
+          type:
+          - array
+          - 'null'
+          description: Index orders.
+          items:
+            type: string
+          example: []
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - key
+      - type
+      - status
+      - error
+      - columns
+      - lengths
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        key: index1
+        type: primary
+        status: available
+        error: string
+        columns: []
+        lengths: []
+        orders: []
+    postgresExtension:
+      description: Postgres extension
+      type: object
+      properties:
+        key:
+          type: string
+          description: Extension key used with CREATE EXTENSION.
+          example: vector
+        name:
+          type: string
+          description: Human-readable extension name.
+          example: pgvector
+        description:
+          type: string
+          description: Short description of what the extension provides.
+          example: Vector data type and similarity search for embeddings.
+        category:
+          type: string
+          description: Category the extension belongs to.
+          example: search
+      required:
+      - key
+      - name
+      - description
+      - category
+      example:
+        key: vector
+        name: pgvector
+        description: Vector data type and similarity search for embeddings.
+        category: search
+    columnEnum:
+      description: ColumnEnum
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: status
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        elements:
+          type: array
+          description: Array of elements in enumerated type.
+          items:
+            type: string
+          example:
+          - element
+        format:
+          type: string
+          description: String format.
+          example: enum
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: element
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - elements
+      - format
+      example:
+        key: status
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        elements: element
+        format: enum
+        default: element
+    preferences:
+      description: Preferences
+      type: object
+      additionalProperties: true
+      example:
+        language: en
+        timezone: UTC
+        darkTheme: true
+    campaign:
+      description: Campaign
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Campaign ID
+          example: ''
+        template:
+          type: string
+          description: Campaign template
+          example: ''
+        title:
+          type: string
+          description: Campaign title
+          example: ''
+        description:
+          type: string
+          description: Campaign description
+          example: ''
+        plan:
+          type:
+          - string
+          - 'null'
+          description: Billing plan campaign is associated with
+          example: ''
+        cta:
+          type:
+          - string
+          - 'null'
+          description: Campaign CTA
+          example: ''
+        claimed:
+          type:
+          - string
+          - 'null'
+          description: Campaign info when claimed
+          example: ''
+        unclaimed:
+          type:
+          - string
+          - 'null'
+          description: Campaign infor when unclaimed
+          example: ''
+        image:
+          type: object
+          additionalProperties: true
+          description: Campaign images
+        reviews:
+          type:
+          - array
+          - 'null'
+          description: Campaign reviews
+          items:
+            $ref: '#/components/schemas/review'
+          example: []
+        onlyNewOrgs:
+          type:
+          - boolean
+          - 'null'
+          description: Campaign valid only for new orgs.
+        footer:
+          type:
+          - boolean
+          - 'null'
+          description: Is footer
+      required:
+      - $id
+      - template
+      - title
+      - description
+      example:
+        $id: ''
+        template: ''
+        title: ''
+        description: ''
+        plan: ''
+        cta: ''
+        claimed: ''
+        unclaimed: ''
+        image: ''
+        reviews: ''
+        onlyNewOrgs: ''
+        footer: ''
+    columnVarchar:
+      description: ColumnVarchar
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        size:
+          type: integer
+          description: Column size.
+          format: int32
+          example: 128
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this column is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - size
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        size: 128
+        default: default
+        encrypt: false
+    consoleRegionList:
+      description: Regions list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of regions that matched your query.
+          format: int32
+          example: 5
+        regions:
+          type: array
+          description: List of regions.
+          items:
+            $ref: '#/components/schemas/consoleRegion'
+          example: []
+      required:
+      - total
+      - regions
+      example:
+        total: 5
+        regions: ''
+    columnString:
+      description: ColumnString
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        size:
+          type: integer
+          description: Column size.
+          format: int32
+          example: 128
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this column is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - size
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        size: 128
+        default: default
+        encrypt: false
+    consoleRegion:
+      description: Region
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Region ID
+          example: eu-fr
+        name:
+          type: string
+          description: Region name
+          example: EU (Frankfurt)
+        available:
+          type:
+          - boolean
+          - 'null'
+          description: Does the organization have access to this region. Null when access has not been resolved.
+          example: false
+        disabled:
+          type: boolean
+          description: Does the backend support this region.
+          example: false
+        default:
+          type: boolean
+          description: Is this the region default.
+          example: true
+        flag:
+          type: string
+          description: Region flag code.
+          example: fr
+      required:
+      - $id
+      - name
+      - disabled
+      - default
+      - flag
+      example:
+        $id: eu-fr
+        name: EU (Frankfurt)
+        available: false
+        disabled: false
+        default: true
+        flag: fr
+    columnBoolean:
+      description: ColumnBoolean
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: isEnabled
+        type:
+          type: string
+          description: Column type.
+          example: boolean
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - boolean
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: isEnabled
+        type: boolean
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: false
+    any:
+      description: Any
+      type: object
+      additionalProperties: true
+      example: {}
+    backupArchive:
+      description: Archive
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Archive ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Archive creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Archive update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        policyId:
+          type: string
+          description: Archive policy ID.
+          example: did8jx6ws45jana098ab7
+        size:
+          type: integer
+          description: Archive size in bytes.
+          format: int32
+          example: 100000
+        status:
+          type: string
+          description: 'The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.'
+          example: completed
+        startedAt:
+          type: string
+          description: The backup start time.
+          example: '2020-10-15T06:38:00.000+00:00'
+        migrationId:
+          type: string
+          description: Migration ID.
+          example: did8jx6ws45jana098ab7
+        services:
+          type: array
+          description: The services that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this archive should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this archive should backup a single resource.
+          example: database
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - policyId
+      - size
+      - status
+      - startedAt
+      - migrationId
+      - services
+      - resources
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        policyId: did8jx6ws45jana098ab7
+        size: 100000
+        status: completed
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        migrationId: did8jx6ws45jana098ab7
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
+    columnMediumtext:
+      description: ColumnMediumtext
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this column is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: default
+        encrypt: false
+    billingLimits:
+      description: Limits
+      type: object
+      properties:
+        bandwidth:
+          type:
+          - integer
+          - 'null'
+          description: Bandwidth limit
+          format: int32
+          example: 5
+        storage:
+          type:
+          - integer
+          - 'null'
+          description: Storage limit
+          format: int32
+          example: 150
+        users:
+          type:
+          - integer
+          - 'null'
+          description: Users limit
+          format: int32
+          example: 200000
+        executions:
+          type:
+          - integer
+          - 'null'
+          description: Executions limit
+          format: int32
+          example: 750000
+        GBHours:
+          type:
+          - integer
+          - 'null'
+          description: GBHours limit
+          format: int32
+          example: 100
+        imageTransformations:
+          type:
+          - integer
+          - 'null'
+          description: Image transformations limit
+          format: int32
+          example: 100
+        authPhone:
+          type:
+          - integer
+          - 'null'
+          description: Auth phone limit
+          format: int32
+          example: 10
+        budgetLimit:
+          type:
+          - integer
+          - 'null'
+          description: Budget limit percentage
+          format: int32
+          example: 100
+      example:
+        bandwidth: 5
+        storage: 150
+        users: 200000
+        executions: 750000
+        GBHours: 100
+        imageTransformations: 100
+        authPhone: 10
+        budgetLimit: 100
+    columnBigint:
+      description: ColumnBigInt
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: count
+        type:
+          type: string
+          description: Column type.
+          example: bigint
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        min:
+          type:
+          - integer
+          - 'null'
+          description: Minimum value to enforce for new documents.
+          format: int64
+          example: 1
+        max:
+          type:
+          - integer
+          - 'null'
+          description: Maximum value to enforce for new documents.
+          format: int64
+          example: 10
+        default:
+          type:
+          - integer
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          format: int64
+          example: 10
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: count
+        type: bigint
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        min: 1
+        max: 10
+        default: 10
+    review:
+      description: Review
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of user
+          example: ''
+        image:
+          type: string
+          description: Reviewer image
+          example: ''
+        description:
+          type: string
+          description: Reviewer description
+          example: ''
+        review:
+          type: string
+          description: Review
+          example: ''
+      required:
+      - name
+      - image
+      - description
+      - review
+      example:
+        name: ''
+        image: ''
+        description: ''
+        review: ''
+    program:
+      description: Program
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Program ID
+          example: ''
+        title:
+          type: string
+          description: Program title
+          example: ''
+        description:
+          type: string
+          description: Program description
+          example: ''
+        tag:
+          type: string
+          description: Program tag for highlighting on console
+        icon:
+          type: string
+          description: Program icon for highlighting on console
+        url:
+          type: string
+          description: URL for more information on this program
+          example: ''
+        active:
+          type: boolean
+          description: Whether this program is active
+          example: false
+        external:
+          type: boolean
+          description: Whether this program is external
+          example: false
+        billingPlanId:
+          type: string
+          description: Billing plan ID that this is program is associated with.
+          example: ''
+      required:
+      - $id
+      - title
+      - description
+      - tag
+      - icon
+      - url
+      - active
+      - external
+      - billingPlanId
+      example:
+        $id: ''
+        title: ''
+        description: ''
+        tag: null
+        icon: null
+        url: ''
+        active: false
+        external: false
+        billingPlanId: ''
+    columnPolygon:
+      description: ColumnPolygon
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - array
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example:
+          - - - 0
+              - 0
+            - - 0
+              - 10
+          - - - 10
+              - 10
+            - - 0
+              - 0
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: double
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default:
+        - - - 0
+            - 0
+          - - 0
+            - 10
+        - - - 10
+            - 10
+          - - 0
+            - 0
+    columnLine:
+      description: ColumnLine
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: fullName
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - array
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example:
+          - - 0
+            - 0
+          - - 1
+            - 1
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default:
+        - - 0
+          - 0
+        - - 1
+          - 1
+    billingPlanLimits:
+      description: PlanLimits
+      type: object
+      properties:
+        credits:
+          type:
+          - integer
+          - 'null'
+          description: Credits limit per billing cycle
+          format: int32
+          example: 100
+        dailyCredits:
+          type:
+          - integer
+          - 'null'
+          description: Daily credits limit (if applicable)
+          format: int32
+          example: 5
+      example:
+        credits: 100
+        dailyCredits: 5
+    consoleKeyScopeList:
+      description: Console Key Scopes List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of key scopes exposed by the server.
+          format: int32
+          example: 5
+        scopes:
+          type: array
+          description: List of key scopes, each with its ID and description.
+          items:
+            $ref: '#/components/schemas/consoleKeyScope'
+          example: []
+      required:
+      - total
+      - scopes
+      example:
+        total: 5
+        scopes: ''
+    databaseList:
+      description: Databases List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of databases that matched your query.
+          format: int32
+          example: 5
+        databases:
+          type: array
+          description: List of databases.
+          items:
+            $ref: '#/components/schemas/database'
+          example: []
+      required:
+      - total
+      - databases
+      example:
+        total: 5
+        databases: ''
+    billingPlanList:
+      description: Billing plan list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of plans that matched your query.
+          format: int32
+          example: 5
+        plans:
+          type: array
+          description: List of plans.
+          items:
+            $ref: '#/components/schemas/billingPlan'
+          example: []
+      required:
+      - total
+      - plans
+      example:
+        total: 5
+        plans: ''
+    columnInteger:
+      description: ColumnInteger
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: count
+        type:
+          type: string
+          description: Column type.
+          example: integer
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        min:
+          type:
+          - integer
+          - 'null'
+          description: Minimum value to enforce for new documents.
+          format: int64
+          example: 1
+        max:
+          type:
+          - integer
+          - 'null'
+          description: Maximum value to enforce for new documents.
+          format: int64
+          example: 10
+        default:
+          type:
+          - integer
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          format: int32
+          example: 10
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: count
+        type: integer
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        min: 1
+        max: 10
+        default: 10
+    columnFloat:
+      description: ColumnFloat
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: percentageCompleted
+        type:
+          type: string
+          description: Column type.
+          example: double
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        min:
+          type:
+          - number
+          - 'null'
+          description: Minimum value to enforce for new documents.
+          format: double
+          example: 1.5
+        max:
+          type:
+          - number
+          - 'null'
+          description: Maximum value to enforce for new documents.
+          format: double
+          example: 10.5
+        default:
+          type:
+          - number
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          format: double
+          example: 2.5
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: percentageCompleted
+        type: double
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        min: 1.5
+        max: 10.5
+        default: 2.5
+    columnIp:
+      description: ColumnIP
+      type: object
+      properties:
+        key:
+          type: string
+          description: Column Key.
+          example: ipAddress
+        type:
+          type: string
+          description: Column type.
+          example: string
+        status:
+          description: 'Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: ColumnStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an column.
+          example: string
+        required:
+          type: boolean
+          description: Is column required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is column an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Column creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Column update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: String format.
+          example: ip
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for column when not provided. Cannot be set when column is required.
+          example: 192.0.2.0
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: ipAddress
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: ip
+        default: 192.0.2.0
+    consoleOAuth2ProviderList:
+      description: Console OAuth2 Providers List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of OAuth2 providers exposed by the server.
+          format: int32
+          example: 5
+        oAuth2Providers:
+          type: array
+          description: List of OAuth2 providers, each with the parameters required to configure it.
+          items:
+            $ref: '#/components/schemas/consoleOAuth2Provider'
+          example: []
+      required:
+      - total
+      - oAuth2Providers
+      example:
+        total: 5
+        oAuth2Providers: ''
+    consoleOAuth2ProviderParameter:
+      description: Console OAuth2 Provider Parameter
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Parameter ID. Maps to the request body field used by the project OAuth2 update endpoint (e.g. `clientId`, `appKey`, `tenant`).
+          example: clientId
+        name:
+          type: string
+          description: Verbose, user-facing parameter name as shown in the provider's own dashboard. Includes alternate names when the provider exposes more than one.
+          example: Client ID or App ID
+        example:
+          type: string
+          description: Example value for this parameter.
+          example: e4d87900000000540733
+        hint:
+          type: string
+          description: Optional hint for this parameter, typically calling out a common wrong value. Empty string when no hint is set.
+          example: 'Example of wrong value: 370006'
+      required:
+      - $id
+      - name
+      - example
+      - hint
+      example:
+        $id: clientId
+        name: Client ID or App ID
+        example: e4d87900000000540733
+        hint: 'Example of wrong value: 370006'
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

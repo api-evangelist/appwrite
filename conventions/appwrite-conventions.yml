@@ -1,0 +1,259 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://appwrite.io/docs/apis/rest, /docs/apis/response-codes, /docs/apis/release-policy,
+  /docs/advanced/security/rate-limits, /docs/advanced/security/dev-keys,
+  /docs/products/databases/documentsdb/pagination, /docs/products/databases/tablesdb/pagination,
+  /docs/apis/webhooks and /docs/partners/project/api-keys — read 2026-09-12 via
+  https://appwrite.io/llms-full.txt — cross-checked against
+  openapi/_original/appwrite-open-api3-latest.json (Appwrite 2.0.0, 754 paths, 1,022 operations).
+provider: Appwrite
+providerId: appwrite
+description: >-
+  How the Appwrite REST API behaves across every operation: authentication style, idempotency,
+  pagination, caching, request tracing, versioning, error envelope, rate-limit signalling, and
+  reversibility of writes. These are the runtime semantics OpenAPI does not express.
+base_url: https://cloud.appwrite.io/v1
+base_url_regional: https://{region}.cloud.appwrite.io/v1
+api_style: REST over HTTPS, JSON request and response bodies, plus a mirror GraphQL endpoint at /v1/graphql
+
+authentication:
+  scheme: header-carried API-key style across seven distinct schemes, all apiKey-typed in the spec
+  required_on_every_request: X-Appwrite-Project
+  schemes:
+    - X-Appwrite-Project (project id — required on every call)
+    - X-Appwrite-Key (server API key, scoped)
+    - X-Appwrite-Session (end-user session)
+    - X-Appwrite-JWT (short-lived user JWT)
+    - X-Appwrite-Organization (organization id)
+    - X-Appwrite-Impersonate-User-Id (act as a user)
+    - project (query parameter form, OAuth2 routes only)
+  oauth2: >-
+    The Appwrite OAuth2 Server (shipped 2026-09-04) turns a project into an OAuth 2.0 / OIDC
+    authorization server; the console's own authorization server backs the hosted MCP endpoint.
+    See scopes/appwrite-scopes.yml and authentication/appwrite-authentication.yml.
+  detail: authentication/appwrite-authentication.yml
+  docs: https://appwrite.io/docs/partners/project/api-keys
+
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  scope: []
+  docs: null
+  note: >-
+    Appwrite publishes NO replay-protection mechanism. There is no Idempotency-Key header, no
+    idempotency parameter, and no documented replay window anywhere in the 1,022-operation spec or in
+    the documentation corpus — the only occurrences of the word "idempotent" in Appwrite's docs are
+    advice about writing idempotent bootstrap scripts and EF Core migrations, not a property of the
+    API. The nearest thing to replay protection is client-supplied resource ids: most create
+    operations take an explicit id (documentId, tableId, bucketId, functionId) and a second create
+    with the same id returns 409 with a `*_already_exists` error type, which turns a duplicate create
+    into a detectable conflict rather than a silent double-write. That is a real mitigation for
+    creates and does nothing for updates, deletes or executions. An agent retrying a POST against
+    Appwrite must assume the write may land twice.
+
+pagination:
+  style: query-object — offset and cursor, selected per request
+  default_page_size: 25
+  max_page_size: no hard limit documented; Appwrite warns large pages degrade performance
+  mechanism: >-
+    List operations take a `queries` array of encoded Query strings rather than discrete page
+    parameters. SDKs build them with Query helpers.
+  offset:
+    params: [Query.limit(n), Query.offset(n)]
+    caveat: >-
+      Appwrite explicitly documents that offset pagination gets slower as the offset grows and
+      produces missing and duplicate results on frequently-changing collections. Recommended only
+      for small or static collections where a page-number indicator is wanted.
+  cursor:
+    params: [Query.cursorAfter(lastId), Query.cursorBefore(firstId)]
+    cursor_value: the $id of the last (or first) row/document on the page
+    recommended_for: frequently-updated collections, feeds, infinite scroll, high-volume datasets
+  response_fields:
+    total: total matching rows/documents
+    rows: TablesDB result array
+    documents: DocumentsDB result array
+  docs: https://appwrite.io/docs/products/databases/tablesdb/pagination
+
+caching:
+  supported: true
+  mechanism: a `ttl` value in seconds passed on list operations
+  range: 1 to 86400 seconds; default 0 (disabled)
+  response_header: X-Appwrite-Cache
+  header_values: [hit, miss]
+  permission_aware: true
+  note: >-
+    TTL-based list response caching, shipped 2026-04-17. The cache is permission-aware, so two users
+    with different roles never share a cached page.
+
+field_expansion:
+  supported: false
+  note: >-
+    No expand[] / sparse-fieldset mechanism. Query.select() restricts which columns come back, which
+    is projection rather than expansion; relationships are resolved by depth settings on the
+    relationship itself, not by a per-request parameter.
+
+metadata:
+  supported: partial
+  mechanism: prefs — a free-form key/value object on account, user and team objects
+  note: Not a general per-object metadata facility the way Stripe's metadata[] is; scoped to those
+    three object types.
+
+request_tracing:
+  request_id_header: null
+  note: >-
+    Appwrite does not document a per-response request-id header. Correlation is done through audit
+    logs (every product writes them) and, for Functions, through execution ids. This is a real gap
+    for an agent trying to report a failed call to support.
+  audit_logs: https://appwrite.io/docs/advanced/security/audit-logs
+
+versioning:
+  scheme: URI path prefix for the API, semver for SDKs and the self-hosted server
+  current_api_version: v1
+  current_product_version: 2.0.0
+  mechanism: All endpoints are served under /v1; the prefix changes only for breaking changes.
+  detail: lifecycle/appwrite-lifecycle.yml
+  changelog: changelog/appwrite-changelog.yml
+  docs: https://appwrite.io/docs/apis/release-policy
+
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape: '{ "message": string, "type": string, "code": integer }'
+  branch_on: type
+  type_count: 137
+  detail: errors/appwrite-problem-types.yml
+  docs: https://appwrite.io/docs/apis/response-codes
+
+rate_limits:
+  signal_status: 429
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+  retry_after: not sent
+  applies_to: Client SDK traffic only — server SDK calls authenticated with an API key are not rate limited.
+  bypass: X-Appwrite-Dev-Key header (development only; dev-key creation is now paused, see lifecycle)
+  detail: rate-limits/appwrite-rate-limits.yml
+  docs: https://appwrite.io/docs/advanced/security/rate-limits
+
+webhooks:
+  signing_header: X-Appwrite-Webhook-Signature
+  verification: base64(HMAC-SHA1(webhook_url + raw_request_body, signature_key))
+  context_headers:
+    - X-Appwrite-Webhook-Id
+    - X-Appwrite-Webhook-Events
+    - X-Appwrite-Webhook-Name
+    - X-Appwrite-Webhook-User-Id
+    - X-Appwrite-Webhook-Project-Id
+  user_agent: Appwrite-Server
+  detail: asyncapi/appwrite-webhooks.yml
+  docs: https://appwrite.io/docs/apis/webhooks
+
+dry_run_mode:
+  supported: false
+  note: No documented dry-run, preview or validate-only parameter on any mutating operation.
+
+reversibility:
+  grade: documented
+  grade_basis: >-
+    Appwrite ships several genuine reversal paths with named operations, and states a retention
+    window for exactly one of them (backups). No reversal path carries a documented undo window for
+    the ordinary CRUD surface — a deleted row, file, function or bucket is gone at the moment the
+    call returns — so this grades `documented` rather than `verified`.
+  default_write_semantics: >-
+    Destructive by default and immediate. DELETE on rows, documents, files, buckets, tables,
+    databases, functions, sites, users and teams is a hard delete with no trash, no soft-delete flag,
+    and no restore endpoint. The only recovery for those objects is a backup restoration, which is a
+    Pro-and-above product feature rather than an API property.
+  surfaces:
+    - surface: Managed database backups (PostgreSQL, MySQL, MongoDB, and project Backups)
+      reversal_operation: backupsCreateRestoration
+      also:
+        - postgresqlCreateRestoration
+        - mysqlCreateRestoration
+        - mongoCreateRestoration
+      window: >-
+        Bounded by the backup policy's retention period in days. Every database is provisioned with a
+        default policy; Appwrite documents 7-day backup retention on Pro, and retention is
+        configurable per policy.
+      window_stated: true
+      docs: https://appwrite.io/docs/products/databases/postgresql
+      note: >-
+        This is the only reversal path in the API with a provider-stated window, and it restores a
+        database — not the individual row a mistaken call deleted.
+    - surface: Organization plan downgrade
+      reversal_operation: organizationsCancelDowngrade
+      window: Before the scheduled downgrade takes effect at the end of the billing period.
+      window_stated: false
+      note: The docs state a downgrade applies at the end of the current billing period, which bounds
+        the cancel window, but no explicit cancellation deadline is published.
+    - surface: Migrations
+      reversal_operation: migrationsRetry
+      window: null
+      window_stated: false
+      note: Retry, not rollback — it re-runs a failed migration rather than undoing a completed one.
+    - surface: Account and user MFA recovery
+      reversal_operation: accountCreateMfaRecoveryCodes
+      also: [usersCreateMfaRecoveryCodes, accountCreateRecovery, accountUpdateRecovery]
+      window: >-
+        Password-recovery tokens expire; the docs describe recovery as a time-limited token flow but
+        do not publish the TTL in the API reference.
+      window_stated: false
+    - surface: Paused free-plan projects
+      reversal_operation: null
+      window: 90 days
+      window_stated: true
+      note: >-
+        Not an API operation — a platform policy. Free projects pause after a week of inactivity and
+        are deleted 90 days later (changelog 2026-06-29). Reactivation before that is a console
+        action, not a callable reversal.
+    - surface: Deployments (Functions and Sites)
+      reversal_operation: null
+      window: Bounded by the deployment retention setting introduced 2026-05-15.
+      window_stated: false
+      note: >-
+        Rolling back is done by activating a previous deployment rather than by a named reverse
+        operation; retained deployments are the thing that makes it possible.
+  missing:
+    - No undelete/restore for rows, documents, files, buckets, tables, databases, users or teams.
+    - No cancel for an in-flight function execution.
+    - No reversal for messaging sends (messagingCreateEmail / Sms / Push deliver immediately or on
+      schedule; a scheduled message can be updated or deleted before its scheduledAt, which is the
+      closest thing to a cancel).
+
+other_conventions:
+  - name: Resource ids
+    detail: >-
+      Client-supplied ids on create, or the literal `unique()` to have Appwrite mint one. A
+      client-supplied id is what makes a duplicate create detectable (409) in the absence of
+      idempotency keys.
+  - name: System fields
+    detail: >-
+      Every object carries $id, $createdAt, $updatedAt, $permissions and the owning $databaseId /
+      $tableId. GraphQL renames the $ prefix to _ because $ is reserved in GraphQL syntax.
+  - name: Timestamps
+    detail: ISO-8601 strings (not epoch seconds).
+  - name: Permissions
+    detail: >-
+      Per-document/row permission strings (read/create/update/delete x role) rather than
+      endpoint-level scopes; scopes govern the API key, permissions govern the object.
+  - name: GraphQL mirror
+    detail: >-
+      Every REST operation has a GraphQL field named for its operationId, at /v1/graphql (queries)
+      and /v1/graphql/mutation. Batching is supported by POSTing a JSON array.
+  - name: Realtime
+    detail: >-
+      A single WebSocket carries many channel subscriptions; message-driven subscribe/unsubscribe
+      since 2026-04-29. See asyncapi/appwrite-asyncapi.yml.
+  - name: S3-compatible storage API
+    detail: Announced 2026-09-03 — any S3 client can address Appwrite Storage buckets.
+
+related:
+  errors: errors/appwrite-problem-types.yml
+  lifecycle: lifecycle/appwrite-lifecycle.yml
+  authentication: authentication/appwrite-authentication.yml
+  rate_limits: rate-limits/appwrite-rate-limits.yml
+  scopes: scopes/appwrite-scopes.yml
+  sandbox: sandbox/appwrite-sandbox.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

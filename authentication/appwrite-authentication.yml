@@ -1,15 +1,172 @@
-generated: '2026-07-11'
+generated: '2026-09-12'
 method: derived
-source: openapi/appwrite-openapi.yaml
+source: openapi/appwrite-account-api-openapi.yml, openapi/appwrite-activities-api-openapi.yml,
+  openapi/appwrite-advisor-api-openapi.yml, openapi/appwrite-affiliates-api-openapi.yml, openapi/appwrite-apps-api-openapi.yml,
+  openapi/appwrite-assistant-api-openapi.yml, openapi/appwrite-avatars-api-openapi.yml, openapi/appwrite-backups-api-openapi.yml,
+  openapi/appwrite-console-api-openapi.yml, openapi/appwrite-databases-api-openapi.yml, openapi/appwrite-documentsdb-api-openapi.yml,
+  openapi/appwrite-domains-api-openapi.yml ...
 summary:
   types:
   - apiKey
   api_key_in:
   - header
+  - query
 schemes:
-- name: projectKey
+- name: JWT
+  type: apiKey
+  in: header
+  parameter: X-Appwrite-JWT
+  description: Your secret JSON Web Token
+  sources:
+  - openapi/appwrite-account-api-openapi.yml
+  - openapi/appwrite-apps-api-openapi.yml
+  - openapi/appwrite-avatars-api-openapi.yml
+  - openapi/appwrite-databases-api-openapi.yml
+  - openapi/appwrite-documentsdb-api-openapi.yml
+  - openapi/appwrite-embeddings-api-openapi.yml
+  - openapi/appwrite-functions-api-openapi.yml
+  - openapi/appwrite-graphql-api-openapi.yml
+  - openapi/appwrite-locale-api-openapi.yml
+  - openapi/appwrite-messaging-api-openapi.yml
+  - openapi/appwrite-oauth2-api-openapi.yml
+  - openapi/appwrite-organization-api-openapi.yml
+  - openapi/appwrite-ping-api-openapi.yml
+  - openapi/appwrite-presences-api-openapi.yml
+  - openapi/appwrite-sites-api-openapi.yml
+  - openapi/appwrite-storage-api-openapi.yml
+  - openapi/appwrite-tablesdb-api-openapi.yml
+  - openapi/appwrite-teams-api-openapi.yml
+  - openapi/appwrite-vectorsdb-api-openapi.yml
+- name: Project
   type: apiKey
   in: header
   parameter: X-Appwrite-Project
+  description: Your project ID
   sources:
-  - openapi/appwrite-openapi.yaml
+  - openapi/appwrite-account-api-openapi.yml
+  - openapi/appwrite-activities-api-openapi.yml
+  - openapi/appwrite-advisor-api-openapi.yml
+  - openapi/appwrite-affiliates-api-openapi.yml
+  - openapi/appwrite-apps-api-openapi.yml
+  - openapi/appwrite-assistant-api-openapi.yml
+  - openapi/appwrite-avatars-api-openapi.yml
+  - openapi/appwrite-backups-api-openapi.yml
+  - openapi/appwrite-console-api-openapi.yml
+  - openapi/appwrite-databases-api-openapi.yml
+  - openapi/appwrite-documentsdb-api-openapi.yml
+  - openapi/appwrite-domains-api-openapi.yml
+  - openapi/appwrite-embeddings-api-openapi.yml
+  - openapi/appwrite-functions-api-openapi.yml
+  - openapi/appwrite-graphql-api-openapi.yml
+  - openapi/appwrite-growth-api-openapi.yml
+  - openapi/appwrite-locale-api-openapi.yml
+  - openapi/appwrite-messaging-api-openapi.yml
+  - openapi/appwrite-migrations-api-openapi.yml
+  - openapi/appwrite-mongo-api-openapi.yml
+  - openapi/appwrite-mysql-api-openapi.yml
+  - openapi/appwrite-notifications-api-openapi.yml
+  - openapi/appwrite-organization-api-openapi.yml
+  - openapi/appwrite-organizations-api-openapi.yml
+  - openapi/appwrite-ping-api-openapi.yml
+  - openapi/appwrite-postgresql-api-openapi.yml
+  - openapi/appwrite-presences-api-openapi.yml
+  - openapi/appwrite-project-api-openapi.yml
+  - openapi/appwrite-projects-api-openapi.yml
+  - openapi/appwrite-proxy-api-openapi.yml
+  - openapi/appwrite-regions-api-openapi.yml
+  - openapi/appwrite-sites-api-openapi.yml
+  - openapi/appwrite-storage-api-openapi.yml
+  - openapi/appwrite-tablesdb-api-openapi.yml
+  - openapi/appwrite-teams-api-openapi.yml
+  - openapi/appwrite-tokens-api-openapi.yml
+  - openapi/appwrite-usage-api-openapi.yml
+  - openapi/appwrite-users-api-openapi.yml
+  - openapi/appwrite-vcs-api-openapi.yml
+  - openapi/appwrite-vectorsdb-api-openapi.yml
+  - openapi/appwrite-waf-api-openapi.yml
+  - openapi/appwrite-webhooks-api-openapi.yml
+- name: Session
+  type: apiKey
+  in: header
+  parameter: X-Appwrite-Session
+  description: The user session to authenticate with
+  sources:
+  - openapi/appwrite-account-api-openapi.yml
+  - openapi/appwrite-apps-api-openapi.yml
+  - openapi/appwrite-avatars-api-openapi.yml
+  - openapi/appwrite-databases-api-openapi.yml
+  - openapi/appwrite-documentsdb-api-openapi.yml
+  - openapi/appwrite-functions-api-openapi.yml
+  - openapi/appwrite-graphql-api-openapi.yml
+  - openapi/appwrite-locale-api-openapi.yml
+  - openapi/appwrite-messaging-api-openapi.yml
+  - openapi/appwrite-oauth2-api-openapi.yml
+  - openapi/appwrite-organization-api-openapi.yml
+  - openapi/appwrite-ping-api-openapi.yml
+  - openapi/appwrite-presences-api-openapi.yml
+  - openapi/appwrite-storage-api-openapi.yml
+  - openapi/appwrite-tablesdb-api-openapi.yml
+  - openapi/appwrite-teams-api-openapi.yml
+  - openapi/appwrite-vectorsdb-api-openapi.yml
+- name: Key
+  type: apiKey
+  in: header
+  parameter: X-Appwrite-Key
+  description: Your secret API key
+  sources:
+  - openapi/appwrite-activities-api-openapi.yml
+  - openapi/appwrite-advisor-api-openapi.yml
+  - openapi/appwrite-apps-api-openapi.yml
+  - openapi/appwrite-avatars-api-openapi.yml
+  - openapi/appwrite-backups-api-openapi.yml
+  - openapi/appwrite-databases-api-openapi.yml
+  - openapi/appwrite-documentsdb-api-openapi.yml
+  - openapi/appwrite-embeddings-api-openapi.yml
+  - openapi/appwrite-functions-api-openapi.yml
+  - openapi/appwrite-graphql-api-openapi.yml
+  - openapi/appwrite-locale-api-openapi.yml
+  - openapi/appwrite-messaging-api-openapi.yml
+  - openapi/appwrite-mongo-api-openapi.yml
+  - openapi/appwrite-mysql-api-openapi.yml
+  - openapi/appwrite-oauth2-api-openapi.yml
+  - openapi/appwrite-organization-api-openapi.yml
+  - openapi/appwrite-ping-api-openapi.yml
+  - openapi/appwrite-postgresql-api-openapi.yml
+  - openapi/appwrite-presences-api-openapi.yml
+  - openapi/appwrite-project-api-openapi.yml
+  - openapi/appwrite-proxy-api-openapi.yml
+  - openapi/appwrite-sites-api-openapi.yml
+  - openapi/appwrite-storage-api-openapi.yml
+  - openapi/appwrite-tablesdb-api-openapi.yml
+  - openapi/appwrite-teams-api-openapi.yml
+  - openapi/appwrite-tokens-api-openapi.yml
+  - openapi/appwrite-usage-api-openapi.yml
+  - openapi/appwrite-users-api-openapi.yml
+  - openapi/appwrite-vectorsdb-api-openapi.yml
+  - openapi/appwrite-waf-api-openapi.yml
+  - openapi/appwrite-webhooks-api-openapi.yml
+- name: ImpersonateUserId
+  type: apiKey
+  in: header
+  parameter: X-Appwrite-Impersonate-User-Id
+  description: Impersonate a user by ID
+  sources:
+  - openapi/appwrite-avatars-api-openapi.yml
+  - openapi/appwrite-functions-api-openapi.yml
+  - openapi/appwrite-organizations-api-openapi.yml
+  - openapi/appwrite-sites-api-openapi.yml
+  - openapi/appwrite-storage-api-openapi.yml
+- name: ProjectPath
+  type: apiKey
+  in: query
+  parameter: project
+  description: Your project ID
+  sources:
+  - openapi/appwrite-oauth2-api-openapi.yml
+- name: Organization
+  type: apiKey
+  in: header
+  parameter: X-Appwrite-Organization
+  description: Your organization ID
+  sources:
+  - openapi/appwrite-organization-api-openapi.yml

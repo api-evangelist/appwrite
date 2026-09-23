@@ -1,0 +1,2723 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Manager API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: Manager
+  description: ''
+paths:
+  /manager/blocks:
+    post:
+      summary: Create a new resource block for a project
+      operationId: managerCreateBlock
+      tags:
+      - Manager
+      description: Creates a new resource block.
+      responses:
+        '201':
+          description: Block
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/block'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/create-block.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        - console
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  description: Project ID
+                  type: string
+                  example: <PROJECT_ID>
+                resourceType:
+                  description: Resource type to block (e.g., projects, functions, databases, storage, etc.)
+                  type: string
+                  example: projects
+                  title: BlockResourceType
+                  oneOf:
+                  - type: string
+                    enum:
+                    - projects
+                    title: projects
+                  - type: string
+                    enum:
+                    - functions
+                    title: functions
+                  - type: string
+                    enum:
+                    - sites
+                    title: sites
+                  - type: string
+                    enum:
+                    - databases
+                    title: databases
+                  - type: string
+                    enum:
+                    - buckets
+                    title: buckets
+                  - type: string
+                    enum:
+                    - providers
+                    title: providers
+                  - type: string
+                    enum:
+                    - topics
+                    title: topics
+                  - type: string
+                    enum:
+                    - subscribers
+                    title: subscribers
+                  - type: string
+                    enum:
+                    - messages
+                    title: messages
+                resourceId:
+                  description: Optional resource ID (if omitted, all resources of this type will be blocked)
+                  type: string
+                  default: ''
+                  example: <RESOURCE_ID>
+                mode:
+                  description: Block mode. Use full to block reads and writes, or readOnly to block database writes only.
+                  type: string
+                  default: full
+                  example: full
+                  title: BlockMode
+                  oneOf:
+                  - type: string
+                    enum:
+                    - full
+                    title: full
+                  - type: string
+                    enum:
+                    - readonly
+                    title: readonly
+                reason:
+                  description: Optional reason why the resource is blocked
+                  type: string
+                  default: ''
+                  example: <REASON>
+                expiredAt:
+                  description: Optional expiration date for the block
+                  type: string
+                  default: ''
+                  example: '2020-10-15T06:38:00.000+00:00'
+                  format: datetime
+              required:
+              - projectId
+              - resourceType
+    delete:
+      summary: Delete resource blocks for a project
+      operationId: managerDeleteBlock
+      tags:
+      - Manager
+      description: Deletes resource blocks for a project.
+      responses:
+        '200':
+          description: BlockDelete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/blockDelete'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/delete-block.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        - console
+        packaging: false
+        public: true
+      parameters:
+      - name: projectId
+        description: Project ID
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: query
+      - name: resourceType
+        description: Resource type to unblock
+        required: true
+        schema:
+          type: string
+          example: projects
+          title: BlockResourceType
+          oneOf:
+          - type: string
+            enum:
+            - projects
+            title: projects
+          - type: string
+            enum:
+            - functions
+            title: functions
+          - type: string
+            enum:
+            - sites
+            title: sites
+          - type: string
+            enum:
+            - databases
+            title: databases
+          - type: string
+            enum:
+            - buckets
+            title: buckets
+          - type: string
+            enum:
+            - providers
+            title: providers
+          - type: string
+            enum:
+            - topics
+            title: topics
+          - type: string
+            enum:
+            - subscribers
+            title: subscribers
+          - type: string
+            enum:
+            - messages
+            title: messages
+        in: query
+      - name: resourceId
+        description: Optional resource ID (if omitted, all blocks of this type will be removed)
+        required: false
+        schema:
+          type: string
+          example: <RESOURCE_ID>
+          default: ''
+        in: query
+  /manager/blocks/{projectId}:
+    get:
+      summary: List all resource blocks for a project
+      operationId: managerListBlocks
+      tags:
+      - Manager
+      description: Lists all resource blocks for a project.
+      responses:
+        '200':
+          description: Blocks list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/blockList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/list-blocks.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        - console
+        packaging: false
+        public: true
+      parameters:
+      - name: projectId
+        description: Project ID
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+  /manager/cache:
+    delete:
+      summary: Clear internal cache
+      operationId: managerDeleteCache
+      tags:
+      - Manager
+      description: Clears internal cache.
+      responses:
+        '200':
+          description: File
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+      deprecated: false
+      x-appwrite:
+        group: cache
+        demo: manager/delete-cache.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        - console
+        packaging: false
+        public: true
+      parameters:
+      - name: region
+        description: Target region.
+        required: false
+        schema:
+          type: string
+          example: fra
+          title: Region
+          oneOf:
+          - type: string
+            enum:
+            - fra
+            title: fra
+          - type: string
+            enum:
+            - nyc
+            title: nyc
+          - type: string
+            enum:
+            - syd
+            title: syd
+          - type: string
+            enum:
+            - sfo
+            title: sfo
+          - type: string
+            enum:
+            - sgp
+            title: sgp
+          - type: string
+            enum:
+            - tor
+            title: tor
+        in: query
+      - name: cache
+        description: Cache target.
+        required: false
+        schema:
+          type: string
+          example: cache
+          title: CacheTarget
+          oneOf:
+          - type: string
+            enum:
+            - cache
+            title: cache
+          - type: string
+            enum:
+            - timelimit
+            title: timelimit
+          - type: string
+            enum:
+            - locks
+            title: locks
+          - type: string
+            enum:
+            - pubsub
+            title: pubsub
+          - type: string
+            enum:
+            - queue
+            title: queue
+          - type: string
+            enum:
+            - all
+            title: all
+          default: cache
+        in: query
+      - name: all
+        description: Clear the entire selected cache target.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: false
+        in: query
+      - name: database
+        description: Database cache scope.
+        required: false
+        schema:
+          type: string
+          example: console
+          title: CacheDatabase
+          oneOf:
+          - type: string
+            enum:
+            - console
+            title: console
+          - type: string
+            enum:
+            - project
+            title: project
+          - type: string
+            enum:
+            - logs
+            title: logs
+          default: console
+        in: query
+      - name: projectId
+        description: Project ID for project or logs database cache.
+        required: false
+        schema:
+          type: string
+          example: <PROJECT_ID>
+          default: ''
+        in: query
+      - name: collectionId
+        description: Collection ID.
+        required: false
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+          default: ''
+        in: query
+      - name: documentId
+        description: Document ID.
+        required: false
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+          default: ''
+        in: query
+  /manager/database/{databaseId}:
+    patch:
+      summary: Update database status (used by Edge)
+      operationId: managerUpdateDatabase
+      tags:
+      - Manager
+      description: 'Update database container status after Edge spindown.
+
+        Called by Edge scheduler to notify Cloud of status changes.'
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: databases
+        demo: manager/update-database.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: databaseId
+        description: Database ID
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                containerStatus:
+                  description: Container status
+                  type: string
+                  example: active
+                projectId:
+                  description: Project ID scoping this tenant-owned database
+                  type: string
+                  default: ''
+                  example: <PROJECT_ID>
+              required:
+              - containerStatus
+  /manager/databases/activity:
+    post:
+      summary: Sync database last-active timestamps in bulk
+      operationId: managerCreateDatabaseActivity
+      tags:
+      - Manager
+      description: 'Sync last-active timestamps for shared and dedicated databases in bulk.
+
+        Called periodically by Edge from its in-memory activity cache. Each entry
+
+        carries a databaseId, the most recent Unix timestamp at which the database
+
+        served traffic, and optionally a tenantId scoping the update to one project.
+
+        Cloud advances the runtime document''s lastAccessedAt monotonically — an older
+
+        timestamp never regresses a newer one — and unknown databases are skipped.'
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: databases
+        demo: manager/create-database-activity.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                databases:
+                  description: Activity entries, each `{databaseId, lastActive, tenantId?}`.
+                  type: array
+                  items:
+                    type: object
+              required:
+              - databases
+  /manager/databases/metrics:
+    post:
+      summary: Submit database metrics in bulk
+      operationId: managerCreateDatabaseMetrics
+      tags:
+      - Manager
+      description: 'Submit resource metrics for dedicated databases in bulk. Called periodically
+
+        by Edge after aggregating pushes from in-pod metrics agents. Accepts both
+
+        gauge values (cpu%, memory%, storage, connections, qps, iops) and counter
+
+        deltas (inbound/outbound bytes, cpu milliseconds) which edge has already computed
+
+        against previous-value caches in Redis.'
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: databases
+        demo: manager/create-database-metrics.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectIds:
+                  description: Project IDs (parallel array).
+                  type: array
+                  items:
+                    type: string
+                databaseIds:
+                  description: Database IDs (parallel array).
+                  type: array
+                  items:
+                    type: string
+                ordinals:
+                  description: 'StatefulSet pod ordinals (parallel array). A stable per-node identity, not a role: ordinal 0 is the first member created, and a failover can leave the primary on any ordinal. Carried on each gauge and on the resource sample as its ordinal dimension so per-node series stay distinct. Empty defaults every sample to ordinal 0.'
+                  type: array
+                  default: []
+                  items:
+                    type: integer
+                cpuPercents:
+                  description: CPU usage percentages.
+                  type: array
+                  default: []
+                  items:
+                    type: number
+                    format: double
+                memoryPercents:
+                  description: Memory usage percentages.
+                  type: array
+                  default: []
+                  items:
+                    type: number
+                    format: double
+                storageUsedBytes:
+                  description: Storage used in bytes.
+                  type: array
+                  default: []
+                  items:
+                    type: integer
+                connectionsActive:
+                  description: Active connection counts.
+                  type: array
+                  default: []
+                  items:
+                    type: integer
+                qps:
+                  description: Queries per second.
+                  type: array
+                  default: []
+                  items:
+                    type: number
+                    format: double
+                iopsRead:
+                  description: Read IOPS.
+                  type: array
+                  default: []
+                  items:
+                    type: number
+                    format: double
+                iopsWrite:
+                  description: Write IOPS.
+                  type: array
+                  default: []
+                  items:
+                    type: number
+                    format: double
+                inboundBytesDeltas:
+                  description: Inbound network bytes since previous sample.
+                  type: array
+                  default: []
+                  items:
+                    type: integer
+                outboundBytesDeltas:
+                  description: Outbound network bytes since previous sample.
+                  type: array
+                  default: []
+                  items:
+                    type: integer
+                cpuMillisecondsDeltas:
+                  description: CPU time in milliseconds since previous sample.
+                  type: array
+                  default: []
+                  items:
+                    type: integer
+              required:
+              - projectIds
+              - databaseIds
+  /manager/databases/{databaseId}/event:
+    post:
+      summary: Create a database lifecycle event
+      operationId: managerCreateDatabaseEvent
+      tags:
+      - Manager
+      description: 'Creates a database lifecycle event for webhook, function, and realtime delivery, or
+
+        executes command events such as start and spin-down.
+
+        Called by Edge to notify Cloud of database lifecycle changes such as provisioning,
+
+        failover, backup completion, etc.'
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: databases
+        demo: manager/create-database-event.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: databaseId
+        description: Database ID
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event:
+                  description: Event name (e.g. start, spin-down, provision.completed, failover.completed). Customer delivery is the matching resource create/update/delete, not this opcode.
+                  type: string
+                  example: <EVENT>
+                data:
+                  description: Additional event data. Start events may include projectId to scope tenant-reused database IDs.
+                  type: object
+                  default: {}
+                  example: {}
+              required:
+              - event
+  /manager/domain:
+    get:
+      summary: Find the DNS details for given domain
+      operationId: managerGetDomain
+      tags:
+      - Manager
+      description: Retrieves DNS details for a given domain.
+      responses:
+        '200':
+          description: ManagerDomain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managerDomain'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/get-domain.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: domain
+        description: Domain name
+        required: true
+        schema:
+          type: string
+          example: example.com
+        in: query
+  /manager/domains/records:
+    get:
+      summary: Find the DNS details for given domain
+      operationId: managerGetDNSRecords
+      tags:
+      - Manager
+      description: Retrieves DNS records for a given domain.
+      responses:
+        '200':
+          description: DNS records list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dnsRecordsList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/get-dns-records.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: domain
+        description: Domain name
+        required: true
+        schema:
+          type: string
+          example: example.com
+        in: query
+  /manager/domains/{domain}/zone:
+    get:
+      summary: Retrieve the DNS zone file for the given domain
+      operationId: managerGetDomainZone
+      tags:
+      - Manager
+      description: Retrieves the DNS zone file for a given domain.
+      responses:
+        '200':
+          description: Text
+          content:
+            text/plain:
+              schema:
+                type: string
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/get-domain-zone.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: domain
+        description: Domain to retrieve the DNS zone file for.
+        required: true
+        schema:
+          type: string
+          example: example.com
+        in: path
+  /manager/events:
+    post:
+      summary: Create a new event for the manager using CloudEvents specification
+      operationId: managerCreateEvent
+      tags:
+      - Manager
+      description: Creates a new event using CloudEvents specification for manager operations.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/create-event.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                specversion:
+                  description: CloudEvents spec version
+                  type: string
+                  default: '1.0'
+                  example: <SPECVERSION>
+                type:
+                  description: Event type that maps to worker. e.g. v1-stats-usage
+                  type: string
+                  example: <TYPE>
+                source:
+                  description: Event source. e.g. imagine
+                  type: string
+                  default: ''
+                  example: <SOURCE>
+                subject:
+                  description: Subject of the event, i.e. projectId
+                  type: string
+                  example: <SUBJECT>
+                id:
+                  description: Unique event ID
+                  type: string
+                  default: ''
+                  example: <ID>
+                time:
+                  description: Event timestamp in RFC3339 format
+                  type: string
+                  default: ''
+                  example: <TIME>
+                datacontenttype:
+                  description: Content type of data
+                  type: string
+                  default: application/json
+                  example: <DATACONTENTTYPE>
+                data:
+                  description: 'Event data containing metrics. e.g. {"metrics": [...]}'
+                  type: object
+                  default: {}
+                  example: {}
+              required:
+              - type
+              - subject
+              - data
+  /manager/projects/{projectId}/databases/{databaseId}:
+    get:
+      summary: Get database routing info
+      operationId: managerGetDatabase
+      tags:
+      - Manager
+      description: 'Retrieves database routing information for Edge TCP proxy.
+
+        Returns hostname, port, engine, status, and backend type.'
+      responses:
+        '200':
+          description: ManagerDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managerDatabase'
+      deprecated: false
+      x-appwrite:
+        group: databases
+        demo: manager/get-database.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: projectId
+        description: Project ID that owns the database
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      - name: databaseId
+        description: Database ID
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /manager/projects/{projectId}/keys:
+    post:
+      summary: Get project key authorization data
+      operationId: managerGetProjectKey
+      tags:
+      - Manager
+      description: Validates a project API key secret and returns the project ID and scopes for Edge.
+      responses:
+        '200':
+          description: ManagerProjectKey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managerProjectKey'
+      deprecated: false
+      x-appwrite:
+        group: projects
+        demo: manager/get-project-key.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: projectId
+        description: Project ID that owns the API key.
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                apiKey:
+                  description: Project API key secret.
+                  type: string
+                  example: <API_KEY>
+              required:
+              - apiKey
+  /manager/projects/{projectId}/user:
+    post:
+      summary: Resolve a user JWT to a project user
+      operationId: managerGetProjectUser
+      tags:
+      - Manager
+      description: 'Decodes a user JWT and confirms the resulting user belongs to the
+
+        project, returning their ID. Used by the edge router to key WAF rate
+
+        limits on the authenticated user without holding the signing key: the
+
+        JWT is verified here, on cloud, where _APP_OPENSSL_KEY_V1 lives.'
+      responses:
+        '200':
+          description: ManagerProjectUser
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managerProjectUser'
+      deprecated: false
+      x-appwrite:
+        group: projects
+        demo: manager/get-project-user.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: projectId
+        description: Project ID
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwt:
+                  description: User JWT issued by the Appwrite API.
+                  type: string
+                  example: <JWT>
+              required:
+              - jwt
+  /manager/projects/{projectId}/waf-rules:
+    get:
+      summary: List enabled WAF rules for a project
+      operationId: managerListProjectWafRules
+      tags:
+      - Manager
+      description: Lists enabled WAF rules for a project.
+      responses:
+        '200':
+          description: Manager WAF rule list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managerWafRuleList'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/list-project-waf-rules.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: projectId
+        description: Project ID
+        required: true
+        schema:
+          type: string
+          example: <PROJECT_ID>
+        in: path
+      - name: total
+        description: When set to false, the total count returned will be 0 and will not be calculated.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: true
+        in: query
+  /manager/rule:
+    get:
+      summary: Find the deployment rule for a given domain
+      operationId: managerGetRule
+      tags:
+      - Manager
+      description: Retrieves the deployment rule for a given domain.
+      responses:
+        '200':
+          description: Rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managerRule'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/get-rule.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      parameters:
+      - name: domain
+        description: Domain name
+        required: true
+        schema:
+          type: string
+          example: example.com
+        in: query
+  /manager/users/status:
+    patch:
+      summary: Update a user status by ID or email
+      operationId: managerUpdateUserStatus
+      tags:
+      - Manager
+      description: Updates a console user status using a user ID or email address.
+      responses:
+        '200':
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+      deprecated: false
+      x-appwrite:
+        group: users
+        demo: manager/update-user-status.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        - console
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  description: User ID.
+                  type: string
+                  default: ''
+                  example: <USER_ID>
+                email:
+                  description: User email address.
+                  type: string
+                  default: ''
+                  example: <EMAIL>
+                status:
+                  description: User status. Set to `false` to block and `true` to unblock.
+                  type: boolean
+                  example: false
+                reason:
+                  description: Optional reason when blocking a user. Accepted for parity with the CLI task but not persisted.
+                  type: string
+                  default: ''
+                  example: <REASON>
+              required:
+              - status
+  /manager/verify-s3-signature:
+    post:
+      summary: Verify an AWS SigV4 signature against a project's API keys
+      operationId: managerVerifyS3Signature
+      tags:
+      - Manager
+      description: 'Verifies an AWS SigV4 signature where the access key is the project ID
+
+        and the secret is one of the project''s API keys. Returns the matching
+
+        key document on success, or an opaque 401 on any failure.'
+      responses:
+        '200':
+          description: Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/key'
+      deprecated: false
+      x-appwrite:
+        group: null
+        demo: manager/verify-s-3-signature.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: ''
+        platforms:
+        - manager
+        packaging: false
+        public: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessKey:
+                  description: Access key from the SigV4 credential scope. Must be the project ID.
+                  type: string
+                  example: <ACCESS_KEY>
+                dateStamp:
+                  description: Date from the SigV4 credential scope (YYYYMMDD).
+                  type: string
+                  example: <DATE_STAMP>
+                region:
+                  description: Region from the SigV4 credential scope.
+                  type: string
+                  example: <REGION>
+                service:
+                  description: Service from the SigV4 credential scope.
+                  type: string
+                  example: <SERVICE>
+                canonicalRequestHash:
+                  description: Hex SHA-256 hash of the SigV4 canonical request.
+                  type: string
+                  example: <CANONICAL_REQUEST_HASH>
+                signature:
+                  description: Hex signature from the SigV4 Authorization header.
+                  type: string
+                  example: <SIGNATURE>
+                amzDate:
+                  description: Value of x-amz-date (YYYYMMDDTHHMMSSZ).
+                  type: string
+                  example: <AMZ_DATE>
+              required:
+              - accessKey
+              - dateStamp
+              - region
+              - service
+              - canonicalRequestHash
+              - signature
+              - amzDate
+components:
+  schemas:
+    algoScrypt:
+      description: AlgoScrypt
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: scrypt
+        costCpu:
+          type: integer
+          description: CPU complexity of computed hash.
+          format: int32
+          example: 8
+        costMemory:
+          type: integer
+          description: Memory complexity of computed hash.
+          format: int32
+          example: 14
+        costParallel:
+          type: integer
+          description: Parallelization of computed hash.
+          format: int32
+          example: 1
+        length:
+          type: integer
+          description: Length used to compute hash.
+          format: int32
+          example: 64
+      required:
+      - type
+      - costCpu
+      - costMemory
+      - costParallel
+      - length
+      example:
+        type: scrypt
+        costCpu: 8
+        costMemory: 14
+        costParallel: 1
+        length: 64
+    algoBcrypt:
+      description: AlgoBcrypt
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: bcrypt
+      required:
+      - type
+      example:
+        type: bcrypt
+    dnsRecordsList:
+      description: DNS records list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of dnsRecords that matched your query.
+          format: int32
+          example: 5
+        dnsRecords:
+          type: array
+          description: List of dnsRecords.
+          items:
+            $ref: '#/components/schemas/dnsRecord'
+          example: []
+      required:
+      - total
+      - dnsRecords
+      example:
+        total: 5
+        dnsRecords: ''
+    managerRule:
+      description: Rule
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Rule ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Rule creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Rule update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        domain:
+          type: string
+          description: Domain name.
+          example: appwrite.company.com
+        type:
+          type: string
+          description: Action definition for the rule. Possible values are "api", "deployment", or "redirect"
+          example: deployment
+        trigger:
+          type: string
+          description: Defines how the rule was created. Possible values are "manual" or "deployment"
+          example: manual
+        redirectUrl:
+          type: string
+          description: URL to redirect to. Used if type is "redirect"
+          example: https://appwrite.io/docs
+        redirectStatusCode:
+          type: integer
+          description: Status code to apply during redirect. Used if type is "redirect"
+          format: int32
+          example: 301
+        deploymentId:
+          type: string
+          description: ID of deployment. Used if type is "deployment"
+          example: n3u9feiwmf
+        deploymentResourceType:
+          description: Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
+          example: function
+          type:
+          - string
+          - 'null'
+          oneOf:
+          - type: string
+            enum:
+            - function
+            title: function
+          - type: string
+            enum:
+            - site
+            title: site
+        deploymentResourceId:
+          type: string
+          description: ID of deployment's resource (site or function ID). Used if type is "deployment"
+          example: n3u9feiwmf
+        deploymentVcsProviderBranch:
+          type: string
+          description: Name of Git branch that updates rule. Used if type is "deployment"
+          example: main
+        status:
+          description: Domain verification status. Possible values are "unverified", "verifying", "verified"
+          example: verified
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - unverified
+            title: unverified
+          - type: string
+            enum:
+            - verifying
+            title: verifying
+          - type: string
+            enum:
+            - verified
+            title: verified
+        logs:
+          type: string
+          description: Logs from rule verification or certificate generation. Certificate generation logs are prioritized if both are available.
+          example: Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.
+        renewAt:
+          type: string
+          description: Certificate auto-renewal date in ISO 8601 format.
+          example: datetime
+        projectId:
+          type: string
+          description: Project ID.
+          example: 5e5ea5c16897e
+        region:
+          type: string
+          description: Region ID.
+          example: fra
+        tags:
+          type:
+          - object
+          - 'null'
+          description: Edge cache invalidation tags derived from the rule.
+          allOf:
+          - $ref: '#/components/schemas/managerTags'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - domain
+      - type
+      - trigger
+      - redirectUrl
+      - redirectStatusCode
+      - deploymentId
+      - deploymentResourceId
+      - deploymentVcsProviderBranch
+      - status
+      - logs
+      - renewAt
+      - projectId
+      - region
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        domain: appwrite.company.com
+        type: deployment
+        trigger: manual
+        redirectUrl: https://appwrite.io/docs
+        redirectStatusCode: 301
+        deploymentId: n3u9feiwmf
+        deploymentResourceType: function
+        deploymentResourceId: n3u9feiwmf
+        deploymentVcsProviderBranch: main
+        status: verified
+        logs: Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.
+        renewAt: datetime
+        projectId: 5e5ea5c16897e
+        region: fra
+        tags: ''
+    blockDelete:
+      description: BlockDelete
+      type: object
+      properties:
+        deleted:
+          type: integer
+          description: Number of blocks deleted
+          format: int32
+          example: 1
+        blocks:
+          type: array
+          description: List of deleted blocks
+          items:
+            $ref: '#/components/schemas/block'
+          example: []
+      required:
+      - deleted
+      - blocks
+      example:
+        deleted: 1
+        blocks: []
+    managerProjectKey:
+      description: ManagerProjectKey
+      type: object
+      properties:
+        projectId:
+          type: string
+          description: Project ID that owns this API key.
+          example: project-abc123
+        scopes:
+          type: array
+          description: Allowed permission scopes.
+          items:
+            type: string
+          example:
+          - databases.write
+      required:
+      - projectId
+      - scopes
+      example:
+        projectId: project-abc123
+        scopes: databases.write
+    user:
+      description: User
+      type: object
+      properties:
+        $id:
+          type: string
+          description: User ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: User creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: User update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: User name.
+          example: John Doe
+        password:
+          type:
+          - string
+          - 'null'
+          description: Hashed user password.
+          example: $argon2id$v=19$m=2048,t=4,p=3$aUZjLnliVWRINmFNTWMudg$5S+x+7uA31xFnrHFT47yFwcJeaP0w92L/4LdgrVRXxE
+        hash:
+          type:
+          - string
+          - 'null'
+          description: Password hashing algorithm.
+          example: argon2
+        hashOptions:
+          type:
+          - object
+          - 'null'
+          description: Password hashing algorithm configuration.
+          example: {}
+          allOf:
+          - oneOf:
+            - $ref: '#/components/schemas/algoArgon2'
+            - $ref: '#/components/schemas/algoScrypt'
+            - $ref: '#/components/schemas/algoScryptModified'
+            - $ref: '#/components/schemas/algoBcrypt'
+            - $ref: '#/components/schemas/algoPhpass'
+            - $ref: '#/components/schemas/algoSha'
+            - $ref: '#/components/schemas/algoMd5'
+            discriminator:
+              propertyName: type
+              mapping:
+                argon2: '#/components/schemas/algoArgon2'
+                scrypt: '#/components/schemas/algoScrypt'
+                scryptMod: '#/components/schemas/algoScryptModified'
+                bcrypt: '#/components/schemas/algoBcrypt'
+                phpass: '#/components/schemas/algoPhpass'
+                sha: '#/components/schemas/algoSha'
+                md5: '#/components/schemas/algoMd5'
+        registration:
+          type: string
+          description: User registration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        status:
+          type: boolean
+          description: User status. Pass `true` for enabled and `false` for disabled.
+          example: true
+        labels:
+          type: array
+          description: Labels for the user.
+          items:
+            type: string
+          example:
+          - vip
+        passwordUpdate:
+          type: string
+          description: Password update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        email:
+          type: string
+          description: User email address.
+          example: john@appwrite.io
+        phone:
+          type: string
+          description: User phone number in E.164 format.
+          example: '+4930901820'
+        emailVerification:
+          type: boolean
+          description: Email verification status.
+          example: true
+        emailCanonical:
+          type:
+          - string
+          - 'null'
+          description: Canonical form of the user email address.
+          example: john@appwrite.io
+        emailIsFree:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user email is from a free email provider.
+          example: true
+        emailIsDisposable:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user email is from a disposable email provider.
+          example: false
+        emailIsCorporate:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user email is from a corporate domain.
+          example: true
+        emailIsCanonical:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user email is in its canonical form.
+          example: true
+        phoneVerification:
+          type: boolean
+          description: Phone verification status.
+          example: true
+        mfa:
+          type: boolean
+          description: Multi factor authentication status.
+          example: true
+        prefs:
+          type: object
+          description: User preferences as a key-value object
+          example:
+            theme: pink
+            timezone: UTC
+          allOf:
+          - $ref: '#/components/schemas/preferences'
+        targets:
+          type: array
+          description: A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
+          items:
+            $ref: '#/components/schemas/target'
+          example: []
+        accessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+          example: '2020-10-15T06:38:00.000+00:00'
+        impersonator:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user can impersonate other users.
+          example: false
+        impersonatorUserId:
+          type:
+          - string
+          - 'null'
+          description: ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
+          example: 5e5ea5c16897e
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - registration
+      - status
+      - labels
+      - passwordUpdate
+      - email
+      - phone
+      - emailVerification
+      - phoneVerification
+      - mfa
+      - prefs
+      - targets
+      - accessedAt
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: John Doe
+        password: $argon2id$v=19$m=2048,t=4,p=3$aUZjLnliVWRINmFNTWMudg$5S+x+7uA31xFnrHFT47yFwcJeaP0w92L/4LdgrVRXxE
+        hash: argon2
+        hashOptions: {}
+        registration: '2020-10-15T06:38:00.000+00:00'
+        status: true
+        labels:
+        - vip
+        passwordUpdate: '2020-10-15T06:38:00.000+00:00'
+        email: john@appwrite.io
+        phone: '+4930901820'
+        emailVerification: true
+        emailCanonical: john@appwrite.io
+        emailIsFree: true
+        emailIsDisposable: false
+        emailIsCorporate: true
+        emailIsCanonical: true
+        phoneVerification: true
+        mfa: true
+        prefs:
+          theme: pink
+          timezone: UTC
+        targets: []
+        accessedAt: '2020-10-15T06:38:00.000+00:00'
+        impersonator: false
+        impersonatorUserId: 5e5ea5c16897e
+    key:
+      description: Key
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Key ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Key creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Key update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Key name.
+          example: My API Key
+        expire:
+          type: string
+          description: Key expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        scopes:
+          type: array
+          description: Allowed permission scopes.
+          items:
+            type: string
+          example:
+          - users.read
+        secret:
+          type: string
+          description: Secret key.
+          example: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+          example: '2020-10-15T06:38:00.000+00:00'
+        sdks:
+          type: array
+          description: List of SDK user agents that used this key.
+          items:
+            type: string
+          example:
+          - appwrite:flutter
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - expire
+      - scopes
+      - secret
+      - accessedAt
+      - sdks
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My API Key
+        expire: '2020-10-15T06:38:00.000+00:00'
+        scopes: users.read
+        secret: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt: '2020-10-15T06:38:00.000+00:00'
+        sdks: appwrite:flutter
+    managerProjectUser:
+      description: ManagerProjectUser
+      type: object
+      properties:
+        userId:
+          type: string
+          description: ID of the user the JWT resolves to within the project.
+          example: user-abc123
+      required:
+      - userId
+      example:
+        userId: user-abc123
+    algoArgon2:
+      description: AlgoArgon2
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: argon2
+        memoryCost:
+          type: integer
+          description: Memory used to compute hash.
+          format: int32
+          example: 65536
+        timeCost:
+          type: integer
+          description: Amount of time consumed to compute hash
+          format: int32
+          example: 4
+        threads:
+          type: integer
+          description: Number of threads used to compute hash.
+          format: int32
+          example: 3
+      required:
+      - type
+      - memoryCost
+      - timeCost
+      - threads
+      example:
+        type: argon2
+        memoryCost: 65536
+        timeCost: 4
+        threads: 3
+    block:
+      description: Block
+      type: object
+      properties:
+        $createdAt:
+          type: string
+          description: Block creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        resourceType:
+          type: string
+          description: Resource type that is blocked
+          example: project
+        resourceId:
+          type: string
+          description: Resource identifier that is blocked
+          example: 5e5ea5c16897e
+        mode:
+          type: string
+          description: Block mode. full blocks reads and writes; readOnly blocks writes only.
+          example: readOnly
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Reason for the block. Can be null if no reason was provided.
+          example: Payment overdue
+        expiredAt:
+          type:
+          - string
+          - 'null'
+          description: Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+          example: '2020-10-15T06:38:00.000+00:00'
+        projectName:
+          type: string
+          description: Name of the project this block applies to.
+          example: My Project
+        region:
+          type: string
+          description: Region of the project this block applies to.
+          example: fra
+        organizationName:
+          type: string
+          description: Name of the organization that owns the project.
+          example: Acme Inc.
+        organizationId:
+          type: string
+          description: ID of the organization that owns the project.
+          example: 5e5ea5c16897e
+        billingPlan:
+          type: string
+          description: Billing plan of the organization that owns the project.
+          example: pro
+      required:
+      - $createdAt
+      - resourceType
+      - resourceId
+      - mode
+      - projectName
+      - region
+      - organizationName
+      - organizationId
+      - billingPlan
+      example:
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        resourceType: project
+        resourceId: 5e5ea5c16897e
+        mode: readOnly
+        reason: Payment overdue
+        expiredAt: '2020-10-15T06:38:00.000+00:00'
+        projectName: My Project
+        region: fra
+        organizationName: Acme Inc.
+        organizationId: 5e5ea5c16897e
+        billingPlan: pro
+    blockList:
+      description: Blocks list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of blocks that matched your query.
+          format: int32
+          example: 5
+        blocks:
+          type: array
+          description: List of blocks.
+          items:
+            $ref: '#/components/schemas/block'
+          example: []
+      required:
+      - total
+      - blocks
+      example:
+        total: 5
+        blocks: ''
+    managerDomain:
+      description: ManagerDomain
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Domain ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Domain creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Domain update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        domain:
+          type: string
+          description: Domain name.
+          example: example.com
+        registrar:
+          type: string
+          description: Domain registrar (e.g. "appwrite" or "third_party").
+          example: appwrite
+        nameservers:
+          type: string
+          description: Nameservers setting. "Appwrite" or empty string.
+          example: Appwrite
+        expire:
+          type: string
+          description: Domain expiry date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        renewal:
+          type: string
+          description: Domain renewal date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        autoRenewal:
+          type: boolean
+          description: If set to true, the domain will automatically renew.
+          example: true
+        renewalPrice:
+          type: integer
+          description: Renewal price (in cents).
+          format: int32
+          example: 2599
+        transferStatus:
+          description: Transfer status for domains being transferred in. Null when the domain is not being transferred.
+          example: pending_registry
+          title: DomainTransferStatusEnum
+          type:
+          - string
+          - 'null'
+          oneOf:
+          - type: string
+            enum:
+            - transferrable
+            title: transferrable
+          - type: string
+            enum:
+            - not_transferrable
+            title: not_transferrable
+          - type: string
+            enum:
+            - pending_owner
+            title: pending_owner
+          - type: string
+            enum:
+            - pending_admin
+            title: pending_admin
+          - type: string
+            enum:
+            - pending_registry
+            title: pending_registry
+          - type: string
+            enum:
+            - completed
+            title: completed
+          - type: string
+            enum:
+            - cancelled
+            title: cancelled
+          - type: string
+            enum:
+            - service_unavailable
+            title: service_unavailable
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        dnsRecords:
+          type: array
+          description: Dns records
+          items:
+            $ref: '#/components/schemas/dnsRecord'
+          example: []
+        soaSerial:
+          type: integer
+          description: SOA serial number
+          format: int32
+          example: 12
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - domain
+      - registrar
+      - nameservers
+      - expire
+      - renewal
+      - autoRenewal
+      - renewalPrice
+      - teamId
+      - dnsRecords
+      - soaSerial
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        domain: example.com
+        registrar: appwrite
+        nameservers: Appwrite
+        expire: '2020-10-15T06:38:00.000+00:00'
+        renewal: '2020-10-15T06:38:00.000+00:00'
+        autoRenewal: true
+        renewalPrice: 2599
+        transferStatus: pending_registry
+        teamId: 5e5ea5c16897e
+        dnsRecords: []
+        soaSerial: 12
+    preferences:
+      description: Preferences
+      type: object
+      additionalProperties: true
+      example:
+        language: en
+        timezone: UTC
+        darkTheme: true
+    dnsRecord:
+      description: DNSRecord
+      type: object
+      properties:
+        $id:
+          type: string
+          description: DNS Record ID.
+          example: 5f40a6e10c65e
+        $createdAt:
+          type: string
+          description: DNS Record creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: DNS Record update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        type:
+          type: string
+          description: DNS record type (e.g. A, CNAME, MX).
+          example: A
+        name:
+          type: string
+          description: Record name or subdomain.
+          example: mail
+        value:
+          type: string
+          description: Value of the record (IP address, domain, etc.).
+          example: 192.0.2.1
+        ttl:
+          type: integer
+          description: Time to live (in seconds).
+          format: int32
+          example: 86400
+        priority:
+          type: integer
+          description: Record priority (commonly used for MX).
+          format: int32
+          example: 10
+        lock:
+          type: boolean
+          description: Whether this record is locked (read-only).
+          example: false
+        weight:
+          type: integer
+          description: Record weight (used for SRV records).
+          format: int32
+          example: 10
+        port:
+          type: integer
+          description: Target port (used for SRV records).
+          format: int32
+          example: 443
+        comment:
+          type: string
+          description: Comment for the DNS record.
+          example: Mail server record
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - type
+      - name
+      - value
+      - ttl
+      - priority
+      - lock
+      - weight
+      - port
+      - comment
+      example:
+        $id: 5f40a6e10c65e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        type: A
+        name: mail
+        value: 192.0.2.1
+        ttl: 86400
+        priority: 10
+        lock: false
+        weight: 10
+        port: 443
+        comment: Mail server record
+    managerWafRuleList:
+      description: Manager WAF rule list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of rules that matched your query.
+          format: int32
+          example: 5
+        rules:
+          type: array
+          description: List of rules.
+          items:
+            $ref: '#/components/schemas/managerWafRule'
+          example: []
+      required:
+      - total
+      - rules
+      example:
+        total: 5
+        rules: ''
+    algoPhpass:
+      description: AlgoPHPass
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: phpass
+      required:
+      - type
+      example:
+        type: phpass
+    algoMd5:
+      description: AlgoMD5
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: md5
+      required:
+      - type
+      example:
+        type: md5
+    algoSha:
+      description: AlgoSHA
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: sha
+      required:
+      - type
+      example:
+        type: sha
+    managerDatabase:
+      description: ManagerDatabase
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Database ID.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID that owns this database.
+          example: project-abc123
+        projectInternalId:
+          type: string
+          description: Internal (sequence) ID of the owning project generation. The Edge namespace reaper compares this against the labelled namespace generation before tearing down an orphan, so it must always be a non-empty string for a live database.
+          example: '42'
+        databaseInternalId:
+          type: string
+          description: Internal (sequence) ID of this database generation. The Edge namespace reaper compares this against the labelled namespace generation before tearing down an orphan, so it must always be a non-empty string for a live database.
+          example: '7'
+        database:
+          type: string
+          description: Physical database/catalog name. Defaults to the database ID.
+          example: mydb
+        hostname:
+          type: string
+          description: Database hostname for connections.
+          example: db-myproject-mydb.fra.appwrite.center
+        port:
+          type: integer
+          description: Database port. Null until the backing reports one.
+          format: int32
+          example: 5432
+        engine:
+          type: string
+          description: 'Database engine: postgresql, mysql, or mongodb.'
+          example: postgresql
+        status:
+          type: string
+          description: 'Database status: provisioning, ready, inactive, paused, failed, deleting, deleted, restoring, scaling, upgrading, migrating.'
+          example: ready
+        containerStatus:
+          type: string
+          description: 'Container status for lifecycle-managed database runtimes: active, inactive, or failed (a wake was declined because the backing namespace is gone).'
+          example: active
+        lastErrorCode:
+          type: string
+          description: 'Code of the last failure recorded against this database. The Edge proxy reads it to refuse immediately instead of spending its cold-start budget on a wake that cannot succeed: dedicated_database_abandoned means a wake was already declined because the backing namespace is gone. Empty when no error is recorded.'
+          example: dedicated_database_abandoned
+        lifecycleState:
+          type: string
+          description: 'Idle-lifecycle state at fetch time: active, warm, cold, or hibernated. The Edge proxy labels wake telemetry with it so warm-start, cold-start, and hibernate-resume durations chart separately.'
+          example: warm
+        suspended:
+          type: boolean
+          description: Whether access to this database is suspended because the owning project is blocked, the organization is read-only (e.g. payment issue), or the plan no longer permits it. When true, the Edge proxy refuses new connections and never cold-starts the database. Recovers automatically once the underlying condition clears.
+          example: false
+        suspendedReason:
+          type: string
+          description: 'Reason access is suspended: blocked, readonly, or plan. Empty when not suspended.'
+          example: readonly
+        type:
+          type: string
+          description: 'Database type: shared (scale-to-zero pod) or dedicated (StatefulSet).'
+          example: dedicated
+        region:
+          type: string
+          description: Region identifier (e.g., fra, nyc, syd).
+          example: fra
+        backend:
+          type: string
+          description: 'Database backend provider: edge.'
+          example: edge
+        sqlApiEnabled:
+          type: boolean
+          description: Whether the SQL API is enabled for this database.
+          example: true
+        sqlApiAllowedStatements:
+          type: array
+          description: 'Statement types accepted by the SQL API. Defaults to read/write DML only; DDL/DCL types (CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE) are opt-in per database. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.'
+          items:
+            type: string
+          example:
+          - SELECT
+        sqlApiMaxRows:
+          type: integer
+          description: Maximum rows returned per SQL API execution. Results larger than this are truncated.
+          format: int32
+          example: 10000
+        sqlApiMaxBytes:
+          type: integer
+          description: Maximum serialised SQL API result payload in bytes. Results larger than this are truncated.
+          format: int32
+          example: 10485760
+        sqlApiTimeoutSeconds:
+          type: integer
+          description: Maximum server-side SQL API execution time in seconds before the query is cancelled.
+          format: int32
+          example: 30
+      required:
+      - $id
+      - projectId
+      - projectInternalId
+      - databaseInternalId
+      - database
+      - hostname
+      - port
+      - engine
+      - status
+      - containerStatus
+      - lastErrorCode
+      - lifecycleState
+      - suspended
+      - suspendedReason
+      - type
+      - region
+      - backend
+      - sqlApiEnabled
+      - sqlApiAllowedStatements
+      - sqlApiMaxRows
+      - sqlApiMaxBytes
+      - sqlApiTimeoutSeconds
+      example:
+        $id: 5e5ea5c16897e
+        projectId: project-abc123
+        projectInternalId: '42'
+        databaseInternalId: '7'
+        database: mydb
+        hostname: db-myproject-mydb.fra.appwrite.center
+        port: 5432
+        engine: postgresql
+        status: ready
+        containerStatus: active
+        lastErrorCode: dedicated_database_abandoned
+        lifecycleState: warm
+        suspended: false
+        suspendedReason: readonly
+        type: dedicated
+        region: fra
+        backend: edge
+        sqlApiEnabled: true
+        sqlApiAllowedStatements: SELECT
+        sqlApiMaxRows: 10000
+        sqlApiMaxBytes: 10485760
+        sqlApiTimeoutSeconds: 30
+    target:
+      description: Target
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Target ID.
+          example: '259125845563242502'
+        $createdAt:
+          type: string
+          description: Target creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Target update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Target Name.
+          example: Apple iPhone 12
+        userId:
+          type: string
+          description: User ID.
+          example: '259125845563242502'
+        providerId:
+          type:
+          - string
+          - 'null'
+          description: Provider ID.
+          example: '259125845563242502'
+        providerType:
+          type: string
+          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
+          example: email
+        identifier:
+          type: string
+          description: The target identifier.
+          example: token
+        expired:
+          type: boolean
+          description: Is the target expired.
+          example: false
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - userId
+      - providerType
+      - identifier
+      - expired
+      example:
+        $id: '259125845563242502'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Apple iPhone 12
+        userId: '259125845563242502'
+        providerId: '259125845563242502'
+        providerType: email
+        identifier: token
+        expired: false
+    algoScryptModified:
+      description: AlgoScryptModified
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: scryptMod
+        salt:
+          type: string
+          description: Salt used to compute hash.
+          example: UxLMreBr6tYyjQ==
+        saltSeparator:
+          type: string
+          description: Separator used to compute hash.
+          example: Bw==
+        signerKey:
+          type: string
+          description: Key used to compute hash.
+          example: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
+      required:
+      - type
+      - salt
+      - saltSeparator
+      - signerKey
+      example:
+        type: scryptMod
+        salt: UxLMreBr6tYyjQ==
+        saltSeparator: Bw==
+        signerKey: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
+    managerTags:
+      description: Tags
+      type: object
+      properties:
+        project:
+          type:
+          - string
+          - 'null'
+          description: Project cache tag.
+          example: 5e5ea5c16897e
+        team:
+          type:
+          - string
+          - 'null'
+          description: Team cache tag.
+          example: 5e5ea5c16897f
+        deployment:
+          type:
+          - string
+          - 'null'
+          description: Deployment cache tag.
+          example: 5e5ea5c168981
+        domain:
+          type:
+          - string
+          - 'null'
+          description: Domain cache tag.
+          example: function.example.com
+        resource:
+          type:
+          - string
+          - 'null'
+          description: Resource type cache tag.
+          example: function
+        function:
+          type:
+          - string
+          - 'null'
+          description: Function cache tag.
+          example: 5e5ea5c168980
+        site:
+          type:
+          - string
+          - 'null'
+          description: Site cache tag.
+          example: 5e5ea5c168980
+      example:
+        project: 5e5ea5c16897e
+        team: 5e5ea5c16897f
+        deployment: 5e5ea5c168981
+        domain: function.example.com
+        resource: function
+        function: 5e5ea5c168980
+        site: 5e5ea5c168980
+    managerWafRule:
+      description: ManagerWafRule
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Rule ID.
+          example: wafRule1
+        $createdAt:
+          type: string
+          description: WAF rule creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: WAF rule last update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Human friendly rule name.
+          example: Block anonymous POST traffic
+        description:
+          type: string
+          description: Optional description for the rule.
+          example: Blocks anonymous POST calls to /v1/graphql
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: cloudConsole
+        resourceType:
+          type: string
+          description: Resource type the rule is scoped to.
+          example: functions
+        resourceId:
+          type: string
+          description: Resource identifier. Empty for API-wide rules.
+          example: functionId
+        action:
+          description: Action performed when the rule matches.
+          example: deny
+          title: WafRuleAction
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - bypass
+            title: bypass
+          - type: string
+            enum:
+            - deny
+            title: deny
+          - type: string
+            enum:
+            - challenge
+            title: challenge
+          - type: string
+            enum:
+            - rateLimit
+            title: rateLimit
+          - type: string
+            enum:
+            - redirect
+            title: redirect
+        priority:
+          type: integer
+          description: Evaluation priority. Lower values execute earlier.
+          format: int32
+          example: 100
+        enabled:
+          type: boolean
+          description: Whether the rule is active.
+          example: true
+        conditions:
+          type: array
+          description: List of conditions evaluated for this rule.
+          items:
+            type: object
+          example:
+          - method: equal
+            attribute: ip
+            values:
+            - 127.0.0.1
+        config:
+          type: object
+          additionalProperties: true
+          description: Action specific configuration.
+          example: {}
+        resourceInternalId:
+          type:
+          - integer
+          - 'null'
+          description: Internal resource sequence ID used by Edge WAF usage.
+          format: int32
+          example: 1
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - description
+      - teamId
+      - projectId
+      - resourceType
+      - resourceId
+      - action
+      - priority
+      - enabled
+      - conditions
+      - config
+      example:
+        $id: wafRule1
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Block anonymous POST traffic
+        description: Blocks anonymous POST calls to /v1/graphql
+        teamId: 5e5ea5c16897e
+        projectId: cloudConsole
+        resourceType: functions
+        resourceId: functionId
+        action: deny
+        priority: 100
+        enabled: true
+        conditions:
+        - method: equal
+          attribute: ip
+          values:
+          - 127.0.0.1
+        config: []
+        resourceInternalId: 1
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

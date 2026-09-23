@@ -1,0 +1,29 @@
+# Front Door AI Index — appwrite — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: appwrite
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: appwrite.io
+  final_host: appwrite.io
+  ownership: own
+  owner: appwrite
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 5
+  host_score: 5
+  density: 8.82
+  words: 567
+  tiers:
+    agentic: 2
+    core: 1
+    model: 2
+  ambiguous: 7
+  top_terms:
+    agent: 7
+    Claude: 2
+    AI agent: 1
+    AI: 1
+    MCP: 1

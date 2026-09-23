@@ -3,89 +3,106 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Appwrite
 providerId: appwrite
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://appwrite.io/docs/advanced/security/rate-limits and
+  https://appwrite.io/docs/advanced/security/abuse-protection (read 2026-09-12), with the 429 error
+  types cross-checked against https://appwrite.io/docs/apis/response-codes and the per-endpoint
+  limits against openapi/_original/appwrite-open-api3-latest.json.
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-12'
 tags:
   - Applications
   - Backends
   - Mobile
   - Open Source
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Appwrite API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
+description: >-
+  Appwrite's published rate-limit behaviour. This file replaces a 2026-05-04 scaffold whose
+  per-tier requests-per-minute numbers were invented — Appwrite does not rate limit by plan tier at
+  all, and recording it that way described a different product.
+model: per-endpoint, client-traffic only
+model_note: >-
+  Appwrite's rate limits are NOT plan-tiered and NOT account-wide. They are attached to individual
+  endpoints — chiefly the authentication and abuse-prone routes — and each route's own reference page
+  states the limit that applies to it. Critically, rate limits apply ONLY to Client SDK traffic;
+  requests authenticated with a server API key (X-Appwrite-Key) are not rate limited. An agent
+  calling Appwrite server-side is therefore governed by plan quotas and the abuse policy, not by a
+  published request rate.
 headers:
   limit: X-RateLimit-Limit
   remaining: X-RateLimit-Remaining
   reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  retryAfter: null
+  policy: null
+header_semantics:
+  X-RateLimit-Limit: Maximum number of requests the consumer may make per hour.
+  X-RateLimit-Remaining: Requests remaining in the current window.
+  X-RateLimit-Reset: UTC epoch seconds at which the current window resets.
+header_note: >-
+  Appwrite returns the three X-RateLimit-* headers on ANY API request, not only on a 429, so a client
+  can read its budget before exhausting it. It does NOT send Retry-After and does not implement the
+  RFC 9239 RateLimit-* draft headers — a consumer has to compute the wait from X-RateLimit-Reset.
 responseCodes:
   throttled: 429
   quotaExceeded: 429
   serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Appwrite API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Appwrite API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Appwrite API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Appwrite API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Appwrite API
+error_types:
+  - type: general_rate_limit_exceeded
+    status: 429
+    description: Rate limit for the current endpoint has been exceeded. Try again after some time.
+  - type: user_count_exceeded
+    status: 429
+    description: Documented under authentication errors; the project's user limit has been reached.
+exhaustion_response:
+  status: 429
+  body: '{ "message": "Too many requests", "code": 429 }'
+  abuse_variant: '{ "message": "Too many login attempts", "code": 429 }'
+  headers_returned: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+limit_count: 0
+limits: []
+limits_note: >-
+  Appwrite publishes NO catalogue of numeric limits. The rate-limits page documents the mechanism,
+  the headers and the 429 shape, and then says "each Appwrite route documentation has information
+  about any rate limits that might apply to them" — so the numbers live on ~754 individual reference
+  pages rather than in one table, and the OpenAPI carries no x-rateLimit extension to recover them
+  from. The single concrete figure Appwrite prints is the 60-per-hour example in its own header
+  sample, which is illustrative, not a contract. An honest zero: the limits exist and are documented
+  per route, but there is no machine-readable list of them.
+bypass:
+  mechanism: X-Appwrite-Dev-Key request header
+  purpose: Lets a client app bypass rate limits in development environments.
+  status: creation paused
+  status_note: >-
+    Appwrite paused creation of new dev keys on 2026-07-22 and states they will be removed. Never
+    ship one in a production app.
+  docs: https://appwrite.io/docs/advanced/security/dev-keys
+abuse_protection:
+  description: >-
+    Beyond the per-endpoint limits, Appwrite applies additional abuse rate limiting to rapid content
+    creation, aggressive polling, high-concurrency calls and repeated computationally-expensive
+    requests.
+  remedy_published: Cache API responses and use webhooks instead of polling.
+  docs: https://appwrite.io/docs/advanced/security/abuse-protection
+plan_quotas:
+  note: >-
+    What IS tiered is consumption, not rate — bandwidth, executions, database reads and writes,
+    realtime connections and messages, with per-plan limits and (on Pro) automatic overage purchase
+    up to a budget cap. See plans/appwrite-plans-pricing.yml.
+  detail: plans/appwrite-plans-pricing.yml
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Client-only enforcement
+    description: Rate limits apply to Client SDKs. Server SDK calls authenticated with an API key are exempt.
+  - name: Reset computation
+    description: Clients must derive the wait from X-RateLimit-Reset (UTC epoch seconds); no Retry-After is sent.
+  - name: Free-plan bandwidth exhaustion
+    description: >-
+      On the Free plan, exhausting bandwidth denies API access entirely until the plan is upgraded —
+      a quota consequence more severe than throttling.
+related:
+  errors: errors/appwrite-problem-types.yml
+  conventions: conventions/appwrite-conventions.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

@@ -1,0 +1,88 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay — Appwrite apps API
+  version: 1.0.0
+extends: ../openapi/appwrite-apps-api-openapi.yml
+x-generated: '2026-09-12'
+x-method: generated
+x-source: API Evangelist enrichment pass 2026-09-12. Captures the cross-cutting runtime semantics Appwrite documents
+  outside the OpenAPI, so they travel with the spec. Every value below is sourced from an artifact in this repo,
+  which is in turn sourced from Appwrite's own documentation — nothing here is invented, and the original spec is
+  never mutated.
+actions:
+- target: $.info
+  update:
+    x-apis-io-provider: appwrite
+    x-contract-source: https://github.com/appwrite/specs/blob/main/specs/latest/open-api3-latest.json
+    x-documentation: https://appwrite.io/docs
+    x-api-reference: https://appwrite.io/docs/references
+    x-llms-txt: https://appwrite.io/llms.txt
+- target: $
+  update:
+    x-error-envelope:
+      rfc9457: false
+      media_type: application/json
+      shape: '{ "message": string, "type": string, "code": integer }'
+      branch_on: type
+      type_count: 137
+      catalog: ../errors/appwrite-problem-types.yml
+      docs: https://appwrite.io/docs/apis/response-codes
+    x-rate-limit:
+      applies_to: Client SDK traffic only; API-key authenticated server calls are exempt.
+      headers:
+      - X-RateLimit-Limit
+      - X-RateLimit-Remaining
+      - X-RateLimit-Reset
+      retry_after: false
+      status: 429
+      detail: ../rate-limits/appwrite-rate-limits.yml
+      docs: https://appwrite.io/docs/advanced/security/rate-limits
+    x-idempotency:
+      supported: false
+      coverage: none
+      mitigation: Client-supplied resource ids make a duplicate create a detectable 409, but updates, deletes and
+        executions have no replay protection.
+      detail: ../conventions/appwrite-conventions.yml
+    x-pagination:
+      style: query-object (offset and cursor)
+      default_page_size: 25
+      offset:
+      - Query.limit(n)
+      - Query.offset(n)
+      cursor:
+      - Query.cursorAfter(id)
+      - Query.cursorBefore(id)
+      docs: https://appwrite.io/docs/products/databases/tablesdb/pagination
+    x-caching:
+      mechanism: ttl parameter on list operations, 1-86400 seconds, default 0
+      response_header: X-Appwrite-Cache
+      values:
+      - hit
+      - miss
+      permission_aware: true
+    x-reversibility:
+      grade: documented
+      default_write_semantics: Hard delete, immediate, no trash and no restore endpoint.
+      detail: ../conventions/appwrite-conventions.yml
+    x-lifecycle:
+      api_version: v1
+      product_version: 2.0.0
+      policy: https://appwrite.io/docs/apis/release-policy
+      sunset_header: false
+      status_page: https://status.appwrite.online/
+      detail: ../lifecycle/appwrite-lifecycle.yml
+    x-events:
+      event_count: 91
+      channels:
+      - webhooks
+      - functions
+      - realtime
+      webhook_signature: X-Appwrite-Webhook-Signature — base64(HMAC-SHA1(url + body, key))
+      detail: ../asyncapi/appwrite-webhooks.yml
+    x-agent-surfaces:
+      mcp_remote: https://mcp.appwrite.io/
+      mcp_stdio: uvx mcp-server-appwrite
+      mcp_server_card: https://appwrite.io/.well-known/mcp/server-card.json
+      agent_skills_index: https://appwrite.io/.well-known/agent-skills/index.json
+      agent_card: null
+      detail: ../mcp/appwrite-mcp.yml

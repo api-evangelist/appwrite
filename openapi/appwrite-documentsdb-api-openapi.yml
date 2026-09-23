@@ -1,0 +1,6261 @@
+openapi: 3.2.0
+info:
+  version: 2.0.0
+  title: Appwrite Documents DB API
+  description: Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to https://appwrite.io/docs
+  termsOfService: https://appwrite.io/policy/terms
+  contact:
+    name: Appwrite Team
+    url: https://appwrite.io/support
+    email: team@appwrite.io
+  license:
+    name: BSD-3-Clause
+    url: https://raw.githubusercontent.com/appwrite/appwrite/master/LICENSE
+servers:
+- url: https://cloud.appwrite.io/v1
+  description: Appwrite Cloud endpoint.
+- url: https://{region}.cloud.appwrite.io/v1
+  description: Appwrite Cloud regional endpoint. Replace `{region}` with your project region.
+  variables:
+    region:
+      default: fra
+      description: Appwrite Cloud region.
+tags:
+- name: documentsDB
+  description: ''
+paths:
+  /documentsdb:
+    get:
+      summary: List databases
+      operationId: documentsDBList
+      tags:
+      - documentsDB
+      description: Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
+      responses:
+        '200':
+          description: Databases List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/databaseList'
+      deprecated: false
+      x-appwrite:
+        group: documentsdb
+        demo: documentsdb/list.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: queries
+        description: 'Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: total
+        description: When set to false, the total count returned will be 0 and will not be calculated.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: true
+        in: query
+    post:
+      summary: Create database
+      operationId: documentsDBCreate
+      tags:
+      - documentsDB
+      description: Create a new Database.
+      responses:
+        '201':
+          description: Database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/database'
+      deprecated: false
+      x-appwrite:
+        group: documentsdb
+        demo: documentsdb/create.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                databaseId:
+                  description: Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+                  type: string
+                  example: <DATABASE_ID>
+                  x-appwrite:
+                    idGenerator: ID.unique
+                name:
+                  description: 'Database name. Max length: 128 chars.'
+                  type: string
+                  example: <NAME>
+                enabled:
+                  description: Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+                  type: boolean
+                  default: true
+                  example: false
+                specification:
+                  description: Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
+                  type: string
+                  default: serverless
+                  example: serverless
+                replicas:
+                  description: Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
+                  type: integer
+                  default: 0
+                  example: 0
+                  format: int32
+                syncMode:
+                  description: 'Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.'
+                  type:
+                  - string
+                  - 'null'
+                  example: async
+              required:
+              - databaseId
+              - name
+  /documentsdb/specifications:
+    get:
+      summary: List specifications
+      operationId: documentsDBListSpecifications
+      tags:
+      - documentsDB
+      description: List the dedicated database specifications available on the current plan. Each specification reports its resource limits, its own prices and overage rates, and whether it is enabled for the organization.
+      responses:
+        '200':
+          description: SpecificationList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseSpecificationList'
+      deprecated: false
+      x-appwrite:
+        group: documentsdb
+        demo: documentsdb/list-specifications.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+  /documentsdb/transactions:
+    get:
+      summary: List transactions
+      operationId: documentsDBListTransactions
+      tags:
+      - documentsDB
+      description: List transactions across all databases.
+      responses:
+        '200':
+          description: Transaction List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactionList'
+      deprecated: false
+      x-appwrite:
+        group: transactions
+        demo: documentsdb/list-transactions.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.read
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: queries
+        description: Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+    post:
+      summary: Create transaction
+      operationId: documentsDBCreateTransaction
+      tags:
+      - documentsDB
+      description: Create a new transaction.
+      responses:
+        '201':
+          description: Transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+      deprecated: false
+      x-appwrite:
+        group: transactions
+        demo: documentsdb/create-transaction.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ttl:
+                  description: Seconds before the transaction expires.
+                  type: integer
+                  default: 300
+                  example: 60
+                  format: int32
+  /documentsdb/transactions/{transactionId}:
+    get:
+      summary: Get transaction
+      operationId: documentsDBGetTransaction
+      tags:
+      - documentsDB
+      description: Get a transaction by its unique ID.
+      responses:
+        '200':
+          description: Transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+      deprecated: false
+      x-appwrite:
+        group: transactions
+        demo: documentsdb/get-transaction.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.read
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: transactionId
+        description: Transaction ID.
+        required: true
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: path
+    patch:
+      summary: Update transaction
+      operationId: documentsDBUpdateTransaction
+      tags:
+      - documentsDB
+      description: Update a transaction, to either commit or roll back its operations.
+      responses:
+        '200':
+          description: Transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+      deprecated: false
+      x-appwrite:
+        group: transactions
+        demo: documentsdb/update-transaction.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: transactionId
+        description: Transaction ID.
+        required: true
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                commit:
+                  description: Commit transaction?
+                  type: boolean
+                  default: false
+                  example: false
+                rollback:
+                  description: Rollback transaction?
+                  type: boolean
+                  default: false
+                  example: false
+    delete:
+      summary: Delete transaction
+      operationId: documentsDBDeleteTransaction
+      tags:
+      - documentsDB
+      description: Delete a transaction by its unique ID.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: transactions
+        demo: documentsdb/delete-transaction.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: transactionId
+        description: Transaction ID.
+        required: true
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: path
+  /documentsdb/transactions/{transactionId}/operations:
+    post:
+      summary: Create operations
+      operationId: documentsDBCreateOperations
+      tags:
+      - documentsDB
+      description: Create multiple operations in a single transaction.
+      responses:
+        '201':
+          description: Transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+      deprecated: false
+      x-appwrite:
+        group: transactions
+        demo: documentsdb/create-operations.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.write
+        platforms:
+        - server
+        - client
+        packaging: false
+        public: true
+        auth:
+          server:
+            Project: []
+            Key: []
+          client:
+            Project: []
+      security:
+      - Project: []
+        Key: []
+        Session: []
+        JWT: []
+      parameters:
+      - name: transactionId
+        description: Transaction ID.
+        required: true
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operations:
+                  description: Array of staged operations.
+                  type: array
+                  default: []
+                  example:
+                  - action: create
+                    databaseId: <DATABASE_ID>
+                    collectionId: <COLLECTION_ID>
+                    documentId: <DOCUMENT_ID>
+                    data:
+                      name: Walter O'Brien
+                  items:
+                    type: object
+  /documentsdb/{databaseId}:
+    get:
+      summary: Get database
+      operationId: documentsDBGet
+      tags:
+      - documentsDB
+      description: Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
+      responses:
+        '200':
+          description: Database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/database'
+      deprecated: false
+      x-appwrite:
+        group: documentsdb
+        demo: documentsdb/get.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+    put:
+      summary: Update database
+      operationId: documentsDBUpdate
+      tags:
+      - documentsDB
+      description: Update a database by its unique ID.
+      responses:
+        '200':
+          description: Database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/database'
+      deprecated: false
+      x-appwrite:
+        group: documentsdb
+        demo: documentsdb/update.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: 'Database name. Max length: 128 chars.'
+                  type: string
+                  example: <NAME>
+                enabled:
+                  description: Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+                  type: boolean
+                  default: true
+                  example: false
+                specification:
+                  description: Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
+                  type:
+                  - string
+                  - 'null'
+                  example: serverless
+                replicas:
+                  description: Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
+                  type:
+                  - integer
+                  - 'null'
+                  example: 0
+                  format: int32
+                syncMode:
+                  description: 'Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.'
+                  type:
+                  - string
+                  - 'null'
+                  example: async
+              required:
+              - name
+    delete:
+      summary: Delete database
+      operationId: documentsDBDelete
+      tags:
+      - documentsDB
+      description: Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: documentsdb
+        demo: documentsdb/delete.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /documentsdb/{databaseId}/collections:
+    get:
+      summary: List collections
+      operationId: documentsDBListCollections
+      tags:
+      - documentsDB
+      description: Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
+      responses:
+        '200':
+          description: Collections List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collectionList'
+      deprecated: false
+      x-appwrite:
+        group: collections
+        demo: documentsdb/list-collections.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.collections.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: queries
+        description: 'Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, documentSecurity'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: search
+        description: 'Search term to filter your list results. Max length: 256 chars.'
+        required: false
+        schema:
+          type: string
+          example: <SEARCH>
+          default: ''
+        in: query
+      - name: total
+        description: When set to false, the total count returned will be 0 and will not be calculated.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: true
+        in: query
+    post:
+      summary: Create collection
+      operationId: documentsDBCreateCollection
+      tags:
+      - documentsDB
+      description: Create a new Collection. Before using this route, you should create a new database resource using either a server integration API or directly from your database console.
+      responses:
+        '201':
+          description: Collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collection'
+      deprecated: false
+      x-appwrite:
+        group: collections
+        demo: documentsdb/create-collection.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.collections.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionId:
+                  description: Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+                  type: string
+                  example: <COLLECTION_ID>
+                  x-appwrite:
+                    idGenerator: ID.unique
+                name:
+                  description: 'Collection name. Max length: 128 chars.'
+                  type: string
+                  example: <NAME>
+                permissions:
+                  description: An array of permissions strings. By default, no user is granted with any permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type:
+                  - array
+                  - 'null'
+                  example:
+                  - read("any")
+                  items:
+                    type: string
+                documentSecurity:
+                  description: Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: boolean
+                  default: false
+                  example: false
+                enabled:
+                  description: Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+                  type: boolean
+                  default: true
+                  example: false
+                attributes:
+                  description: 'Array of attribute definitions to create. Each attribute should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.'
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                indexes:
+                  description: 'Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).'
+                  type: array
+                  default: []
+                  items:
+                    type: object
+              required:
+              - collectionId
+              - name
+  /documentsdb/{databaseId}/collections/{collectionId}:
+    get:
+      summary: Get collection
+      operationId: documentsDBGetCollection
+      tags:
+      - documentsDB
+      description: Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
+      responses:
+        '200':
+          description: Collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collection'
+      deprecated: false
+      x-appwrite:
+        group: collections
+        demo: documentsdb/get-collection.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.collections.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+    put:
+      summary: Update collection
+      operationId: documentsDBUpdateCollection
+      tags:
+      - documentsDB
+      description: Update a collection by its unique ID.
+      responses:
+        '200':
+          description: Collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collection'
+      deprecated: false
+      x-appwrite:
+        group: collections
+        demo: documentsdb/update-collection.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.collections.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: 'Collection name. Max length: 128 chars.'
+                  type: string
+                  example: <NAME>
+                permissions:
+                  description: An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: array
+                  example:
+                  - read("any")
+                  items:
+                    type: string
+                documentSecurity:
+                  description: Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: boolean
+                  default: false
+                  example: false
+                enabled:
+                  description: Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+                  type: boolean
+                  default: true
+                  example: false
+                purge:
+                  description: When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
+                  type: boolean
+                  default: false
+                  example: false
+              required:
+              - name
+    delete:
+      summary: Delete collection
+      operationId: documentsDBDeleteCollection
+      tags:
+      - documentsDB
+      description: Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: collections
+        demo: documentsdb/delete-collection.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.collections.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+  /documentsdb/{databaseId}/collections/{collectionId}/documents:
+    get:
+      summary: List documents
+      operationId: documentsDBListDocuments
+      tags:
+      - documentsDB
+      description: Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
+      responses:
+        '200':
+          description: Documents List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/documentList'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/list-documents.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: queries
+        description: Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: transactionId
+        description: Transaction ID to read uncommitted changes within the transaction.
+        required: false
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: query
+      - name: total
+        description: When set to false, the total count returned will be 0 and will not be calculated.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: true
+        in: query
+      - name: ttl
+        description: TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+    post:
+      summary: Create document
+      operationId: documentsDBCreateDocument
+      tags:
+      - documentsDB
+      description: Create a new Document. Before using this route, you should create a new collection resource using either a server integration API or directly from your database console.
+      responses:
+        '201':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/create-document.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        methods:
+        - name: createDocument
+          namespace: documentsDB
+          platforms:
+          - console
+          - client
+          - server
+          desc: Create document
+          auth:
+            console:
+              Project: []
+            client:
+              Project: []
+            server:
+              Project: []
+              Session: []
+          parameters:
+          - databaseId
+          - collectionId
+          - documentId
+          - data
+          - permissions
+          - transactionId
+          required:
+          - databaseId
+          - collectionId
+          - documentId
+          - data
+          responses:
+          - code: 201
+            model: '#/components/schemas/document'
+          description: Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+          demo: documentsdb/create-document.md
+          public: true
+        - name: createDocuments
+          namespace: documentsDB
+          platforms:
+          - console
+          - client
+          - server
+          desc: Create documents
+          auth:
+            console:
+              Project: []
+            client:
+              Project: []
+            server:
+              Project: []
+              Session: []
+          parameters:
+          - databaseId
+          - collectionId
+          - documents
+          - transactionId
+          required:
+          - databaseId
+          - collectionId
+          - documents
+          responses:
+          - code: 201
+            model: '#/components/schemas/documentList'
+          description: Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+          demo: documentsdb/create-documents.md
+          public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documentId:
+                  description: Document ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+                  type: string
+                  example: <DOCUMENT_ID>
+                  x-appwrite:
+                    idGenerator: ID.unique
+                data:
+                  description: Document data as JSON object.
+                  type: object
+                  default: {}
+                  example:
+                    username: walter.obrien
+                    email: walter.obrien@example.com
+                    fullName: Walter O'Brien
+                    age: 30
+                    isAdmin: false
+                permissions:
+                  description: An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: array
+                  example:
+                  - read("any")
+                  items:
+                    type: string
+                documents:
+                  description: Array of documents data as JSON objects.
+                  type: array
+                  default: []
+                  items:
+                    type: object
+                transactionId:
+                  description: Transaction ID for staging the operation.
+                  type: string
+                  example: <TRANSACTION_ID>
+              required:
+              - documentId
+              - data
+    put:
+      summary: Upsert documents
+      operationId: documentsDBUpsertDocuments
+      tags:
+      - documentsDB
+      description: Create or update Documents. Before using this route, you should create a new collection resource using either a server integration API or directly from your database console.
+      responses:
+        '201':
+          description: Documents List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/documentList'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/upsert-documents.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        methods:
+        - name: upsertDocuments
+          namespace: documentsDB
+          platforms:
+          - console
+          - server
+          desc: ''
+          auth:
+            console:
+              Project: []
+            server:
+              Project: []
+              Key: []
+          parameters:
+          - databaseId
+          - collectionId
+          - documents
+          - transactionId
+          required:
+          - databaseId
+          - collectionId
+          - documents
+          responses:
+          - code: 201
+            model: '#/components/schemas/documentList'
+          description: 'Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+
+            '
+          demo: documentsdb/upsert-documents.md
+          public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documents:
+                  description: Array of document data as JSON objects. May contain partial documents.
+                  type: array
+                  items:
+                    type: object
+                transactionId:
+                  description: Transaction ID for staging the operation.
+                  type: string
+                  example: <TRANSACTION_ID>
+              required:
+              - documents
+    patch:
+      summary: Update documents
+      operationId: documentsDBUpdateDocuments
+      tags:
+      - documentsDB
+      description: Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
+      responses:
+        '200':
+          description: Documents List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/documentList'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/update-documents.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  description: Document data as JSON object. Include only attribute and value pairs to be updated.
+                  type: object
+                  default: {}
+                  example: {}
+                queries:
+                  description: Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+                  type: array
+                  default: []
+                  items:
+                    type: string
+                transactionId:
+                  description: Transaction ID for staging the operation.
+                  type: string
+                  example: <TRANSACTION_ID>
+    delete:
+      summary: Delete documents
+      operationId: documentsDBDeleteDocuments
+      tags:
+      - documentsDB
+      description: Bulk delete documents using queries, if no queries are passed then all documents are deleted.
+      responses:
+        '200':
+          description: Documents List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/documentList'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/delete-documents.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: queries
+        description: Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: transactionId
+        description: Transaction ID for staging the operation.
+        required: false
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: query
+  /documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}:
+    get:
+      summary: Get document
+      operationId: documentsDBGetDocument
+      tags:
+      - documentsDB
+      description: Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
+      responses:
+        '200':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/get-document.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.documents.read
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: documentId
+        description: Document ID.
+        required: true
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+        in: path
+      - name: queries
+        description: Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: transactionId
+        description: Transaction ID to read uncommitted changes within the transaction.
+        required: false
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: query
+    put:
+      summary: Upsert a document
+      operationId: documentsDBUpsertDocument
+      tags:
+      - documentsDB
+      description: Create or update a Document. Before using this route, you should create a new collection resource using either a server integration API or directly from your database console.
+      responses:
+        '201':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/upsert-document.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        methods:
+        - name: upsertDocument
+          namespace: documentsDB
+          platforms:
+          - console
+          - client
+          - server
+          desc: ''
+          auth:
+            console:
+              Project: []
+            client:
+              Project: []
+            server:
+              Project: []
+              Session: []
+          parameters:
+          - databaseId
+          - collectionId
+          - documentId
+          - data
+          - permissions
+          - transactionId
+          required:
+          - databaseId
+          - collectionId
+          - documentId
+          responses:
+          - code: 201
+            model: '#/components/schemas/document'
+          description: Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+          demo: documentsdb/upsert-document.md
+          public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: documentId
+        description: Document ID.
+        required: true
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  description: Document data as JSON object. Include all required fields of the document to be created or updated.
+                  type: object
+                  default: {}
+                  example: {}
+                permissions:
+                  description: An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: array
+                  example:
+                  - read("any")
+                  items:
+                    type: string
+                transactionId:
+                  description: Transaction ID for staging the operation.
+                  type: string
+                  example: <TRANSACTION_ID>
+    patch:
+      summary: Update document
+      operationId: documentsDBUpdateDocument
+      tags:
+      - documentsDB
+      description: Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
+      responses:
+        '200':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/update-document.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: documentId
+        description: Document ID.
+        required: true
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  description: Document data as JSON object. Include only fields and value pairs to be updated.
+                  type: object
+                  default: {}
+                  example: {}
+                permissions:
+                  description: An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+                  type: array
+                  example:
+                  - read("any")
+                  items:
+                    type: string
+                transactionId:
+                  description: Transaction ID for staging the operation.
+                  type: string
+                  example: <TRANSACTION_ID>
+    delete:
+      summary: Delete document
+      operationId: documentsDBDeleteDocument
+      tags:
+      - documentsDB
+      description: Delete a document by its unique ID.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/delete-document.md
+        rate-limit: 60
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - console
+        - client
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+      security:
+      - Project: []
+        Session: []
+        Key: []
+        JWT: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: documentId
+        description: Document ID.
+        required: true
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+        in: path
+      - name: transactionId
+        description: Transaction ID for staging the operation.
+        required: false
+        schema:
+          type: string
+          example: <TRANSACTION_ID>
+        in: query
+  /documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement:
+    patch:
+      summary: Decrement document attribute
+      operationId: documentsDBDecrementDocumentAttribute
+      tags:
+      - documentsDB
+      description: Decrement a specific column of a row by a given value.
+      responses:
+        '200':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/decrement-document-attribute.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - client
+        - server
+        - console
+        packaging: false
+        public: true
+        auth:
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+          console:
+            Project: []
+      security:
+      - Project: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: documentId
+        description: Document ID.
+        required: true
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+        in: path
+      - name: attribute
+        description: Attribute key.
+        required: true
+        schema:
+          type: string
+          example: <ATTRIBUTE>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  description: Value to decrement the attribute by. The value must be a number.
+                  type: number
+                  default: 1
+                  example: 1
+                  format: float
+                min:
+                  description: Minimum value for the attribute. If the current value is lesser than this value, an exception will be thrown.
+                  type: number
+                  example: 0
+                  format: float
+                transactionId:
+                  description: Transaction ID for staging the operation.
+                  type: string
+                  example: <TRANSACTION_ID>
+  /documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment:
+    patch:
+      summary: Increment document attribute
+      operationId: documentsDBIncrementDocumentAttribute
+      tags:
+      - documentsDB
+      description: Increment a specific column of a row by a given value.
+      responses:
+        '200':
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+      deprecated: false
+      x-appwrite:
+        group: documents
+        demo: documentsdb/increment-document-attribute.md
+        rate-limit: 120
+        rate-time: 60
+        rate-key: ip:{ip},method:{method},url:{url},userId:{userId}
+        scope: documentsdb.documents.write
+        platforms:
+        - client
+        - server
+        - console
+        packaging: false
+        public: true
+        auth:
+          client:
+            Project: []
+          server:
+            Project: []
+            Session: []
+          console:
+            Project: []
+      security:
+      - Project: []
+        Session: []
+        JWT: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID.
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: documentId
+        description: Document ID.
+        required: true
+        schema:
+          type: string
+          example: <DOCUMENT_ID>
+        in: path
+      - name: attribute
+        description: Attribute key.
+        required: true
+        schema:
+          type: string
+          example: <ATTRIBUTE>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  description: Value to increment the attribute by. The value must be a number.
+                  type: number
+                  default: 1
+                  example: 1
+                  format: float
+                max:
+                  description: Maximum value for the attribute. If the current value is greater than this value, an error will be thrown.
+                  type: number
+                  example: 100
+                  format: float
+                transactionId:
+                  description: Transaction ID for staging the operation.
+                  type: string
+                  example: <TRANSACTION_ID>
+  /documentsdb/{databaseId}/collections/{collectionId}/indexes:
+    get:
+      summary: List indexes
+      operationId: documentsDBListIndexes
+      tags:
+      - documentsDB
+      description: List indexes in the collection.
+      responses:
+        '200':
+          description: Indexes List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/indexList'
+      deprecated: false
+      x-appwrite:
+        group: indexes
+        demo: documentsdb/list-indexes.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.indexes.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: queries
+        description: 'Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, type, status, attributes, error'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+        in: query
+      - name: total
+        description: When set to false, the total count returned will be 0 and will not be calculated.
+        required: false
+        schema:
+          type: boolean
+          example: false
+          default: true
+        in: query
+    post:
+      summary: Create index
+      operationId: documentsDBCreateIndex
+      tags:
+      - documentsDB
+      description: 'Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
+
+        Attributes can be `key`, `fulltext`, and `unique`.'
+      responses:
+        '202':
+          description: Index
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/index'
+      deprecated: false
+      x-appwrite:
+        group: indexes
+        demo: documentsdb/create-index.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.indexes.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  description: Index Key.
+                  type: string
+                  example: <KEY>
+                type:
+                  description: Index type.
+                  type: string
+                  example: key
+                  title: DocumentsDBIndexType
+                  oneOf:
+                  - type: string
+                    enum:
+                    - key
+                    title: key
+                  - type: string
+                    enum:
+                    - fulltext
+                    title: fulltext
+                  - type: string
+                    enum:
+                    - unique
+                    title: unique
+                attributes:
+                  description: Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
+                  type: array
+                  items:
+                    type: string
+                orders:
+                  description: Array of index orders. Maximum of 100 orders are allowed.
+                  type: array
+                  default: []
+                  items:
+                    title: OrderBy
+                    type: string
+                    oneOf:
+                    - type: string
+                      enum:
+                      - asc
+                      title: asc
+                    - type: string
+                      enum:
+                      - desc
+                      title: desc
+                lengths:
+                  description: Length of index. Maximum of 100
+                  type: array
+                  default: []
+                  items:
+                    type: integer
+              required:
+              - key
+              - type
+              - attributes
+  /documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}:
+    get:
+      summary: Get index
+      operationId: documentsDBGetIndex
+      tags:
+      - documentsDB
+      description: Get index by ID.
+      responses:
+        '200':
+          description: Index
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/index'
+      deprecated: false
+      x-appwrite:
+        group: indexes
+        demo: documentsdb/get-index.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.indexes.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: key
+        description: Index Key.
+        required: true
+        schema:
+          type: string
+          example: <KEY>
+        in: path
+    delete:
+      summary: Delete index
+      operationId: documentsDBDeleteIndex
+      tags:
+      - documentsDB
+      description: Delete an index.
+      responses:
+        '204':
+          description: No content
+      deprecated: false
+      x-appwrite:
+        group: indexes
+        demo: documentsdb/delete-index.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: documentsdb.indexes.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: collectionId
+        description: Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+        required: true
+        schema:
+          type: string
+          example: <COLLECTION_ID>
+        in: path
+      - name: key
+        description: Index Key.
+        required: true
+        schema:
+          type: string
+          example: <KEY>
+        in: path
+  /documentsdb/{databaseId}/failovers:
+    post:
+      summary: Create failover
+      operationId: documentsDBCreateFailover
+      tags:
+      - documentsDB
+      description: Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
+      responses:
+        '202':
+          description: DedicatedDatabase
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabase'
+      deprecated: false
+      x-appwrite:
+        group: failovers
+        demo: documentsdb/create-failover.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.write
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetReplicaId:
+                  description: Target replica ID to promote. If not specified, the healthiest replica is selected.
+                  type:
+                  - string
+                  - 'null'
+                  example: <TARGET_REPLICA_ID>
+  /documentsdb/{databaseId}/operations:
+    get:
+      summary: List operations
+      operationId: documentsDBListOperations
+      tags:
+      - documentsDB
+      description: List the lifecycle operations recorded for a dedicated database, newest first. Every provision, update, restore, backup and replication action is recorded here with its outcome, including an attempt that was abandoned because another worker took over the database.
+      responses:
+        '200':
+          description: OperationList
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseOperationList'
+      deprecated: false
+      x-appwrite:
+        group: operations
+        demo: documentsdb/list-operations.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+      - name: status
+        description: Filter by operation status.
+        required: false
+        schema:
+          type: string
+          example: queued
+        in: query
+      - name: limit
+        description: Maximum number of operations to return.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 1
+          default: 25
+        in: query
+      - name: offset
+        description: Number of operations to skip.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          example: 0
+          default: 0
+        in: query
+  /documentsdb/{databaseId}/replicas:
+    get:
+      summary: Get replicas
+      operationId: documentsDBGetReplicas
+      tags:
+      - documentsDB
+      description: Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
+      responses:
+        '200':
+          description: Replicas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dedicatedDatabaseReplicas'
+      deprecated: false
+      x-appwrite:
+        group: replicas
+        demo: documentsdb/get-replicas.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+  /documentsdb/{databaseId}/status:
+    get:
+      summary: Get status
+      operationId: documentsDBGetStatus
+      tags:
+      - documentsDB
+      description: Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/databaseStatus'
+      deprecated: false
+      x-appwrite:
+        group: documentsdb
+        demo: documentsdb/get-status.md
+        rate-limit: 0
+        rate-time: 3600
+        rate-key: url:{url},ip:{ip}
+        scope: databases.read
+        platforms:
+        - console
+        - server
+        packaging: false
+        public: true
+        auth:
+          console:
+            Project: []
+          server:
+            Project: []
+            Key: []
+      security:
+      - Project: []
+        Key: []
+      parameters:
+      - name: databaseId
+        description: Database ID.
+        required: true
+        schema:
+          type: string
+          example: <DATABASE_ID>
+        in: path
+components:
+  schemas:
+    dedicatedDatabaseSpecificationList:
+      description: SpecificationList
+      type: object
+      properties:
+        specifications:
+          type: array
+          description: List of dedicated database specifications.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseSpecification'
+          example: []
+        total:
+          type: integer
+          description: Total number of specifications.
+          format: int32
+          example: 9
+      required:
+      - specifications
+      - total
+      example:
+        specifications: []
+        total: 9
+    dedicatedDatabaseOperationList:
+      description: OperationList
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of operations.
+          format: int32
+          example: 5
+        operations:
+          type: array
+          description: List of operations.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseOperation'
+          example: []
+      required:
+      - total
+      - operations
+      example:
+        total: 5
+        operations: ''
+    documentList:
+      description: Documents List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of documents that matched your query.
+          format: int32
+          example: 5
+        documents:
+          type: array
+          description: List of documents.
+          items:
+            $ref: '#/components/schemas/document'
+          example: []
+      required:
+      - total
+      - documents
+      example:
+        total: 5
+        documents: ''
+    attributeLongtext:
+      description: AttributeLongtext
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this attribute is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: default
+        encrypt: false
+    indexList:
+      description: Indexes List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of indexes that matched your query.
+          format: int32
+          example: 5
+        indexes:
+          type: array
+          description: List of indexes.
+          items:
+            $ref: '#/components/schemas/index'
+          example: []
+      required:
+      - total
+      - indexes
+      example:
+        total: 5
+        indexes: ''
+    backupPolicy:
+      description: backup
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Backup policy ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Backup policy name.
+          example: Hourly backups
+        $createdAt:
+          type: string
+          description: Policy creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Policy update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        services:
+          type: array
+          description: The services that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this policy should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this policy should backup a single resource.
+          example: database
+        retention:
+          type: integer
+          description: How many days to keep the backup before it will be automatically deleted.
+          format: int32
+          example: 7
+        schedule:
+          type: string
+          description: Policy backup schedule in CRON format.
+          example: 0 * * * *
+        type:
+          type: string
+          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).'
+          example: full
+        enabled:
+          type: boolean
+          description: Is this policy enabled.
+          example: true
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - services
+      - resources
+      - retention
+      - schedule
+      - type
+      - enabled
+      example:
+        $id: 5e5ea5c16897e
+        name: Hourly backups
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
+        retention: 7
+        schedule: 0 * * * *
+        type: full
+        enabled: true
+    dedicatedDatabaseSpecification:
+      description: Specification
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Specification slug. Use this value when creating a dedicated database.
+          example: s-2vcpu-2gb
+        name:
+          type: string
+          description: Human readable specification name.
+          example: Standard
+        price:
+          type: number
+          description: Monthly price of the specification in USD.
+          format: double
+          example: 20
+        storageOverageRate:
+          type: number
+          description: Price per GB of storage above the included amount, per month, in USD.
+          format: double
+          example: 0.125
+        bandwidthOverageRate:
+          type: number
+          description: Price per GB of bandwidth above the included amount, per month, in USD.
+          format: double
+          example: 0.08
+        replicaRate:
+          type: number
+          description: High availability replica price as a fraction of the specification price.
+          format: double
+          example: 1
+        pitrRate:
+          type: number
+          description: Point-in-time recovery price as a fraction of the specification price.
+          format: double
+          example: 0.2
+        cpu:
+          type: integer
+          description: Allocated CPU in millicores.
+          format: int32
+          example: 2000
+        memory:
+          type: integer
+          description: Allocated memory in MB.
+          format: int32
+          example: 2048
+        maxConnections:
+          type: integer
+          description: Maximum number of concurrent connections.
+          format: int32
+          example: 200
+        includedStorage:
+          type: integer
+          description: Included storage in GB before overage charges apply.
+          format: int32
+          example: 25
+        includedBandwidth:
+          type: integer
+          description: Included bandwidth in GB before overage charges apply.
+          format: int32
+          example: 200
+        enabled:
+          type: boolean
+          description: Whether the specification is available on the current plan.
+          example: true
+      required:
+      - slug
+      - name
+      - price
+      - storageOverageRate
+      - bandwidthOverageRate
+      - replicaRate
+      - pitrRate
+      - cpu
+      - memory
+      - maxConnections
+      - includedStorage
+      - includedBandwidth
+      - enabled
+      example:
+        slug: s-2vcpu-2gb
+        name: Standard
+        price: 20
+        storageOverageRate: 0.125
+        bandwidthOverageRate: 0.08
+        replicaRate: 1
+        pitrRate: 0.2
+        cpu: 2000
+        memory: 2048
+        maxConnections: 200
+        includedStorage: 25
+        includedBandwidth: 200
+        enabled: true
+    transaction:
+      description: Transaction
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Transaction ID.
+          example: '259125845563242502'
+        $createdAt:
+          type: string
+          description: Transaction creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Transaction update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        status:
+          type: string
+          description: 'Current status of the transaction. One of: pending, committing, committed, rolled_back, failed.'
+          example: pending
+        operations:
+          type: integer
+          description: Number of operations in the transaction.
+          format: int32
+          example: 5
+        expiresAt:
+          type: string
+          description: Expiration time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - status
+      - operations
+      - expiresAt
+      example:
+        $id: '259125845563242502'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        status: pending
+        operations: 5
+        expiresAt: '2020-10-15T06:38:00.000+00:00'
+    collection:
+      description: Collection
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Collection ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Collection creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Collection update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Collection permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        databaseId:
+          type: string
+          description: Database ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Collection name.
+          example: My Collection
+        enabled:
+          type: boolean
+          description: Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
+          example: false
+        documentSecurity:
+          type: boolean
+          description: Whether document-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          example: true
+        attributes:
+          type: array
+          description: Collection attributes.
+          items:
+            anyOf:
+            - allOf:
+              - $ref: '#/components/schemas/attributeBoolean'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - boolean
+            - allOf:
+              - $ref: '#/components/schemas/attributeBigint'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - bigint
+            - allOf:
+              - $ref: '#/components/schemas/attributeInteger'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - integer
+            - allOf:
+              - $ref: '#/components/schemas/attributeFloat'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - double
+            - allOf:
+              - $ref: '#/components/schemas/attributeEmail'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - email
+            - allOf:
+              - $ref: '#/components/schemas/attributeEnum'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - enum
+            - allOf:
+              - $ref: '#/components/schemas/attributeUrl'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - url
+            - allOf:
+              - $ref: '#/components/schemas/attributeIp'
+              - type: object
+                required:
+                - type
+                - format
+                properties:
+                  type:
+                    enum:
+                    - string
+                  format:
+                    enum:
+                    - ip
+            - allOf:
+              - $ref: '#/components/schemas/attributeDatetime'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - datetime
+            - allOf:
+              - $ref: '#/components/schemas/attributeRelationship'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - relationship
+            - allOf:
+              - $ref: '#/components/schemas/attributePoint'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - point
+            - allOf:
+              - $ref: '#/components/schemas/attributeLine'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - linestring
+            - allOf:
+              - $ref: '#/components/schemas/attributePolygon'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - polygon
+            - allOf:
+              - $ref: '#/components/schemas/attributeVarchar'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - varchar
+            - allOf:
+              - $ref: '#/components/schemas/attributeText'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - text
+            - allOf:
+              - $ref: '#/components/schemas/attributeMediumtext'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - mediumtext
+            - allOf:
+              - $ref: '#/components/schemas/attributeLongtext'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - longtext
+            - allOf:
+              - $ref: '#/components/schemas/attributeString'
+              - type: object
+                required:
+                - type
+                properties:
+                  type:
+                    enum:
+                    - string
+          example: []
+        indexes:
+          type: array
+          description: Collection indexes.
+          items:
+            $ref: '#/components/schemas/index'
+          example: []
+        bytesMax:
+          type: integer
+          description: Maximum document size in bytes. Returns 0 when no limit applies.
+          format: int32
+          example: 65535
+        bytesUsed:
+          type: integer
+          description: Currently used document size in bytes based on defined attributes.
+          format: int32
+          example: 1500
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - databaseId
+      - name
+      - enabled
+      - documentSecurity
+      - attributes
+      - indexes
+      - bytesMax
+      - bytesUsed
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        databaseId: 5e5ea5c16897e
+        name: My Collection
+        enabled: false
+        documentSecurity: true
+        attributes: {}
+        indexes: {}
+        bytesMax: 65535
+        bytesUsed: 1500
+    document:
+      description: Document
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Document ID.
+          example: 5e5ea5c16897e
+        $sequence:
+          type: string
+          description: Document sequence ID.
+          readOnly: true
+          example: '1'
+        $collectionId:
+          type: string
+          description: Collection ID.
+          readOnly: true
+          example: 5e5ea5c15117e
+        $databaseId:
+          type: string
+          description: Database ID.
+          readOnly: true
+          example: 5e5ea5c15117e
+        $createdAt:
+          type: string
+          description: Document creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Document update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+      additionalProperties: true
+      required:
+      - $id
+      - $sequence
+      - $collectionId
+      - $databaseId
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      example:
+        $id: 5e5ea5c16897e
+        $sequence: '1'
+        $collectionId: 5e5ea5c15117e
+        $databaseId: 5e5ea5c15117e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        username: john.doe
+        email: john.doe@example.com
+        fullName: John Doe
+        age: 30
+        isAdmin: false
+    attributeDatetime:
+      description: AttributeDatetime
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: birthDay
+        type:
+          type: string
+          description: Attribute type.
+          example: datetime
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: ISO 8601 format.
+          example: datetime
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Only null is optional
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: birthDay
+        type: datetime
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: datetime
+        default: '2020-10-15T06:38:00.000+00:00'
+    attributeBoolean:
+      description: AttributeBoolean
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: isEnabled
+        type:
+          type: string
+          description: Attribute type.
+          example: boolean
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - boolean
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: isEnabled
+        type: boolean
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: false
+    dedicatedDatabaseOperation:
+      description: Operation
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Operation ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Operation creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        databaseId:
+          type: string
+          description: Database ID the operation ran against.
+          example: 5e5ea5c16897e
+        type:
+          type: string
+          description: Operation type, such as provision, update, credentials-update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
+          example: update
+        status:
+          type: string
+          description: 'Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).'
+          example: completed
+        attempts:
+          type: integer
+          description: Number of times this operation has been attempted.
+          format: int32
+          example: 1
+        requestedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation was requested, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation started, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        completedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation reached a terminal state, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        errorCode:
+          type: string
+          description: Machine-readable failure code. `Interrupted` marks an attempt that ended before its outcome could be confirmed.
+          example: Interrupted
+        errorMessage:
+          type: string
+          description: Failure message if the operation failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - databaseId
+      - type
+      - status
+      - attempts
+      - errorCode
+      - errorMessage
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        databaseId: 5e5ea5c16897e
+        type: update
+        status: completed
+        attempts: 1
+        requestedAt: '2020-10-15T06:38:00.000+00:00'
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        completedAt: '2020-10-15T06:38:00.000+00:00'
+        errorCode: Interrupted
+        errorMessage: ''
+    collectionList:
+      description: Collections List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of collections that matched your query.
+          format: int32
+          example: 5
+        collections:
+          type: array
+          description: List of collections.
+          items:
+            $ref: '#/components/schemas/collection'
+          example: []
+      required:
+      - total
+      - collections
+      example:
+        total: 5
+        collections: ''
+    attributeEnum:
+      description: AttributeEnum
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: status
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        elements:
+          type: array
+          description: Array of elements in enumerated type.
+          items:
+            type: string
+          example:
+          - element
+        format:
+          type: string
+          description: String format.
+          example: enum
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: element
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - elements
+      - format
+      example:
+        key: status
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        elements: element
+        format: enum
+        default: element
+    databaseStatusVolume:
+      description: Volume
+      type: object
+      properties:
+        path:
+          type: string
+          description: Mount path of the volume.
+          example: /var/lib/postgresql/data
+        usedPercent:
+          type: string
+          description: Percentage of storage used.
+          example: 45%
+        available:
+          type: string
+          description: Available storage space.
+          example: 55GB
+        mounted:
+          type: boolean
+          description: Whether the volume is mounted.
+          example: true
+      required:
+      - path
+      - usedPercent
+      - available
+      - mounted
+      example:
+        path: /var/lib/postgresql/data
+        usedPercent: 45%
+        available: 55GB
+        mounted: true
+    transactionList:
+      description: Transaction List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of transactions that matched your query.
+          format: int32
+          example: 5
+        transactions:
+          type: array
+          description: List of transactions.
+          items:
+            $ref: '#/components/schemas/transaction'
+          example: []
+      required:
+      - total
+      - transactions
+      example:
+        total: 5
+        transactions: ''
+    attributeVarchar:
+      description: AttributeVarchar
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        size:
+          type: integer
+          description: Attribute size.
+          format: int32
+          example: 128
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this attribute is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - size
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        size: 128
+        default: default
+        encrypt: false
+    attributeLine:
+      description: AttributeLine
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - array
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example:
+          - - 0
+            - 0
+          - - 1
+            - 1
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default:
+        - - 0
+          - 0
+        - - 1
+          - 1
+    database:
+      description: Database
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Database ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Database name.
+          example: My Database
+        $createdAt:
+          type: string
+          description: Database creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Database update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        enabled:
+          type: boolean
+          description: If database is enabled. Can be 'enabled' or 'disabled'. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
+          example: false
+        type:
+          description: Database type.
+          example: legacy
+          title: DatabaseType
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - legacy
+            title: legacy
+          - type: string
+            enum:
+            - tablesdb
+            title: tablesdb
+          - type: string
+            enum:
+            - documentsdb
+            title: documentsdb
+          - type: string
+            enum:
+            - vectorsdb
+            title: vectorsdb
+          - type: string
+            enum:
+            - mysql
+            title: mysql
+          - type: string
+            enum:
+            - postgresql
+            title: postgresql
+          - type: string
+            enum:
+            - mongodb
+            title: mongodb
+        status:
+          description: Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
+          readOnly: true
+          example: ready
+          title: DatabaseStatus
+          type:
+          - string
+          - 'null'
+          oneOf:
+          - type: string
+            enum:
+            - provisioning
+            title: provisioning
+          - type: string
+            enum:
+            - ready
+            title: ready
+          - type: string
+            enum:
+            - inactive
+            title: inactive
+          - type: string
+            enum:
+            - paused
+            title: paused
+          - type: string
+            enum:
+            - failed
+            title: failed
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - deleted
+            title: deleted
+          - type: string
+            enum:
+            - restoring
+            title: restoring
+          - type: string
+            enum:
+            - scaling
+            title: scaling
+          - type: string
+            enum:
+            - upgrading
+            title: upgrading
+          - type: string
+            enum:
+            - migrating
+            title: migrating
+          - type: string
+            enum:
+            - pausing
+            title: pausing
+          - type: string
+            enum:
+            - resuming
+            title: resuming
+          - type: string
+            enum:
+            - failing-over
+            title: failing-over
+        engine:
+          type:
+          - string
+          - 'null'
+          description: 'Underlying engine of the dedicated backing: postgresql, mysql, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.'
+          readOnly: true
+          example: postgresql
+        specification:
+          type:
+          - string
+          - 'null'
+          description: Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
+          readOnly: true
+          example: s-2vcpu-2gb
+        replicas:
+          type:
+          - integer
+          - 'null'
+          description: Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
+          format: int32
+          readOnly: true
+          example: 0
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message when the dedicated backing failed. Null when the database has no dedicated backing or has not failed.
+          readOnly: true
+          example: ''
+        containerStatus:
+          type:
+          - string
+          - 'null'
+          description: 'Container status of the dedicated backing: active, inactive, or failed (a wake was declined because the backing namespace is gone). Null when the database has no dedicated backing or the runtime has not reported one.'
+          readOnly: true
+          example: active
+        lifecycleState:
+          type:
+          - string
+          - 'null'
+          description: 'Idle-lifecycle state of the dedicated backing: active, warm, cold, or hibernated. Null when the database has no dedicated backing or the runtime has not reported one.'
+          readOnly: true
+          example: active
+        policies:
+          type:
+          - array
+          - 'null'
+          description: Database backup policies.
+          items:
+            $ref: '#/components/schemas/backupPolicy'
+          example: []
+        archives:
+          type:
+          - array
+          - 'null'
+          description: Database backup archives.
+          items:
+            $ref: '#/components/schemas/backupArchive'
+          example: []
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - enabled
+      - type
+      example:
+        $id: 5e5ea5c16897e
+        name: My Database
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        enabled: false
+        type: legacy
+        status: ready
+        engine: postgresql
+        specification: s-2vcpu-2gb
+        replicas: 0
+        error: ''
+        containerStatus: active
+        lifecycleState: active
+        policies: {}
+        archives: {}
+    databaseStatus:
+      description: Status
+      type: object
+      properties:
+        health:
+          type: string
+          description: 'Overall health status: healthy, degraded, unhealthy, or unknown when nothing could be measured.'
+          example: healthy
+        ready:
+          type: boolean
+          description: Whether the database is ready to accept connections.
+          example: true
+        engine:
+          type: string
+          description: 'Database engine: postgresql, mysql, or mongodb.'
+          example: postgresql
+        version:
+          type: string
+          description: Database engine version.
+          example: '17'
+        uptime:
+          type: integer
+          description: Database uptime in seconds.
+          format: int32
+          example: 86400
+        connections:
+          type: object
+          description: Connection statistics.
+          example:
+            current: 12
+            max: 100
+          allOf:
+          - $ref: '#/components/schemas/databaseStatusConnections'
+        syncMode:
+          type: string
+          description: 'Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.'
+          example: async
+        effectiveSyncMode:
+          type:
+          - string
+          - 'null'
+          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read.
+          example: async
+        syncDegraded:
+          type: boolean
+          description: Whether the enforced replication is weaker than the requested syncMode.
+          example: false
+        syncAcknowledgements:
+          type: integer
+          description: Number of standby acknowledgements the primary waits for before a write is committed.
+          format: int32
+          example: 1
+        syncStandbyCount:
+          type: integer
+          description: Number of standbys registered with the primary for synchronous replication.
+          format: int32
+          example: 2
+        syncStateConfirmed:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
+          example: true
+        replicas:
+          type: array
+          description: List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
+          items:
+            $ref: '#/components/schemas/databaseStatusReplica'
+          example:
+          - index: 0
+            role: primary
+            healthy: true
+            replicating: null
+            lagSeconds: null
+          - index: 1
+            role: replica
+            healthy: true
+            replicating: true
+            lagSeconds: 0.2
+        volumes:
+          type: array
+          description: Storage volume information.
+          items:
+            $ref: '#/components/schemas/databaseStatusVolume'
+          example:
+          - data:
+              path: /var/lib/postgresql/data
+              usedPercent: 45%
+              available: 55GB
+              mounted: true
+      required:
+      - health
+      - ready
+      - engine
+      - version
+      - uptime
+      - connections
+      - syncMode
+      - syncDegraded
+      - syncAcknowledgements
+      - syncStandbyCount
+      - replicas
+      - volumes
+      example:
+        health: healthy
+        ready: true
+        engine: postgresql
+        version: '17'
+        uptime: 86400
+        connections:
+          current: 12
+          max: 100
+        syncMode: async
+        effectiveSyncMode: async
+        syncDegraded: false
+        syncAcknowledgements: 1
+        syncStandbyCount: 2
+        syncStateConfirmed: true
+        replicas:
+        - index: 0
+          role: primary
+          healthy: true
+          replicating: null
+          lagSeconds: null
+        - index: 1
+          role: replica
+          healthy: true
+          replicating: true
+          lagSeconds: 0.2
+        volumes:
+          data:
+            path: /var/lib/postgresql/data
+            usedPercent: 45%
+            available: 55GB
+            mounted: true
+    attributeUrl:
+      description: AttributeURL
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: githubUrl
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: String format.
+          example: url
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: http://example.com
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: githubUrl
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: url
+        default: http://example.com
+    attributeMediumtext:
+      description: AttributeMediumtext
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this attribute is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: default
+        encrypt: false
+    index:
+      description: Index
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Index ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Index creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Index update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        key:
+          type: string
+          description: Index key.
+          example: index1
+        type:
+          type: string
+          description: Index type.
+          example: primary
+        status:
+          description: 'Index status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an index.
+          example: string
+        attributes:
+          type: array
+          description: Index attributes.
+          items:
+            type: string
+          example: []
+        lengths:
+          type: array
+          description: Index attributes length.
+          items:
+            type: integer
+            format: int32
+          example: []
+        orders:
+          type:
+          - array
+          - 'null'
+          description: Index orders.
+          items:
+            type: string
+          example: []
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - key
+      - type
+      - status
+      - error
+      - attributes
+      - lengths
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        key: index1
+        type: primary
+        status: available
+        error: string
+        attributes: []
+        lengths: []
+        orders: []
+    attributeFloat:
+      description: AttributeFloat
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: percentageCompleted
+        type:
+          type: string
+          description: Attribute type.
+          example: double
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        min:
+          type:
+          - number
+          - 'null'
+          description: Minimum value to enforce for new documents.
+          format: double
+          example: 1.5
+        max:
+          type:
+          - number
+          - 'null'
+          description: Maximum value to enforce for new documents.
+          format: double
+          example: 10.5
+        default:
+          type:
+          - number
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          format: double
+          example: 2.5
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: percentageCompleted
+        type: double
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        min: 1.5
+        max: 10.5
+        default: 2.5
+    attributeBigint:
+      description: AttributeBigInt
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: count
+        type:
+          type: string
+          description: Attribute type.
+          example: bigint
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        min:
+          type:
+          - integer
+          - 'null'
+          description: Minimum value to enforce for new documents.
+          format: int64
+          example: 1
+        max:
+          type:
+          - integer
+          - 'null'
+          description: Maximum value to enforce for new documents.
+          format: int64
+          example: 10
+        default:
+          type:
+          - integer
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          format: int64
+          example: 10
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: count
+        type: bigint
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        min: 1
+        max: 10
+        default: 10
+    attributeText:
+      description: AttributeText
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this attribute is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default: default
+        encrypt: false
+    attributeIp:
+      description: AttributeIP
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: ipAddress
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: String format.
+          example: ip
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: 192.0.2.0
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: ipAddress
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: ip
+        default: 192.0.2.0
+    attributePolygon:
+      description: AttributePolygon
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - array
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example:
+          - - - 0
+              - 0
+            - - 0
+              - 10
+          - - - 10
+              - 10
+            - - 0
+              - 0
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: double
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default:
+        - - - 0
+            - 0
+          - - 0
+            - 10
+        - - - 10
+            - 10
+          - - 0
+            - 0
+    attributeInteger:
+      description: AttributeInteger
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: count
+        type:
+          type: string
+          description: Attribute type.
+          example: integer
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        min:
+          type:
+          - integer
+          - 'null'
+          description: Minimum value to enforce for new documents.
+          format: int64
+          example: 1
+        max:
+          type:
+          - integer
+          - 'null'
+          description: Maximum value to enforce for new documents.
+          format: int64
+          example: 10
+        default:
+          type:
+          - integer
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          format: int32
+          example: 10
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: count
+        type: integer
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        min: 1
+        max: 10
+        default: 10
+    backupArchive:
+      description: Archive
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Archive ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Archive creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Archive update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        policyId:
+          type: string
+          description: Archive policy ID.
+          example: did8jx6ws45jana098ab7
+        size:
+          type: integer
+          description: Archive size in bytes.
+          format: int32
+          example: 100000
+        status:
+          type: string
+          description: 'The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.'
+          example: completed
+        startedAt:
+          type: string
+          description: The backup start time.
+          example: '2020-10-15T06:38:00.000+00:00'
+        migrationId:
+          type: string
+          description: Migration ID.
+          example: did8jx6ws45jana098ab7
+        services:
+          type: array
+          description: The services that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this archive should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this archive should backup a single resource.
+          example: database
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - policyId
+      - size
+      - status
+      - startedAt
+      - migrationId
+      - services
+      - resources
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        policyId: did8jx6ws45jana098ab7
+        size: 100000
+        status: completed
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        migrationId: did8jx6ws45jana098ab7
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
+    attributeString:
+      description: AttributeString
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        size:
+          type: integer
+          description: Attribute size.
+          format: int32
+          example: 128
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: default
+        encrypt:
+          type:
+          - boolean
+          - 'null'
+          description: Defines whether this attribute is encrypted or not.
+          example: false
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - size
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        size: 128
+        default: default
+        encrypt: false
+    dedicatedDatabaseMember:
+      description: Member
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Member identifier.
+          example: '1'
+        role:
+          type: string
+          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology and this member has not been probed, so no member can be named the write target).'
+          example: replica
+        status:
+          type: string
+          description: 'Member pod status. Possible values: pending (configured but absent from the backend topology, so nothing is bringing it up), provisioning (pod missing or Pending), starting (Running but not Ready), active (Running and Ready), failed (Failed phase or CrashLoopBackOff container), or the lowercased pod phase reported by the cluster.'
+          example: active
+        replicating:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not active, or whose probe did not answer, has none yet. False is a reading and null is the absence of one, so the two are not interchangeable. Read it beside lagSeconds before expecting a failover that names no target to find a promotable standby: a member streaming at a known lag is one, and a member reporting null is not evidence either way.'
+          example: true
+        lagSeconds:
+          type:
+          - number
+          - 'null'
+          description: 'Replication lag in seconds. Null when the lag is not known: a primary has none to report, and a member the backend has not probed has none yet. Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
+          format: double
+          example: 0.5
+      required:
+      - $id
+      - role
+      - status
+      example:
+        $id: '1'
+        role: replica
+        status: active
+        replicating: true
+        lagSeconds: 0.5
+    databaseStatusConnections:
+      description: Connections
+      type: object
+      properties:
+        current:
+          type: integer
+          description: Current number of active connections.
+          format: int32
+          example: 12
+        max:
+          type: integer
+          description: The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
+          format: int32
+          example: 100
+      required:
+      - current
+      - max
+      example:
+        current: 12
+        max: 100
+    dedicatedDatabase:
+      description: DedicatedDatabase
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Dedicated database ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Database creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Database update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        projectId:
+          type: string
+          description: Project ID that owns this database.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Database display name.
+          example: My Production Database
+        api:
+          type: string
+          description: 'Product API that owns this database: tablesdb, documentsdb, vectorsdb, mysql, postgresql, or mongodb.'
+          example: postgresql
+        engine:
+          type: string
+          description: 'Database engine: postgresql, mysql, or mongodb. Null until the backing reports one.'
+          example: postgresql
+        version:
+          type: string
+          description: Database engine version.
+          example: '16'
+        specification:
+          type: string
+          description: Specification identifier.
+          example: s-2vcpu-2gb
+        backend:
+          type: string
+          description: 'Database backend provider. Possible values: edge.'
+          example: edge
+        hostname:
+          type: string
+          description: Database hostname for connections.
+          example: db-myproject-mydb.fra.appwrite.center
+        connectionPort:
+          type: integer
+          description: Database port for connections. Derived from the engine when the backing has not reported one yet.
+          format: int32
+          example: 5432
+        connectionUser:
+          type: string
+          description: Database username for connections.
+          example: appwrite_user
+        connectionPassword:
+          type: string
+          description: Database password for connections.
+          example: ••••••••
+        credentialGeneration:
+          type: integer
+          description: Committed generation of the primary connection credentials. Null until the rotation contract has been initialized.
+          format: int32
+          example: 1
+        connectionString:
+          type: string
+          description: Full database connection string (URI format).
+          example: postgresql://user:pass@db-myproject-mydb.fra.appwrite.center:5432/postgres?sslmode=require
+        ssl:
+          type: boolean
+          description: Whether SSL/TLS is required for client connections.
+          example: true
+        status:
+          type: string
+          description: 'Database status. Possible values: provisioning, ready, inactive, paused, failed, deleted, restoring, scaling.'
+          example: ready
+        containerStatus:
+          type: string
+          description: 'Container status for lifecycle-managed database runtimes: active, inactive, or failed (a wake was declined because the backing namespace is gone).'
+          example: active
+        lastAccessedAt:
+          type:
+          - string
+          - 'null'
+          description: Last activity timestamp in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        idleUntil:
+          type:
+          - string
+          - 'null'
+          description: Display-only timestamp when the database is expected to be considered idle (ISO 8601 format). Derived from last activity; lifecycle transitions are driven by lifecycleState.
+          example: '2020-10-15T06:38:00.000+00:00'
+        lifecycleState:
+          type: string
+          description: 'Idle-lifecycle state of the database. Possible values: active, warm, cold, hibernated.'
+          example: active
+        idleTimeoutMinutes:
+          type: integer
+          description: Minutes of inactivity before container scales to zero.
+          format: int32
+          example: 15
+        cpu:
+          type: integer
+          description: CPU allocated in millicores.
+          format: int32
+          example: 2000
+        memory:
+          type: integer
+          description: Memory allocated in MB.
+          format: int32
+          example: 4096
+        storage:
+          type: integer
+          description: Storage allocated in GB.
+          format: int32
+          example: 100
+        storageStatus:
+          type: string
+          description: 'Storage resize status. Possible values: idle (no resize in flight), resizing (the volume is growing towards storageTargetGb).'
+          example: resizing
+        storageTargetGb:
+          type: integer
+          description: Size in GB the volume is growing towards while storageStatus is resizing. 0 when no resize is in flight.
+          format: int32
+          example: 120
+        storageResizeStartedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the in-flight storage resize started, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        storageClass:
+          type: string
+          description: Storage class. Currently always 'ssd'; DigitalOcean exposes a single block-storage class.
+          example: ssd
+        storageMaxGb:
+          type: integer
+          description: Maximum storage allowed in GB. 0 means use system default.
+          format: int32
+          example: 100
+        nodePool:
+          type: string
+          description: Kubernetes node pool where the database is scheduled.
+          example: db-pool-4vcpu-8gb
+        replicas:
+          type: integer
+          description: Number of high availability replicas. High availability is enabled when greater than 0.
+          format: int32
+          example: 2
+        syncMode:
+          type: string
+          description: 'Replication sync mode: async, sync, or quorum.'
+          example: async
+        networkMaxConnections:
+          type: integer
+          description: Maximum concurrent client connections. This is the limit a client pool may reach; the engine's own max_connections reported by the status endpoint is a smaller backend limit the pooler multiplexes onto and does not constrain a client pool.
+          format: int32
+          example: 500
+        networkIdleTimeoutSeconds:
+          type: integer
+          description: Connection idle timeout in seconds.
+          format: int32
+          example: 900
+        networkIPAllowlist:
+          type: array
+          description: IP addresses/CIDR ranges allowed to connect.
+          items:
+            type: string
+          example:
+          - 10.0.0.0/8
+          - 192.168.1.0/24
+        backupEnabled:
+          type: boolean
+          description: Whether automatic backups are enabled.
+          example: true
+        pitr:
+          type: boolean
+          description: Whether point-in-time recovery is enabled.
+          example: true
+        pitrRetentionDays:
+          type: integer
+          description: Number of days to retain PITR data.
+          format: int32
+          example: 14
+        storageAutoscaling:
+          type: boolean
+          description: Whether automatic storage expansion is enabled.
+          example: true
+        storageAutoscalingThresholdPercent:
+          type: integer
+          description: Storage usage percentage that triggers automatic expansion.
+          format: int32
+          example: 85
+        storageAutoscalingMaxGb:
+          type: integer
+          description: Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
+          format: int32
+          example: 30
+        maintenanceWindowDay:
+          type: string
+          description: 'Day of the week for the maintenance window. Possible values: sun, mon, tue, wed, thu, fri, sat.'
+          example: sun
+        maintenanceWindowHourUtc:
+          type: integer
+          description: Hour in UTC (0-23) when the maintenance window starts.
+          format: int32
+          example: 3
+        metricsEnabled:
+          type: boolean
+          description: Whether metrics collection is enabled.
+          example: false
+        sqlApiEnabled:
+          type: boolean
+          description: Whether the SQL API sidecar is enabled for this database.
+          example: true
+        sqlApiAllowedStatements:
+          type: array
+          description: 'Statement types accepted by the SQL API. Defaults to read/write DML only; DDL/DCL types (CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE) are opt-in per database. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.'
+          items:
+            type: string
+          example:
+          - SELECT
+        sqlApiMaxRows:
+          type: integer
+          description: Maximum rows returned per SQL API execution. Results larger than this are truncated.
+          format: int32
+          example: 10000
+        sqlApiMaxBytes:
+          type: integer
+          description: Maximum serialised SQL API result payload in bytes. Results larger than this are truncated.
+          format: int32
+          example: 10485760
+        sqlApiTimeoutSeconds:
+          type: integer
+          description: Maximum server-side SQL API execution time in seconds before the query is cancelled.
+          format: int32
+          example: 30
+        error:
+          type: string
+          description: Error message if status is failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - projectId
+      - name
+      - api
+      - engine
+      - version
+      - specification
+      - backend
+      - hostname
+      - connectionPort
+      - connectionUser
+      - connectionPassword
+      - credentialGeneration
+      - connectionString
+      - ssl
+      - status
+      - containerStatus
+      - lifecycleState
+      - idleTimeoutMinutes
+      - cpu
+      - memory
+      - storage
+      - storageStatus
+      - storageTargetGb
+      - storageClass
+      - storageMaxGb
+      - nodePool
+      - replicas
+      - syncMode
+      - networkMaxConnections
+      - networkIdleTimeoutSeconds
+      - networkIPAllowlist
+      - backupEnabled
+      - pitr
+      - pitrRetentionDays
+      - storageAutoscaling
+      - storageAutoscalingThresholdPercent
+      - storageAutoscalingMaxGb
+      - maintenanceWindowDay
+      - maintenanceWindowHourUtc
+      - metricsEnabled
+      - sqlApiEnabled
+      - sqlApiAllowedStatements
+      - sqlApiMaxRows
+      - sqlApiMaxBytes
+      - sqlApiTimeoutSeconds
+      - error
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        projectId: 5e5ea5c16897e
+        name: My Production Database
+        api: postgresql
+        engine: postgresql
+        version: '16'
+        specification: s-2vcpu-2gb
+        backend: edge
+        hostname: db-myproject-mydb.fra.appwrite.center
+        connectionPort: 5432
+        connectionUser: appwrite_user
+        connectionPassword: ••••••••
+        credentialGeneration: 1
+        connectionString: postgresql://user:pass@db-myproject-mydb.fra.appwrite.center:5432/postgres?sslmode=require
+        ssl: true
+        status: ready
+        containerStatus: active
+        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        idleUntil: '2020-10-15T06:38:00.000+00:00'
+        lifecycleState: active
+        idleTimeoutMinutes: 15
+        cpu: 2000
+        memory: 4096
+        storage: 100
+        storageStatus: resizing
+        storageTargetGb: 120
+        storageResizeStartedAt: '2020-10-15T06:38:00.000+00:00'
+        storageClass: ssd
+        storageMaxGb: 100
+        nodePool: db-pool-4vcpu-8gb
+        replicas: 2
+        syncMode: async
+        networkMaxConnections: 500
+        networkIdleTimeoutSeconds: 900
+        networkIPAllowlist:
+        - 10.0.0.0/8
+        - 192.168.1.0/24
+        backupEnabled: true
+        pitr: true
+        pitrRetentionDays: 14
+        storageAutoscaling: true
+        storageAutoscalingThresholdPercent: 85
+        storageAutoscalingMaxGb: 30
+        maintenanceWindowDay: sun
+        maintenanceWindowHourUtc: 3
+        metricsEnabled: false
+        sqlApiEnabled: true
+        sqlApiAllowedStatements: SELECT
+        sqlApiMaxRows: 10000
+        sqlApiMaxBytes: 10485760
+        sqlApiTimeoutSeconds: 30
+        error: ''
+    databaseStatusReplica:
+      description: Replica
+      type: object
+      properties:
+        index:
+          type: integer
+          description: 'Member index within the database. Read `role` for which member accepts writes: a failover moves the primary without renumbering the indexes.'
+          format: int32
+          example: 0
+        role:
+          type: string
+          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology, so no member can be named the write target).'
+          example: primary
+        healthy:
+          type: boolean
+          description: Whether the replica is healthy.
+          example: true
+        replicating:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not healthy, or whose probe did not answer, has none yet. `healthy` is a reachability probe of the member itself and says nothing about replication, so a healthy member may still not be replicating.'
+          example: true
+        lagSeconds:
+          type:
+          - number
+          - 'null'
+          description: 'Replication lag in seconds (null for primary). Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
+          format: double
+          example: 0.2
+      required:
+      - index
+      - role
+      - healthy
+      example:
+        index: 0
+        role: primary
+        healthy: true
+        replicating: true
+        lagSeconds: 0.2
+    databaseList:
+      description: Databases List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of databases that matched your query.
+          format: int32
+          example: 5
+        databases:
+          type: array
+          description: List of databases.
+          items:
+            $ref: '#/components/schemas/database'
+          example: []
+      required:
+      - total
+      - databases
+      example:
+        total: 5
+        databases: ''
+    dedicatedDatabaseReplicas:
+      description: Replicas
+      type: object
+      properties:
+        replicas:
+          type: integer
+          description: Number of configured replicas. Zero means high availability is disabled.
+          format: int32
+          example: 2
+        syncMode:
+          type: string
+          description: 'Requested replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm). This is what was asked for; compare it with effectiveSyncMode for what the primary is enforcing.'
+          example: async
+        effectiveSyncMode:
+          type:
+          - string
+          - 'null'
+          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read. A value below the requested syncMode means writes are being acknowledged with weaker durability than configured.
+          example: async
+        syncDegraded:
+          type: boolean
+          description: Whether the enforced replication is weaker than the requested syncMode.
+          example: false
+        syncAcknowledgements:
+          type: integer
+          description: Number of standby acknowledgements the primary waits for before a write is committed. Zero means writes are acknowledged locally.
+          format: int32
+          example: 1
+        syncStandbyCount:
+          type: integer
+          description: Number of standbys registered with the primary for synchronous replication.
+          format: int32
+          example: 2
+        syncStateConfirmed:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
+          example: true
+        members:
+          type: array
+          description: Per-pod statuses for the primary and every replica.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseMember'
+          example: []
+      required:
+      - replicas
+      - syncMode
+      - syncDegraded
+      - syncAcknowledgements
+      - syncStandbyCount
+      - members
+      example:
+        replicas: 2
+        syncMode: async
+        effectiveSyncMode: async
+        syncDegraded: false
+        syncAcknowledgements: 1
+        syncStandbyCount: 2
+        syncStateConfirmed: true
+        members: []
+    attributeRelationship:
+      description: AttributeRelationship
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        relatedCollection:
+          type: string
+          description: The ID of the related collection.
+          example: collection
+        relationType:
+          type: string
+          description: The type of the relationship.
+          example: oneToOne|oneToMany|manyToOne|manyToMany
+        twoWay:
+          type: boolean
+          description: Is the relationship two-way?
+          example: false
+        twoWayKey:
+          type: string
+          description: The key of the two-way relationship.
+          example: string
+        onDelete:
+          type: string
+          description: How deleting the parent document will propagate to child documents.
+          example: restrict|cascade|setNull
+        side:
+          type: string
+          description: Whether this is the parent or child side of the relationship
+          example: parent|child
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - relatedCollection
+      - relationType
+      - twoWay
+      - twoWayKey
+      - onDelete
+      - side
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        relatedCollection: collection
+        relationType: oneToOne|oneToMany|manyToOne|manyToMany
+        twoWay: false
+        twoWayKey: string
+        onDelete: restrict|cascade|setNull
+        side: parent|child
+    attributeEmail:
+      description: AttributeEmail
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: userEmail
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        format:
+          type: string
+          description: String format.
+          example: email
+        default:
+          type:
+          - string
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example: default@example.com
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - format
+      example:
+        key: userEmail
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        format: email
+        default: default@example.com
+    attributePoint:
+      description: AttributePoint
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        default:
+          type:
+          - array
+          - 'null'
+          description: Default value for attribute when not provided. Cannot be set when attribute is required.
+          example:
+          - 0
+          - 0
+          items:
+            type: number
+            format: double
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        default:
+        - 0
+        - 0
+  securitySchemes:
+    Project:
+      type: apiKey
+      name: X-Appwrite-Project
+      description: Your project ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    ProjectPath:
+      type: apiKey
+      name: project
+      description: Your project ID
+      in: query
+      x-appwrite:
+        location: path
+        param: project_id
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_PROJECT_ID>
+    JWT:
+      type: apiKey
+      name: X-Appwrite-JWT
+      description: Your secret JSON Web Token
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: <YOUR_JWT>
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The OAuth access token to authenticate with
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Locale:
+      type: apiKey
+      name: X-Appwrite-Locale
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+        demo: en
+    Session:
+      type: apiKey
+      name: X-Appwrite-Session
+      description: The user session to authenticate with
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    DevKey:
+      type: apiKey
+      name: X-Appwrite-Dev-Key
+      description: Your secret dev API key
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Cookie:
+      type: apiKey
+      name: Cookie
+      description: The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserId:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Id
+      description: Impersonate a user by ID
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserEmail:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Email
+      description: Impersonate a user by email
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    ImpersonateUserPhone:
+      type: apiKey
+      name: X-Appwrite-Impersonate-User-Phone
+      description: Impersonate a user by phone
+      in: header
+      x-appwrite:
+        platforms:
+        - client
+        - server
+        - console
+    Key:
+      type: apiKey
+      name: X-Appwrite-Key
+      description: Your secret API key
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        - manager
+        demo: <YOUR_API_KEY>
+    Organization:
+      type: apiKey
+      name: X-Appwrite-Organization
+      description: Your organization ID
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+        - console
+        demo: <YOUR_ORGANIZATION_ID>
+    ForwardedUserAgent:
+      type: apiKey
+      name: X-Forwarded-User-Agent
+      description: The user agent string of the client that made the request
+      in: header
+      x-appwrite:
+        platforms:
+        - server
+    Mode:
+      type: apiKey
+      name: X-Appwrite-Mode
+      description: ''
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+        demo: ''
+    Platform:
+      type: apiKey
+      name: X-Appwrite-Platform
+      description: The platform type (Appwrite or Imagine)
+      in: header
+      x-appwrite:
+        platforms:
+        - console
+externalDocs:
+  description: Full API docs, specs and tutorials
+  url: https://appwrite.io/docs

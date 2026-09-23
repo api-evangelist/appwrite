@@ -1,0 +1,335 @@
+generated: '2026-09-12'
+method: searched
+source: https://appwrite.io/changelog.md (HTTP 200, 2026-09-12) — the machine-readable flat index Appwrite publishes
+  for agents; every entry has a .md twin.
+provider: Appwrite
+providerId: appwrite
+changelog_url: https://appwrite.io/changelog
+markdown_index: https://appwrite.io/changelog.md
+releases_url: https://github.com/appwrite/appwrite/releases
+scheme: dated entries, one per shipped change, independent of the semver product releases
+current_version: 2.0.0
+entry_format: Append .md to any entry URL for the raw Markdown source.
+note: Appwrite publishes the changelog as an agent-readable index — a flat list with a .md twin per entry — which
+  is rarer than it should be. The window below is 2026-04-01 onward; the full index reaches back to 2019. Entries
+  flagged breaking:true changed or withdrew behaviour rather than adding it.
+window:
+  from: '2026-04-01'
+  to: '2026-09-10'
+  entries: 62
+total_entries_in_index: 206
+entries:
+- date: '2026-09-10'
+  title: Automatic image cropping with gravity=auto
+  url: https://appwrite.io/changelog/entry/2026-09-10
+  summary: null
+  breaking: false
+- date: '2026-09-07'
+  title: Announcing Appwrite 2.0 for self-hosted deployments
+  url: https://appwrite.io/changelog/entry/2026-09-07
+  summary: null
+  breaking: false
+- date: '2026-09-04'
+  title: Buy domains and host DNS inside your Appwrite organization
+  url: https://appwrite.io/changelog/entry/2026-09-04
+  summary: null
+  breaking: false
+- date: '2026-09-04'
+  title: Functions and Sites builds skip npm audit by default for faster deploys
+  url: https://appwrite.io/changelog/entry/2026-09-04-2
+  summary: null
+  breaking: false
+- date: '2026-09-03'
+  title: Deploy Appwrite Sites and Functions from GitLab
+  url: https://appwrite.io/changelog/entry/2026-09-03
+  summary: null
+  breaking: false
+- date: '2026-09-03'
+  title: Deploy Appwrite Sites and Functions from Bitbucket
+  url: https://appwrite.io/changelog/entry/2026-09-03-2
+  summary: null
+  breaking: false
+- date: '2026-08-31'
+  title: Console IV brings appwrite.io and the Console into one app
+  url: https://appwrite.io/changelog/entry/2026-08-31
+  summary: null
+  breaking: false
+- date: '2026-08-21'
+  title: Bun 1.4 is now available for Functions and Sites
+  url: https://appwrite.io/changelog/entry/2026-08-21
+  summary: null
+  breaking: false
+- date: '2026-08-18'
+  title: MCP documentation embeddings now refresh daily, independent of version releases
+  url: https://appwrite.io/changelog/entry/2026-08-18
+  summary: null
+  breaking: false
+- date: '2026-08-17'
+  title: API keys and JWTs can no longer mint further credentials
+  url: https://appwrite.io/changelog/entry/2026-08-17
+  summary: null
+  breaking: true
+- date: '2026-08-13'
+  title: Better tool search and clearer schemas in the Appwrite MCP server
+  url: https://appwrite.io/changelog/entry/2026-08-13-1
+  summary: null
+  breaking: false
+- date: '2026-08-14'
+  title: Send your MFA code through any channel with the custom factor
+  url: https://appwrite.io/changelog/entry/2026-08-14
+  summary: null
+  breaking: false
+- date: '2026-08-13'
+  title: Up to 4x faster dependency installs with the build cache
+  url: https://appwrite.io/changelog/entry/2026-08-13
+  summary: null
+  breaking: false
+- date: '2026-08-12'
+  title: Faster cold starts for Appwrite Sites and Functions with SquashFS
+  url: https://appwrite.io/changelog/entry/2026-08-12
+  summary: null
+  breaking: false
+- date: '2026-08-11'
+  title: The Appwrite CLI is now written in Go
+  url: https://appwrite.io/changelog/entry/2026-08-11
+  summary: null
+  breaking: false
+- date: '2026-08-07'
+  title: Scheduled executions shift slightly on Free and Education plans
+  url: https://appwrite.io/changelog/entry/2026-08-07
+  summary: null
+  breaking: false
+- date: '2026-08-06'
+  title: Deploy your own MCP server with the new Functions template
+  url: https://appwrite.io/changelog/entry/2026-08-06
+  summary: null
+  breaking: false
+- date: '2026-08-03'
+  title: Easier project discovery and targeting in the Appwrite CLI
+  url: https://appwrite.io/changelog/entry/2026-08-03
+  summary: null
+  breaking: false
+- date: '2026-08-03'
+  title: 'Pricing update: storage costs for builds and deployments will be enforced'
+  url: https://appwrite.io/changelog/entry/2026-08-03-1
+  summary: null
+  breaking: true
+- date: '2026-07-31'
+  title: The Appwrite MCP server is now remote
+  url: https://appwrite.io/changelog/entry/2026-07-31
+  summary: null
+  breaking: false
+- date: '2026-07-30'
+  title: Non-destructive column updates and renames in the Appwrite CLI
+  url: https://appwrite.io/changelog/entry/2026-07-30
+  summary: null
+  breaking: false
+- date: '2026-07-29'
+  title: Browser-based login for the Appwrite CLI
+  url: https://appwrite.io/changelog/entry/2026-07-29
+  summary: null
+  breaking: false
+- date: '2026-07-23'
+  title: Announcing Appwrite 1.9.6 for self-hosted deployments
+  url: https://appwrite.io/changelog/entry/2026-07-23
+  summary: null
+  breaking: false
+- date: '2026-07-22'
+  title: 'Announcing the Projects API: Configure your project with Server SDKs'
+  url: https://appwrite.io/changelog/entry/2026-07-22-projects-api
+  summary: null
+  breaking: false
+- date: '2026-07-22'
+  title: Pausing the creation of new dev keys
+  url: https://appwrite.io/changelog/entry/2026-07-22
+  summary: null
+  breaking: false
+- date: '2026-06-30'
+  title: Announcing Appwrite 1.9.5 for self-hosted deployments
+  url: https://appwrite.io/changelog/entry/2026-06-30
+  summary: null
+  breaking: false
+- date: '2026-06-29'
+  title: Paused free projects are deleted after 90 days
+  url: https://appwrite.io/changelog/entry/2026-06-29
+  summary: null
+  breaking: true
+- date: '2026-06-26'
+  title: Announcing the Appwrite React library
+  url: https://appwrite.io/changelog/entry/2026-06-26
+  summary: null
+  breaking: false
+- date: '2026-06-23'
+  title: Appwrite Explorer brings the REST API into the Console
+  url: https://appwrite.io/changelog/entry/2026-06-23
+  summary: null
+  breaking: false
+- date: '2026-06-22'
+  title: Appwrite Terminal is now in the Console
+  url: https://appwrite.io/changelog/entry/2026-06-22
+  summary: null
+  breaking: false
+- date: '2026-06-09'
+  title: Enforce minimum length and character rules with Password strength
+  url: https://appwrite.io/changelog/entry/2026-06-09
+  summary: null
+  breaking: false
+- date: '2026-06-08'
+  title: The Appwrite plugin is now in the official Claude marketplace
+  url: https://appwrite.io/changelog/entry/2026-06-08
+  summary: null
+  breaking: false
+- date: '2026-05-29'
+  title: Control automatic Git deployments with build triggers
+  url: https://appwrite.io/changelog/entry/2026-05-29
+  summary: null
+  breaking: false
+- date: '2026-05-26'
+  title: Dart 3.12 lands on Functions and Flutter 3.44 on Sites
+  url: https://appwrite.io/changelog/entry/2026-05-26
+  summary: null
+  breaking: false
+- date: '2026-05-25'
+  title: Track who is online with the new Presences API
+  url: https://appwrite.io/changelog/entry/2026-05-25
+  summary: null
+  breaking: false
+- date: '2026-05-21'
+  title: Up to 7x faster Appwrite Storage uploads with parallel chunks
+  url: https://appwrite.io/changelog/entry/2026-05-21-1
+  summary: Appwrite SDKs now upload Storage chunks in parallel on runtimes with native concurrency. Our Node SDK
+    benchmarks show up to 7.10x faster uploads on large files, with no API changes for developers.
+  breaking: false
+- date: '2026-05-20'
+  title: Announcing Email policies for Appwrite Auth
+  url: https://appwrite.io/changelog/entry/2026-05-20
+  summary: null
+  breaking: false
+- date: '2026-05-19'
+  title: Bun and Deno are now build runtimes for Sites
+  url: https://appwrite.io/changelog/entry/2026-05-19
+  summary: null
+  breaking: false
+- date: '2026-05-15'
+  title: Announcing deployment retention for Functions and Sites
+  url: https://appwrite.io/changelog/entry/2026-05-15
+  summary: null
+  breaking: false
+- date: '2026-05-13'
+  title: Database relationships are out of beta
+  url: https://appwrite.io/changelog/entry/2026-05-13
+  summary: null
+  breaking: false
+- date: '2026-05-12'
+  title: Store 64-bit integers with BigInt columns
+  url: https://appwrite.io/changelog/entry/2026-05-12
+  summary: null
+  breaking: false
+- date: '2026-05-11'
+  title: Appwrite plugin for Codex
+  url: https://appwrite.io/changelog/entry/2026-05-11
+  summary: null
+  breaking: false
+- date: '2026-05-06'
+  title: Appwrite CLI now supports multi-file project configuration
+  url: https://appwrite.io/changelog/entry/2026-05-06
+  summary: null
+  breaking: false
+- date: '2026-05-05'
+  title: Configurable start command for SSR Sites
+  url: https://appwrite.io/changelog/entry/2026-05-05
+  summary: null
+  breaking: false
+- date: '2026-05-04'
+  title: Rust runtime for Appwrite Functions
+  url: https://appwrite.io/changelog/entry/2026-05-04
+  summary: null
+  breaking: false
+- date: '2026-04-30'
+  title: 'Variables API: manage function, site, and project variables with Server SDKs'
+  url: https://appwrite.io/changelog/entry/2026-04-30
+  summary: null
+  breaking: false
+- date: '2026-04-29'
+  title: 'Realtime: persistent WebSocket and message-driven subscriptions'
+  url: https://appwrite.io/changelog/entry/2026-04-29
+  summary: null
+  breaking: false
+- date: '2026-04-28'
+  title: New filter, sort, and pagination flags in the Appwrite CLI
+  url: https://appwrite.io/changelog/entry/2026-04-28
+  summary: null
+  breaking: false
+- date: '2026-04-25'
+  title: Build timeouts increased to 45 minutes (Pro and above)
+  url: https://appwrite.io/changelog/entry/2026-04-25
+  summary: null
+  breaking: false
+- date: '2026-04-24'
+  title: Terraform provider for Appwrite
+  url: https://appwrite.io/changelog/entry/2026-04-24
+  summary: null
+  breaking: false
+- date: '2026-04-22'
+  title: 'Webhooks API: manage webhooks with Server SDKs'
+  url: https://appwrite.io/changelog/entry/2026-04-22
+  summary: null
+  breaking: false
+- date: '2026-04-21'
+  title: More control over your API protocols
+  url: https://appwrite.io/changelog/entry/2026-04-21
+  summary: null
+  breaking: false
+- date: '2026-04-20'
+  title: Appwrite plugin for Claude Code
+  url: https://appwrite.io/changelog/entry/2026-04-20
+  summary: null
+  breaking: false
+- date: '2026-04-17'
+  title: TTL-based list response caching
+  url: https://appwrite.io/changelog/entry/2026-04-17
+  summary: null
+  breaking: false
+- date: '2026-04-16'
+  title: 'Keys API: manage API keys with Server SDKs'
+  url: https://appwrite.io/changelog/entry/2026-04-16
+  summary: null
+  breaking: false
+- date: '2026-04-13'
+  title: Appwrite MCP server no longer requires service flags
+  url: https://appwrite.io/changelog/entry/2026-04-13
+  summary: null
+  breaking: true
+- date: '2026-04-08'
+  title: Separate build and runtime compute specs for Sites and Functions
+  url: https://appwrite.io/changelog/entry/2026-04-08
+  summary: null
+  breaking: false
+- date: '2026-04-08'
+  title: Introducing the Appwrite Rust SDK
+  url: https://appwrite.io/changelog/entry/2026-04-08-1
+  summary: null
+  breaking: false
+- date: '2026-04-07'
+  title: 'Education plan: project limit reduced to 2'
+  url: https://appwrite.io/changelog/entry/2026-04-07
+  summary: null
+  breaking: false
+- date: '2026-04-06'
+  title: Appwrite plugin for Cursor
+  url: https://appwrite.io/changelog/entry/2026-04-06
+  summary: null
+  breaking: false
+- date: '2026-04-02'
+  title: Flutter 3.41 and Dart 3.11 are now available on Appwrite Cloud
+  url: https://appwrite.io/changelog/entry/2026-04-02
+  summary: null
+  breaking: false
+- date: '2026-04-01'
+  title: MongoDB support for self-hosted Appwrite
+  url: https://appwrite.io/changelog/entry/2026-04-01
+  summary: null
+  breaking: false
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

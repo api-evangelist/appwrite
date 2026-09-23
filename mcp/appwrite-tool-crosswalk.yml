@@ -1,0 +1,169 @@
+generated: '2026-09-12'
+method: derived
+source: mcp/appwrite-mcp.yml (tool names from https://appwrite.io/docs/tooling/ai/mcp-servers) x openapi/_original/appwrite-open-api3-latest.json
+  (1,022 operations) x https://appwrite.io/docs/apis/graphql
+provider: Appwrite
+providerId: appwrite
+confidence_note: 'The live MCP schemas are auth-gated (POST tools/list -> 401 invalid_token), so no inputSchema
+  was captured. Bindings below are by documented semantics, not by observed schema, and confidence is set accordingly.
+  Nothing here is invented: every operationId named is present in the spec.'
+surfaces:
+  openapi:
+    file: openapi/_original/appwrite-open-api3-latest.json
+    paths: 754
+    operations: 1022
+    gated: false
+    note: First-party spec published at github.com/appwrite/specs.
+  graphql:
+    endpoint: https://cloud.appwrite.io/v1/graphql
+    mutation_endpoint: https://cloud.appwrite.io/v1/graphql/mutation
+    gated: true
+    schema: graphql/appwrite-schema.graphql
+    note: The GraphQL schema is generated from the same route definitions as REST, so every REST operation has a
+      GraphQL field named for its operationId — accountGet, storageCreateFile. Introspection needs a project header,
+      so the saved SDL is a partial capture.
+  mcp:
+    url: https://mcp.appwrite.io/
+    gated: true
+    transport: streamable-http
+    note: 401 invalid_token on anonymous tools/list; RFC 9728 challenge points at the console authorization server.
+architecture_note: 'This is NOT a one-tool-per-operation MCP server, and a crosswalk that pretended otherwise would
+  misdescribe it. Appwrite exposes FOUR meta-tools and keeps the 1,022-operation catalog internal, searched at runtime
+  by appwrite_search_tools and invoked by name through appwrite_call_tool. So the REST surface is reachable in full
+  through one dispatch tool rather than enumerated as 1,022 tool definitions. The consequence for an agent is real:
+  it cannot see the operation list up front, it has to search for it.'
+crosswalk:
+- tool: appwrite_get_context
+  category: discovery
+  rest:
+  - accountGet
+  - organizationListProjects
+  - organizationsList
+  binding: composite
+  confidence: medium
+  note: Documented as "returns a summary of your workspace, including your account, organization, and projects"
+    — those are the three operations that produce exactly that summary (organizationsList enumerates the organizations,
+    organizationListProjects the projects inside one). Composite, so no single operationId owns it.
+- tool: appwrite_search_tools
+  category: discovery
+  rest: []
+  binding: none
+  confidence: high
+  note: Server-side catalog search over the internal tool registry. No public REST operation exposes it.
+- tool: appwrite_call_tool
+  category: dispatch
+  rest:
+  - '*'
+  binding: dispatch
+  confidence: high
+  note: 'Dispatches to any tool in the internal catalog by name. Its effective reach is the whole REST surface —
+    1,022 operations — but the binding is indirect: the tool name is an argument, not the tool identity, so an agent
+    inherits parameters from whichever operation it names rather than from this tool.'
+- tool: appwrite_search_docs
+  category: documentation
+  rest: []
+  binding: none
+  confidence: high
+  note: Semantic search over the Appwrite documentation corpus. Backed by an embeddings index the API does not expose;
+    the closest public surfaces are /llms.txt and the .md twin of every docs page, neither of which is a REST operation.
+mcp_only:
+- tool: appwrite_search_tools
+  reason: Internal tool-registry search; no public REST equivalent.
+- tool: appwrite_search_docs
+  reason: Documentation embeddings search; no public REST equivalent. Appwrite notes the docs embeddings refresh
+    daily, independent of API releases.
+rest_only:
+  count: 1022
+  note: Every one of the 1,022 REST operations is "rest_only" in the strict sense that no MCP tool is named for
+    it — and simultaneously reachable through appwrite_call_tool. Listing 1,022 rows here would be noise; the tags
+    and counts below say the same thing and stay readable.
+  by_tag:
+    project: 109
+    tablesDB: 80
+    account: 73
+    databases: 70
+    domains: 54
+    messaging: 46
+    organizations: 45
+    users: 45
+    postgresql: 37
+    documentsDB: 36
+    vectorsDB: 35
+    mysql: 34
+    mongo: 31
+    functions: 28
+    sites: 27
+    organization: 23
+    apps: 22
+    console: 19
+    manager: 19
+    teams: 19
+    projects: 18
+    migrations: 16
+    oauth2: 14
+    storage: 13
+    waf: 13
+    backups: 12
+    vcs: 11
+    avatars: 9
+    proxy: 9
+    locale: 8
+    affiliates: 7
+    presences: 6
+    regions: 6
+    webhooks: 6
+    advisor: 5
+    tokens: 5
+    activities: 2
+    graphql: 2
+    notifications: 2
+    usage: 2
+    assistant: 1
+    embeddings: 1
+    growth: 1
+    ping: 1
+local_server_coverage:
+  note: 'The self-hosted stdio server (uvx mcp-server-appwrite) is a DIFFERENT shape from the hosted one: it registers
+    real per-service tools behind flags rather than four meta-tools, which is why its docs warn about context-window
+    exhaustion. Operation counts per enabled flag, computed from the spec:'
+  flags:
+  - flag: --tablesdb
+    tag: tablesDB
+    operations: 80
+  - flag: --users
+    tag: users
+    operations: 45
+  - flag: --teams
+    tag: teams
+    operations: 19
+  - flag: --storage
+    tag: storage
+    operations: 13
+  - flag: --functions
+    tag: functions
+    operations: 28
+  - flag: --messaging
+    tag: messaging
+    operations: 46
+  - flag: --locale
+    tag: locale
+    operations: 8
+  - flag: --avatars
+    tag: avatars
+    operations: 9
+  - flag: --databases
+    tag: databases
+    operations: 70
+  operations_behind_flags: 318
+  operations_total: 1022
+coverage:
+  mcp_tools: 4
+  mcp_tools_bound_to_rest: 2
+  mcp_only: 2
+  rest_operations: 1022
+  rest_operations_named_by_a_tool: 0
+  rest_operations_reachable_via_dispatch: 1022
+  graphql_fields_mirroring_rest: 1022
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

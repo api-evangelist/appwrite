@@ -1,0 +1,124 @@
+generated: '2026-09-12'
+method: probed
+source: https://appwrite.io/.well-known/mcp/server-card.json (SEP-1649 server card, HTTP 200,
+  content-type application/mcp-server-card+json) + https://appwrite.io/docs/tooling/ai/mcp-servers +
+  https://appwrite.io/docs/advanced/self-hosting/mcp + live POST to https://mcp.appwrite.io/mcp
+provider: Appwrite
+providerId: appwrite
+status: published
+server:
+  name: appwrite
+  card_name: io.appwrite/mcp
+  title: Appwrite
+  description: Backend API for auth, databases, storage, functions, messaging, and hosting.
+  version: 1.0.0
+  transport: streamable-http
+  url: https://mcp.appwrite.io/
+  repository: https://github.com/appwrite/mcp
+  documentation: https://appwrite.io/docs/tooling/ai/mcp-servers
+deployment:
+  mode: both
+  endpoint: https://mcp.appwrite.io/
+  install: uvx mcp-server-appwrite
+  package: https://pypi.org/project/mcp-server-appwrite/
+  auth: oauth
+  verified: probed
+  checked: '2026-09-12'
+  note: >-
+    Appwrite ships BOTH agent surfaces and they are not interchangeable. The hosted endpoint at
+    https://mcp.appwrite.io/ is streamable-HTTP and an MCP client can POST to it today; it authenticates
+    with OAuth 2.0 (browser sign-in, no API key to mint) or with an Appwrite project API key as a bearer
+    token. The stdio package `uvx mcp-server-appwrite` is for SELF-HOSTED Appwrite instances only — the
+    hosted server authenticates against Appwrite Cloud — and requires a human to install uv and mint an
+    API key before an agent sees anything.
+discovery:
+  server_card: https://appwrite.io/.well-known/mcp/server-card.json
+  ai_catalog: https://appwrite.io/.well-known/ai-catalog.json
+  llms_txt: https://appwrite.io/llms.txt
+  schema: https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json
+authorization:
+  scheme: RFC 9728 protected resource + RFC 8414 authorization server metadata
+  protected_resource: https://mcp.appwrite.io/.well-known/oauth-protected-resource
+  authorization_server: https://fra.cloud.appwrite.io/v1/oauth2/console
+  authorization_endpoint: https://fra.cloud.appwrite.io/v1/oauth2/console/authorize
+  token_endpoint: https://fra.cloud.appwrite.io/v1/oauth2/console/token
+  registration_endpoint: https://fra.cloud.appwrite.io/v1/oauth2/console/register
+  dynamic_client_registration: true
+  device_authorization_grant: true
+  pkce: S256
+  bearer_methods_supported:
+    - header
+  scope_count: 137
+  scopes: scopes/appwrite-scopes.yml
+  api_key_alternative: 'An Appwrite project API key may be sent as `Authorization: Bearer <key>` in place
+    of an OAuth access token, per the server card header definition.'
+probe:
+  url: https://mcp.appwrite.io/mcp
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 401
+  response: '{"error": "invalid_token", "error_description": "Authentication required"}'
+  www_authenticate: 'Bearer error="invalid_token", error_description="Authentication required",
+    resource_metadata="https://mcp.appwrite.io/.well-known/oauth-protected-resource/mcp", scope="..."'
+  verdict: gated
+  note: The `initialize` handshake returns the same 401. The live tool schemas therefore require an
+    authenticated introspection; the tool list below is read from Appwrite's own documentation, not from
+    the wire, and carries no inputSchema.
+tools_source: https://appwrite.io/docs/tooling/ai/mcp-servers
+tools_note: >-
+  Appwrite runs a COMPACT-WORKFLOW MCP server: it exposes four meta-tools and keeps the full Appwrite tool
+  catalog internal, searched at runtime, so that a 1,022-operation API does not consume the model's context
+  window. This is a deliberate design choice and it means a tools/list against this server would NOT
+  enumerate the API — it would return the four tools below. Names and descriptions are quoted from the
+  provider's documentation; input schemas were not captured because anonymous introspection is gated.
+tools:
+  - name: appwrite_get_context
+    description: Returns a summary of your workspace, including your account, organization, and projects.
+    category: discovery
+  - name: appwrite_search_tools
+    description: Searches the full Appwrite tool catalog at runtime.
+    category: discovery
+  - name: appwrite_call_tool
+    description: Calls a specific Appwrite tool by name.
+    category: dispatch
+  - name: appwrite_search_docs
+    description: Semantically searches the Appwrite documentation.
+    category: documentation
+local_server:
+  package: mcp-server-appwrite
+  registry: pypi
+  install: uvx mcp-server-appwrite
+  transport: stdio
+  auth: api-key
+  env:
+    - APPWRITE_PROJECT_ID
+    - APPWRITE_API_KEY
+    - APPWRITE_ENDPOINT
+  docs: https://appwrite.io/docs/advanced/self-hosting/mcp
+  service_flags:
+    - flag: --tablesdb
+      enables: TablesDB API
+    - flag: --users
+      enables: Users API
+    - flag: --teams
+      enables: Teams API
+    - flag: --storage
+      enables: Storage API
+    - flag: --functions
+      enables: Functions API
+    - flag: --messaging
+      enables: Messaging API
+    - flag: --locale
+      enables: Locale API
+    - flag: --avatars
+      enables: Avatars API
+    - flag: --databases
+      enables: Legacy Databases API
+    - flag: --all
+      enables: All Appwrite APIs
+  note: Database tools are enabled by default; every other service is opt-in behind a flag, explicitly to
+    keep the tool definitions inside the model's context window.
+crosswalk: mcp/appwrite-tool-crosswalk.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

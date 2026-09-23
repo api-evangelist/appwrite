@@ -1,0 +1,1134 @@
+generated: '2026-09-12'
+method: derived
+source: 'openapi/_original/appwrite-open-api3-latest.json — the first-party Appwrite 2.0.0 OpenAPI (423 component
+  schemas). Relationships were computed from two signals only: $ref links between schemas, and the <entity>Id /
+  $<entity>Id id-reference field convention Appwrite uses consistently. Nothing was inferred from prose.'
+provider: Appwrite
+providerId: appwrite
+entity_count: 421
+relationship_count: 192
+list_wrapper_count: 109
+id_convention:
+  system_fields:
+  - $id
+  - $createdAt
+  - $updatedAt
+  - $permissions
+  - $databaseId
+  - $tableId
+  - $collectionId
+  - $sequence
+  note: Every persisted Appwrite object carries $-prefixed system fields. GraphQL renames the $ prefix to _ because
+    $ is reserved in GraphQL syntax, so the same field is $id over REST and _id over GraphQL — a real trap when
+    mapping between the two surfaces.
+  reference_fields: Foreign keys are plain strings named <entity>Id (databaseId, tableId, bucketId, functionId,
+    userId, teamId), client-suppliable on create or minted with the literal unique().
+list_wrapper_note: Appwrite wraps every collection response in a <Entity>List schema carrying a total count and
+  a typed array — {total, rows} for TablesDB, {total, documents} for DocumentsDB, and so on. There are 109 such
+  wrappers, which is why the raw schema count is roughly double the entity count.
+largest_entities:
+- name: billingPlan
+  field_count: 72
+  description: billingPlan
+- name: usageProject
+  field_count: 68
+  description: Project
+- name: dedicatedDatabase
+  field_count: 52
+  description: DedicatedDatabase
+- name: project
+  field_count: 46
+  description: Project
+- name: site
+  field_count: 35
+  description: Site
+- name: organization
+  field_count: 35
+  description: Organization
+- name: function
+  field_count: 32
+  description: Function
+- name: aggregationTeam
+  field_count: 31
+  description: Team
+- name: consoleVariables
+  field_count: 30
+  description: Console Variables
+- name: usageOrganization
+  field_count: 30
+  description: Organization
+- name: session
+  field_count: 29
+  description: Session
+- name: usageDataPoint
+  field_count: 29
+  description: usageDataPoint
+- name: activityEvent
+  field_count: 29
+  description: ActivityEvent
+- name: migrationReport
+  field_count: 28
+  description: Migration Report
+- name: deployment
+  field_count: 27
+  description: Deployment
+- name: user
+  field_count: 26
+  description: User
+- name: app
+  field_count: 26
+  description: App
+- name: invoice
+  field_count: 23
+  description: Invoice
+- name: log
+  field_count: 22
+  description: Log
+- name: managerDatabase
+  field_count: 22
+  description: ManagerDatabase
+- name: migration
+  field_count: 21
+  description: Migration
+- name: paymentMethod
+  field_count: 20
+  description: paymentMethod
+- name: usageOrganizationProject
+  field_count: 20
+  description: OrganizationProject
+- name: execution
+  field_count: 19
+  description: Execution
+- name: billingPlanDedicatedDatabaseLimits
+  field_count: 19
+  description: dedicatedDatabaseLimits
+- name: wafRuleRateLimit
+  field_count: 19
+  description: WafRuleRateLimit
+- name: locale
+  field_count: 18
+  description: Locale
+- name: managerRule
+  field_count: 18
+  description: Rule
+- name: templateFunction
+  field_count: 17
+  description: Template Function
+- name: insight
+  field_count: 17
+  description: Insight
+most_referenced:
+- entity: metric
+  referenced_by: 39
+- entity: estimation_item
+  referenced_by: 4
+- entity: index
+  referenced_by: 3
+- entity: variable
+  referenced_by: 3
+- entity: block
+  referenced_by: 3
+- entity: usageResources
+  referenced_by: 3
+- entity: dnsRecord
+  referenced_by: 3
+- entity: columnIndex
+  referenced_by: 2
+- entity: devKey
+  referenced_by: 2
+- entity: target
+  referenced_by: 2
+- entity: insight
+  referenced_by: 2
+- entity: backupPolicy
+  referenced_by: 2
+- entity: backupArchive
+  referenced_by: 2
+- entity: templateVariable
+  referenced_by: 2
+- entity: detectionVariable
+  referenced_by: 2
+- entity: headers
+  referenced_by: 2
+- entity: usageMetric
+  referenced_by: 2
+- entity: invoice
+  referenced_by: 2
+- entity: postgresExtension
+  referenced_by: 2
+- entity: appSecret
+  referenced_by: 2
+- entity: row
+  referenced_by: 1
+- entity: document
+  referenced_by: 1
+- entity: presence
+  referenced_by: 1
+- entity: table
+  referenced_by: 1
+- entity: collection
+  referenced_by: 1
+relationships:
+- from: rowList
+  to: row
+  type: has_many
+  via: rows
+  basis: $ref array
+- from: documentList
+  to: document
+  type: has_many
+  via: documents
+  basis: $ref array
+- from: presenceList
+  to: presence
+  type: has_many
+  via: presences
+  basis: $ref array
+- from: tableList
+  to: table
+  type: has_many
+  via: tables
+  basis: $ref array
+- from: collectionList
+  to: collection
+  type: has_many
+  via: collections
+  basis: $ref array
+- from: databaseList
+  to: database
+  type: has_many
+  via: databases
+  basis: $ref array
+- from: indexList
+  to: index
+  type: has_many
+  via: indexes
+  basis: $ref array
+- from: columnIndexList
+  to: columnIndex
+  type: has_many
+  via: indexes
+  basis: $ref array
+- from: userList
+  to: user
+  type: has_many
+  via: users
+  basis: $ref array
+- from: sessionList
+  to: session
+  type: has_many
+  via: sessions
+  basis: $ref array
+- from: identityList
+  to: identity
+  type: has_many
+  via: identities
+  basis: $ref array
+- from: notificationList
+  to: notification
+  type: has_many
+  via: notifications
+  basis: $ref array
+- from: logList
+  to: log
+  type: has_many
+  via: logs
+  basis: $ref array
+- from: fileList
+  to: file
+  type: has_many
+  via: files
+  basis: $ref array
+- from: bucketList
+  to: bucket
+  type: has_many
+  via: buckets
+  basis: $ref array
+- from: resourceTokenList
+  to: resourceToken
+  type: has_many
+  via: tokens
+  basis: $ref array
+- from: teamList
+  to: team
+  type: has_many
+  via: teams
+  basis: $ref array
+- from: membershipList
+  to: membership
+  type: has_many
+  via: memberships
+  basis: $ref array
+- from: siteList
+  to: site
+  type: has_many
+  via: sites
+  basis: $ref array
+- from: templateSiteList
+  to: templateSite
+  type: has_many
+  via: templates
+  basis: $ref array
+- from: functionList
+  to: function
+  type: has_many
+  via: functions
+  basis: $ref array
+- from: templateFunctionList
+  to: templateFunction
+  type: has_many
+  via: templates
+  basis: $ref array
+- from: installationList
+  to: installation
+  type: has_many
+  via: installations
+  basis: $ref array
+- from: providerRepositoryFrameworkList
+  to: providerRepositoryFramework
+  type: has_many
+  via: frameworkProviderRepositories
+  basis: $ref array
+- from: providerRepositoryRuntimeList
+  to: providerRepositoryRuntime
+  type: has_many
+  via: runtimeProviderRepositories
+  basis: $ref array
+- from: vcsNamespaceList
+  to: vcsNamespace
+  type: has_many
+  via: namespaces
+  basis: $ref array
+- from: branchList
+  to: branch
+  type: has_many
+  via: branches
+  basis: $ref array
+- from: frameworkList
+  to: framework
+  type: has_many
+  via: frameworks
+  basis: $ref array
+- from: runtimeList
+  to: runtime
+  type: has_many
+  via: runtimes
+  basis: $ref array
+- from: deploymentList
+  to: deployment
+  type: has_many
+  via: deployments
+  basis: $ref array
+- from: executionList
+  to: execution
+  type: has_many
+  via: executions
+  basis: $ref array
+- from: projectList
+  to: project
+  type: has_many
+  via: projects
+  basis: $ref array
+- from: webhookList
+  to: webhook
+  type: has_many
+  via: webhooks
+  basis: $ref array
+- from: keyList
+  to: key
+  type: has_many
+  via: keys
+  basis: $ref array
+- from: devKeyList
+  to: devKey
+  type: has_many
+  via: devKeys
+  basis: $ref array
+- from: countryList
+  to: country
+  type: has_many
+  via: countries
+  basis: $ref array
+- from: continentList
+  to: continent
+  type: has_many
+  via: continents
+  basis: $ref array
+- from: languageList
+  to: language
+  type: has_many
+  via: languages
+  basis: $ref array
+- from: currencyList
+  to: currency
+  type: has_many
+  via: currencies
+  basis: $ref array
+- from: phoneList
+  to: phone
+  type: has_many
+  via: phones
+  basis: $ref array
+- from: variableList
+  to: variable
+  type: has_many
+  via: variables
+  basis: $ref array
+- from: mockNumberList
+  to: mockNumber
+  type: has_many
+  via: mockNumbers
+  basis: $ref array
+- from: emailTemplateList
+  to: emailTemplate
+  type: has_many
+  via: templates
+  basis: $ref array
+- from: proxyRuleList
+  to: proxyRule
+  type: has_many
+  via: rules
+  basis: $ref array
+- from: scheduleList
+  to: schedule
+  type: has_many
+  via: schedules
+  basis: $ref array
+- from: stageList
+  to: stage
+  type: has_many
+  via: stages
+  basis: $ref array
+- from: localeCodeList
+  to: localeCode
+  type: has_many
+  via: localeCodes
+  basis: $ref array
+- from: providerList
+  to: provider
+  type: has_many
+  via: providers
+  basis: $ref array
+- from: messageList
+  to: message
+  type: has_many
+  via: messages
+  basis: $ref array
+- from: topicList
+  to: topic
+  type: has_many
+  via: topics
+  basis: $ref array
+- from: subscriberList
+  to: subscriber
+  type: has_many
+  via: subscribers
+  basis: $ref array
+- from: targetList
+  to: target
+  type: has_many
+  via: targets
+  basis: $ref array
+- from: transactionList
+  to: transaction
+  type: has_many
+  via: transactions
+  basis: $ref array
+- from: migrationList
+  to: migration
+  type: has_many
+  via: migrations
+  basis: $ref array
+- from: specificationList
+  to: specification
+  type: has_many
+  via: specifications
+  basis: $ref array
+- from: vcsContentList
+  to: vcsContent
+  type: has_many
+  via: contents
+  basis: $ref array
+- from: vectorsdbCollectionList
+  to: vectorsdbCollection
+  type: has_many
+  via: collections
+  basis: $ref array
+- from: embeddingList
+  to: embedding
+  type: has_many
+  via: embeddings
+  basis: $ref array
+- from: insightList
+  to: insight
+  type: has_many
+  via: insights
+  basis: $ref array
+- from: reportList
+  to: report
+  type: has_many
+  via: reports
+  basis: $ref array
+- from: database
+  to: backupPolicy
+  type: has_many
+  via: policies
+  basis: $ref array
+- from: database
+  to: backupArchive
+  type: has_many
+  via: archives
+  basis: $ref array
+- from: collection
+  to: index
+  type: has_many
+  via: indexes
+  basis: $ref array
+- from: vectorsdbCollection
+  to: index
+  type: has_many
+  via: indexes
+  basis: $ref array
+- from: table
+  to: columnIndex
+  type: has_many
+  via: indexes
+  basis: $ref array
+- from: user
+  to: target
+  type: has_many
+  via: targets
+  basis: $ref array
+- from: site
+  to: variable
+  type: has_many
+  via: vars
+  basis: $ref array
+- from: templateSite
+  to: templateFramework
+  type: has_many
+  via: frameworks
+  basis: $ref array
+- from: templateSite
+  to: templateVariable
+  type: has_many
+  via: variables
+  basis: $ref array
+- from: function
+  to: variable
+  type: has_many
+  via: vars
+  basis: $ref array
+- from: templateFunction
+  to: templateRuntime
+  type: has_many
+  via: runtimes
+  basis: $ref array
+- from: templateFunction
+  to: templateVariable
+  type: has_many
+  via: variables
+  basis: $ref array
+- from: detectionFramework
+  to: detectionVariable
+  type: has_many
+  via: variables
+  basis: $ref array
+- from: detectionRuntime
+  to: detectionVariable
+  type: has_many
+  via: variables
+  basis: $ref array
+- from: framework
+  to: frameworkAdapter
+  type: has_many
+  via: adapters
+  basis: $ref array
+- from: execution
+  to: headers
+  type: has_many
+  via: requestHeaders
+  basis: $ref array
+- from: execution
+  to: headers
+  type: has_many
+  via: responseHeaders
+  basis: $ref array
+- from: project
+  to: devKey
+  type: has_many
+  via: devKeys
+  basis: $ref array
+- from: project
+  to: projectAuthMethod
+  type: has_many
+  via: authMethods
+  basis: $ref array
+- from: project
+  to: projectService
+  type: has_many
+  via: services
+  basis: $ref array
+- from: project
+  to: projectProtocol
+  type: has_many
+  via: protocols
+  basis: $ref array
+- from: project
+  to: block
+  type: has_many
+  via: blocks
+  basis: $ref array
+- from: usageUsers
+  to: metric
+  type: has_many
+  via: users
+  basis: $ref array
+- from: usageUsers
+  to: metric
+  type: has_many
+  via: sessions
+  basis: $ref array
+- from: usagePresence
+  to: metric
+  type: has_many
+  via: presences
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: requests
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: network
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: users
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: executions
+  basis: $ref array
+- from: usageProject
+  to: metricBreakdown
+  type: has_many
+  via: authPhoneCountryBreakdown
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: databasesReads
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: databasesWrites
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: documentsdbDatabasesReads
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: documentsdbDatabasesWrites
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: documentsdbDatabasesStorage
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: imageTransformations
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: vectorsdbDatabases
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: vectorsdbCollections
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: vectorsdbDocuments
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: vectorsdbDatabasesStorage
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: vectorsdbDatabasesReads
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: vectorsdbDatabasesWrites
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: embeddingsText
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: embeddingsTextTokens
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: embeddingsTextDuration
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: embeddingsTextErrors
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: functionsExecutions
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: sitesExecutions
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: screenshotsGenerated
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: realtimeConnections
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: realtimeMessages
+  basis: $ref array
+- from: usageProject
+  to: metric
+  type: has_many
+  via: realtimeBandwidth
+  basis: $ref array
+- from: usageMetric
+  to: usageDataPoint
+  type: has_many
+  via: points
+  basis: $ref array
+- from: usageEventList
+  to: usageMetric
+  type: has_many
+  via: metrics
+  basis: $ref array
+- from: usageGaugeList
+  to: usageMetric
+  type: has_many
+  via: metrics
+  basis: $ref array
+- from: consoleOAuth2Provider
+  to: consoleOAuth2ProviderParameter
+  type: has_many
+  via: parameters
+  basis: $ref array
+- from: consoleOAuth2ProviderList
+  to: consoleOAuth2Provider
+  type: has_many
+  via: oAuth2Providers
+  basis: $ref array
+- from: consoleKeyScopeList
+  to: consoleKeyScope
+  type: has_many
+  via: scopes
+  basis: $ref array
+- from: insight
+  to: insightCTA
+  type: has_many
+  via: ctas
+  basis: $ref array
+- from: report
+  to: insight
+  type: has_many
+  via: insights
+  basis: $ref array
+- from: affiliateLinkList
+  to: affiliateLink
+  type: has_many
+  via: links
+  basis: $ref array
+- from: affiliateReferralList
+  to: affiliateReferral
+  type: has_many
+  via: referrals
+  basis: $ref array
+- from: affiliateRewardList
+  to: affiliateReward
+  type: has_many
+  via: rewards
+  basis: $ref array
+- from: aggregationBreakdown
+  to: usageResources
+  type: has_many
+  via: resources
+  basis: $ref array
+- from: aggregationTeam
+  to: aggregationBreakdown
+  type: has_many
+  via: breakdown
+  basis: $ref array
+- from: aggregationTeam
+  to: usageResources
+  type: has_many
+  via: resources
+  basis: $ref array
+- from: dedicatedDatabaseBackupList
+  to: dedicatedDatabaseBackup
+  type: has_many
+  via: backups
+  basis: $ref array
+- from: blockDelete
+  to: block
+  type: has_many
+  via: blocks
+  basis: $ref array
+- from: dedicatedDatabaseBranchList
+  to: dedicatedDatabaseBranch
+  type: has_many
+  via: branches
+  basis: $ref array
+- from: campaign
+  to: review
+  type: has_many
+  via: reviews
+  basis: $ref array
+- from: creditList
+  to: credit
+  type: has_many
+  via: credits
+  basis: $ref array
+- from: dedicatedDatabaseExecution
+  to: dedicatedDatabaseExecutionColumn
+  type: has_many
+  via: columns
+  basis: $ref array
+- from: databaseStatus
+  to: databaseStatusReplica
+  type: has_many
+  via: replicas
+  basis: $ref array
+- from: databaseStatus
+  to: databaseStatusVolume
+  type: has_many
+  via: volumes
+  basis: $ref array
+- from: domain
+  to: dnsRecord
+  type: has_many
+  via: dnsRecords
+  basis: $ref array
+- from: estimation
+  to: estimation_item
+  type: has_many
+  via: items
+  basis: $ref array
+- from: estimation
+  to: estimation_item
+  type: has_many
+  via: discounts
+  basis: $ref array
+- from: estimationDeleteOrganization
+  to: invoice
+  type: has_many
+  via: unpaidInvoices
+  basis: $ref array
+- from: estimationUpdatePlan
+  to: estimation_item
+  type: has_many
+  via: items
+  basis: $ref array
+- from: estimationUpdatePlan
+  to: estimation_item
+  type: has_many
+  via: discounts
+  basis: $ref array
+- from: dedicatedDatabaseExtensions
+  to: postgresExtension
+  type: has_many
+  via: metadata
+  basis: $ref array
+- from: dedicatedDatabaseOperationList
+  to: dedicatedDatabaseOperation
+  type: has_many
+  via: operations
+  basis: $ref array
+- from: dedicatedDatabaseReplicas
+  to: dedicatedDatabaseMember
+  type: has_many
+  via: members
+  basis: $ref array
+- from: invoice
+  to: usageResources
+  type: has_many
+  via: usage
+  basis: $ref array
+- from: managerDomain
+  to: dnsRecord
+  type: has_many
+  via: dnsRecords
+  basis: $ref array
+- from: planChangeLimits
+  to: planChangeProjectCompliance
+  type: has_many
+  via: projectCompliance
+  basis: $ref array
+- from: planChangeProjectCompliance
+  to: planChangeResourceCompliance
+  type: has_many
+  via: resources
+  basis: $ref array
+- from: dedicatedDatabaseRestorationList
+  to: dedicatedDatabaseRestoration
+  type: has_many
+  via: restorations
+  basis: $ref array
+- from: dedicatedDatabaseSpecificationList
+  to: dedicatedDatabaseSpecification
+  type: has_many
+  via: specifications
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: bandwidth
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: users
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: executions
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: databasesReads
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: databasesWrites
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: imageTransformations
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: screenshotsGenerated
+  basis: $ref array
+- from: usageOrganization
+  to: usageOrganizationProject
+  type: has_many
+  via: projects
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: realtimeConnections
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: realtimeMessages
+  basis: $ref array
+- from: usageOrganization
+  to: metric
+  type: has_many
+  via: realtimeBandwidth
+  basis: $ref array
+- from: app
+  to: appSecret
+  type: has_many
+  via: secrets
+  basis: $ref array
+- from: managerWafRuleList
+  to: managerWafRule
+  type: has_many
+  via: rules
+  basis: $ref array
+- from: wafRuleList
+  to: wafRule
+  type: has_many
+  via: rules
+  basis: $ref array
+- from: oauth2ProjectList
+  to: oauth2Project
+  type: has_many
+  via: projects
+  basis: $ref array
+- from: oauth2OrganizationList
+  to: oauth2Organization
+  type: has_many
+  via: organizations
+  basis: $ref array
+- from: oauth2ConsentList
+  to: oauth2Consent
+  type: has_many
+  via: consents
+  basis: $ref array
+- from: oauth2ConsentTokenList
+  to: oauth2ConsentToken
+  type: has_many
+  via: tokens
+  basis: $ref array
+- from: activityEventList
+  to: activityEvent
+  type: has_many
+  via: events
+  basis: $ref array
+- from: addonList
+  to: addon
+  type: has_many
+  via: addons
+  basis: $ref array
+- from: aggregationTeamList
+  to: aggregationTeam
+  type: has_many
+  via: aggregations
+  basis: $ref array
+- from: backupArchiveList
+  to: backupArchive
+  type: has_many
+  via: archives
+  basis: $ref array
+- from: backupPolicyList
+  to: backupPolicy
+  type: has_many
+  via: policies
+  basis: $ref array
+- from: backupRestorationList
+  to: backupRestoration
+  type: has_many
+  via: restorations
+  basis: $ref array
+- from: billingAddressList
+  to: billingAddress
+  type: has_many
+  via: billingAddresses
+  basis: $ref array
+- from: invoiceList
+  to: invoice
+  type: has_many
+  via: invoices
+  basis: $ref array
+- from: billingPlanList
+  to: billingPlan
+  type: has_many
+  via: plans
+  basis: $ref array
+- from: blockList
+  to: block
+  type: has_many
+  via: blocks
+  basis: $ref array
+- from: databaseMigrationList
+  to: databaseMigration
+  type: has_many
+  via: migrations
+  basis: $ref array
+- from: dedicatedDatabaseList
+  to: dedicatedDatabase
+  type: has_many
+  via: databases
+  basis: $ref array
+- from: dnsRecordsList
+  to: dnsRecord
+  type: has_many
+  via: dnsRecords
+  basis: $ref array
+- from: domainSuggestionsList
+  to: domainSuggestion
+  type: has_many
+  via: suggestions
+  basis: $ref array
+- from: domainPricesList
+  to: domainPrice
+  type: has_many
+  via: prices
+  basis: $ref array
+- from: domainsList
+  to: domain
+  type: has_many
+  via: domains
+  basis: $ref array
+- from: organizationList
+  to: organization
+  type: has_many
+  via: teams
+  basis: $ref array
+- from: paymentMethodList
+  to: paymentMethod
+  type: has_many
+  via: paymentMethods
+  basis: $ref array
+- from: postgresExtensionList
+  to: postgresExtension
+  type: has_many
+  via: extensions
+  basis: $ref array
+- from: consoleRegionList
+  to: consoleRegion
+  type: has_many
+  via: regions
+  basis: $ref array
+- from: appsList
+  to: app
+  type: has_many
+  via: apps
+  basis: $ref array
+- from: appSecretList
+  to: appSecret
+  type: has_many
+  via: secrets
+  basis: $ref array
+- from: appScopeList
+  to: appScope
+  type: has_many
+  via: scopes
+  basis: $ref array
+- from: appInstallationList
+  to: appInstallation
+  type: has_many
+  via: installations
+  basis: $ref array
+- from: appKeyList
+  to: appKey
+  type: has_many
+  via: keys
+  basis: $ref array
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
