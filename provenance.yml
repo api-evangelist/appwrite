@@ -6,11 +6,26 @@ artifacts:
   agentic-access/appwrite-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-catalog/appwrite-ai-catalog.json:
+    method: unknown
+    evidence: no authorship recorded
+  ai-catalog/appwrite-ai-catalog.yml:
+    method: unknown
+    evidence: no authorship recorded
   asyncapi/appwrite-asyncapi.yml:
     method: unknown
     evidence: no authorship recorded
+  asyncapi/appwrite-webhooks.yml:
+    method: searched
+    evidence: declared in the artifact
   authentication/appwrite-authentication.yml:
     method: derived
+    evidence: declared in the artifact
+  changelog/appwrite-changelog.yml:
+    method: searched
+    evidence: declared in the artifact
+  cli/appwrite-cli.yml:
+    method: searched
     evidence: declared in the artifact
   collections/appwrite-account-api.opencollection.json:
     method: derived
@@ -36,12 +51,27 @@ artifacts:
   collections/appwrite-users-api.postman_collection.json:
     method: derived
     evidence: openapi/appwrite-users-api
+  conformance/appwrite-conformance.yml:
+    method: unknown
+    evidence: no authorship recorded
+  conventions/appwrite-conventions.yml:
+    method: searched
+    evidence: declared in the artifact
+  data-model/appwrite-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  errors/appwrite-problem-types.yml:
+    method: searched
+    evidence: declared in the artifact
   examples/user-example.json:
     method: unknown
     evidence: no authorship recorded
   finops/appwrite-finops.yml:
     method: generated
     evidence: declared in the artifact
+  front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
   graphql/appwrite-graphql.md:
     method: unknown
     evidence: no authorship recorded
@@ -57,55 +87,7 @@ artifacts:
   json-structure/user-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-06T210741.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-07T135032.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T093022.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T111628.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-11T211707.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-12T193225.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T080027.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T082702.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T114122.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T165047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T191845.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T205517.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-21T110057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T064859.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T171257.yml:
+  kin/checks-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-25T125852.yml:
@@ -192,26 +174,412 @@ artifacts:
   kin/score-2026-09-05T072335.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T144739.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T195450.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T211839.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T011047.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T211804.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T224210.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T200636.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T213054.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T214843.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T232836.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T204815.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T222408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T062655.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-23T000603.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T064009.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T090406.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  lifecycle/appwrite-lifecycle.yml:
+    method: searched
+    evidence: declared in the artifact
   llms/appwrite-llms.txt:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
+  mcp/appwrite-mcp.yml:
+    method: unknown
+    evidence: no authorship recorded
+  mcp/appwrite-tool-crosswalk.yml:
+    method: derived
+    evidence: declared in the artifact
+  openapi/_original/appwrite-open-api3-latest.json:
+    method: harvested
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/appwrite-openapi.yaml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/appwrite-account-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-activities-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-advisor-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-affiliates-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-apps-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-assistant-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-avatars-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-backups-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-console-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/appwrite-databases-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-documentsdb-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-domains-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-embeddings-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-functions-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-graph-ql-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-growth-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-locale-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-manager-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-messaging-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-migrations-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-mongo-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-mysql-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-notifications-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-oauth2-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-organization-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-organizations-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-ping-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-postgresql-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-presences-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-project-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-projects-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-proxy-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-regions-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-sites-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/appwrite-storage-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-tablesdb-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-teams-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-tokens-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-usage-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/appwrite-users-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  plans/appwrite-plans-pricing.yml:
+  openapi/appwrite-vcs-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-vectorsdb-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-waf-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appwrite-webhooks-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/appwrite-account-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-activities-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-advisor-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-affiliates-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-apps-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-assistant-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-avatars-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-backups-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-console-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-databases-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-documentsdb-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-domains-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-embeddings-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-functions-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-graphql-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-growth-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-locale-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-manager-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-messaging-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-migrations-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-mongo-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-mysql-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-notifications-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-oauth2-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-organization-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-organizations-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-ping-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-postgresql-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-presences-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-project-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-projects-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-proxy-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-regions-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-sites-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-storage-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-tablesdb-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-teams-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-tokens-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-usage-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-users-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-vcs-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-vectorsdb-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-waf-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/appwrite-webhooks-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  packages/appwrite-packages.yml:
+    method: searched
+    evidence: declared in the artifact
+  plans/appwrite-plans-pricing.yml:
+    method: searched
     evidence: declared in the artifact
   postman/appwrite-account-api.postman_collection.json:
     method: derived
@@ -226,7 +594,7 @@ artifacts:
     method: derived
     evidence: openapi/appwrite-users-api
   rate-limits/appwrite-rate-limits.yml:
-    method: generated
+    method: searched
     evidence: declared in the artifact
   rules/appwrite-asyncapi-spectral-rules.yml:
     method: generated
@@ -237,9 +605,60 @@ artifacts:
   rules/appwrite-spectral-rules.yml:
     method: generated
     evidence: declared in the artifact
+  sandbox/appwrite-sandbox.yml:
+    method: searched
+    evidence: declared in the artifact
+  scopes/appwrite-scopes.yml:
+    method: unknown
+    evidence: no authorship recorded
   security/appwrite-domain-security.yml:
     method: unknown
     evidence: no authorship recorded
+  security/appwrite-vulnerability-disclosure.yml:
+    method: searched
+    evidence: declared in the artifact
+  skills/APPWRITE-SKILLS-CHANGELOG.md:
+    method: unknown
+    evidence: no authorship recorded
+  skills/APPWRITE-SKILLS-README.md:
+    method: unknown
+    evidence: no authorship recorded
+  skills/LICENSE:
+    method: unknown
+    evidence: no authorship recorded
+  skills/_index.yml:
+    method: searched
+    evidence: declared in the artifact
   vocabulary/appwrite-vocabulary.yaml:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-agent-skills-index.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-ai-catalog.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-console-jwks.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-console-openid-configuration.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-fra-oauth-authorization-server.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-mcp-oauth-authorization-server.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-mcp-oauth-protected-resource.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-mcp-openid-configuration.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-mcp-server-card.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appwrite-well-known.yml:
     method: unknown
     evidence: no authorship recorded
