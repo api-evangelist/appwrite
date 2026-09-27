@@ -118,27 +118,6 @@ paths:
               - read
 components:
   schemas:
-    notificationList:
-      description: Notifications List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of notifications that matched your query.
-          format: int32
-          example: 5
-        notifications:
-          type: array
-          description: List of notifications.
-          items:
-            $ref: '#/components/schemas/notification'
-          example: []
-      required:
-      - total
-      - notifications
-      example:
-        total: 5
-        notifications: ''
     notification:
       description: Notification
       type: object
@@ -246,6 +225,27 @@ components:
         read: false
         firstSeen: '2020-10-15T06:38:00.000+00:00'
         lastSeen: '2020-10-15T06:38:00.000+00:00'
+    notificationList:
+      description: Notifications List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of notifications that matched your query.
+          format: int32
+          example: 5
+        notifications:
+          type: array
+          description: List of notifications.
+          items:
+            $ref: '#/components/schemas/notification'
+          example: []
+      required:
+      - total
+      - notifications
+      example:
+        total: 5
+        notifications: ''
   securitySchemes:
     Project:
       type: apiKey

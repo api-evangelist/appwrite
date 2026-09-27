@@ -1255,50 +1255,6 @@ paths:
               - grant_type
 components:
   schemas:
-    oauth2DeviceAuthorization:
-      description: OAuth2 Device Authorization
-      type: object
-      properties:
-        device_code:
-          type: string
-          description: Device verification code used by the client to poll the token endpoint.
-          example: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
-        user_code:
-          type: string
-          description: Short code the end user enters on the verification page.
-          example: ABCD-EFGH
-        verification_uri:
-          type: string
-          description: URL where the end user enters the user code.
-          example: https://cloud.appwrite.io/console/oauth2/device
-        verification_uri_complete:
-          type: string
-          description: Verification URL with the user code prefilled as a query parameter.
-          example: https://cloud.appwrite.io/console/oauth2/device?user_code=ABCD-EFGH
-        expires_in:
-          type: integer
-          description: Lifetime of the device code and user code in seconds.
-          format: int32
-          example: 900
-        interval:
-          type: integer
-          description: Minimum polling interval for the token endpoint in seconds.
-          format: int32
-          example: 5
-      required:
-      - device_code
-      - user_code
-      - verification_uri
-      - verification_uri_complete
-      - expires_in
-      - interval
-      example:
-        device_code: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
-        user_code: ABCD-EFGH
-        verification_uri: https://cloud.appwrite.io/console/oauth2/device
-        verification_uri_complete: https://cloud.appwrite.io/console/oauth2/device?user_code=ABCD-EFGH
-        expires_in: 900
-        interval: 5
     oauth2Grant:
       description: OAuth2 Grant
       type: object
@@ -1390,18 +1346,27 @@ components:
         redirectUri: https://example.com/callback
         authTime: 1592981250
         expire: '2020-10-15T06:38:00.000+00:00'
-    oauth2Approve:
-      description: OAuth2 Approve
+    oauth2ProjectList:
+      description: OAuth2 accessible projects list
       type: object
       properties:
-        redirectUrl:
-          type: string
-          description: URL the end user should be redirected to after the grant is approved, carrying the authorization `code` and/or `id_token` along with the original `state`.
-          example: https://example.com/callback?code=abcde&state=fghij
+        total:
+          type: integer
+          description: Total number of projects that matched your query.
+          format: int32
+          example: 5
+        projects:
+          type: array
+          description: List of projects.
+          items:
+            $ref: '#/components/schemas/oauth2Project'
+          example: []
       required:
-      - redirectUrl
+      - total
+      - projects
       example:
-        redirectUrl: https://example.com/callback?code=abcde&state=fghij
+        total: 5
+        projects: ''
     oauth2Organization:
       description: OAuth2 Organization
       type: object
@@ -1414,25 +1379,18 @@ components:
       - $id
       example:
         $id: 5e5ea5c16897e
-    oauth2PAR:
-      description: OAuth2 PAR
+    oauth2Approve:
+      description: OAuth2 Approve
       type: object
       properties:
-        request_uri:
+        redirectUrl:
           type: string
-          description: Authorization request handle to pass to the authorize endpoint.
-          example: urn:appwrite:oauth2:request:5e5ea5c16897e
-        expires_in:
-          type: integer
-          description: Lifetime of the authorization request handle in seconds.
-          format: int32
-          example: 600
+          description: URL the end user should be redirected to after the grant is approved, carrying the authorization `code` and/or `id_token` along with the original `state`.
+          example: https://example.com/callback?code=abcde&state=fghij
       required:
-      - request_uri
-      - expires_in
+      - redirectUrl
       example:
-        request_uri: urn:appwrite:oauth2:request:5e5ea5c16897e
-        expires_in: 600
+        redirectUrl: https://example.com/callback?code=abcde&state=fghij
     oauth2Token:
       description: OAuth2 Token
       type: object
@@ -1502,60 +1460,6 @@ components:
       example:
         grantId: 5e5ea5c16897e
         redirectUrl: https://example.com/callback?code=abcde&state=fghij
-    oauth2OrganizationList:
-      description: OAuth2 accessible organizations list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of organizations that matched your query.
-          format: int32
-          example: 5
-        organizations:
-          type: array
-          description: List of organizations.
-          items:
-            $ref: '#/components/schemas/oauth2Organization'
-          example: []
-      required:
-      - total
-      - organizations
-      example:
-        total: 5
-        organizations: ''
-    oauth2ProjectList:
-      description: OAuth2 accessible projects list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of projects that matched your query.
-          format: int32
-          example: 5
-        projects:
-          type: array
-          description: List of projects.
-          items:
-            $ref: '#/components/schemas/oauth2Project'
-          example: []
-      required:
-      - total
-      - projects
-      example:
-        total: 5
-        projects: ''
-    oauth2Reject:
-      description: OAuth2 Reject
-      type: object
-      properties:
-        redirectUrl:
-          type: string
-          description: URL the end user should be redirected to after the grant is rejected, carrying an `access_denied` error.
-          example: https://example.com/callback?error=access_denied&state=fghij
-      required:
-      - redirectUrl
-      example:
-        redirectUrl: https://example.com/callback?error=access_denied&state=fghij
     oauth2Project:
       description: OAuth2 Project
       type: object
@@ -1580,6 +1484,102 @@ components:
         $id: 5e5ea5c16897e
         region: fra
         endpoint: https://fra.cloud.appwrite.io/v1
+    oauth2PAR:
+      description: OAuth2 PAR
+      type: object
+      properties:
+        request_uri:
+          type: string
+          description: Authorization request handle to pass to the authorize endpoint.
+          example: urn:appwrite:oauth2:request:5e5ea5c16897e
+        expires_in:
+          type: integer
+          description: Lifetime of the authorization request handle in seconds.
+          format: int32
+          example: 600
+      required:
+      - request_uri
+      - expires_in
+      example:
+        request_uri: urn:appwrite:oauth2:request:5e5ea5c16897e
+        expires_in: 600
+    oauth2Reject:
+      description: OAuth2 Reject
+      type: object
+      properties:
+        redirectUrl:
+          type: string
+          description: URL the end user should be redirected to after the grant is rejected, carrying an `access_denied` error.
+          example: https://example.com/callback?error=access_denied&state=fghij
+      required:
+      - redirectUrl
+      example:
+        redirectUrl: https://example.com/callback?error=access_denied&state=fghij
+    oauth2DeviceAuthorization:
+      description: OAuth2 Device Authorization
+      type: object
+      properties:
+        device_code:
+          type: string
+          description: Device verification code used by the client to poll the token endpoint.
+          example: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
+        user_code:
+          type: string
+          description: Short code the end user enters on the verification page.
+          example: ABCD-EFGH
+        verification_uri:
+          type: string
+          description: URL where the end user enters the user code.
+          example: https://cloud.appwrite.io/console/oauth2/device
+        verification_uri_complete:
+          type: string
+          description: Verification URL with the user code prefilled as a query parameter.
+          example: https://cloud.appwrite.io/console/oauth2/device?user_code=ABCD-EFGH
+        expires_in:
+          type: integer
+          description: Lifetime of the device code and user code in seconds.
+          format: int32
+          example: 900
+        interval:
+          type: integer
+          description: Minimum polling interval for the token endpoint in seconds.
+          format: int32
+          example: 5
+      required:
+      - device_code
+      - user_code
+      - verification_uri
+      - verification_uri_complete
+      - expires_in
+      - interval
+      example:
+        device_code: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
+        user_code: ABCD-EFGH
+        verification_uri: https://cloud.appwrite.io/console/oauth2/device
+        verification_uri_complete: https://cloud.appwrite.io/console/oauth2/device?user_code=ABCD-EFGH
+        expires_in: 900
+        interval: 5
+    oauth2OrganizationList:
+      description: OAuth2 accessible organizations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of organizations that matched your query.
+          format: int32
+          example: 5
+        organizations:
+          type: array
+          description: List of organizations.
+          items:
+            $ref: '#/components/schemas/oauth2Organization'
+          example: []
+      required:
+      - total
+      - organizations
+      example:
+        total: 5
+        organizations: ''
   securitySchemes:
     Project:
       type: apiKey

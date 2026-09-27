@@ -117,6 +117,27 @@ paths:
               - texts
 components:
   schemas:
+    embeddingList:
+      description: Embedding list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of embeddings that matched your query.
+          format: int32
+          example: 5
+        embeddings:
+          type: array
+          description: List of embeddings.
+          items:
+            $ref: '#/components/schemas/embedding'
+          example: []
+      required:
+      - total
+      - embeddings
+      example:
+        total: 5
+        embeddings: ''
     embedding:
       description: Embedding
       type: object
@@ -157,27 +178,6 @@ components:
         - 0.02
         - 0.03
         error: Error message
-    embeddingList:
-      description: Embedding list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of embeddings that matched your query.
-          format: int32
-          example: 5
-        embeddings:
-          type: array
-          description: List of embeddings.
-          items:
-            $ref: '#/components/schemas/embedding'
-          example: []
-      required:
-      - total
-      - embeddings
-      example:
-        total: 5
-        embeddings: ''
   securitySchemes:
     Project:
       type: apiKey

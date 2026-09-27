@@ -762,84 +762,6 @@ paths:
         in: path
 components:
   schemas:
-    backupRestoration:
-      description: Restoration
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Restoration ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Restoration creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Restoration update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        archiveId:
-          type: string
-          description: Backup archive ID.
-          example: did8jx6ws45jana098ab7
-        policyId:
-          type: string
-          description: Backup policy ID.
-          example: did8jx6ws45jana098ab7
-        status:
-          type: string
-          description: 'The status of the restoration. Possible values: pending, downloading, processing, completed, failed.'
-          example: completed
-        startedAt:
-          type: string
-          description: The backup start time.
-          example: '2020-10-15T06:38:00.000+00:00'
-        migrationId:
-          type: string
-          description: Migration ID.
-          example: did8jx6ws45jana098ab7
-        services:
-          type: array
-          description: The services that are backed up by this policy.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''storage'']'
-        resources:
-          type: array
-          description: The resources that are backed up by this policy.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        options:
-          type: string
-          description: 'Optional data in key-value object. '
-          example: '{databases.database[{oldId, newId, newName}]}'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - archiveId
-      - policyId
-      - status
-      - startedAt
-      - migrationId
-      - services
-      - resources
-      - options
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        archiveId: did8jx6ws45jana098ab7
-        policyId: did8jx6ws45jana098ab7
-        status: completed
-        startedAt: '2020-10-15T06:38:00.000+00:00'
-        migrationId: did8jx6ws45jana098ab7
-        services: '[''databases'', ''storage'']'
-        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        options: '{databases.database[{oldId, newId, newName}]}'
     backupArchiveList:
       description: Backup archive list
       type: object
@@ -903,93 +825,6 @@ components:
       example:
         total: 5
         restorations: ''
-    backupArchive:
-      description: Archive
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Archive ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Archive creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Archive update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        policyId:
-          type: string
-          description: Archive policy ID.
-          example: did8jx6ws45jana098ab7
-        size:
-          type: integer
-          description: Archive size in bytes.
-          format: int32
-          example: 100000
-        status:
-          type: string
-          description: 'The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.'
-          example: completed
-        startedAt:
-          type: string
-          description: The backup start time.
-          example: '2020-10-15T06:38:00.000+00:00'
-        migrationId:
-          type: string
-          description: Migration ID.
-          example: did8jx6ws45jana098ab7
-        services:
-          type: array
-          description: The services that are backed up by this archive.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''storage'']'
-        resources:
-          type: array
-          description: The resources that are backed up by this archive.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId:
-          type:
-          - string
-          - 'null'
-          description: The resource ID to backup. Set only if this archive should backup a single resource.
-          example: DB1
-        resourceType:
-          type:
-          - string
-          - 'null'
-          description: The resource type to backup. Set only if this archive should backup a single resource.
-          example: database
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - policyId
-      - size
-      - status
-      - startedAt
-      - migrationId
-      - services
-      - resources
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        policyId: did8jx6ws45jana098ab7
-        size: 100000
-        status: completed
-        startedAt: '2020-10-15T06:38:00.000+00:00'
-        migrationId: did8jx6ws45jana098ab7
-        services: '[''databases'', ''storage'']'
-        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId: DB1
-        resourceType: database
     backupPolicy:
       description: backup
       type: object
@@ -1077,6 +912,171 @@ components:
         schedule: 0 * * * *
         type: full
         enabled: true
+    backupRestoration:
+      description: Restoration
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Restoration ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Restoration creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Restoration update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        archiveId:
+          type: string
+          description: Backup archive ID.
+          example: did8jx6ws45jana098ab7
+        policyId:
+          type: string
+          description: Backup policy ID.
+          example: did8jx6ws45jana098ab7
+        status:
+          type: string
+          description: 'The status of the restoration. Possible values: pending, downloading, processing, completed, failed.'
+          example: completed
+        startedAt:
+          type: string
+          description: The backup start time.
+          example: '2020-10-15T06:38:00.000+00:00'
+        migrationId:
+          type: string
+          description: Migration ID.
+          example: did8jx6ws45jana098ab7
+        services:
+          type: array
+          description: The services that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        options:
+          type: string
+          description: 'Optional data in key-value object. '
+          example: '{databases.database[{oldId, newId, newName}]}'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - archiveId
+      - policyId
+      - status
+      - startedAt
+      - migrationId
+      - services
+      - resources
+      - options
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        archiveId: did8jx6ws45jana098ab7
+        policyId: did8jx6ws45jana098ab7
+        status: completed
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        migrationId: did8jx6ws45jana098ab7
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        options: '{databases.database[{oldId, newId, newName}]}'
+    backupArchive:
+      description: Archive
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Archive ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Archive creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Archive update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        policyId:
+          type: string
+          description: Archive policy ID.
+          example: did8jx6ws45jana098ab7
+        size:
+          type: integer
+          description: Archive size in bytes.
+          format: int32
+          example: 100000
+        status:
+          type: string
+          description: 'The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.'
+          example: completed
+        startedAt:
+          type: string
+          description: The backup start time.
+          example: '2020-10-15T06:38:00.000+00:00'
+        migrationId:
+          type: string
+          description: Migration ID.
+          example: did8jx6ws45jana098ab7
+        services:
+          type: array
+          description: The services that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this archive should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this archive should backup a single resource.
+          example: database
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - policyId
+      - size
+      - status
+      - startedAt
+      - migrationId
+      - services
+      - resources
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        policyId: did8jx6ws45jana098ab7
+        size: 100000
+        status: completed
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        migrationId: did8jx6ws45jana098ab7
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
   securitySchemes:
     Project:
       type: apiKey

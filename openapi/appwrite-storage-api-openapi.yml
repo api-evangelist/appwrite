@@ -1140,27 +1140,6 @@ paths:
         in: query
 components:
   schemas:
-    bucketList:
-      description: Buckets List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of buckets that matched your query.
-          format: int32
-          example: 5
-        buckets:
-          type: array
-          description: List of buckets.
-          items:
-            $ref: '#/components/schemas/bucket'
-          example: []
-      required:
-      - total
-      - buckets
-      example:
-        total: 5
-        buckets: ''
     fileList:
       description: Files List
       type: object
@@ -1394,6 +1373,27 @@ components:
         antivirus: false
         transformations: false
         totalSize: 128
+    bucketList:
+      description: Buckets List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of buckets that matched your query.
+          format: int32
+          example: 5
+        buckets:
+          type: array
+          description: List of buckets.
+          items:
+            $ref: '#/components/schemas/bucket'
+          example: []
+      required:
+      - total
+      - buckets
+      example:
+        total: 5
+        buckets: ''
   securitySchemes:
     Project:
       type: apiKey

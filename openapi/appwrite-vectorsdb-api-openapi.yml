@@ -2445,1307 +2445,27 @@ paths:
         in: path
 components:
   schemas:
-    dedicatedDatabaseSpecificationList:
-      description: SpecificationList
-      type: object
-      properties:
-        specifications:
-          type: array
-          description: List of dedicated database specifications.
-          items:
-            $ref: '#/components/schemas/dedicatedDatabaseSpecification'
-          example: []
-        total:
-          type: integer
-          description: Total number of specifications.
-          format: int32
-          example: 9
-      required:
-      - specifications
-      - total
-      example:
-        specifications: []
-        total: 9
-    documentList:
-      description: Documents List
+    dedicatedDatabaseOperationList:
+      description: OperationList
       type: object
       properties:
         total:
           type: integer
-          description: Total number of documents that matched your query.
+          description: Total number of operations.
           format: int32
           example: 5
-        documents:
-          type: array
-          description: List of documents.
-          items:
-            $ref: '#/components/schemas/document'
-          example: []
-      required:
-      - total
-      - documents
-      example:
-        total: 5
-        documents: ''
-    indexList:
-      description: Indexes List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of indexes that matched your query.
-          format: int32
-          example: 5
-        indexes:
-          type: array
-          description: List of indexes.
-          items:
-            $ref: '#/components/schemas/index'
-          example: []
-      required:
-      - total
-      - indexes
-      example:
-        total: 5
-        indexes: ''
-    backupPolicy:
-      description: backup
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Backup policy ID.
-          example: 5e5ea5c16897e
-        name:
-          type: string
-          description: Backup policy name.
-          example: Hourly backups
-        $createdAt:
-          type: string
-          description: Policy creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Policy update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        services:
-          type: array
-          description: The services that are backed up by this policy.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''storage'']'
-        resources:
-          type: array
-          description: The resources that are backed up by this policy.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId:
-          type:
-          - string
-          - 'null'
-          description: The resource ID to backup. Set only if this policy should backup a single resource.
-          example: DB1
-        resourceType:
-          type:
-          - string
-          - 'null'
-          description: The resource type to backup. Set only if this policy should backup a single resource.
-          example: database
-        retention:
-          type: integer
-          description: How many days to keep the backup before it will be automatically deleted.
-          format: int32
-          example: 7
-        schedule:
-          type: string
-          description: Policy backup schedule in CRON format.
-          example: 0 * * * *
-        type:
-          type: string
-          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).'
-          example: full
-        enabled:
-          type: boolean
-          description: Is this policy enabled.
-          example: true
-      required:
-      - $id
-      - name
-      - $createdAt
-      - $updatedAt
-      - services
-      - resources
-      - retention
-      - schedule
-      - type
-      - enabled
-      example:
-        $id: 5e5ea5c16897e
-        name: Hourly backups
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        services: '[''databases'', ''storage'']'
-        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId: DB1
-        resourceType: database
-        retention: 7
-        schedule: 0 * * * *
-        type: full
-        enabled: true
-    vectorsdbCollectionList:
-      description: VectorsDB Collections List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of collections that matched your query.
-          format: int32
-          example: 5
-        collections:
-          type: array
-          description: List of collections.
-          items:
-            $ref: '#/components/schemas/vectorsdbCollection'
-          example: []
-      required:
-      - total
-      - collections
-      example:
-        total: 5
-        collections: ''
-    transaction:
-      description: Transaction
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Transaction ID.
-          example: '259125845563242502'
-        $createdAt:
-          type: string
-          description: Transaction creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Transaction update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        status:
-          type: string
-          description: 'Current status of the transaction. One of: pending, committing, committed, rolled_back, failed.'
-          example: pending
         operations:
-          type: integer
-          description: Number of operations in the transaction.
-          format: int32
-          example: 5
-        expiresAt:
-          type: string
-          description: Expiration time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - status
-      - operations
-      - expiresAt
-      example:
-        $id: '259125845563242502'
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        status: pending
-        operations: 5
-        expiresAt: '2020-10-15T06:38:00.000+00:00'
-    dedicatedDatabaseSpecification:
-      description: Specification
-      type: object
-      properties:
-        slug:
-          type: string
-          description: Specification slug. Use this value when creating a dedicated database.
-          example: s-2vcpu-2gb
-        name:
-          type: string
-          description: Human readable specification name.
-          example: Standard
-        price:
-          type: number
-          description: Monthly price of the specification in USD.
-          format: double
-          example: 20
-        storageOverageRate:
-          type: number
-          description: Price per GB of storage above the included amount, per month, in USD.
-          format: double
-          example: 0.125
-        bandwidthOverageRate:
-          type: number
-          description: Price per GB of bandwidth above the included amount, per month, in USD.
-          format: double
-          example: 0.08
-        replicaRate:
-          type: number
-          description: High availability replica price as a fraction of the specification price.
-          format: double
-          example: 1
-        pitrRate:
-          type: number
-          description: Point-in-time recovery price as a fraction of the specification price.
-          format: double
-          example: 0.2
-        cpu:
-          type: integer
-          description: Allocated CPU in millicores.
-          format: int32
-          example: 2000
-        memory:
-          type: integer
-          description: Allocated memory in MB.
-          format: int32
-          example: 2048
-        maxConnections:
-          type: integer
-          description: Maximum number of concurrent connections.
-          format: int32
-          example: 200
-        includedStorage:
-          type: integer
-          description: Included storage in GB before overage charges apply.
-          format: int32
-          example: 25
-        includedBandwidth:
-          type: integer
-          description: Included bandwidth in GB before overage charges apply.
-          format: int32
-          example: 200
-        enabled:
-          type: boolean
-          description: Whether the specification is available on the current plan.
-          example: true
-      required:
-      - slug
-      - name
-      - price
-      - storageOverageRate
-      - bandwidthOverageRate
-      - replicaRate
-      - pitrRate
-      - cpu
-      - memory
-      - maxConnections
-      - includedStorage
-      - includedBandwidth
-      - enabled
-      example:
-        slug: s-2vcpu-2gb
-        name: Standard
-        price: 20
-        storageOverageRate: 0.125
-        bandwidthOverageRate: 0.08
-        replicaRate: 1
-        pitrRate: 0.2
-        cpu: 2000
-        memory: 2048
-        maxConnections: 200
-        includedStorage: 25
-        includedBandwidth: 200
-        enabled: true
-    vectorsdbCollection:
-      description: VectorsDB Collection
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Collection ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Collection creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Collection update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
           type: array
-          description: Collection permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          description: List of operations.
           items:
-            type: string
-          example:
-          - read("any")
-        databaseId:
-          type: string
-          description: Database ID.
-          example: 5e5ea5c16897e
-        name:
-          type: string
-          description: Collection name.
-          example: My Collection
-        enabled:
-          type: boolean
-          description: Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
-          example: false
-        documentSecurity:
-          type: boolean
-          description: Whether document-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
-          example: true
-        attributes:
-          type: array
-          description: Collection attributes.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/attributeObject'
-            - $ref: '#/components/schemas/attributeVector'
-            discriminator:
-              propertyName: type
-              mapping:
-                object: '#/components/schemas/attributeObject'
-                vector: '#/components/schemas/attributeVector'
-          example: []
-        indexes:
-          type: array
-          description: Collection indexes.
-          items:
-            $ref: '#/components/schemas/index'
-          example: []
-        bytesMax:
-          type: integer
-          description: Maximum document size in bytes. Returns 0 when no limit applies.
-          format: int32
-          example: 65535
-        bytesUsed:
-          type: integer
-          description: Currently used document size in bytes based on defined attributes.
-          format: int32
-          example: 1500
-        dimension:
-          type: integer
-          description: Embedding dimension.
-          format: int32
-          example: 1536
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - databaseId
-      - name
-      - enabled
-      - documentSecurity
-      - attributes
-      - indexes
-      - bytesMax
-      - bytesUsed
-      - dimension
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        databaseId: 5e5ea5c16897e
-        name: My Collection
-        enabled: false
-        documentSecurity: true
-        attributes: {}
-        indexes: {}
-        bytesMax: 65535
-        bytesUsed: 1500
-        dimension: 1536
-    attributeVector:
-      description: AttributeVector
-      type: object
-      properties:
-        key:
-          type: string
-          description: Attribute Key.
-          example: fullName
-        type:
-          type: string
-          description: Attribute type.
-          example: string
-        status:
-          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
-          example: available
-          title: AttributeStatus
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - available
-            title: available
-          - type: string
-            enum:
-            - processing
-            title: processing
-          - type: string
-            enum:
-            - deleting
-            title: deleting
-          - type: string
-            enum:
-            - stuck
-            title: stuck
-          - type: string
-            enum:
-            - failed
-            title: failed
-        error:
-          type: string
-          description: Error message. Displays error generated on failure of creating or deleting an attribute.
-          example: string
-        required:
-          type: boolean
-          description: Is attribute required?
-          example: true
-        array:
-          type:
-          - boolean
-          - 'null'
-          description: Is attribute an array?
-          example: false
-        $createdAt:
-          type: string
-          description: Attribute creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Attribute update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        size:
-          type: integer
-          description: Vector dimensions.
-          format: int32
-          example: 1536
-      required:
-      - key
-      - type
-      - status
-      - error
-      - required
-      - $createdAt
-      - $updatedAt
-      - size
-      example:
-        key: fullName
-        type: string
-        status: available
-        error: string
-        required: true
-        array: false
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        size: 1536
-    document:
-      description: Document
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Document ID.
-          example: 5e5ea5c16897e
-        $sequence:
-          type: string
-          description: Document sequence ID.
-          readOnly: true
-          example: '1'
-        $collectionId:
-          type: string
-          description: Collection ID.
-          readOnly: true
-          example: 5e5ea5c15117e
-        $databaseId:
-          type: string
-          description: Database ID.
-          readOnly: true
-          example: 5e5ea5c15117e
-        $createdAt:
-          type: string
-          description: Document creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Document update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-      additionalProperties: true
-      required:
-      - $id
-      - $sequence
-      - $collectionId
-      - $databaseId
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      example:
-        $id: 5e5ea5c16897e
-        $sequence: '1'
-        $collectionId: 5e5ea5c15117e
-        $databaseId: 5e5ea5c15117e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        username: john.doe
-        email: john.doe@example.com
-        fullName: John Doe
-        age: 30
-        isAdmin: false
-    dedicatedDatabaseOperation:
-      description: Operation
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Operation ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Operation creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        databaseId:
-          type: string
-          description: Database ID the operation ran against.
-          example: 5e5ea5c16897e
-        type:
-          type: string
-          description: Operation type, such as provision, update, credentials-update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
-          example: update
-        status:
-          type: string
-          description: 'Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).'
-          example: completed
-        attempts:
-          type: integer
-          description: Number of times this operation has been attempted.
-          format: int32
-          example: 1
-        requestedAt:
-          type:
-          - string
-          - 'null'
-          description: Time the operation was requested, in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        startedAt:
-          type:
-          - string
-          - 'null'
-          description: Time the operation started, in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        completedAt:
-          type:
-          - string
-          - 'null'
-          description: Time the operation reached a terminal state, in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        errorCode:
-          type: string
-          description: Machine-readable failure code. `Interrupted` marks an attempt that ended before its outcome could be confirmed.
-          example: Interrupted
-        errorMessage:
-          type: string
-          description: Failure message if the operation failed.
-          example: ''
-      required:
-      - $id
-      - $createdAt
-      - databaseId
-      - type
-      - status
-      - attempts
-      - errorCode
-      - errorMessage
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        databaseId: 5e5ea5c16897e
-        type: update
-        status: completed
-        attempts: 1
-        requestedAt: '2020-10-15T06:38:00.000+00:00'
-        startedAt: '2020-10-15T06:38:00.000+00:00'
-        completedAt: '2020-10-15T06:38:00.000+00:00'
-        errorCode: Interrupted
-        errorMessage: ''
-    attributeObject:
-      description: AttributeObject
-      type: object
-      properties:
-        key:
-          type: string
-          description: Attribute Key.
-          example: fullName
-        type:
-          type: string
-          description: Attribute type.
-          example: string
-        status:
-          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
-          example: available
-          title: AttributeStatus
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - available
-            title: available
-          - type: string
-            enum:
-            - processing
-            title: processing
-          - type: string
-            enum:
-            - deleting
-            title: deleting
-          - type: string
-            enum:
-            - stuck
-            title: stuck
-          - type: string
-            enum:
-            - failed
-            title: failed
-        error:
-          type: string
-          description: Error message. Displays error generated on failure of creating or deleting an attribute.
-          example: string
-        required:
-          type: boolean
-          description: Is attribute required?
-          example: true
-        array:
-          type:
-          - boolean
-          - 'null'
-          description: Is attribute an array?
-          example: false
-        $createdAt:
-          type: string
-          description: Attribute creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Attribute update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - key
-      - type
-      - status
-      - error
-      - required
-      - $createdAt
-      - $updatedAt
-      example:
-        key: fullName
-        type: string
-        status: available
-        error: string
-        required: true
-        array: false
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-    databaseStatusVolume:
-      description: Volume
-      type: object
-      properties:
-        path:
-          type: string
-          description: Mount path of the volume.
-          example: /var/lib/postgresql/data
-        usedPercent:
-          type: string
-          description: Percentage of storage used.
-          example: 45%
-        available:
-          type: string
-          description: Available storage space.
-          example: 55GB
-        mounted:
-          type: boolean
-          description: Whether the volume is mounted.
-          example: true
-      required:
-      - path
-      - usedPercent
-      - available
-      - mounted
-      example:
-        path: /var/lib/postgresql/data
-        usedPercent: 45%
-        available: 55GB
-        mounted: true
-    transactionList:
-      description: Transaction List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of transactions that matched your query.
-          format: int32
-          example: 5
-        transactions:
-          type: array
-          description: List of transactions.
-          items:
-            $ref: '#/components/schemas/transaction'
+            $ref: '#/components/schemas/dedicatedDatabaseOperation'
           example: []
       required:
       - total
-      - transactions
+      - operations
       example:
         total: 5
-        transactions: ''
-    database:
-      description: Database
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Database ID.
-          example: 5e5ea5c16897e
-        name:
-          type: string
-          description: Database name.
-          example: My Database
-        $createdAt:
-          type: string
-          description: Database creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Database update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        enabled:
-          type: boolean
-          description: If database is enabled. Can be 'enabled' or 'disabled'. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
-          example: false
-        type:
-          description: Database type.
-          example: legacy
-          title: DatabaseType
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - legacy
-            title: legacy
-          - type: string
-            enum:
-            - tablesdb
-            title: tablesdb
-          - type: string
-            enum:
-            - documentsdb
-            title: documentsdb
-          - type: string
-            enum:
-            - vectorsdb
-            title: vectorsdb
-          - type: string
-            enum:
-            - mysql
-            title: mysql
-          - type: string
-            enum:
-            - postgresql
-            title: postgresql
-          - type: string
-            enum:
-            - mongodb
-            title: mongodb
-        status:
-          description: Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
-          readOnly: true
-          example: ready
-          title: DatabaseStatus
-          type:
-          - string
-          - 'null'
-          oneOf:
-          - type: string
-            enum:
-            - provisioning
-            title: provisioning
-          - type: string
-            enum:
-            - ready
-            title: ready
-          - type: string
-            enum:
-            - inactive
-            title: inactive
-          - type: string
-            enum:
-            - paused
-            title: paused
-          - type: string
-            enum:
-            - failed
-            title: failed
-          - type: string
-            enum:
-            - deleting
-            title: deleting
-          - type: string
-            enum:
-            - deleted
-            title: deleted
-          - type: string
-            enum:
-            - restoring
-            title: restoring
-          - type: string
-            enum:
-            - scaling
-            title: scaling
-          - type: string
-            enum:
-            - upgrading
-            title: upgrading
-          - type: string
-            enum:
-            - migrating
-            title: migrating
-          - type: string
-            enum:
-            - pausing
-            title: pausing
-          - type: string
-            enum:
-            - resuming
-            title: resuming
-          - type: string
-            enum:
-            - failing-over
-            title: failing-over
-        engine:
-          type:
-          - string
-          - 'null'
-          description: 'Underlying engine of the dedicated backing: postgresql, mysql, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.'
-          readOnly: true
-          example: postgresql
-        specification:
-          type:
-          - string
-          - 'null'
-          description: Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
-          readOnly: true
-          example: s-2vcpu-2gb
-        replicas:
-          type:
-          - integer
-          - 'null'
-          description: Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
-          format: int32
-          readOnly: true
-          example: 0
-        error:
-          type:
-          - string
-          - 'null'
-          description: Error message when the dedicated backing failed. Null when the database has no dedicated backing or has not failed.
-          readOnly: true
-          example: ''
-        containerStatus:
-          type:
-          - string
-          - 'null'
-          description: 'Container status of the dedicated backing: active, inactive, or failed (a wake was declined because the backing namespace is gone). Null when the database has no dedicated backing or the runtime has not reported one.'
-          readOnly: true
-          example: active
-        lifecycleState:
-          type:
-          - string
-          - 'null'
-          description: 'Idle-lifecycle state of the dedicated backing: active, warm, cold, or hibernated. Null when the database has no dedicated backing or the runtime has not reported one.'
-          readOnly: true
-          example: active
-        policies:
-          type:
-          - array
-          - 'null'
-          description: Database backup policies.
-          items:
-            $ref: '#/components/schemas/backupPolicy'
-          example: []
-        archives:
-          type:
-          - array
-          - 'null'
-          description: Database backup archives.
-          items:
-            $ref: '#/components/schemas/backupArchive'
-          example: []
-      required:
-      - $id
-      - name
-      - $createdAt
-      - $updatedAt
-      - enabled
-      - type
-      example:
-        $id: 5e5ea5c16897e
-        name: My Database
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        enabled: false
-        type: legacy
-        status: ready
-        engine: postgresql
-        specification: s-2vcpu-2gb
-        replicas: 0
-        error: ''
-        containerStatus: active
-        lifecycleState: active
-        policies: {}
-        archives: {}
-    databaseStatus:
-      description: Status
-      type: object
-      properties:
-        health:
-          type: string
-          description: 'Overall health status: healthy, degraded, unhealthy, or unknown when nothing could be measured.'
-          example: healthy
-        ready:
-          type: boolean
-          description: Whether the database is ready to accept connections.
-          example: true
-        engine:
-          type: string
-          description: 'Database engine: postgresql, mysql, or mongodb.'
-          example: postgresql
-        version:
-          type: string
-          description: Database engine version.
-          example: '17'
-        uptime:
-          type: integer
-          description: Database uptime in seconds.
-          format: int32
-          example: 86400
-        connections:
-          type: object
-          description: Connection statistics.
-          example:
-            current: 12
-            max: 100
-          allOf:
-          - $ref: '#/components/schemas/databaseStatusConnections'
-        syncMode:
-          type: string
-          description: 'Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.'
-          example: async
-        effectiveSyncMode:
-          type:
-          - string
-          - 'null'
-          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read.
-          example: async
-        syncDegraded:
-          type: boolean
-          description: Whether the enforced replication is weaker than the requested syncMode.
-          example: false
-        syncAcknowledgements:
-          type: integer
-          description: Number of standby acknowledgements the primary waits for before a write is committed.
-          format: int32
-          example: 1
-        syncStandbyCount:
-          type: integer
-          description: Number of standbys registered with the primary for synchronous replication.
-          format: int32
-          example: 2
-        syncStateConfirmed:
-          type:
-          - boolean
-          - 'null'
-          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
-          example: true
-        replicas:
-          type: array
-          description: List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
-          items:
-            $ref: '#/components/schemas/databaseStatusReplica'
-          example:
-          - index: 0
-            role: primary
-            healthy: true
-            replicating: null
-            lagSeconds: null
-          - index: 1
-            role: replica
-            healthy: true
-            replicating: true
-            lagSeconds: 0.2
-        volumes:
-          type: array
-          description: Storage volume information.
-          items:
-            $ref: '#/components/schemas/databaseStatusVolume'
-          example:
-          - data:
-              path: /var/lib/postgresql/data
-              usedPercent: 45%
-              available: 55GB
-              mounted: true
-      required:
-      - health
-      - ready
-      - engine
-      - version
-      - uptime
-      - connections
-      - syncMode
-      - syncDegraded
-      - syncAcknowledgements
-      - syncStandbyCount
-      - replicas
-      - volumes
-      example:
-        health: healthy
-        ready: true
-        engine: postgresql
-        version: '17'
-        uptime: 86400
-        connections:
-          current: 12
-          max: 100
-        syncMode: async
-        effectiveSyncMode: async
-        syncDegraded: false
-        syncAcknowledgements: 1
-        syncStandbyCount: 2
-        syncStateConfirmed: true
-        replicas:
-        - index: 0
-          role: primary
-          healthy: true
-          replicating: null
-          lagSeconds: null
-        - index: 1
-          role: replica
-          healthy: true
-          replicating: true
-          lagSeconds: 0.2
-        volumes:
-          data:
-            path: /var/lib/postgresql/data
-            usedPercent: 45%
-            available: 55GB
-            mounted: true
-    index:
-      description: Index
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Index ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Index creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Index update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        key:
-          type: string
-          description: Index key.
-          example: index1
-        type:
-          type: string
-          description: Index type.
-          example: primary
-        status:
-          description: 'Index status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
-          example: available
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - available
-            title: available
-          - type: string
-            enum:
-            - processing
-            title: processing
-          - type: string
-            enum:
-            - deleting
-            title: deleting
-          - type: string
-            enum:
-            - stuck
-            title: stuck
-          - type: string
-            enum:
-            - failed
-            title: failed
-        error:
-          type: string
-          description: Error message. Displays error generated on failure of creating or deleting an index.
-          example: string
-        attributes:
-          type: array
-          description: Index attributes.
-          items:
-            type: string
-          example: []
-        lengths:
-          type: array
-          description: Index attributes length.
-          items:
-            type: integer
-            format: int32
-          example: []
-        orders:
-          type:
-          - array
-          - 'null'
-          description: Index orders.
-          items:
-            type: string
-          example: []
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - key
-      - type
-      - status
-      - error
-      - attributes
-      - lengths
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        key: index1
-        type: primary
-        status: available
-        error: string
-        attributes: []
-        lengths: []
-        orders: []
-    backupArchive:
-      description: Archive
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Archive ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Archive creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Archive update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        policyId:
-          type: string
-          description: Archive policy ID.
-          example: did8jx6ws45jana098ab7
-        size:
-          type: integer
-          description: Archive size in bytes.
-          format: int32
-          example: 100000
-        status:
-          type: string
-          description: 'The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.'
-          example: completed
-        startedAt:
-          type: string
-          description: The backup start time.
-          example: '2020-10-15T06:38:00.000+00:00'
-        migrationId:
-          type: string
-          description: Migration ID.
-          example: did8jx6ws45jana098ab7
-        services:
-          type: array
-          description: The services that are backed up by this archive.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''storage'']'
-        resources:
-          type: array
-          description: The resources that are backed up by this archive.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId:
-          type:
-          - string
-          - 'null'
-          description: The resource ID to backup. Set only if this archive should backup a single resource.
-          example: DB1
-        resourceType:
-          type:
-          - string
-          - 'null'
-          description: The resource type to backup. Set only if this archive should backup a single resource.
-          example: database
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - policyId
-      - size
-      - status
-      - startedAt
-      - migrationId
-      - services
-      - resources
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        policyId: did8jx6ws45jana098ab7
-        size: 100000
-        status: completed
-        startedAt: '2020-10-15T06:38:00.000+00:00'
-        migrationId: did8jx6ws45jana098ab7
-        services: '[''databases'', ''storage'']'
-        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId: DB1
-        resourceType: database
-    databaseStatusConnections:
-      description: Connections
-      type: object
-      properties:
-        current:
-          type: integer
-          description: Current number of active connections.
-          format: int32
-          example: 12
-        max:
-          type: integer
-          description: The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
-          format: int32
-          example: 100
-      required:
-      - current
-      - max
-      example:
-        current: 12
-        max: 100
+        operations: ''
     dedicatedDatabaseMember:
       description: Member
       type: object
@@ -4133,6 +2853,804 @@ components:
         sqlApiMaxBytes: 10485760
         sqlApiTimeoutSeconds: 30
         error: ''
+    databaseStatus:
+      description: Status
+      type: object
+      properties:
+        health:
+          type: string
+          description: 'Overall health status: healthy, degraded, unhealthy, or unknown when nothing could be measured.'
+          example: healthy
+        ready:
+          type: boolean
+          description: Whether the database is ready to accept connections.
+          example: true
+        engine:
+          type: string
+          description: 'Database engine: postgresql, mysql, or mongodb.'
+          example: postgresql
+        version:
+          type: string
+          description: Database engine version.
+          example: '17'
+        uptime:
+          type: integer
+          description: Database uptime in seconds.
+          format: int32
+          example: 86400
+        connections:
+          type: object
+          description: Connection statistics.
+          example:
+            current: 12
+            max: 100
+          allOf:
+          - $ref: '#/components/schemas/databaseStatusConnections'
+        syncMode:
+          type: string
+          description: 'Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.'
+          example: async
+        effectiveSyncMode:
+          type:
+          - string
+          - 'null'
+          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read.
+          example: async
+        syncDegraded:
+          type: boolean
+          description: Whether the enforced replication is weaker than the requested syncMode.
+          example: false
+        syncAcknowledgements:
+          type: integer
+          description: Number of standby acknowledgements the primary waits for before a write is committed.
+          format: int32
+          example: 1
+        syncStandbyCount:
+          type: integer
+          description: Number of standbys registered with the primary for synchronous replication.
+          format: int32
+          example: 2
+        syncStateConfirmed:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
+          example: true
+        replicas:
+          type: array
+          description: List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
+          items:
+            $ref: '#/components/schemas/databaseStatusReplica'
+          example:
+          - index: 0
+            role: primary
+            healthy: true
+            replicating: null
+            lagSeconds: null
+          - index: 1
+            role: replica
+            healthy: true
+            replicating: true
+            lagSeconds: 0.2
+        volumes:
+          type: array
+          description: Storage volume information.
+          items:
+            $ref: '#/components/schemas/databaseStatusVolume'
+          example:
+          - data:
+              path: /var/lib/postgresql/data
+              usedPercent: 45%
+              available: 55GB
+              mounted: true
+      required:
+      - health
+      - ready
+      - engine
+      - version
+      - uptime
+      - connections
+      - syncMode
+      - syncDegraded
+      - syncAcknowledgements
+      - syncStandbyCount
+      - replicas
+      - volumes
+      example:
+        health: healthy
+        ready: true
+        engine: postgresql
+        version: '17'
+        uptime: 86400
+        connections:
+          current: 12
+          max: 100
+        syncMode: async
+        effectiveSyncMode: async
+        syncDegraded: false
+        syncAcknowledgements: 1
+        syncStandbyCount: 2
+        syncStateConfirmed: true
+        replicas:
+        - index: 0
+          role: primary
+          healthy: true
+          replicating: null
+          lagSeconds: null
+        - index: 1
+          role: replica
+          healthy: true
+          replicating: true
+          lagSeconds: 0.2
+        volumes:
+          data:
+            path: /var/lib/postgresql/data
+            usedPercent: 45%
+            available: 55GB
+            mounted: true
+    attributeVector:
+      description: AttributeVector
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        size:
+          type: integer
+          description: Vector dimensions.
+          format: int32
+          example: 1536
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      - size
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        size: 1536
+    document:
+      description: Document
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Document ID.
+          example: 5e5ea5c16897e
+        $sequence:
+          type: string
+          description: Document sequence ID.
+          readOnly: true
+          example: '1'
+        $collectionId:
+          type: string
+          description: Collection ID.
+          readOnly: true
+          example: 5e5ea5c15117e
+        $databaseId:
+          type: string
+          description: Database ID.
+          readOnly: true
+          example: 5e5ea5c15117e
+        $createdAt:
+          type: string
+          description: Document creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Document update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+      additionalProperties: true
+      required:
+      - $id
+      - $sequence
+      - $collectionId
+      - $databaseId
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      example:
+        $id: 5e5ea5c16897e
+        $sequence: '1'
+        $collectionId: 5e5ea5c15117e
+        $databaseId: 5e5ea5c15117e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        username: john.doe
+        email: john.doe@example.com
+        fullName: John Doe
+        age: 30
+        isAdmin: false
+    transactionList:
+      description: Transaction List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of transactions that matched your query.
+          format: int32
+          example: 5
+        transactions:
+          type: array
+          description: List of transactions.
+          items:
+            $ref: '#/components/schemas/transaction'
+          example: []
+      required:
+      - total
+      - transactions
+      example:
+        total: 5
+        transactions: ''
+    documentList:
+      description: Documents List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of documents that matched your query.
+          format: int32
+          example: 5
+        documents:
+          type: array
+          description: List of documents.
+          items:
+            $ref: '#/components/schemas/document'
+          example: []
+      required:
+      - total
+      - documents
+      example:
+        total: 5
+        documents: ''
+    indexList:
+      description: Indexes List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of indexes that matched your query.
+          format: int32
+          example: 5
+        indexes:
+          type: array
+          description: List of indexes.
+          items:
+            $ref: '#/components/schemas/index'
+          example: []
+      required:
+      - total
+      - indexes
+      example:
+        total: 5
+        indexes: ''
+    transaction:
+      description: Transaction
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Transaction ID.
+          example: '259125845563242502'
+        $createdAt:
+          type: string
+          description: Transaction creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Transaction update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        status:
+          type: string
+          description: 'Current status of the transaction. One of: pending, committing, committed, rolled_back, failed.'
+          example: pending
+        operations:
+          type: integer
+          description: Number of operations in the transaction.
+          format: int32
+          example: 5
+        expiresAt:
+          type: string
+          description: Expiration time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - status
+      - operations
+      - expiresAt
+      example:
+        $id: '259125845563242502'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        status: pending
+        operations: 5
+        expiresAt: '2020-10-15T06:38:00.000+00:00'
+    vectorsdbCollection:
+      description: VectorsDB Collection
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Collection ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Collection creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Collection update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Collection permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        databaseId:
+          type: string
+          description: Database ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Collection name.
+          example: My Collection
+        enabled:
+          type: boolean
+          description: Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
+          example: false
+        documentSecurity:
+          type: boolean
+          description: Whether document-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          example: true
+        attributes:
+          type: array
+          description: Collection attributes.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/attributeObject'
+            - $ref: '#/components/schemas/attributeVector'
+            discriminator:
+              propertyName: type
+              mapping:
+                object: '#/components/schemas/attributeObject'
+                vector: '#/components/schemas/attributeVector'
+          example: []
+        indexes:
+          type: array
+          description: Collection indexes.
+          items:
+            $ref: '#/components/schemas/index'
+          example: []
+        bytesMax:
+          type: integer
+          description: Maximum document size in bytes. Returns 0 when no limit applies.
+          format: int32
+          example: 65535
+        bytesUsed:
+          type: integer
+          description: Currently used document size in bytes based on defined attributes.
+          format: int32
+          example: 1500
+        dimension:
+          type: integer
+          description: Embedding dimension.
+          format: int32
+          example: 1536
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - databaseId
+      - name
+      - enabled
+      - documentSecurity
+      - attributes
+      - indexes
+      - bytesMax
+      - bytesUsed
+      - dimension
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        databaseId: 5e5ea5c16897e
+        name: My Collection
+        enabled: false
+        documentSecurity: true
+        attributes: {}
+        indexes: {}
+        bytesMax: 65535
+        bytesUsed: 1500
+        dimension: 1536
+    attributeObject:
+      description: AttributeObject
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute Key.
+          example: fullName
+        type:
+          type: string
+          description: Attribute type.
+          example: string
+        status:
+          description: 'Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          title: AttributeStatus
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an attribute.
+          example: string
+        required:
+          type: boolean
+          description: Is attribute required?
+          example: true
+        array:
+          type:
+          - boolean
+          - 'null'
+          description: Is attribute an array?
+          example: false
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - key
+      - type
+      - status
+      - error
+      - required
+      - $createdAt
+      - $updatedAt
+      example:
+        key: fullName
+        type: string
+        status: available
+        error: string
+        required: true
+        array: false
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+    index:
+      description: Index
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Index ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Index creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Index update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        key:
+          type: string
+          description: Index key.
+          example: index1
+        type:
+          type: string
+          description: Index type.
+          example: primary
+        status:
+          description: 'Index status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`'
+          example: available
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - available
+            title: available
+          - type: string
+            enum:
+            - processing
+            title: processing
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - stuck
+            title: stuck
+          - type: string
+            enum:
+            - failed
+            title: failed
+        error:
+          type: string
+          description: Error message. Displays error generated on failure of creating or deleting an index.
+          example: string
+        attributes:
+          type: array
+          description: Index attributes.
+          items:
+            type: string
+          example: []
+        lengths:
+          type: array
+          description: Index attributes length.
+          items:
+            type: integer
+            format: int32
+          example: []
+        orders:
+          type:
+          - array
+          - 'null'
+          description: Index orders.
+          items:
+            type: string
+          example: []
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - key
+      - type
+      - status
+      - error
+      - attributes
+      - lengths
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        key: index1
+        type: primary
+        status: available
+        error: string
+        attributes: []
+        lengths: []
+        orders: []
+    dedicatedDatabaseOperation:
+      description: Operation
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Operation ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Operation creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        databaseId:
+          type: string
+          description: Database ID the operation ran against.
+          example: 5e5ea5c16897e
+        type:
+          type: string
+          description: Operation type, such as provision, update, credentials-update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
+          example: update
+        status:
+          type: string
+          description: 'Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).'
+          example: completed
+        attempts:
+          type: integer
+          description: Number of times this operation has been attempted.
+          format: int32
+          example: 1
+        requestedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation was requested, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation started, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        completedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation reached a terminal state, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        errorCode:
+          type: string
+          description: Machine-readable failure code. `Interrupted` marks an attempt that ended before its outcome could be confirmed.
+          example: Interrupted
+        errorMessage:
+          type: string
+          description: Failure message if the operation failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - databaseId
+      - type
+      - status
+      - attempts
+      - errorCode
+      - errorMessage
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        databaseId: 5e5ea5c16897e
+        type: update
+        status: completed
+        attempts: 1
+        requestedAt: '2020-10-15T06:38:00.000+00:00'
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        completedAt: '2020-10-15T06:38:00.000+00:00'
+        errorCode: Interrupted
+        errorMessage: ''
+    vectorsdbCollectionList:
+      description: VectorsDB Collections List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of collections that matched your query.
+          format: int32
+          example: 5
+        collections:
+          type: array
+          description: List of collections.
+          items:
+            $ref: '#/components/schemas/vectorsdbCollection'
+          example: []
+      required:
+      - total
+      - collections
+      example:
+        total: 5
+        collections: ''
+    databaseStatusConnections:
+      description: Connections
+      type: object
+      properties:
+        current:
+          type: integer
+          description: Current number of active connections.
+          format: int32
+          example: 12
+        max:
+          type: integer
+          description: The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
+          format: int32
+          example: 100
+      required:
+      - current
+      - max
+      example:
+        current: 12
+        max: 100
+    dedicatedDatabaseSpecificationList:
+      description: SpecificationList
+      type: object
+      properties:
+        specifications:
+          type: array
+          description: List of dedicated database specifications.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseSpecification'
+          example: []
+        total:
+          type: integer
+          description: Total number of specifications.
+          format: int32
+          example: 9
+      required:
+      - specifications
+      - total
+      example:
+        specifications: []
+        total: 9
     databaseStatusReplica:
       description: Replica
       type: object
@@ -4173,6 +3691,298 @@ components:
         healthy: true
         replicating: true
         lagSeconds: 0.2
+    database:
+      description: Database
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Database ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Database name.
+          example: My Database
+        $createdAt:
+          type: string
+          description: Database creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Database update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        enabled:
+          type: boolean
+          description: If database is enabled. Can be 'enabled' or 'disabled'. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
+          example: false
+        type:
+          description: Database type.
+          example: legacy
+          title: DatabaseType
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - legacy
+            title: legacy
+          - type: string
+            enum:
+            - tablesdb
+            title: tablesdb
+          - type: string
+            enum:
+            - documentsdb
+            title: documentsdb
+          - type: string
+            enum:
+            - vectorsdb
+            title: vectorsdb
+          - type: string
+            enum:
+            - mysql
+            title: mysql
+          - type: string
+            enum:
+            - postgresql
+            title: postgresql
+          - type: string
+            enum:
+            - mongodb
+            title: mongodb
+        status:
+          description: Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
+          readOnly: true
+          example: ready
+          title: DatabaseStatus
+          type:
+          - string
+          - 'null'
+          oneOf:
+          - type: string
+            enum:
+            - provisioning
+            title: provisioning
+          - type: string
+            enum:
+            - ready
+            title: ready
+          - type: string
+            enum:
+            - inactive
+            title: inactive
+          - type: string
+            enum:
+            - paused
+            title: paused
+          - type: string
+            enum:
+            - failed
+            title: failed
+          - type: string
+            enum:
+            - deleting
+            title: deleting
+          - type: string
+            enum:
+            - deleted
+            title: deleted
+          - type: string
+            enum:
+            - restoring
+            title: restoring
+          - type: string
+            enum:
+            - scaling
+            title: scaling
+          - type: string
+            enum:
+            - upgrading
+            title: upgrading
+          - type: string
+            enum:
+            - migrating
+            title: migrating
+          - type: string
+            enum:
+            - pausing
+            title: pausing
+          - type: string
+            enum:
+            - resuming
+            title: resuming
+          - type: string
+            enum:
+            - failing-over
+            title: failing-over
+        engine:
+          type:
+          - string
+          - 'null'
+          description: 'Underlying engine of the dedicated backing: postgresql, mysql, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.'
+          readOnly: true
+          example: postgresql
+        specification:
+          type:
+          - string
+          - 'null'
+          description: Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
+          readOnly: true
+          example: s-2vcpu-2gb
+        replicas:
+          type:
+          - integer
+          - 'null'
+          description: Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
+          format: int32
+          readOnly: true
+          example: 0
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message when the dedicated backing failed. Null when the database has no dedicated backing or has not failed.
+          readOnly: true
+          example: ''
+        containerStatus:
+          type:
+          - string
+          - 'null'
+          description: 'Container status of the dedicated backing: active, inactive, or failed (a wake was declined because the backing namespace is gone). Null when the database has no dedicated backing or the runtime has not reported one.'
+          readOnly: true
+          example: active
+        lifecycleState:
+          type:
+          - string
+          - 'null'
+          description: 'Idle-lifecycle state of the dedicated backing: active, warm, cold, or hibernated. Null when the database has no dedicated backing or the runtime has not reported one.'
+          readOnly: true
+          example: active
+        policies:
+          type:
+          - array
+          - 'null'
+          description: Database backup policies.
+          items:
+            $ref: '#/components/schemas/backupPolicy'
+          example: []
+        archives:
+          type:
+          - array
+          - 'null'
+          description: Database backup archives.
+          items:
+            $ref: '#/components/schemas/backupArchive'
+          example: []
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - enabled
+      - type
+      example:
+        $id: 5e5ea5c16897e
+        name: My Database
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        enabled: false
+        type: legacy
+        status: ready
+        engine: postgresql
+        specification: s-2vcpu-2gb
+        replicas: 0
+        error: ''
+        containerStatus: active
+        lifecycleState: active
+        policies: {}
+        archives: {}
+    backupArchive:
+      description: Archive
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Archive ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Archive creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Archive update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        policyId:
+          type: string
+          description: Archive policy ID.
+          example: did8jx6ws45jana098ab7
+        size:
+          type: integer
+          description: Archive size in bytes.
+          format: int32
+          example: 100000
+        status:
+          type: string
+          description: 'The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.'
+          example: completed
+        startedAt:
+          type: string
+          description: The backup start time.
+          example: '2020-10-15T06:38:00.000+00:00'
+        migrationId:
+          type: string
+          description: Migration ID.
+          example: did8jx6ws45jana098ab7
+        services:
+          type: array
+          description: The services that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this archive.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this archive should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this archive should backup a single resource.
+          example: database
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - policyId
+      - size
+      - status
+      - startedAt
+      - migrationId
+      - services
+      - resources
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        policyId: did8jx6ws45jana098ab7
+        size: 100000
+        status: completed
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        migrationId: did8jx6ws45jana098ab7
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
     databaseList:
       description: Databases List
       type: object
@@ -4194,6 +4004,123 @@ components:
       example:
         total: 5
         databases: ''
+    backupPolicy:
+      description: backup
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Backup policy ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Backup policy name.
+          example: Hourly backups
+        $createdAt:
+          type: string
+          description: Policy creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Policy update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        services:
+          type: array
+          description: The services that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this policy should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this policy should backup a single resource.
+          example: database
+        retention:
+          type: integer
+          description: How many days to keep the backup before it will be automatically deleted.
+          format: int32
+          example: 7
+        schedule:
+          type: string
+          description: Policy backup schedule in CRON format.
+          example: 0 * * * *
+        type:
+          type: string
+          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).'
+          example: full
+        enabled:
+          type: boolean
+          description: Is this policy enabled.
+          example: true
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - services
+      - resources
+      - retention
+      - schedule
+      - type
+      - enabled
+      example:
+        $id: 5e5ea5c16897e
+        name: Hourly backups
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
+        retention: 7
+        schedule: 0 * * * *
+        type: full
+        enabled: true
+    databaseStatusVolume:
+      description: Volume
+      type: object
+      properties:
+        path:
+          type: string
+          description: Mount path of the volume.
+          example: /var/lib/postgresql/data
+        usedPercent:
+          type: string
+          description: Percentage of storage used.
+          example: 45%
+        available:
+          type: string
+          description: Available storage space.
+          example: 55GB
+        mounted:
+          type: boolean
+          description: Whether the volume is mounted.
+          example: true
+      required:
+      - path
+      - usedPercent
+      - available
+      - mounted
+      example:
+        path: /var/lib/postgresql/data
+        usedPercent: 45%
+        available: 55GB
+        mounted: true
     dedicatedDatabaseReplicas:
       description: Replicas
       type: object
@@ -4255,27 +4182,100 @@ components:
         syncStandbyCount: 2
         syncStateConfirmed: true
         members: []
-    dedicatedDatabaseOperationList:
-      description: OperationList
+    dedicatedDatabaseSpecification:
+      description: Specification
       type: object
       properties:
-        total:
+        slug:
+          type: string
+          description: Specification slug. Use this value when creating a dedicated database.
+          example: s-2vcpu-2gb
+        name:
+          type: string
+          description: Human readable specification name.
+          example: Standard
+        price:
+          type: number
+          description: Monthly price of the specification in USD.
+          format: double
+          example: 20
+        storageOverageRate:
+          type: number
+          description: Price per GB of storage above the included amount, per month, in USD.
+          format: double
+          example: 0.125
+        bandwidthOverageRate:
+          type: number
+          description: Price per GB of bandwidth above the included amount, per month, in USD.
+          format: double
+          example: 0.08
+        replicaRate:
+          type: number
+          description: High availability replica price as a fraction of the specification price.
+          format: double
+          example: 1
+        pitrRate:
+          type: number
+          description: Point-in-time recovery price as a fraction of the specification price.
+          format: double
+          example: 0.2
+        cpu:
           type: integer
-          description: Total number of operations.
+          description: Allocated CPU in millicores.
           format: int32
-          example: 5
-        operations:
-          type: array
-          description: List of operations.
-          items:
-            $ref: '#/components/schemas/dedicatedDatabaseOperation'
-          example: []
+          example: 2000
+        memory:
+          type: integer
+          description: Allocated memory in MB.
+          format: int32
+          example: 2048
+        maxConnections:
+          type: integer
+          description: Maximum number of concurrent connections.
+          format: int32
+          example: 200
+        includedStorage:
+          type: integer
+          description: Included storage in GB before overage charges apply.
+          format: int32
+          example: 25
+        includedBandwidth:
+          type: integer
+          description: Included bandwidth in GB before overage charges apply.
+          format: int32
+          example: 200
+        enabled:
+          type: boolean
+          description: Whether the specification is available on the current plan.
+          example: true
       required:
-      - total
-      - operations
+      - slug
+      - name
+      - price
+      - storageOverageRate
+      - bandwidthOverageRate
+      - replicaRate
+      - pitrRate
+      - cpu
+      - memory
+      - maxConnections
+      - includedStorage
+      - includedBandwidth
+      - enabled
       example:
-        total: 5
-        operations: ''
+        slug: s-2vcpu-2gb
+        name: Standard
+        price: 20
+        storageOverageRate: 0.125
+        bandwidthOverageRate: 0.08
+        replicaRate: 1
+        pitrRate: 0.2
+        cpu: 2000
+        memory: 2048
+        maxConnections: 200
+        includedStorage: 25
+        includedBandwidth: 200
+        enabled: true
   securitySchemes:
     Project:
       type: apiKey

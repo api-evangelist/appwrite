@@ -1178,6 +1178,589 @@ paths:
         in: path
 components:
   schemas:
+    wafRuleBypass:
+      description: WafRuleBypass
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Rule ID.
+          example: wafRule1
+        $createdAt:
+          type: string
+          description: WAF rule creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: WAF rule last update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Human friendly rule name.
+          example: Block anonymous POST traffic
+        description:
+          type: string
+          description: Optional description for the rule.
+          example: Blocks anonymous POST calls to /v1/graphql
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: cloudConsole
+        resourceType:
+          type: string
+          description: Resource type the rule is scoped to.
+          example: functions
+        resourceId:
+          type: string
+          description: Resource identifier. Empty for API-wide rules.
+          example: functionId
+        action:
+          description: Action performed when the rule matches.
+          example: deny
+          title: WafRuleAction
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - bypass
+            title: bypass
+          - type: string
+            enum:
+            - deny
+            title: deny
+          - type: string
+            enum:
+            - challenge
+            title: challenge
+          - type: string
+            enum:
+            - rateLimit
+            title: rateLimit
+          - type: string
+            enum:
+            - redirect
+            title: redirect
+        priority:
+          type: integer
+          description: Evaluation priority. Lower values execute earlier.
+          format: int32
+          example: 100
+        enabled:
+          type: boolean
+          description: Whether the rule is active.
+          example: true
+        conditions:
+          type: array
+          description: List of conditions evaluated for this rule.
+          items:
+            type: object
+          example:
+          - method: equal
+            attribute: ip
+            values:
+            - 127.0.0.1
+        config:
+          type: object
+          additionalProperties: true
+          description: Action specific configuration.
+          example: {}
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - description
+      - teamId
+      - projectId
+      - resourceType
+      - resourceId
+      - action
+      - priority
+      - enabled
+      - conditions
+      - config
+      example:
+        $id: wafRule1
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Block anonymous POST traffic
+        description: Blocks anonymous POST calls to /v1/graphql
+        teamId: 5e5ea5c16897e
+        projectId: cloudConsole
+        resourceType: functions
+        resourceId: functionId
+        action: deny
+        priority: 100
+        enabled: true
+        conditions:
+        - method: equal
+          attribute: ip
+          values:
+          - 127.0.0.1
+        config: []
+    wafRuleList:
+      description: WAF rule list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of rules that matched your query.
+          format: int32
+          example: 5
+        rules:
+          type: array
+          description: List of rules.
+          items:
+            $ref: '#/components/schemas/wafRule'
+          example: []
+      required:
+      - total
+      - rules
+      example:
+        total: 5
+        rules: ''
+    wafRuleRateLimit:
+      description: WafRuleRateLimit
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Rule ID.
+          example: wafRule1
+        $createdAt:
+          type: string
+          description: WAF rule creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: WAF rule last update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Human friendly rule name.
+          example: Block anonymous POST traffic
+        description:
+          type: string
+          description: Optional description for the rule.
+          example: Blocks anonymous POST calls to /v1/graphql
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: cloudConsole
+        resourceType:
+          type: string
+          description: Resource type the rule is scoped to.
+          example: functions
+        resourceId:
+          type: string
+          description: Resource identifier. Empty for API-wide rules.
+          example: functionId
+        action:
+          description: Action performed when the rule matches.
+          example: deny
+          title: WafRuleAction
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - bypass
+            title: bypass
+          - type: string
+            enum:
+            - deny
+            title: deny
+          - type: string
+            enum:
+            - challenge
+            title: challenge
+          - type: string
+            enum:
+            - rateLimit
+            title: rateLimit
+          - type: string
+            enum:
+            - redirect
+            title: redirect
+        priority:
+          type: integer
+          description: Evaluation priority. Lower values execute earlier.
+          format: int32
+          example: 100
+        enabled:
+          type: boolean
+          description: Whether the rule is active.
+          example: true
+        conditions:
+          type: array
+          description: List of conditions evaluated for this rule.
+          items:
+            type: object
+          example:
+          - method: equal
+            attribute: ip
+            values:
+            - 127.0.0.1
+        config:
+          type: object
+          additionalProperties: true
+          description: Action specific configuration.
+          example: {}
+        limit:
+          type: integer
+          description: Maximum number of matching requests allowed for the given interval.
+          format: int32
+          example: 1000
+        interval:
+          type: integer
+          description: Interval in seconds for the rate limit window.
+          format: int32
+          example: 60
+        key:
+          type: string
+          description: 'Rate limit key: `ip` limits per client IP, `userId` limits per authenticated user.'
+          example: userId
+        strategy:
+          type: string
+          description: 'Rate limit strategy: `fixedWindow`, `slidingWindow`, or `tokenBucket`.'
+          example: slidingWindow
+        maxBucketSize:
+          type: integer
+          description: Maximum burst capacity in tokens, applied by the `tokenBucket` strategy. The sustained refill rate is `limit / interval`. Defaults to `limit`.
+          format: int32
+          example: 200
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - description
+      - teamId
+      - projectId
+      - resourceType
+      - resourceId
+      - action
+      - priority
+      - enabled
+      - conditions
+      - config
+      - limit
+      - interval
+      - key
+      - strategy
+      - maxBucketSize
+      example:
+        $id: wafRule1
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Block anonymous POST traffic
+        description: Blocks anonymous POST calls to /v1/graphql
+        teamId: 5e5ea5c16897e
+        projectId: cloudConsole
+        resourceType: functions
+        resourceId: functionId
+        action: deny
+        priority: 100
+        enabled: true
+        conditions:
+        - method: equal
+          attribute: ip
+          values:
+          - 127.0.0.1
+        config: []
+        limit: 1000
+        interval: 60
+        key: userId
+        strategy: slidingWindow
+        maxBucketSize: 200
+    wafRuleRedirect:
+      description: WafRuleRedirect
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Rule ID.
+          example: wafRule1
+        $createdAt:
+          type: string
+          description: WAF rule creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: WAF rule last update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Human friendly rule name.
+          example: Block anonymous POST traffic
+        description:
+          type: string
+          description: Optional description for the rule.
+          example: Blocks anonymous POST calls to /v1/graphql
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: cloudConsole
+        resourceType:
+          type: string
+          description: Resource type the rule is scoped to.
+          example: functions
+        resourceId:
+          type: string
+          description: Resource identifier. Empty for API-wide rules.
+          example: functionId
+        action:
+          description: Action performed when the rule matches.
+          example: deny
+          title: WafRuleAction
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - bypass
+            title: bypass
+          - type: string
+            enum:
+            - deny
+            title: deny
+          - type: string
+            enum:
+            - challenge
+            title: challenge
+          - type: string
+            enum:
+            - rateLimit
+            title: rateLimit
+          - type: string
+            enum:
+            - redirect
+            title: redirect
+        priority:
+          type: integer
+          description: Evaluation priority. Lower values execute earlier.
+          format: int32
+          example: 100
+        enabled:
+          type: boolean
+          description: Whether the rule is active.
+          example: true
+        conditions:
+          type: array
+          description: List of conditions evaluated for this rule.
+          items:
+            type: object
+          example:
+          - method: equal
+            attribute: ip
+            values:
+            - 127.0.0.1
+        config:
+          type: object
+          additionalProperties: true
+          description: Action specific configuration.
+          example: {}
+        location:
+          type: string
+          description: Target location for the redirect.
+          example: /maintenance
+        statusCode:
+          type: integer
+          description: HTTP status code used for the redirect.
+          format: int32
+          example: 301
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - description
+      - teamId
+      - projectId
+      - resourceType
+      - resourceId
+      - action
+      - priority
+      - enabled
+      - conditions
+      - config
+      - location
+      - statusCode
+      example:
+        $id: wafRule1
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Block anonymous POST traffic
+        description: Blocks anonymous POST calls to /v1/graphql
+        teamId: 5e5ea5c16897e
+        projectId: cloudConsole
+        resourceType: functions
+        resourceId: functionId
+        action: deny
+        priority: 100
+        enabled: true
+        conditions:
+        - method: equal
+          attribute: ip
+          values:
+          - 127.0.0.1
+        config: []
+        location: /maintenance
+        statusCode: 301
+    wafRuleChallenge:
+      description: WafRuleChallenge
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Rule ID.
+          example: wafRule1
+        $createdAt:
+          type: string
+          description: WAF rule creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: WAF rule last update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Human friendly rule name.
+          example: Block anonymous POST traffic
+        description:
+          type: string
+          description: Optional description for the rule.
+          example: Blocks anonymous POST calls to /v1/graphql
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: cloudConsole
+        resourceType:
+          type: string
+          description: Resource type the rule is scoped to.
+          example: functions
+        resourceId:
+          type: string
+          description: Resource identifier. Empty for API-wide rules.
+          example: functionId
+        action:
+          description: Action performed when the rule matches.
+          example: deny
+          title: WafRuleAction
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - bypass
+            title: bypass
+          - type: string
+            enum:
+            - deny
+            title: deny
+          - type: string
+            enum:
+            - challenge
+            title: challenge
+          - type: string
+            enum:
+            - rateLimit
+            title: rateLimit
+          - type: string
+            enum:
+            - redirect
+            title: redirect
+        priority:
+          type: integer
+          description: Evaluation priority. Lower values execute earlier.
+          format: int32
+          example: 100
+        enabled:
+          type: boolean
+          description: Whether the rule is active.
+          example: true
+        conditions:
+          type: array
+          description: List of conditions evaluated for this rule.
+          items:
+            type: object
+          example:
+          - method: equal
+            attribute: ip
+            values:
+            - 127.0.0.1
+        config:
+          type: object
+          additionalProperties: true
+          description: Action specific configuration.
+          example: {}
+        challengeType:
+          type: string
+          description: Challenge type enforced when the rule matches.
+          example: compute
+        difficulty:
+          type: integer
+          description: Challenge difficulty from 1 (easiest) to 5 (hardest) enforced when the rule matches.
+          format: int32
+          example: 3
+        ttl:
+          type: integer
+          description: Seconds a visitor stays cleared after passing the challenge before being challenged again.
+          format: int32
+          example: 1800
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - description
+      - teamId
+      - projectId
+      - resourceType
+      - resourceId
+      - action
+      - priority
+      - enabled
+      - conditions
+      - config
+      - challengeType
+      - difficulty
+      - ttl
+      example:
+        $id: wafRule1
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Block anonymous POST traffic
+        description: Blocks anonymous POST calls to /v1/graphql
+        teamId: 5e5ea5c16897e
+        projectId: cloudConsole
+        resourceType: functions
+        resourceId: functionId
+        action: deny
+        priority: 100
+        enabled: true
+        conditions:
+        - method: equal
+          attribute: ip
+          values:
+          - 127.0.0.1
+        config: []
+        challengeType: compute
+        difficulty: 3
+        ttl: 1800
     wafRule:
       description: WafRule
       type: object
@@ -1426,589 +2009,6 @@ components:
           values:
           - 127.0.0.1
         config: []
-    wafRuleList:
-      description: WAF rule list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of rules that matched your query.
-          format: int32
-          example: 5
-        rules:
-          type: array
-          description: List of rules.
-          items:
-            $ref: '#/components/schemas/wafRule'
-          example: []
-      required:
-      - total
-      - rules
-      example:
-        total: 5
-        rules: ''
-    wafRuleBypass:
-      description: WafRuleBypass
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Rule ID.
-          example: wafRule1
-        $createdAt:
-          type: string
-          description: WAF rule creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: WAF rule last update time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Human friendly rule name.
-          example: Block anonymous POST traffic
-        description:
-          type: string
-          description: Optional description for the rule.
-          example: Blocks anonymous POST calls to /v1/graphql
-        teamId:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        projectId:
-          type: string
-          description: Project ID.
-          example: cloudConsole
-        resourceType:
-          type: string
-          description: Resource type the rule is scoped to.
-          example: functions
-        resourceId:
-          type: string
-          description: Resource identifier. Empty for API-wide rules.
-          example: functionId
-        action:
-          description: Action performed when the rule matches.
-          example: deny
-          title: WafRuleAction
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - bypass
-            title: bypass
-          - type: string
-            enum:
-            - deny
-            title: deny
-          - type: string
-            enum:
-            - challenge
-            title: challenge
-          - type: string
-            enum:
-            - rateLimit
-            title: rateLimit
-          - type: string
-            enum:
-            - redirect
-            title: redirect
-        priority:
-          type: integer
-          description: Evaluation priority. Lower values execute earlier.
-          format: int32
-          example: 100
-        enabled:
-          type: boolean
-          description: Whether the rule is active.
-          example: true
-        conditions:
-          type: array
-          description: List of conditions evaluated for this rule.
-          items:
-            type: object
-          example:
-          - method: equal
-            attribute: ip
-            values:
-            - 127.0.0.1
-        config:
-          type: object
-          additionalProperties: true
-          description: Action specific configuration.
-          example: {}
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - description
-      - teamId
-      - projectId
-      - resourceType
-      - resourceId
-      - action
-      - priority
-      - enabled
-      - conditions
-      - config
-      example:
-        $id: wafRule1
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Block anonymous POST traffic
-        description: Blocks anonymous POST calls to /v1/graphql
-        teamId: 5e5ea5c16897e
-        projectId: cloudConsole
-        resourceType: functions
-        resourceId: functionId
-        action: deny
-        priority: 100
-        enabled: true
-        conditions:
-        - method: equal
-          attribute: ip
-          values:
-          - 127.0.0.1
-        config: []
-    wafRuleChallenge:
-      description: WafRuleChallenge
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Rule ID.
-          example: wafRule1
-        $createdAt:
-          type: string
-          description: WAF rule creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: WAF rule last update time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Human friendly rule name.
-          example: Block anonymous POST traffic
-        description:
-          type: string
-          description: Optional description for the rule.
-          example: Blocks anonymous POST calls to /v1/graphql
-        teamId:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        projectId:
-          type: string
-          description: Project ID.
-          example: cloudConsole
-        resourceType:
-          type: string
-          description: Resource type the rule is scoped to.
-          example: functions
-        resourceId:
-          type: string
-          description: Resource identifier. Empty for API-wide rules.
-          example: functionId
-        action:
-          description: Action performed when the rule matches.
-          example: deny
-          title: WafRuleAction
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - bypass
-            title: bypass
-          - type: string
-            enum:
-            - deny
-            title: deny
-          - type: string
-            enum:
-            - challenge
-            title: challenge
-          - type: string
-            enum:
-            - rateLimit
-            title: rateLimit
-          - type: string
-            enum:
-            - redirect
-            title: redirect
-        priority:
-          type: integer
-          description: Evaluation priority. Lower values execute earlier.
-          format: int32
-          example: 100
-        enabled:
-          type: boolean
-          description: Whether the rule is active.
-          example: true
-        conditions:
-          type: array
-          description: List of conditions evaluated for this rule.
-          items:
-            type: object
-          example:
-          - method: equal
-            attribute: ip
-            values:
-            - 127.0.0.1
-        config:
-          type: object
-          additionalProperties: true
-          description: Action specific configuration.
-          example: {}
-        challengeType:
-          type: string
-          description: Challenge type enforced when the rule matches.
-          example: compute
-        difficulty:
-          type: integer
-          description: Challenge difficulty from 1 (easiest) to 5 (hardest) enforced when the rule matches.
-          format: int32
-          example: 3
-        ttl:
-          type: integer
-          description: Seconds a visitor stays cleared after passing the challenge before being challenged again.
-          format: int32
-          example: 1800
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - description
-      - teamId
-      - projectId
-      - resourceType
-      - resourceId
-      - action
-      - priority
-      - enabled
-      - conditions
-      - config
-      - challengeType
-      - difficulty
-      - ttl
-      example:
-        $id: wafRule1
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Block anonymous POST traffic
-        description: Blocks anonymous POST calls to /v1/graphql
-        teamId: 5e5ea5c16897e
-        projectId: cloudConsole
-        resourceType: functions
-        resourceId: functionId
-        action: deny
-        priority: 100
-        enabled: true
-        conditions:
-        - method: equal
-          attribute: ip
-          values:
-          - 127.0.0.1
-        config: []
-        challengeType: compute
-        difficulty: 3
-        ttl: 1800
-    wafRuleRedirect:
-      description: WafRuleRedirect
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Rule ID.
-          example: wafRule1
-        $createdAt:
-          type: string
-          description: WAF rule creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: WAF rule last update time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Human friendly rule name.
-          example: Block anonymous POST traffic
-        description:
-          type: string
-          description: Optional description for the rule.
-          example: Blocks anonymous POST calls to /v1/graphql
-        teamId:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        projectId:
-          type: string
-          description: Project ID.
-          example: cloudConsole
-        resourceType:
-          type: string
-          description: Resource type the rule is scoped to.
-          example: functions
-        resourceId:
-          type: string
-          description: Resource identifier. Empty for API-wide rules.
-          example: functionId
-        action:
-          description: Action performed when the rule matches.
-          example: deny
-          title: WafRuleAction
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - bypass
-            title: bypass
-          - type: string
-            enum:
-            - deny
-            title: deny
-          - type: string
-            enum:
-            - challenge
-            title: challenge
-          - type: string
-            enum:
-            - rateLimit
-            title: rateLimit
-          - type: string
-            enum:
-            - redirect
-            title: redirect
-        priority:
-          type: integer
-          description: Evaluation priority. Lower values execute earlier.
-          format: int32
-          example: 100
-        enabled:
-          type: boolean
-          description: Whether the rule is active.
-          example: true
-        conditions:
-          type: array
-          description: List of conditions evaluated for this rule.
-          items:
-            type: object
-          example:
-          - method: equal
-            attribute: ip
-            values:
-            - 127.0.0.1
-        config:
-          type: object
-          additionalProperties: true
-          description: Action specific configuration.
-          example: {}
-        location:
-          type: string
-          description: Target location for the redirect.
-          example: /maintenance
-        statusCode:
-          type: integer
-          description: HTTP status code used for the redirect.
-          format: int32
-          example: 301
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - description
-      - teamId
-      - projectId
-      - resourceType
-      - resourceId
-      - action
-      - priority
-      - enabled
-      - conditions
-      - config
-      - location
-      - statusCode
-      example:
-        $id: wafRule1
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Block anonymous POST traffic
-        description: Blocks anonymous POST calls to /v1/graphql
-        teamId: 5e5ea5c16897e
-        projectId: cloudConsole
-        resourceType: functions
-        resourceId: functionId
-        action: deny
-        priority: 100
-        enabled: true
-        conditions:
-        - method: equal
-          attribute: ip
-          values:
-          - 127.0.0.1
-        config: []
-        location: /maintenance
-        statusCode: 301
-    wafRuleRateLimit:
-      description: WafRuleRateLimit
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Rule ID.
-          example: wafRule1
-        $createdAt:
-          type: string
-          description: WAF rule creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: WAF rule last update time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Human friendly rule name.
-          example: Block anonymous POST traffic
-        description:
-          type: string
-          description: Optional description for the rule.
-          example: Blocks anonymous POST calls to /v1/graphql
-        teamId:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        projectId:
-          type: string
-          description: Project ID.
-          example: cloudConsole
-        resourceType:
-          type: string
-          description: Resource type the rule is scoped to.
-          example: functions
-        resourceId:
-          type: string
-          description: Resource identifier. Empty for API-wide rules.
-          example: functionId
-        action:
-          description: Action performed when the rule matches.
-          example: deny
-          title: WafRuleAction
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - bypass
-            title: bypass
-          - type: string
-            enum:
-            - deny
-            title: deny
-          - type: string
-            enum:
-            - challenge
-            title: challenge
-          - type: string
-            enum:
-            - rateLimit
-            title: rateLimit
-          - type: string
-            enum:
-            - redirect
-            title: redirect
-        priority:
-          type: integer
-          description: Evaluation priority. Lower values execute earlier.
-          format: int32
-          example: 100
-        enabled:
-          type: boolean
-          description: Whether the rule is active.
-          example: true
-        conditions:
-          type: array
-          description: List of conditions evaluated for this rule.
-          items:
-            type: object
-          example:
-          - method: equal
-            attribute: ip
-            values:
-            - 127.0.0.1
-        config:
-          type: object
-          additionalProperties: true
-          description: Action specific configuration.
-          example: {}
-        limit:
-          type: integer
-          description: Maximum number of matching requests allowed for the given interval.
-          format: int32
-          example: 1000
-        interval:
-          type: integer
-          description: Interval in seconds for the rate limit window.
-          format: int32
-          example: 60
-        key:
-          type: string
-          description: 'Rate limit key: `ip` limits per client IP, `userId` limits per authenticated user.'
-          example: userId
-        strategy:
-          type: string
-          description: 'Rate limit strategy: `fixedWindow`, `slidingWindow`, or `tokenBucket`.'
-          example: slidingWindow
-        maxBucketSize:
-          type: integer
-          description: Maximum burst capacity in tokens, applied by the `tokenBucket` strategy. The sustained refill rate is `limit / interval`. Defaults to `limit`.
-          format: int32
-          example: 200
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - description
-      - teamId
-      - projectId
-      - resourceType
-      - resourceId
-      - action
-      - priority
-      - enabled
-      - conditions
-      - config
-      - limit
-      - interval
-      - key
-      - strategy
-      - maxBucketSize
-      example:
-        $id: wafRule1
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Block anonymous POST traffic
-        description: Blocks anonymous POST calls to /v1/graphql
-        teamId: 5e5ea5c16897e
-        projectId: cloudConsole
-        resourceType: functions
-        resourceId: functionId
-        action: deny
-        priority: 100
-        enabled: true
-        conditions:
-        - method: equal
-          attribute: ip
-          values:
-          - 127.0.0.1
-        config: []
-        limit: 1000
-        interval: 60
-        key: userId
-        strategy: slidingWindow
-        maxBucketSize: 200
   securitySchemes:
     Project:
       type: apiKey

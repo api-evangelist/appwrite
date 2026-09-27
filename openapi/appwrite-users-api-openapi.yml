@@ -3013,155 +3013,159 @@ paths:
               - phoneVerification
 components:
   schemas:
-    algoScrypt:
-      description: AlgoScrypt
+    algoSha:
+      description: AlgoSHA
       type: object
       properties:
         type:
           type: string
           description: Algo type.
-          example: scrypt
-        costCpu:
-          type: integer
-          description: CPU complexity of computed hash.
-          format: int32
-          example: 8
-        costMemory:
-          type: integer
-          description: Memory complexity of computed hash.
-          format: int32
-          example: 14
-        costParallel:
-          type: integer
-          description: Parallelization of computed hash.
-          format: int32
-          example: 1
-        length:
-          type: integer
-          description: Length used to compute hash.
-          format: int32
-          example: 64
+          example: sha
       required:
       - type
-      - costCpu
-      - costMemory
-      - costParallel
-      - length
       example:
-        type: scrypt
-        costCpu: 8
-        costMemory: 14
-        costParallel: 1
-        length: 64
-    metric:
-      description: Metric
-      type: object
-      properties:
-        value:
-          type: integer
-          description: The value of this metric at the timestamp.
-          format: int32
-          example: 1
-        date:
-          type: string
-          description: The date at which this metric was aggregated in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - value
-      - date
-      example:
-        value: 1
-        date: '2020-10-15T06:38:00.000+00:00'
-    logList:
-      description: Logs List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of logs that matched your query.
-          format: int32
-          example: 5
-        logs:
-          type: array
-          description: List of logs.
-          items:
-            $ref: '#/components/schemas/log'
-          example: []
-      required:
-      - total
-      - logs
-      example:
-        total: 5
-        logs: ''
-    algoBcrypt:
-      description: AlgoBcrypt
+        type: sha
+    algoMd5:
+      description: AlgoMD5
       type: object
       properties:
         type:
           type: string
           description: Algo type.
-          example: bcrypt
+          example: md5
       required:
       - type
       example:
-        type: bcrypt
-    sessionList:
-      description: Sessions List
+        type: md5
+    mfaFactors:
+      description: MFAFactors
+      type: object
+      properties:
+        totp:
+          type: boolean
+          description: Can TOTP be used for MFA challenge for this account.
+          example: true
+        phone:
+          type: boolean
+          description: Can phone (SMS) be used for MFA challenge for this account.
+          example: true
+        email:
+          type: boolean
+          description: Can email be used for MFA challenge for this account.
+          example: true
+        recoveryCode:
+          type: boolean
+          description: Can recovery code be used for MFA challenge for this account.
+          example: true
+        custom:
+          type: boolean
+          description: Can custom factor be used for MFA challenge for this account.
+          example: true
+      required:
+      - totp
+      - phone
+      - email
+      - recoveryCode
+      - custom
+      example:
+        totp: true
+        phone: true
+        email: true
+        recoveryCode: true
+        custom: true
+    userList:
+      description: Users List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of sessions that matched your query.
+          description: Total number of users that matched your query.
           format: int32
           example: 5
-        sessions:
+        users:
           type: array
-          description: List of sessions.
+          description: List of users.
           items:
-            $ref: '#/components/schemas/session'
+            $ref: '#/components/schemas/user'
           example: []
       required:
       - total
-      - sessions
+      - users
       example:
         total: 5
-        sessions: ''
-    mfaChallengeSecret:
-      description: MFA Challenge Secret
+        users: ''
+    algoArgon2:
+      description: AlgoArgon2
       type: object
       properties:
-        $id:
+        type:
           type: string
-          description: Token ID.
-          example: bb8ea5c16897e
-        $createdAt:
-          type: string
-          description: Token creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: User ID.
-          example: 5e5ea5c168bb8
-        expire:
-          type: string
-          description: Token expiration date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        code:
-          type: string
-          description: Challenge code to be delivered to the end user through a custom channel.
-          example: '446372'
+          description: Algo type.
+          example: argon2
+        memoryCost:
+          type: integer
+          description: Memory used to compute hash.
+          format: int32
+          example: 65536
+        timeCost:
+          type: integer
+          description: Amount of time consumed to compute hash
+          format: int32
+          example: 4
+        threads:
+          type: integer
+          description: Number of threads used to compute hash.
+          format: int32
+          example: 3
       required:
-      - $id
-      - $createdAt
-      - userId
-      - expire
-      - code
+      - type
+      - memoryCost
+      - timeCost
+      - threads
       example:
-        $id: bb8ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5ea5c168bb8
-        expire: '2020-10-15T06:38:00.000+00:00'
-        code: '446372'
+        type: argon2
+        memoryCost: 65536
+        timeCost: 4
+        threads: 3
+    membershipList:
+      description: Memberships List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of memberships that matched your query.
+          format: int32
+          example: 5
+        memberships:
+          type: array
+          description: List of memberships.
+          items:
+            $ref: '#/components/schemas/membership'
+          example: []
+      required:
+      - total
+      - memberships
+      example:
+        total: 5
+        memberships: ''
+    mfaRecoveryCodes:
+      description: MFA Recovery Codes
+      type: object
+      properties:
+        recoveryCodes:
+          type: array
+          description: Recovery codes.
+          items:
+            type: string
+          example:
+          - a3kf0-s0cl2
+          - s0co1-as98s
+      required:
+      - recoveryCodes
+      example:
+        recoveryCodes:
+        - a3kf0-s0cl2
+        - s0co1-as98s
     token:
       description: Token
       type: object
@@ -3204,69 +3208,66 @@ components:
         secret: ''
         expire: '2020-10-15T06:38:00.000+00:00'
         phrase: Golden Fox
-    membershipList:
-      description: Memberships List
+    preferences:
+      description: Preferences
+      type: object
+      additionalProperties: true
+      example:
+        language: en
+        timezone: UTC
+        darkTheme: true
+    algoPhpass:
+      description: AlgoPHPass
       type: object
       properties:
-        total:
-          type: integer
-          description: Total number of memberships that matched your query.
-          format: int32
-          example: 5
-        memberships:
-          type: array
-          description: List of memberships.
-          items:
-            $ref: '#/components/schemas/membership'
-          example: []
+        type:
+          type: string
+          description: Algo type.
+          example: phpass
       required:
-      - total
-      - memberships
+      - type
       example:
-        total: 5
-        memberships: ''
-    identityList:
-      description: Identities List
+        type: phpass
+    algoScrypt:
+      description: AlgoScrypt
       type: object
       properties:
-        total:
+        type:
+          type: string
+          description: Algo type.
+          example: scrypt
+        costCpu:
           type: integer
-          description: Total number of identities that matched your query.
+          description: CPU complexity of computed hash.
           format: int32
-          example: 5
-        identities:
-          type: array
-          description: List of identities.
-          items:
-            $ref: '#/components/schemas/identity'
-          example: []
-      required:
-      - total
-      - identities
-      example:
-        total: 5
-        identities: ''
-    userList:
-      description: Users List
-      type: object
-      properties:
-        total:
+          example: 8
+        costMemory:
           type: integer
-          description: Total number of users that matched your query.
+          description: Memory complexity of computed hash.
           format: int32
-          example: 5
-        users:
-          type: array
-          description: List of users.
-          items:
-            $ref: '#/components/schemas/user'
-          example: []
+          example: 14
+        costParallel:
+          type: integer
+          description: Parallelization of computed hash.
+          format: int32
+          example: 1
+        length:
+          type: integer
+          description: Length used to compute hash.
+          format: int32
+          example: 64
       required:
-      - total
-      - users
+      - type
+      - costCpu
+      - costMemory
+      - costParallel
+      - length
       example:
-        total: 5
-        users: ''
+        type: scrypt
+        costCpu: 8
+        costMemory: 14
+        costParallel: 1
+        length: 64
     user:
       description: User
       type: object
@@ -3470,57 +3471,177 @@ components:
         accessedAt: '2020-10-15T06:38:00.000+00:00'
         impersonator: false
         impersonatorUserId: 5e5ea5c16897e
-    mfaRecoveryCodes:
-      description: MFA Recovery Codes
+    jwt:
+      description: JWT
       type: object
       properties:
-        recoveryCodes:
-          type: array
-          description: Recovery codes.
-          items:
-            type: string
-          example:
-          - a3kf0-s0cl2
-          - s0co1-as98s
+        jwt:
+          type: string
+          description: JWT encoded string.
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
       required:
-      - recoveryCodes
+      - jwt
       example:
-        recoveryCodes:
-        - a3kf0-s0cl2
-        - s0co1-as98s
-    algoArgon2:
-      description: AlgoArgon2
+        jwt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    algoScryptModified:
+      description: AlgoScryptModified
       type: object
       properties:
         type:
           type: string
           description: Algo type.
-          example: argon2
-        memoryCost:
-          type: integer
-          description: Memory used to compute hash.
-          format: int32
-          example: 65536
-        timeCost:
-          type: integer
-          description: Amount of time consumed to compute hash
-          format: int32
-          example: 4
-        threads:
-          type: integer
-          description: Number of threads used to compute hash.
-          format: int32
-          example: 3
+          example: scryptMod
+        salt:
+          type: string
+          description: Salt used to compute hash.
+          example: UxLMreBr6tYyjQ==
+        saltSeparator:
+          type: string
+          description: Separator used to compute hash.
+          example: Bw==
+        signerKey:
+          type: string
+          description: Key used to compute hash.
+          example: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
       required:
       - type
-      - memoryCost
-      - timeCost
-      - threads
+      - salt
+      - saltSeparator
+      - signerKey
       example:
-        type: argon2
-        memoryCost: 65536
-        timeCost: 4
-        threads: 3
+        type: scryptMod
+        salt: UxLMreBr6tYyjQ==
+        saltSeparator: Bw==
+        signerKey: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
+    sessionList:
+      description: Sessions List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of sessions that matched your query.
+          format: int32
+          example: 5
+        sessions:
+          type: array
+          description: List of sessions.
+          items:
+            $ref: '#/components/schemas/session'
+          example: []
+      required:
+      - total
+      - sessions
+      example:
+        total: 5
+        sessions: ''
+    usageUsers:
+      description: UsageUsers
+      type: object
+      properties:
+        range:
+          type: string
+          description: Time range of the usage stats.
+          example: 30d
+        usersTotal:
+          type: integer
+          description: Total aggregated number of statistics of users.
+          format: int32
+          example: 0
+        sessionsTotal:
+          type: integer
+          description: Total aggregated number of active sessions.
+          format: int32
+          example: 0
+        users:
+          type: array
+          description: Aggregated number of users per period.
+          items:
+            $ref: '#/components/schemas/metric'
+          example: []
+        sessions:
+          type: array
+          description: Aggregated number of active sessions  per period.
+          items:
+            $ref: '#/components/schemas/metric'
+          example: []
+      required:
+      - range
+      - usersTotal
+      - sessionsTotal
+      - users
+      - sessions
+      example:
+        range: 30d
+        usersTotal: 0
+        sessionsTotal: 0
+        users: []
+        sessions: []
+    identity:
+      description: Identity
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Identity ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Identity creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Identity update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: User ID.
+          example: 5e5bb8c16897e
+        provider:
+          type: string
+          description: Identity Provider.
+          example: email
+        providerUid:
+          type: string
+          description: ID of the User in the Identity Provider.
+          example: 5e5bb8c16897e
+        providerEmail:
+          type: string
+          description: Email of the User in the Identity Provider.
+          example: user@example.com
+        providerAccessToken:
+          type: string
+          description: Identity Provider Access Token.
+          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
+        providerAccessTokenExpiry:
+          type: string
+          description: The date of when the access token expires in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        providerRefreshToken:
+          type: string
+          description: Identity Provider Refresh Token.
+          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - userId
+      - provider
+      - providerUid
+      - providerEmail
+      - providerAccessToken
+      - providerAccessTokenExpiry
+      - providerRefreshToken
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5bb8c16897e
+        provider: email
+        providerUid: 5e5bb8c16897e
+        providerEmail: user@example.com
+        providerAccessToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
+        providerAccessTokenExpiry: '2020-10-15T06:38:00.000+00:00'
+        providerRefreshToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
     log:
       description: Log
       type: object
@@ -3659,14 +3780,297 @@ components:
         deviceModel: Nexus 5
         countryCode: US
         countryName: United States
-    preferences:
-      description: Preferences
+    membership:
+      description: Membership
       type: object
-      additionalProperties: true
+      properties:
+        $id:
+          type: string
+          description: Membership ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Membership creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Membership update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: User ID.
+          example: 5e5ea5c16897e
+        userName:
+          type: string
+          description: User name. Hide this attribute by toggling membership privacy in the Console.
+          example: John Doe
+        userEmail:
+          type: string
+          description: User email address. Hide this attribute by toggling membership privacy in the Console.
+          example: john@appwrite.io
+        userPhone:
+          type: string
+          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
+          example: +1 555 555 5555
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        teamName:
+          type: string
+          description: Team name.
+          example: VIP
+        invited:
+          type: string
+          description: Date, the user has been invited to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        joined:
+          type: string
+          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        confirm:
+          type: boolean
+          description: User confirmation status, true if the user has joined the team or false otherwise.
+          example: false
+        mfa:
+          type: boolean
+          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
+          example: false
+        userAccessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
+          example: '2020-10-15T06:38:00.000+00:00'
+        roles:
+          type: array
+          description: User list of roles
+          items:
+            type: string
+          example:
+          - owner
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - userId
+      - userName
+      - userEmail
+      - userPhone
+      - teamId
+      - teamName
+      - invited
+      - joined
+      - confirm
+      - mfa
+      - userAccessedAt
+      - roles
       example:
-        language: en
-        timezone: UTC
-        darkTheme: true
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5ea5c16897e
+        userName: John Doe
+        userEmail: john@appwrite.io
+        userPhone: +1 555 555 5555
+        teamId: 5e5ea5c16897e
+        teamName: VIP
+        invited: '2020-10-15T06:38:00.000+00:00'
+        joined: '2020-10-15T06:38:00.000+00:00'
+        confirm: false
+        mfa: false
+        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        roles:
+        - owner
+    target:
+      description: Target
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Target ID.
+          example: '259125845563242502'
+        $createdAt:
+          type: string
+          description: Target creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Target update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Target Name.
+          example: Apple iPhone 12
+        userId:
+          type: string
+          description: User ID.
+          example: '259125845563242502'
+        providerId:
+          type:
+          - string
+          - 'null'
+          description: Provider ID.
+          example: '259125845563242502'
+        providerType:
+          type: string
+          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
+          example: email
+        identifier:
+          type: string
+          description: The target identifier.
+          example: token
+        expired:
+          type: boolean
+          description: Is the target expired.
+          example: false
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - userId
+      - providerType
+      - identifier
+      - expired
+      example:
+        $id: '259125845563242502'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Apple iPhone 12
+        userId: '259125845563242502'
+        providerId: '259125845563242502'
+        providerType: email
+        identifier: token
+        expired: false
+    mfaChallengeSecret:
+      description: MFA Challenge Secret
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Token ID.
+          example: bb8ea5c16897e
+        $createdAt:
+          type: string
+          description: Token creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: User ID.
+          example: 5e5ea5c168bb8
+        expire:
+          type: string
+          description: Token expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        code:
+          type: string
+          description: Challenge code to be delivered to the end user through a custom channel.
+          example: '446372'
+      required:
+      - $id
+      - $createdAt
+      - userId
+      - expire
+      - code
+      example:
+        $id: bb8ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5ea5c168bb8
+        expire: '2020-10-15T06:38:00.000+00:00'
+        code: '446372'
+    metric:
+      description: Metric
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The value of this metric at the timestamp.
+          format: int32
+          example: 1
+        date:
+          type: string
+          description: The date at which this metric was aggregated in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - value
+      - date
+      example:
+        value: 1
+        date: '2020-10-15T06:38:00.000+00:00'
+    algoBcrypt:
+      description: AlgoBcrypt
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: bcrypt
+      required:
+      - type
+      example:
+        type: bcrypt
+    logList:
+      description: Logs List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of logs that matched your query.
+          format: int32
+          example: 5
+        logs:
+          type: array
+          description: List of logs.
+          items:
+            $ref: '#/components/schemas/log'
+          example: []
+      required:
+      - total
+      - logs
+      example:
+        total: 5
+        logs: ''
+    targetList:
+      description: Target list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of targets that matched your query.
+          format: int32
+          example: 5
+        targets:
+          type: array
+          description: List of targets.
+          items:
+            $ref: '#/components/schemas/target'
+          example: []
+      required:
+      - total
+      - targets
+      example:
+        total: 5
+        targets: ''
+    identityList:
+      description: Identities List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of identities that matched your query.
+          format: int32
+          example: 5
+        identities:
+          type: array
+          description: List of identities.
+          items:
+            $ref: '#/components/schemas/identity'
+          example: []
+      required:
+      - total
+      - identities
+      example:
+        total: 5
+        identities: ''
     session:
       description: Session
       type: object
@@ -3851,410 +4255,6 @@ components:
         - email
         secret: 5e5bb8c16897e
         mfaUpdatedAt: '2020-10-15T06:38:00.000+00:00'
-    targetList:
-      description: Target list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of targets that matched your query.
-          format: int32
-          example: 5
-        targets:
-          type: array
-          description: List of targets.
-          items:
-            $ref: '#/components/schemas/target'
-          example: []
-      required:
-      - total
-      - targets
-      example:
-        total: 5
-        targets: ''
-    algoPhpass:
-      description: AlgoPHPass
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: phpass
-      required:
-      - type
-      example:
-        type: phpass
-    algoMd5:
-      description: AlgoMD5
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: md5
-      required:
-      - type
-      example:
-        type: md5
-    mfaFactors:
-      description: MFAFactors
-      type: object
-      properties:
-        totp:
-          type: boolean
-          description: Can TOTP be used for MFA challenge for this account.
-          example: true
-        phone:
-          type: boolean
-          description: Can phone (SMS) be used for MFA challenge for this account.
-          example: true
-        email:
-          type: boolean
-          description: Can email be used for MFA challenge for this account.
-          example: true
-        recoveryCode:
-          type: boolean
-          description: Can recovery code be used for MFA challenge for this account.
-          example: true
-        custom:
-          type: boolean
-          description: Can custom factor be used for MFA challenge for this account.
-          example: true
-      required:
-      - totp
-      - phone
-      - email
-      - recoveryCode
-      - custom
-      example:
-        totp: true
-        phone: true
-        email: true
-        recoveryCode: true
-        custom: true
-    identity:
-      description: Identity
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Identity ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Identity creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Identity update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: User ID.
-          example: 5e5bb8c16897e
-        provider:
-          type: string
-          description: Identity Provider.
-          example: email
-        providerUid:
-          type: string
-          description: ID of the User in the Identity Provider.
-          example: 5e5bb8c16897e
-        providerEmail:
-          type: string
-          description: Email of the User in the Identity Provider.
-          example: user@example.com
-        providerAccessToken:
-          type: string
-          description: Identity Provider Access Token.
-          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-        providerAccessTokenExpiry:
-          type: string
-          description: The date of when the access token expires in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        providerRefreshToken:
-          type: string
-          description: Identity Provider Refresh Token.
-          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - userId
-      - provider
-      - providerUid
-      - providerEmail
-      - providerAccessToken
-      - providerAccessTokenExpiry
-      - providerRefreshToken
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5bb8c16897e
-        provider: email
-        providerUid: 5e5bb8c16897e
-        providerEmail: user@example.com
-        providerAccessToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-        providerAccessTokenExpiry: '2020-10-15T06:38:00.000+00:00'
-        providerRefreshToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-    jwt:
-      description: JWT
-      type: object
-      properties:
-        jwt:
-          type: string
-          description: JWT encoded string.
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-      required:
-      - jwt
-      example:
-        jwt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-    algoSha:
-      description: AlgoSHA
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: sha
-      required:
-      - type
-      example:
-        type: sha
-    membership:
-      description: Membership
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Membership ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Membership creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Membership update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: User ID.
-          example: 5e5ea5c16897e
-        userName:
-          type: string
-          description: User name. Hide this attribute by toggling membership privacy in the Console.
-          example: John Doe
-        userEmail:
-          type: string
-          description: User email address. Hide this attribute by toggling membership privacy in the Console.
-          example: john@appwrite.io
-        userPhone:
-          type: string
-          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
-          example: +1 555 555 5555
-        teamId:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        teamName:
-          type: string
-          description: Team name.
-          example: VIP
-        invited:
-          type: string
-          description: Date, the user has been invited to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        joined:
-          type: string
-          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        confirm:
-          type: boolean
-          description: User confirmation status, true if the user has joined the team or false otherwise.
-          example: false
-        mfa:
-          type: boolean
-          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
-          example: false
-        userAccessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
-          example: '2020-10-15T06:38:00.000+00:00'
-        roles:
-          type: array
-          description: User list of roles
-          items:
-            type: string
-          example:
-          - owner
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - userId
-      - userName
-      - userEmail
-      - userPhone
-      - teamId
-      - teamName
-      - invited
-      - joined
-      - confirm
-      - mfa
-      - userAccessedAt
-      - roles
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5ea5c16897e
-        userName: John Doe
-        userEmail: john@appwrite.io
-        userPhone: +1 555 555 5555
-        teamId: 5e5ea5c16897e
-        teamName: VIP
-        invited: '2020-10-15T06:38:00.000+00:00'
-        joined: '2020-10-15T06:38:00.000+00:00'
-        confirm: false
-        mfa: false
-        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
-        roles:
-        - owner
-    target:
-      description: Target
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Target ID.
-          example: '259125845563242502'
-        $createdAt:
-          type: string
-          description: Target creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Target update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Target Name.
-          example: Apple iPhone 12
-        userId:
-          type: string
-          description: User ID.
-          example: '259125845563242502'
-        providerId:
-          type:
-          - string
-          - 'null'
-          description: Provider ID.
-          example: '259125845563242502'
-        providerType:
-          type: string
-          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
-          example: email
-        identifier:
-          type: string
-          description: The target identifier.
-          example: token
-        expired:
-          type: boolean
-          description: Is the target expired.
-          example: false
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - userId
-      - providerType
-      - identifier
-      - expired
-      example:
-        $id: '259125845563242502'
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Apple iPhone 12
-        userId: '259125845563242502'
-        providerId: '259125845563242502'
-        providerType: email
-        identifier: token
-        expired: false
-    algoScryptModified:
-      description: AlgoScryptModified
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: scryptMod
-        salt:
-          type: string
-          description: Salt used to compute hash.
-          example: UxLMreBr6tYyjQ==
-        saltSeparator:
-          type: string
-          description: Separator used to compute hash.
-          example: Bw==
-        signerKey:
-          type: string
-          description: Key used to compute hash.
-          example: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
-      required:
-      - type
-      - salt
-      - saltSeparator
-      - signerKey
-      example:
-        type: scryptMod
-        salt: UxLMreBr6tYyjQ==
-        saltSeparator: Bw==
-        signerKey: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
-    usageUsers:
-      description: UsageUsers
-      type: object
-      properties:
-        range:
-          type: string
-          description: Time range of the usage stats.
-          example: 30d
-        usersTotal:
-          type: integer
-          description: Total aggregated number of statistics of users.
-          format: int32
-          example: 0
-        sessionsTotal:
-          type: integer
-          description: Total aggregated number of active sessions.
-          format: int32
-          example: 0
-        users:
-          type: array
-          description: Aggregated number of users per period.
-          items:
-            $ref: '#/components/schemas/metric'
-          example: []
-        sessions:
-          type: array
-          description: Aggregated number of active sessions  per period.
-          items:
-            $ref: '#/components/schemas/metric'
-          example: []
-      required:
-      - range
-      - usersTotal
-      - sessionsTotal
-      - users
-      - sessions
-      example:
-        range: 30d
-        usersTotal: 0
-        sessionsTotal: 0
-        users: []
-        sessions: []
   securitySchemes:
     Project:
       type: apiKey

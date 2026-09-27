@@ -1203,27 +1203,48 @@ paths:
               - prefs
 components:
   schemas:
-    logList:
-      description: Logs List
+    membershipList:
+      description: Memberships List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of logs that matched your query.
+          description: Total number of memberships that matched your query.
           format: int32
           example: 5
-        logs:
+        memberships:
           type: array
-          description: List of logs.
+          description: List of memberships.
           items:
-            $ref: '#/components/schemas/log'
+            $ref: '#/components/schemas/membership'
           example: []
       required:
       - total
-      - logs
+      - memberships
       example:
         total: 5
-        logs: ''
+        memberships: ''
+    teamList:
+      description: Teams List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of teams that matched your query.
+          format: int32
+          example: 5
+        teams:
+          type: array
+          description: List of teams.
+          items:
+            $ref: '#/components/schemas/team'
+          example: []
+      required:
+      - total
+      - teams
+      example:
+        total: 5
+        teams: ''
     team:
       description: Team
       type: object
@@ -1273,114 +1294,106 @@ components:
         prefs:
           theme: pink
           timezone: UTC
-    membership:
-      description: Membership
+    logList:
+      description: Logs List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of logs that matched your query.
+          format: int32
+          example: 5
+        logs:
+          type: array
+          description: List of logs.
+          items:
+            $ref: '#/components/schemas/log'
+          example: []
+      required:
+      - total
+      - logs
+      example:
+        total: 5
+        logs: ''
+    appInstallation:
+      description: AppInstallation
       type: object
       properties:
         $id:
           type: string
-          description: Membership ID.
+          description: Installation ID.
           example: 5e5ea5c16897e
         $createdAt:
           type: string
-          description: Membership creation date in ISO 8601 format.
+          description: Installation creation time in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
         $updatedAt:
           type: string
-          description: Membership update date in ISO 8601 format.
+          description: Installation update time in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        userId:
+        appId:
           type: string
-          description: User ID.
+          description: ID of the installed application.
           example: 5e5ea5c16897e
-        userName:
-          type: string
-          description: User name. Hide this attribute by toggling membership privacy in the Console.
-          example: John Doe
-        userEmail:
-          type: string
-          description: User email address. Hide this attribute by toggling membership privacy in the Console.
-          example: john@appwrite.io
-        userPhone:
-          type: string
-          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
-          example: +1 555 555 5555
         teamId:
           type: string
-          description: Team ID.
+          description: ID of the team the application is installed on.
           example: 5e5ea5c16897e
-        teamName:
-          type: string
-          description: Team name.
-          example: VIP
-        invited:
-          type: string
-          description: Date, the user has been invited to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        joined:
-          type: string
-          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        confirm:
-          type: boolean
-          description: User confirmation status, true if the user has joined the team or false otherwise.
-          example: false
-        mfa:
-          type: boolean
-          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
-          example: false
-        userAccessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
-          example: '2020-10-15T06:38:00.000+00:00'
-        roles:
+        scopes:
           type: array
-          description: User list of roles
+          description: Scopes granted to the application. Snapshot of the application's installation scopes taken when the installation was created or last updated.
           items:
             type: string
           example:
-          - owner
+          - organization:organization.read
+        authorizationDetails:
+          type: array
+          description: Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
+          items:
+            type: object
+          example:
+          - type: project
+            identifiers:
+            - '*'
+        createdById:
+          type: string
+          description: ID of the user who created the installation.
+          example: 5e5ea5c16897e
+        createdByName:
+          type: string
+          description: Name of the user who created the installation.
+          example: Walter White
+        lastAccessedAt:
+          type:
+          - string
+          - 'null'
+          description: Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
+          example: '2020-10-15T06:38:00.000+00:00'
       required:
       - $id
       - $createdAt
       - $updatedAt
-      - userId
-      - userName
-      - userEmail
-      - userPhone
+      - appId
       - teamId
-      - teamName
-      - invited
-      - joined
-      - confirm
-      - mfa
-      - userAccessedAt
-      - roles
+      - scopes
+      - authorizationDetails
+      - createdById
+      - createdByName
       example:
         $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5ea5c16897e
-        userName: John Doe
-        userEmail: john@appwrite.io
-        userPhone: +1 555 555 5555
+        appId: 5e5ea5c16897e
         teamId: 5e5ea5c16897e
-        teamName: VIP
-        invited: '2020-10-15T06:38:00.000+00:00'
-        joined: '2020-10-15T06:38:00.000+00:00'
-        confirm: false
-        mfa: false
-        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
-        roles:
-        - owner
-    preferences:
-      description: Preferences
-      type: object
-      additionalProperties: true
-      example:
-        language: en
-        timezone: UTC
-        darkTheme: true
+        scopes:
+        - organization:organization.read
+        authorizationDetails:
+        - type: project
+          identifiers:
+          - '*'
+        createdById: 5e5ea5c16897e
+        createdByName: Walter White
+        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
     log:
       description: Log
       type: object
@@ -1519,127 +1532,114 @@ components:
         deviceModel: Nexus 5
         countryCode: US
         countryName: United States
-    membershipList:
-      description: Memberships List
+    preferences:
+      description: Preferences
       type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of memberships that matched your query.
-          format: int32
-          example: 5
-        memberships:
-          type: array
-          description: List of memberships.
-          items:
-            $ref: '#/components/schemas/membership'
-          example: []
-      required:
-      - total
-      - memberships
+      additionalProperties: true
       example:
-        total: 5
-        memberships: ''
-    appInstallation:
-      description: AppInstallation
+        language: en
+        timezone: UTC
+        darkTheme: true
+    membership:
+      description: Membership
       type: object
       properties:
         $id:
           type: string
-          description: Installation ID.
+          description: Membership ID.
           example: 5e5ea5c16897e
         $createdAt:
           type: string
-          description: Installation creation time in ISO 8601 format.
+          description: Membership creation date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
         $updatedAt:
           type: string
-          description: Installation update time in ISO 8601 format.
+          description: Membership update date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        appId:
+        userId:
           type: string
-          description: ID of the installed application.
+          description: User ID.
           example: 5e5ea5c16897e
+        userName:
+          type: string
+          description: User name. Hide this attribute by toggling membership privacy in the Console.
+          example: John Doe
+        userEmail:
+          type: string
+          description: User email address. Hide this attribute by toggling membership privacy in the Console.
+          example: john@appwrite.io
+        userPhone:
+          type: string
+          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
+          example: +1 555 555 5555
         teamId:
           type: string
-          description: ID of the team the application is installed on.
+          description: Team ID.
           example: 5e5ea5c16897e
-        scopes:
+        teamName:
+          type: string
+          description: Team name.
+          example: VIP
+        invited:
+          type: string
+          description: Date, the user has been invited to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        joined:
+          type: string
+          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        confirm:
+          type: boolean
+          description: User confirmation status, true if the user has joined the team or false otherwise.
+          example: false
+        mfa:
+          type: boolean
+          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
+          example: false
+        userAccessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
+          example: '2020-10-15T06:38:00.000+00:00'
+        roles:
           type: array
-          description: Scopes granted to the application. Snapshot of the application's installation scopes taken when the installation was created or last updated.
+          description: User list of roles
           items:
             type: string
           example:
-          - organization:organization.read
-        authorizationDetails:
-          type: array
-          description: Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
-          items:
-            type: object
-          example:
-          - type: project
-            identifiers:
-            - '*'
-        createdById:
-          type: string
-          description: ID of the user who created the installation.
-          example: 5e5ea5c16897e
-        createdByName:
-          type: string
-          description: Name of the user who created the installation.
-          example: Walter White
-        lastAccessedAt:
-          type:
-          - string
-          - 'null'
-          description: Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
-          example: '2020-10-15T06:38:00.000+00:00'
+          - owner
       required:
       - $id
       - $createdAt
       - $updatedAt
-      - appId
+      - userId
+      - userName
+      - userEmail
+      - userPhone
       - teamId
-      - scopes
-      - authorizationDetails
-      - createdById
-      - createdByName
+      - teamName
+      - invited
+      - joined
+      - confirm
+      - mfa
+      - userAccessedAt
+      - roles
       example:
         $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        appId: 5e5ea5c16897e
+        userId: 5e5ea5c16897e
+        userName: John Doe
+        userEmail: john@appwrite.io
+        userPhone: +1 555 555 5555
         teamId: 5e5ea5c16897e
-        scopes:
-        - organization:organization.read
-        authorizationDetails:
-        - type: project
-          identifiers:
-          - '*'
-        createdById: 5e5ea5c16897e
-        createdByName: Walter White
-        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
-    teamList:
-      description: Teams List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of teams that matched your query.
-          format: int32
-          example: 5
-        teams:
-          type: array
-          description: List of teams.
-          items:
-            $ref: '#/components/schemas/team'
-          example: []
-      required:
-      - total
-      - teams
-      example:
-        total: 5
-        teams: ''
+        teamName: VIP
+        invited: '2020-10-15T06:38:00.000+00:00'
+        joined: '2020-10-15T06:38:00.000+00:00'
+        confirm: false
+        mfa: false
+        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        roles:
+        - owner
     appInstallationList:
       description: App installations list
       type: object

@@ -50,7 +50,7 @@
     "appwrite-webhooks-api-openapi.yml"
   ],
   "archived": [
-    "deleted 2 superseded output(s) from the previous generation"
+    "deleted 1 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -58,8 +58,8 @@
     "1 archived document(s) dropped as subsets of other archived documents",
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "appwrite-open-api3-latest.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "superseded outputs removed: appwrite-graph-ql-api-openapi.yml, appwrite-o-auth2-api-openapi.yml",
-    "apis.yml register: written (+2 apis, 44 total)"
+    "superseded outputs removed: appwrite-graph-ql-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 44 total)"
   ],
   "skipped": [
     "_original/appwrite-openapi.yaml: archived document superseded by a larger archived document",
@@ -86,7 +86,7 @@
     "appwrite-mongo-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "appwrite-mysql-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "appwrite-notifications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "appwrite-o-auth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "appwrite-oauth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "appwrite-organization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "appwrite-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "appwrite-ping-api-openapi.yml: previously refined output, superseded by openapi/_original/",

@@ -655,129 +655,48 @@ paths:
         in: query
 components:
   schemas:
-    providerRepositoryRuntimeList:
-      description: Runtime Provider Repositories List
+    installation:
+      description: Installation
       type: object
       properties:
-        total:
-          type: integer
-          description: Total number of runtimeProviderRepositories that matched your query.
-          format: int32
-          example: 5
-        runtimeProviderRepositories:
-          type: array
-          description: List of runtimeProviderRepositories.
-          items:
-            $ref: '#/components/schemas/providerRepositoryRuntime'
-          example: []
-        type:
+        $id:
           type: string
-          description: Provider repository list type.
-          example: runtime
-      required:
-      - total
-      - runtimeProviderRepositories
-      - type
-      example:
-        total: 5
-        runtimeProviderRepositories: ''
-        type: runtime
-    providerRepositoryRuntime:
-      description: ProviderRepositoryRuntime
-      type: object
-      properties:
-        id:
-          type: string
-          description: VCS (Version Control System) repository ID.
+          description: Function ID.
           example: 5e5ea5c16897e
-        name:
+        $createdAt:
           type: string
-          description: VCS (Version Control System) repository name.
-          example: appwrite
-        organization:
+          description: Function creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
           type: string
-          description: VCS (Version Control System) organization name
-          example: appwrite
+          description: Function update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
         provider:
           type: string
           description: VCS (Version Control System) provider name.
           example: github
-        private:
-          type: boolean
-          description: Is VCS (Version Control System) repository private?
-          example: true
-        defaultBranch:
+        organization:
           type: string
-          description: VCS (Version Control System) repository's default branch name.
-          example: main
+          description: VCS (Version Control System) organization name.
+          example: appwrite
         providerInstallationId:
           type: string
           description: VCS (Version Control System) installation ID.
-          example: '108104697'
-        authorized:
-          type: boolean
-          description: Is VCS (Version Control System) repository authorized for the installation?
-          example: true
-        pushedAt:
-          type: string
-          description: Last commit date in ISO 8601 format.
-          example: datetime
-        variables:
-          type: array
-          description: Environment variables found in .env files
-          items:
-            type: string
-          example:
-          - PORT
-          - NODE_ENV
-        runtime:
-          type: string
-          description: Auto-detected runtime. Empty if type is not "runtime".
-          example: node-22
+          example: '5322'
       required:
-      - id
-      - name
-      - organization
+      - $id
+      - $createdAt
+      - $updatedAt
       - provider
-      - private
-      - defaultBranch
+      - organization
       - providerInstallationId
-      - authorized
-      - pushedAt
-      - variables
-      - runtime
       example:
-        id: 5e5ea5c16897e
-        name: appwrite
-        organization: appwrite
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
         provider: github
-        private: true
-        defaultBranch: main
-        providerInstallationId: '108104697'
-        authorized: true
-        pushedAt: datetime
-        variables:
-        - PORT
-        - NODE_ENV
-        runtime: node-22
-    detectionVariable:
-      description: DetectionVariable
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of environment variable
-          example: NODE_ENV
-        value:
-          type: string
-          description: Value of environment variable
-          example: production
-      required:
-      - name
-      - value
-      example:
-        name: NODE_ENV
-        value: production
+        organization: appwrite
+        providerInstallationId: '5322'
     providerRepositoryFramework:
       description: ProviderRepositoryFramework
       type: object
@@ -856,6 +775,233 @@ components:
         - PORT
         - NODE_ENV
         framework: nextjs
+    providerRepositoryRuntime:
+      description: ProviderRepositoryRuntime
+      type: object
+      properties:
+        id:
+          type: string
+          description: VCS (Version Control System) repository ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: VCS (Version Control System) repository name.
+          example: appwrite
+        organization:
+          type: string
+          description: VCS (Version Control System) organization name
+          example: appwrite
+        provider:
+          type: string
+          description: VCS (Version Control System) provider name.
+          example: github
+        private:
+          type: boolean
+          description: Is VCS (Version Control System) repository private?
+          example: true
+        defaultBranch:
+          type: string
+          description: VCS (Version Control System) repository's default branch name.
+          example: main
+        providerInstallationId:
+          type: string
+          description: VCS (Version Control System) installation ID.
+          example: '108104697'
+        authorized:
+          type: boolean
+          description: Is VCS (Version Control System) repository authorized for the installation?
+          example: true
+        pushedAt:
+          type: string
+          description: Last commit date in ISO 8601 format.
+          example: datetime
+        variables:
+          type: array
+          description: Environment variables found in .env files
+          items:
+            type: string
+          example:
+          - PORT
+          - NODE_ENV
+        runtime:
+          type: string
+          description: Auto-detected runtime. Empty if type is not "runtime".
+          example: node-22
+      required:
+      - id
+      - name
+      - organization
+      - provider
+      - private
+      - defaultBranch
+      - providerInstallationId
+      - authorized
+      - pushedAt
+      - variables
+      - runtime
+      example:
+        id: 5e5ea5c16897e
+        name: appwrite
+        organization: appwrite
+        provider: github
+        private: true
+        defaultBranch: main
+        providerInstallationId: '108104697'
+        authorized: true
+        pushedAt: datetime
+        variables:
+        - PORT
+        - NODE_ENV
+        runtime: node-22
+    branchList:
+      description: Branches List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of branches that matched your query.
+          format: int32
+          example: 5
+        branches:
+          type: array
+          description: List of branches.
+          items:
+            $ref: '#/components/schemas/branch'
+          example: []
+      required:
+      - total
+      - branches
+      example:
+        total: 5
+        branches: ''
+    vcsNamespace:
+      description: VcsNamespace
+      type: object
+      properties:
+        $id:
+          type: string
+          description: VCS (Version Control System) namespace ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: VCS (Version Control System) namespace display name.
+          example: Appwrite
+        path:
+          type: string
+          description: VCS (Version Control System) namespace path, used to filter repositories by namespace.
+          example: appwrite
+        type:
+          type: string
+          description: Namespace type. Either the user's personal namespace or a group/organization.
+          example: user
+        avatarUrl:
+          type: string
+          description: Namespace avatar URL.
+          example: https://example.com/avatar.png
+      required:
+      - $id
+      - name
+      - path
+      - type
+      - avatarUrl
+      example:
+        $id: 5e5ea5c16897e
+        name: Appwrite
+        path: appwrite
+        type: user
+        avatarUrl: https://example.com/avatar.png
+    providerRepositoryFrameworkList:
+      description: Framework Provider Repositories List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of frameworkProviderRepositories that matched your query.
+          format: int32
+          example: 5
+        frameworkProviderRepositories:
+          type: array
+          description: List of frameworkProviderRepositories.
+          items:
+            $ref: '#/components/schemas/providerRepositoryFramework'
+          example: []
+        type:
+          type: string
+          description: Provider repository list type.
+          example: framework
+      required:
+      - total
+      - frameworkProviderRepositories
+      - type
+      example:
+        total: 5
+        frameworkProviderRepositories: ''
+        type: framework
+    detectionRuntime:
+      description: DetectionRuntime
+      type: object
+      properties:
+        type:
+          description: Repository detection type.
+          example: runtime
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - runtime
+            title: runtime
+        variables:
+          type:
+          - array
+          - 'null'
+          description: Environment variables found in .env files
+          items:
+            $ref: '#/components/schemas/detectionVariable'
+          example: []
+        runtime:
+          type: string
+          description: Runtime
+          example: node
+        entrypoint:
+          type: string
+          description: Function Entrypoint
+          example: index.js
+        commands:
+          type: string
+          description: Function install and build commands
+          example: npm install && npm run build
+      required:
+      - type
+      - runtime
+      - entrypoint
+      - commands
+      example:
+        type: runtime
+        variables: {}
+        runtime: node
+        entrypoint: index.js
+        commands: npm install && npm run build
+    installationList:
+      description: Installations List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of installations that matched your query.
+          format: int32
+          example: 5
+        installations:
+          type: array
+          description: List of installations.
+          items:
+            $ref: '#/components/schemas/installation'
+          example: []
+      required:
+      - total
+      - installations
+      example:
+        total: 5
+        installations: ''
     detectionFramework:
       description: DetectionFramework
       type: object
@@ -906,119 +1052,6 @@ components:
         installCommand: npm install
         buildCommand: npm run build
         outputDirectory: dist
-    detectionRuntime:
-      description: DetectionRuntime
-      type: object
-      properties:
-        type:
-          description: Repository detection type.
-          example: runtime
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - runtime
-            title: runtime
-        variables:
-          type:
-          - array
-          - 'null'
-          description: Environment variables found in .env files
-          items:
-            $ref: '#/components/schemas/detectionVariable'
-          example: []
-        runtime:
-          type: string
-          description: Runtime
-          example: node
-        entrypoint:
-          type: string
-          description: Function Entrypoint
-          example: index.js
-        commands:
-          type: string
-          description: Function install and build commands
-          example: npm install && npm run build
-      required:
-      - type
-      - runtime
-      - entrypoint
-      - commands
-      example:
-        type: runtime
-        variables: {}
-        runtime: node
-        entrypoint: index.js
-        commands: npm install && npm run build
-    providerRepositoryFrameworkList:
-      description: Framework Provider Repositories List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of frameworkProviderRepositories that matched your query.
-          format: int32
-          example: 5
-        frameworkProviderRepositories:
-          type: array
-          description: List of frameworkProviderRepositories.
-          items:
-            $ref: '#/components/schemas/providerRepositoryFramework'
-          example: []
-        type:
-          type: string
-          description: Provider repository list type.
-          example: framework
-      required:
-      - total
-      - frameworkProviderRepositories
-      - type
-      example:
-        total: 5
-        frameworkProviderRepositories: ''
-        type: framework
-    installation:
-      description: Installation
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Function ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Function creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Function update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        provider:
-          type: string
-          description: VCS (Version Control System) provider name.
-          example: github
-        organization:
-          type: string
-          description: VCS (Version Control System) organization name.
-          example: appwrite
-        providerInstallationId:
-          type: string
-          description: VCS (Version Control System) installation ID.
-          example: '5322'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - provider
-      - organization
-      - providerInstallationId
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        provider: github
-        organization: appwrite
-        providerInstallationId: '5322'
     vcsContent:
       description: VcsContents
       type: object
@@ -1046,81 +1079,6 @@ components:
         size: 1523
         isDirectory: true
         name: Main.java
-    vcsContentList:
-      description: VCS Content List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of contents that matched your query.
-          format: int32
-          example: 5
-        contents:
-          type: array
-          description: List of contents.
-          items:
-            $ref: '#/components/schemas/vcsContent'
-          example: []
-      required:
-      - total
-      - contents
-      example:
-        total: 5
-        contents: ''
-    branchList:
-      description: Branches List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of branches that matched your query.
-          format: int32
-          example: 5
-        branches:
-          type: array
-          description: List of branches.
-          items:
-            $ref: '#/components/schemas/branch'
-          example: []
-      required:
-      - total
-      - branches
-      example:
-        total: 5
-        branches: ''
-    branch:
-      description: Branch
-      type: object
-      properties:
-        name:
-          type: string
-          description: Branch Name.
-          example: main
-      required:
-      - name
-      example:
-        name: main
-    installationList:
-      description: Installations List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of installations that matched your query.
-          format: int32
-          example: 5
-        installations:
-          type: array
-          description: List of installations.
-          items:
-            $ref: '#/components/schemas/installation'
-          example: []
-      required:
-      - total
-      - installations
-      example:
-        total: 5
-        installations: ''
     vcsNamespaceList:
       description: VCS Namespaces List
       type: object
@@ -1142,42 +1100,36 @@ components:
       example:
         total: 5
         namespaces: ''
-    vcsNamespace:
-      description: VcsNamespace
+    detectionVariable:
+      description: DetectionVariable
       type: object
       properties:
-        $id:
-          type: string
-          description: VCS (Version Control System) namespace ID.
-          example: 5e5ea5c16897e
         name:
           type: string
-          description: VCS (Version Control System) namespace display name.
-          example: Appwrite
-        path:
+          description: Name of environment variable
+          example: NODE_ENV
+        value:
           type: string
-          description: VCS (Version Control System) namespace path, used to filter repositories by namespace.
-          example: appwrite
-        type:
-          type: string
-          description: Namespace type. Either the user's personal namespace or a group/organization.
-          example: user
-        avatarUrl:
-          type: string
-          description: Namespace avatar URL.
-          example: https://example.com/avatar.png
+          description: Value of environment variable
+          example: production
       required:
-      - $id
       - name
-      - path
-      - type
-      - avatarUrl
+      - value
       example:
-        $id: 5e5ea5c16897e
-        name: Appwrite
-        path: appwrite
-        type: user
-        avatarUrl: https://example.com/avatar.png
+        name: NODE_ENV
+        value: production
+    branch:
+      description: Branch
+      type: object
+      properties:
+        name:
+          type: string
+          description: Branch Name.
+          example: main
+      required:
+      - name
+      example:
+        name: main
     providerRepository:
       description: ProviderRepository
       type: object
@@ -1250,6 +1202,54 @@ components:
         variables:
         - PORT
         - NODE_ENV
+    vcsContentList:
+      description: VCS Content List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of contents that matched your query.
+          format: int32
+          example: 5
+        contents:
+          type: array
+          description: List of contents.
+          items:
+            $ref: '#/components/schemas/vcsContent'
+          example: []
+      required:
+      - total
+      - contents
+      example:
+        total: 5
+        contents: ''
+    providerRepositoryRuntimeList:
+      description: Runtime Provider Repositories List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of runtimeProviderRepositories that matched your query.
+          format: int32
+          example: 5
+        runtimeProviderRepositories:
+          type: array
+          description: List of runtimeProviderRepositories.
+          items:
+            $ref: '#/components/schemas/providerRepositoryRuntime'
+          example: []
+        type:
+          type: string
+          description: Provider repository list type.
+          example: runtime
+      required:
+      - total
+      - runtimeProviderRepositories
+      - type
+      example:
+        total: 5
+        runtimeProviderRepositories: ''
+        type: runtime
   securitySchemes:
     Project:
       type: apiKey

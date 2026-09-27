@@ -45,7 +45,7 @@ tags:
 - Application
 - Backend
 - Mobile
-- Open-Source
+- Open Source
 - Database
 - Storage
 - Serverless
@@ -63,6 +63,7 @@ tags_raw:
 - Authentication
 - Hosting
 - Agents
+- Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/appwrite/refs/heads/main/apis.yml
 created: '2025-02-17'
 modified: '2026-09-12'
@@ -334,10 +335,11 @@ apis:
   baseURL: https://cloud.appwrite.io/v1
   tags:
   - Database
-  - Machine-Learning
+  - Machine Learning
   tags_raw:
   - Databases
   - Machine Learning
+  - Machine-Learning
   properties:
   - type: OpenAPI
     url: openapi/appwrite-vectorsdb-api-openapi.yml
@@ -997,9 +999,10 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
-  - Machine-Learning
+  - Machine Learning
   tags_raw:
   - Machine Learning
+  - Machine-Learning
   properties:
   - type: OpenAPI
     url: openapi/appwrite-embeddings-api-openapi.yml
@@ -1083,8 +1086,6 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
-  - GraphQL
-  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI

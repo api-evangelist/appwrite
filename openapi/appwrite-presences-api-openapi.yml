@@ -516,6 +516,25 @@ paths:
         in: path
 components:
   schemas:
+    metric:
+      description: Metric
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The value of this metric at the timestamp.
+          format: int32
+          example: 1
+        date:
+          type: string
+          description: The date at which this metric was aggregated in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - value
+      - date
+      example:
+        value: 1
+        date: '2020-10-15T06:38:00.000+00:00'
     usagePresence:
       description: UsagePresence
       type: object
@@ -611,25 +630,6 @@ components:
         expiresAt: '2020-10-15T06:38:00.000+00:00'
         metadata:
           key: value
-    metric:
-      description: Metric
-      type: object
-      properties:
-        value:
-          type: integer
-          description: The value of this metric at the timestamp.
-          format: int32
-          example: 1
-        date:
-          type: string
-          description: The date at which this metric was aggregated in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - value
-      - date
-      example:
-        value: 1
-        date: '2020-10-15T06:38:00.000+00:00'
     presenceList:
       description: Presences List
       type: object

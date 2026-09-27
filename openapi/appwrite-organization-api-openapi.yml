@@ -1395,351 +1395,6 @@ paths:
         in: path
 components:
   schemas:
-    project:
-      description: Project
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Project ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Project creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Project update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Project name.
-          example: New Project
-        teamId:
-          type: string
-          description: Project team ID.
-          example: '1592981250'
-        region:
-          type: string
-          description: Project region
-          example: fra
-        devKeys:
-          type: array
-          description: 'Deprecated since 1.9.5: List of dev keys.'
-          items:
-            $ref: '#/components/schemas/devKey'
-          example: []
-        smtpEnabled:
-          type: boolean
-          description: Status for custom SMTP
-          example: false
-        smtpSenderName:
-          type: string
-          description: SMTP sender name
-          example: John Appwrite
-        smtpSenderEmail:
-          type: string
-          description: SMTP sender email
-          example: john@appwrite.io
-        smtpReplyToName:
-          type: string
-          description: SMTP reply to name
-          example: Support Team
-        smtpReplyToEmail:
-          type: string
-          description: SMTP reply to email
-          example: support@appwrite.io
-        smtpHost:
-          type: string
-          description: SMTP server host name
-          example: mail.appwrite.io
-        smtpPort:
-          type: integer
-          description: SMTP server port
-          format: int32
-          example: 25
-        smtpUsername:
-          type: string
-          description: SMTP server username
-          example: emailuser
-        smtpPassword:
-          type: string
-          description: SMTP server password. This property is write-only and always returned empty.
-          format: password
-          example: smtp-password
-        smtpSecure:
-          type: string
-          description: SMTP server secure protocol
-          example: tls
-        pingCount:
-          type: integer
-          description: Number of times the ping was received for this project.
-          format: int32
-          example: 1
-        pingedAt:
-          type: string
-          description: Last ping datetime in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        labels:
-          type: array
-          description: Labels for the project.
-          items:
-            type: string
-          example:
-          - vip
-        status:
-          type: string
-          description: Project status
-          example: active
-        onboarding:
-          type: object
-          additionalProperties: true
-          description: Stage progress (completed or skipped) with timestamps and actor types, keyed by stage id.
-          example: {}
-        authMethods:
-          type: array
-          description: List of auth methods.
-          items:
-            $ref: '#/components/schemas/projectAuthMethod'
-          example: []
-        services:
-          type: array
-          description: List of services.
-          items:
-            $ref: '#/components/schemas/projectService'
-          example: []
-        protocols:
-          type: array
-          description: List of protocols.
-          items:
-            $ref: '#/components/schemas/projectProtocol'
-          example: []
-        blocks:
-          type: array
-          description: Project blocks information
-          items:
-            $ref: '#/components/schemas/block'
-          example: []
-        consoleAccessedAt:
-          type: string
-          description: Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
-          example: '2020-10-15T06:38:00.000+00:00'
-        wafEnabled:
-          type:
-          - boolean
-          - 'null'
-          description: Whether WAF enforcement is enabled for the project.
-          example: true
-        billingLimits:
-          type:
-          - object
-          - 'null'
-          description: Billing limits reached
-          allOf:
-          - $ref: '#/components/schemas/billingLimits'
-        oAuth2ServerEnabled:
-          type:
-          - boolean
-          - 'null'
-          description: OAuth2 server status
-          example: false
-        oAuth2ServerAuthorizationUrl:
-          type:
-          - string
-          - 'null'
-          description: OAuth2 server authorization URL
-          example: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
-        oAuth2ServerScopes:
-          type:
-          - array
-          - 'null'
-          description: OAuth2 server allowed scopes
-          items:
-            type: string
-          example:
-          - read
-          - write
-        oAuth2ServerDefaultScopes:
-          type:
-          - array
-          - 'null'
-          description: OAuth2 server scopes used when an authorization request omits the scope parameter
-          items:
-            type: string
-          example:
-          - read
-        oAuth2ServerInstallationScopes:
-          type:
-          - array
-          - 'null'
-          description: Scopes an application may request when installed on a team
-          items:
-            type: string
-          example:
-          - project:all
-        oAuth2ServerAuthorizationDetailsTypes:
-          type:
-          - array
-          - 'null'
-          description: OAuth2 server accepted RFC 9396 authorization_details types
-          items:
-            type: string
-          example:
-          - calendar
-        oAuth2ServerAccessTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server access token duration in seconds for confidential clients
-          format: int32
-          example: 3600
-        oAuth2ServerRefreshTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server refresh token duration in seconds for confidential clients
-          format: int32
-          example: 86400
-        oAuth2ServerPublicAccessTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
-          format: int32
-          example: 3600
-        oAuth2ServerPublicRefreshTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
-          format: int32
-          example: 2592000
-        oAuth2ServerInstallationAccessTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server access token duration in seconds for app installation access tokens
-          format: int32
-          example: 3600
-        oAuth2ServerConfidentialPkce:
-          type:
-          - boolean
-          - 'null'
-          description: When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
-          example: false
-        oAuth2ServerVerificationUrl:
-          type:
-          - string
-          - 'null'
-          description: URL to your application page where users enter the device flow user code. Empty when the Device Authorization Grant is not configured.
-          example: https://cloud.appwrite.io/device
-        oAuth2ServerUserCodeLength:
-          type:
-          - integer
-          - 'null'
-          description: Number of characters in the device flow user code, excluding the formatting separator.
-          format: int32
-          example: 8
-        oAuth2ServerUserCodeFormat:
-          type:
-          - string
-          - 'null'
-          description: 'Character set for device flow user codes: `numeric`, `alphabetic`, or `alphanumeric`.'
-          example: alphanumeric
-        oAuth2ServerDeviceCodeDuration:
-          type:
-          - integer
-          - 'null'
-          description: Lifetime in seconds of device flow device codes and user codes.
-          format: int32
-          example: 600
-        oAuth2ServerDiscoveryUrl:
-          type:
-          - string
-          - 'null'
-          description: OAuth2 server discovery URL
-          example: https://auth.example.com/.well-known/openid-configuration
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - teamId
-      - region
-      - devKeys
-      - smtpEnabled
-      - smtpSenderName
-      - smtpSenderEmail
-      - smtpReplyToName
-      - smtpReplyToEmail
-      - smtpHost
-      - smtpPort
-      - smtpUsername
-      - smtpPassword
-      - smtpSecure
-      - pingCount
-      - pingedAt
-      - labels
-      - status
-      - onboarding
-      - authMethods
-      - services
-      - protocols
-      - blocks
-      - consoleAccessedAt
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: New Project
-        teamId: '1592981250'
-        region: fra
-        devKeys: {}
-        smtpEnabled: false
-        smtpSenderName: John Appwrite
-        smtpSenderEmail: john@appwrite.io
-        smtpReplyToName: Support Team
-        smtpReplyToEmail: support@appwrite.io
-        smtpHost: mail.appwrite.io
-        smtpPort: 25
-        smtpUsername: emailuser
-        smtpPassword: smtp-password
-        smtpSecure: tls
-        pingCount: 1
-        pingedAt: '2020-10-15T06:38:00.000+00:00'
-        labels:
-        - vip
-        status: active
-        onboarding: {}
-        authMethods: {}
-        services: {}
-        protocols: {}
-        blocks: ''
-        consoleAccessedAt: '2020-10-15T06:38:00.000+00:00'
-        wafEnabled: true
-        billingLimits: ''
-        oAuth2ServerEnabled: false
-        oAuth2ServerAuthorizationUrl: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
-        oAuth2ServerScopes:
-        - read
-        - write
-        oAuth2ServerDefaultScopes:
-        - read
-        oAuth2ServerInstallationScopes:
-        - project:all
-        oAuth2ServerAuthorizationDetailsTypes:
-        - calendar
-        oAuth2ServerAccessTokenDuration: 3600
-        oAuth2ServerRefreshTokenDuration: 86400
-        oAuth2ServerPublicAccessTokenDuration: 3600
-        oAuth2ServerPublicRefreshTokenDuration: 2592000
-        oAuth2ServerInstallationAccessTokenDuration: 3600
-        oAuth2ServerConfidentialPkce: false
-        oAuth2ServerVerificationUrl: https://cloud.appwrite.io/device
-        oAuth2ServerUserCodeLength: 8
-        oAuth2ServerUserCodeFormat: alphanumeric
-        oAuth2ServerDeviceCodeDuration: 600
-        oAuth2ServerDiscoveryUrl: https://auth.example.com/.well-known/openid-configuration
     devKey:
       description: DevKey
       type: object
@@ -1797,6 +1452,157 @@ components:
         secret: 919c2d18fb5d4...a2ae413da83346ad2
         accessedAt: '2020-10-15T06:38:00.000+00:00'
         sdks: appwrite:flutter
+    program:
+      description: Program
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Program ID
+          example: ''
+        title:
+          type: string
+          description: Program title
+          example: ''
+        description:
+          type: string
+          description: Program description
+          example: ''
+        tag:
+          type: string
+          description: Program tag for highlighting on console
+        icon:
+          type: string
+          description: Program icon for highlighting on console
+        url:
+          type: string
+          description: URL for more information on this program
+          example: ''
+        active:
+          type: boolean
+          description: Whether this program is active
+          example: false
+        external:
+          type: boolean
+          description: Whether this program is external
+          example: false
+        billingPlanId:
+          type: string
+          description: Billing plan ID that this is program is associated with.
+          example: ''
+      required:
+      - $id
+      - title
+      - description
+      - tag
+      - icon
+      - url
+      - active
+      - external
+      - billingPlanId
+      example:
+        $id: ''
+        title: ''
+        description: ''
+        tag: null
+        icon: null
+        url: ''
+        active: false
+        external: false
+        billingPlanId: ''
+    billingLimits:
+      description: Limits
+      type: object
+      properties:
+        bandwidth:
+          type:
+          - integer
+          - 'null'
+          description: Bandwidth limit
+          format: int32
+          example: 5
+        storage:
+          type:
+          - integer
+          - 'null'
+          description: Storage limit
+          format: int32
+          example: 150
+        users:
+          type:
+          - integer
+          - 'null'
+          description: Users limit
+          format: int32
+          example: 200000
+        executions:
+          type:
+          - integer
+          - 'null'
+          description: Executions limit
+          format: int32
+          example: 750000
+        GBHours:
+          type:
+          - integer
+          - 'null'
+          description: GBHours limit
+          format: int32
+          example: 100
+        imageTransformations:
+          type:
+          - integer
+          - 'null'
+          description: Image transformations limit
+          format: int32
+          example: 100
+        authPhone:
+          type:
+          - integer
+          - 'null'
+          description: Auth phone limit
+          format: int32
+          example: 10
+        budgetLimit:
+          type:
+          - integer
+          - 'null'
+          description: Budget limit percentage
+          format: int32
+          example: 100
+      example:
+        bandwidth: 5
+        storage: 150
+        users: 200000
+        executions: 750000
+        GBHours: 100
+        imageTransformations: 100
+        authPhone: 10
+        budgetLimit: 100
+    billingPlanSupportedAddons:
+      description: BillingPlanSupportedAddons
+      type: object
+      properties:
+        baa:
+          type: boolean
+          description: Whether the plan supports BAA (Business Associate Agreement) addon
+          example: true
+        premiumGeoDB:
+          type: boolean
+          description: Whether the plan supports Premium Geo DB addon (project-level)
+          example: true
+        premiumGeoDBOrg:
+          type: boolean
+          description: Whether the plan supports Premium Geo DB addon (organization-level)
+          example: true
+      required:
+      - baa
+      - premiumGeoDB
+      - premiumGeoDBOrg
+      example:
+        baa: true
+        premiumGeoDB: true
+        premiumGeoDBOrg: true
     billingPlanDedicatedDatabaseLimits:
       description: dedicatedDatabaseLimits
       type: object
@@ -1975,293 +1781,54 @@ components:
         - async
         - sync
         - quorum
-    billingPlanSupportedAddons:
-      description: BillingPlanSupportedAddons
-      type: object
-      properties:
-        baa:
-          type: boolean
-          description: Whether the plan supports BAA (Business Associate Agreement) addon
-          example: true
-        premiumGeoDB:
-          type: boolean
-          description: Whether the plan supports Premium Geo DB addon (project-level)
-          example: true
-        premiumGeoDBOrg:
-          type: boolean
-          description: Whether the plan supports Premium Geo DB addon (organization-level)
-          example: true
-      required:
-      - baa
-      - premiumGeoDB
-      - premiumGeoDBOrg
-      example:
-        baa: true
-        premiumGeoDB: true
-        premiumGeoDBOrg: true
-    usageBillingPlan:
-      description: usageBillingPlan
-      type: object
-      properties:
-        bandwidth:
-          type: object
-          description: Bandwidth additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        executions:
-          type: object
-          description: Executions additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        member:
-          type:
-          - object
-          - 'null'
-          description: Member additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        realtime:
-          type: object
-          description: Realtime additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        realtimeMessages:
-          type: object
-          description: Realtime messages additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        realtimeBandwidth:
-          type:
-          - object
-          - 'null'
-          description: Realtime bandwidth additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        storage:
-          type: object
-          description: Storage additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        users:
-          type: object
-          description: User additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        GBHours:
-          type: object
-          description: GBHour additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        imageTransformations:
-          type: object
-          description: Image transformation additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        credits:
-          type:
-          - object
-          - 'null'
-          description: Credits additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-      required:
-      - bandwidth
-      - executions
-      - realtime
-      - realtimeMessages
-      - storage
-      - users
-      - GBHours
-      - imageTransformations
-      example:
-        bandwidth: null
-        executions: null
-        member: null
-        realtime: null
-        realtimeMessages: null
-        realtimeBandwidth: null
-        storage: null
-        users: null
-        GBHours: null
-        imageTransformations: null
-        credits: null
-    membershipList:
-      description: Memberships List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of memberships that matched your query.
-          format: int32
-          example: 5
-        memberships:
-          type: array
-          description: List of memberships.
-          items:
-            $ref: '#/components/schemas/membership'
-          example: []
-      required:
-      - total
-      - memberships
-      example:
-        total: 5
-        memberships: ''
-    billingPlanAddonDetails:
-      description: Details
-      type: object
-      properties:
-        supported:
-          type: boolean
-          description: Is the addon supported in the plan?
-          example: true
-        planIncluded:
-          type: integer
-          description: Addon plan included value
-          format: int32
-          example: 1
-        limit:
-          type: integer
-          description: Addon limit
-          format: int32
-          example: 5
-        type:
-          type: string
-          description: Addon type
-          example: numeric
-        currency:
-          type:
-          - string
-          - 'null'
-          description: Price currency
-          example: USD
-        price:
-          type: number
-          description: Price
-          format: double
-          example: 5
-        value:
-          type: integer
-          description: Resource value
-          format: int32
-          example: 25
-        invoiceDesc:
-          type: string
-          description: Description on invoice
-          example: ''
-      required:
-      - supported
-      - planIncluded
-      - limit
-      - type
-      - price
-      - value
-      - invoiceDesc
-      example:
-        supported: true
-        planIncluded: 1
-        limit: 5
-        type: numeric
-        currency: USD
-        price: 5
-        value: 25
-        invoiceDesc: ''
-    projectProtocol:
-      description: ProjectProtocol
+    projectAuthMethod:
+      description: ProjectAuthMethod
       type: object
       properties:
         $id:
-          description: Protocol ID.
-          example: graphql
-          title: ProjectProtocolId
+          description: Auth method ID.
+          example: email-password
+          title: ProjectAuthMethodId
           type: string
           oneOf:
           - type: string
             enum:
-            - rest
-            title: rest
+            - email-password
+            title: email-password
           - type: string
             enum:
-            - graphql
-            title: graphql
+            - magic-url
+            title: magic-url
           - type: string
             enum:
-            - websocket
-            title: websocket
+            - email-otp
+            title: email-otp
+          - type: string
+            enum:
+            - anonymous
+            title: anonymous
+          - type: string
+            enum:
+            - invites
+            title: invites
+          - type: string
+            enum:
+            - jwt
+            title: jwt
+          - type: string
+            enum:
+            - phone
+            title: phone
         enabled:
           type: boolean
-          description: Protocol status.
+          description: Auth method status.
           example: false
       required:
       - $id
       - enabled
       example:
-        $id: graphql
+        $id: email-password
         enabled: false
-    billingPlanAddon:
-      description: Addon
-      type: object
-      properties:
-        seats:
-          type:
-          - object
-          - 'null'
-          description: Addon seats
-          allOf:
-          - $ref: '#/components/schemas/billingPlanAddonDetails'
-        projects:
-          type:
-          - object
-          - 'null'
-          description: Addon projects
-          allOf:
-          - $ref: '#/components/schemas/billingPlanAddonDetails'
-      example:
-        seats: null
-        projects: null
-    additionalResource:
-      description: AdditionalResource
-      type: object
-      properties:
-        name:
-          type: string
-          description: Resource name
-          example: ''
-        unit:
-          type: string
-          description: Resource unit
-          example: GB
-        currency:
-          type: string
-          description: Price currency
-          example: USD
-        price:
-          type: number
-          description: Price
-          format: double
-          example: 5
-        value:
-          type: integer
-          description: Resource value
-          format: int32
-          example: 25
-        invoiceDesc:
-          type: string
-          description: Description on invoice
-          example: ''
-      required:
-      - name
-      - unit
-      - currency
-      - price
-      - value
-      - invoiceDesc
-      example:
-        name: ''
-        unit: GB
-        currency: USD
-        price: 5
-        value: 25
-        invoiceDesc: ''
     billingPlan:
       description: billingPlan
       type: object
@@ -2783,72 +2350,151 @@ components:
         program: null
         databaseComputeCredit: 10
         dedicatedDatabases: null
-    key:
-      description: Key
+    projectService:
+      description: ProjectService
       type: object
       properties:
         $id:
+          description: Service ID.
+          example: sites
+          title: ProjectServiceId
           type: string
-          description: Key ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Key creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Key update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Key name.
-          example: My API Key
-        expire:
-          type: string
-          description: Key expiration date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        scopes:
-          type: array
-          description: Allowed permission scopes.
-          items:
-            type: string
-          example:
-          - users.read
-        secret:
-          type: string
-          description: Secret key.
-          example: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
-          example: '2020-10-15T06:38:00.000+00:00'
-        sdks:
-          type: array
-          description: List of SDK user agents that used this key.
-          items:
-            type: string
-          example:
-          - appwrite:flutter
+          oneOf:
+          - type: string
+            enum:
+            - account
+            title: account
+          - type: string
+            enum:
+            - avatars
+            title: avatars
+          - type: string
+            enum:
+            - databases
+            title: databases
+          - type: string
+            enum:
+            - tablesdb
+            title: tablesdb
+          - type: string
+            enum:
+            - locale
+            title: locale
+          - type: string
+            enum:
+            - health
+            title: health
+          - type: string
+            enum:
+            - project
+            title: project
+          - type: string
+            enum:
+            - storage
+            title: storage
+          - type: string
+            enum:
+            - teams
+            title: teams
+          - type: string
+            enum:
+            - users
+            title: users
+          - type: string
+            enum:
+            - vcs
+            title: vcs
+          - type: string
+            enum:
+            - sites
+            title: sites
+          - type: string
+            enum:
+            - functions
+            title: functions
+          - type: string
+            enum:
+            - proxy
+            title: proxy
+          - type: string
+            enum:
+            - graphql
+            title: graphql
+          - type: string
+            enum:
+            - migrations
+            title: migrations
+          - type: string
+            enum:
+            - messaging
+            title: messaging
+          - type: string
+            enum:
+            - advisor
+            title: advisor
+        enabled:
+          type: boolean
+          description: Service status.
+          example: false
       required:
       - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - expire
-      - scopes
-      - secret
-      - accessedAt
-      - sdks
+      - enabled
       example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: My API Key
-        expire: '2020-10-15T06:38:00.000+00:00'
-        scopes: users.read
-        secret: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt: '2020-10-15T06:38:00.000+00:00'
-        sdks: appwrite:flutter
+        $id: sites
+        enabled: false
+    membershipList:
+      description: Memberships List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of memberships that matched your query.
+          format: int32
+          example: 5
+        memberships:
+          type: array
+          description: List of memberships.
+          items:
+            $ref: '#/components/schemas/membership'
+          example: []
+      required:
+      - total
+      - memberships
+      example:
+        total: 5
+        memberships: ''
+    projectProtocol:
+      description: ProjectProtocol
+      type: object
+      properties:
+        $id:
+          description: Protocol ID.
+          example: graphql
+          title: ProjectProtocolId
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - rest
+            title: rest
+          - type: string
+            enum:
+            - graphql
+            title: graphql
+          - type: string
+            enum:
+            - websocket
+            title: websocket
+        enabled:
+          type: boolean
+          description: Protocol status.
+          example: false
+      required:
+      - $id
+      - enabled
+      example:
+        $id: graphql
+        enabled: false
     organization:
       description: Organization
       type: object
@@ -3097,54 +2743,6 @@ components:
         markedForDeletion: ''
         platform: imagine
         projects: ''
-    projectAuthMethod:
-      description: ProjectAuthMethod
-      type: object
-      properties:
-        $id:
-          description: Auth method ID.
-          example: email-password
-          title: ProjectAuthMethodId
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - email-password
-            title: email-password
-          - type: string
-            enum:
-            - magic-url
-            title: magic-url
-          - type: string
-            enum:
-            - email-otp
-            title: email-otp
-          - type: string
-            enum:
-            - anonymous
-            title: anonymous
-          - type: string
-            enum:
-            - invites
-            title: invites
-          - type: string
-            enum:
-            - jwt
-            title: jwt
-          - type: string
-            enum:
-            - phone
-            title: phone
-        enabled:
-          type: boolean
-          description: Auth method status.
-          example: false
-      required:
-      - $id
-      - enabled
-      example:
-        $id: email-password
-        enabled: false
     appInstallation:
       description: AppInstallation
       type: object
@@ -3224,80 +2822,27 @@ components:
         createdById: 5e5ea5c16897e
         createdByName: Walter White
         lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
-    block:
-      description: Block
+    projectList:
+      description: Projects List
       type: object
       properties:
-        $createdAt:
-          type: string
-          description: Block creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        resourceType:
-          type: string
-          description: Resource type that is blocked
-          example: project
-        resourceId:
-          type: string
-          description: Resource identifier that is blocked
-          example: 5e5ea5c16897e
-        mode:
-          type: string
-          description: Block mode. full blocks reads and writes; readOnly blocks writes only.
-          example: readOnly
-        reason:
-          type:
-          - string
-          - 'null'
-          description: Reason for the block. Can be null if no reason was provided.
-          example: Payment overdue
-        expiredAt:
-          type:
-          - string
-          - 'null'
-          description: Block expiration date in ISO 8601 format. Can be null if the block does not expire.
-          example: '2020-10-15T06:38:00.000+00:00'
-        projectName:
-          type: string
-          description: Name of the project this block applies to.
-          example: My Project
-        region:
-          type: string
-          description: Region of the project this block applies to.
-          example: fra
-        organizationName:
-          type: string
-          description: Name of the organization that owns the project.
-          example: Acme Inc.
-        organizationId:
-          type: string
-          description: ID of the organization that owns the project.
-          example: 5e5ea5c16897e
-        billingPlan:
-          type: string
-          description: Billing plan of the organization that owns the project.
-          example: pro
+        total:
+          type: integer
+          description: Total number of projects that matched your query.
+          format: int32
+          example: 5
+        projects:
+          type: array
+          description: List of projects.
+          items:
+            $ref: '#/components/schemas/project'
+          example: []
       required:
-      - $createdAt
-      - resourceType
-      - resourceId
-      - mode
-      - projectName
-      - region
-      - organizationName
-      - organizationId
-      - billingPlan
+      - total
+      - projects
       example:
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        resourceType: project
-        resourceId: 5e5ea5c16897e
-        mode: readOnly
-        reason: Payment overdue
-        expiredAt: '2020-10-15T06:38:00.000+00:00'
-        projectName: My Project
-        region: fra
-        organizationName: Acme Inc.
-        organizationId: 5e5ea5c16897e
-        billingPlan: pro
+        total: 5
+        projects: ''
     preferences:
       description: Preferences
       type: object
@@ -3327,133 +2872,476 @@ components:
       example:
         total: 5
         keys: ''
-    billingLimits:
-      description: Limits
-      type: object
-      properties:
-        bandwidth:
-          type:
-          - integer
-          - 'null'
-          description: Bandwidth limit
-          format: int32
-          example: 5
-        storage:
-          type:
-          - integer
-          - 'null'
-          description: Storage limit
-          format: int32
-          example: 150
-        users:
-          type:
-          - integer
-          - 'null'
-          description: Users limit
-          format: int32
-          example: 200000
-        executions:
-          type:
-          - integer
-          - 'null'
-          description: Executions limit
-          format: int32
-          example: 750000
-        GBHours:
-          type:
-          - integer
-          - 'null'
-          description: GBHours limit
-          format: int32
-          example: 100
-        imageTransformations:
-          type:
-          - integer
-          - 'null'
-          description: Image transformations limit
-          format: int32
-          example: 100
-        authPhone:
-          type:
-          - integer
-          - 'null'
-          description: Auth phone limit
-          format: int32
-          example: 10
-        budgetLimit:
-          type:
-          - integer
-          - 'null'
-          description: Budget limit percentage
-          format: int32
-          example: 100
-      example:
-        bandwidth: 5
-        storage: 150
-        users: 200000
-        executions: 750000
-        GBHours: 100
-        imageTransformations: 100
-        authPhone: 10
-        budgetLimit: 100
-    program:
-      description: Program
+    project:
+      description: Project
       type: object
       properties:
         $id:
           type: string
-          description: Program ID
-          example: ''
-        title:
+          description: Project ID.
+          example: 5e5ea5c16897e
+        $createdAt:
           type: string
-          description: Program title
-          example: ''
-        description:
+          description: Project creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
           type: string
-          description: Program description
-          example: ''
-        tag:
+          description: Project update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
           type: string
-          description: Program tag for highlighting on console
-        icon:
+          description: Project name.
+          example: New Project
+        teamId:
           type: string
-          description: Program icon for highlighting on console
-        url:
+          description: Project team ID.
+          example: '1592981250'
+        region:
           type: string
-          description: URL for more information on this program
-          example: ''
-        active:
+          description: Project region
+          example: fra
+        devKeys:
+          type: array
+          description: 'Deprecated since 1.9.5: List of dev keys.'
+          items:
+            $ref: '#/components/schemas/devKey'
+          example: []
+        smtpEnabled:
           type: boolean
-          description: Whether this program is active
+          description: Status for custom SMTP
           example: false
-        external:
-          type: boolean
-          description: Whether this program is external
-          example: false
-        billingPlanId:
+        smtpSenderName:
           type: string
-          description: Billing plan ID that this is program is associated with.
-          example: ''
+          description: SMTP sender name
+          example: John Appwrite
+        smtpSenderEmail:
+          type: string
+          description: SMTP sender email
+          example: john@appwrite.io
+        smtpReplyToName:
+          type: string
+          description: SMTP reply to name
+          example: Support Team
+        smtpReplyToEmail:
+          type: string
+          description: SMTP reply to email
+          example: support@appwrite.io
+        smtpHost:
+          type: string
+          description: SMTP server host name
+          example: mail.appwrite.io
+        smtpPort:
+          type: integer
+          description: SMTP server port
+          format: int32
+          example: 25
+        smtpUsername:
+          type: string
+          description: SMTP server username
+          example: emailuser
+        smtpPassword:
+          type: string
+          description: SMTP server password. This property is write-only and always returned empty.
+          format: password
+          example: smtp-password
+        smtpSecure:
+          type: string
+          description: SMTP server secure protocol
+          example: tls
+        pingCount:
+          type: integer
+          description: Number of times the ping was received for this project.
+          format: int32
+          example: 1
+        pingedAt:
+          type: string
+          description: Last ping datetime in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        labels:
+          type: array
+          description: Labels for the project.
+          items:
+            type: string
+          example:
+          - vip
+        status:
+          type: string
+          description: Project status
+          example: active
+        onboarding:
+          type: object
+          additionalProperties: true
+          description: Stage progress (completed or skipped) with timestamps and actor types, keyed by stage id.
+          example: {}
+        authMethods:
+          type: array
+          description: List of auth methods.
+          items:
+            $ref: '#/components/schemas/projectAuthMethod'
+          example: []
+        services:
+          type: array
+          description: List of services.
+          items:
+            $ref: '#/components/schemas/projectService'
+          example: []
+        protocols:
+          type: array
+          description: List of protocols.
+          items:
+            $ref: '#/components/schemas/projectProtocol'
+          example: []
+        blocks:
+          type: array
+          description: Project blocks information
+          items:
+            $ref: '#/components/schemas/block'
+          example: []
+        consoleAccessedAt:
+          type: string
+          description: Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
+          example: '2020-10-15T06:38:00.000+00:00'
+        wafEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether WAF enforcement is enabled for the project.
+          example: true
+        billingLimits:
+          type:
+          - object
+          - 'null'
+          description: Billing limits reached
+          allOf:
+          - $ref: '#/components/schemas/billingLimits'
+        oAuth2ServerEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: OAuth2 server status
+          example: false
+        oAuth2ServerAuthorizationUrl:
+          type:
+          - string
+          - 'null'
+          description: OAuth2 server authorization URL
+          example: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
+        oAuth2ServerScopes:
+          type:
+          - array
+          - 'null'
+          description: OAuth2 server allowed scopes
+          items:
+            type: string
+          example:
+          - read
+          - write
+        oAuth2ServerDefaultScopes:
+          type:
+          - array
+          - 'null'
+          description: OAuth2 server scopes used when an authorization request omits the scope parameter
+          items:
+            type: string
+          example:
+          - read
+        oAuth2ServerInstallationScopes:
+          type:
+          - array
+          - 'null'
+          description: Scopes an application may request when installed on a team
+          items:
+            type: string
+          example:
+          - project:all
+        oAuth2ServerAuthorizationDetailsTypes:
+          type:
+          - array
+          - 'null'
+          description: OAuth2 server accepted RFC 9396 authorization_details types
+          items:
+            type: string
+          example:
+          - calendar
+        oAuth2ServerAccessTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server access token duration in seconds for confidential clients
+          format: int32
+          example: 3600
+        oAuth2ServerRefreshTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server refresh token duration in seconds for confidential clients
+          format: int32
+          example: 86400
+        oAuth2ServerPublicAccessTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
+          format: int32
+          example: 3600
+        oAuth2ServerPublicRefreshTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
+          format: int32
+          example: 2592000
+        oAuth2ServerInstallationAccessTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server access token duration in seconds for app installation access tokens
+          format: int32
+          example: 3600
+        oAuth2ServerConfidentialPkce:
+          type:
+          - boolean
+          - 'null'
+          description: When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+          example: false
+        oAuth2ServerVerificationUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to your application page where users enter the device flow user code. Empty when the Device Authorization Grant is not configured.
+          example: https://cloud.appwrite.io/device
+        oAuth2ServerUserCodeLength:
+          type:
+          - integer
+          - 'null'
+          description: Number of characters in the device flow user code, excluding the formatting separator.
+          format: int32
+          example: 8
+        oAuth2ServerUserCodeFormat:
+          type:
+          - string
+          - 'null'
+          description: 'Character set for device flow user codes: `numeric`, `alphabetic`, or `alphanumeric`.'
+          example: alphanumeric
+        oAuth2ServerDeviceCodeDuration:
+          type:
+          - integer
+          - 'null'
+          description: Lifetime in seconds of device flow device codes and user codes.
+          format: int32
+          example: 600
+        oAuth2ServerDiscoveryUrl:
+          type:
+          - string
+          - 'null'
+          description: OAuth2 server discovery URL
+          example: https://auth.example.com/.well-known/openid-configuration
       required:
       - $id
-      - title
-      - description
-      - tag
-      - icon
-      - url
-      - active
-      - external
-      - billingPlanId
+      - $createdAt
+      - $updatedAt
+      - name
+      - teamId
+      - region
+      - devKeys
+      - smtpEnabled
+      - smtpSenderName
+      - smtpSenderEmail
+      - smtpReplyToName
+      - smtpReplyToEmail
+      - smtpHost
+      - smtpPort
+      - smtpUsername
+      - smtpPassword
+      - smtpSecure
+      - pingCount
+      - pingedAt
+      - labels
+      - status
+      - onboarding
+      - authMethods
+      - services
+      - protocols
+      - blocks
+      - consoleAccessedAt
       example:
-        $id: ''
-        title: ''
-        description: ''
-        tag: null
-        icon: null
-        url: ''
-        active: false
-        external: false
-        billingPlanId: ''
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: New Project
+        teamId: '1592981250'
+        region: fra
+        devKeys: {}
+        smtpEnabled: false
+        smtpSenderName: John Appwrite
+        smtpSenderEmail: john@appwrite.io
+        smtpReplyToName: Support Team
+        smtpReplyToEmail: support@appwrite.io
+        smtpHost: mail.appwrite.io
+        smtpPort: 25
+        smtpUsername: emailuser
+        smtpPassword: smtp-password
+        smtpSecure: tls
+        pingCount: 1
+        pingedAt: '2020-10-15T06:38:00.000+00:00'
+        labels:
+        - vip
+        status: active
+        onboarding: {}
+        authMethods: {}
+        services: {}
+        protocols: {}
+        blocks: ''
+        consoleAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        wafEnabled: true
+        billingLimits: ''
+        oAuth2ServerEnabled: false
+        oAuth2ServerAuthorizationUrl: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
+        oAuth2ServerScopes:
+        - read
+        - write
+        oAuth2ServerDefaultScopes:
+        - read
+        oAuth2ServerInstallationScopes:
+        - project:all
+        oAuth2ServerAuthorizationDetailsTypes:
+        - calendar
+        oAuth2ServerAccessTokenDuration: 3600
+        oAuth2ServerRefreshTokenDuration: 86400
+        oAuth2ServerPublicAccessTokenDuration: 3600
+        oAuth2ServerPublicRefreshTokenDuration: 2592000
+        oAuth2ServerInstallationAccessTokenDuration: 3600
+        oAuth2ServerConfidentialPkce: false
+        oAuth2ServerVerificationUrl: https://cloud.appwrite.io/device
+        oAuth2ServerUserCodeLength: 8
+        oAuth2ServerUserCodeFormat: alphanumeric
+        oAuth2ServerDeviceCodeDuration: 600
+        oAuth2ServerDiscoveryUrl: https://auth.example.com/.well-known/openid-configuration
+    billingPlanAddonDetails:
+      description: Details
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: Is the addon supported in the plan?
+          example: true
+        planIncluded:
+          type: integer
+          description: Addon plan included value
+          format: int32
+          example: 1
+        limit:
+          type: integer
+          description: Addon limit
+          format: int32
+          example: 5
+        type:
+          type: string
+          description: Addon type
+          example: numeric
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
+      required:
+      - supported
+      - planIncluded
+      - limit
+      - type
+      - price
+      - value
+      - invoiceDesc
+      example:
+        supported: true
+        planIncluded: 1
+        limit: 5
+        type: numeric
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
+    key:
+      description: Key
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Key ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Key creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Key update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Key name.
+          example: My API Key
+        expire:
+          type: string
+          description: Key expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        scopes:
+          type: array
+          description: Allowed permission scopes.
+          items:
+            type: string
+          example:
+          - users.read
+        secret:
+          type: string
+          description: Secret key.
+          example: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+          example: '2020-10-15T06:38:00.000+00:00'
+        sdks:
+          type: array
+          description: List of SDK user agents that used this key.
+          items:
+            type: string
+          example:
+          - appwrite:flutter
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - expire
+      - scopes
+      - secret
+      - accessedAt
+      - sdks
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My API Key
+        expire: '2020-10-15T06:38:00.000+00:00'
+        scopes: users.read
+        secret: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt: '2020-10-15T06:38:00.000+00:00'
+        sdks: appwrite:flutter
     membership:
       description: Membership
       type: object
@@ -3554,140 +3442,136 @@ components:
         userAccessedAt: '2020-10-15T06:38:00.000+00:00'
         roles:
         - owner
-    billingPlanLimits:
-      description: PlanLimits
+    usageBillingPlan:
+      description: usageBillingPlan
       type: object
       properties:
+        bandwidth:
+          type: object
+          description: Bandwidth additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        executions:
+          type: object
+          description: Executions additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        member:
+          type:
+          - object
+          - 'null'
+          description: Member additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtime:
+          type: object
+          description: Realtime additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtimeMessages:
+          type: object
+          description: Realtime messages additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtimeBandwidth:
+          type:
+          - object
+          - 'null'
+          description: Realtime bandwidth additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        storage:
+          type: object
+          description: Storage additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        users:
+          type: object
+          description: User additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        GBHours:
+          type: object
+          description: GBHour additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        imageTransformations:
+          type: object
+          description: Image transformation additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
         credits:
           type:
-          - integer
+          - object
           - 'null'
-          description: Credits limit per billing cycle
-          format: int32
-          example: 100
-        dailyCredits:
-          type:
-          - integer
-          - 'null'
-          description: Daily credits limit (if applicable)
-          format: int32
-          example: 5
-      example:
-        credits: 100
-        dailyCredits: 5
-    projectList:
-      description: Projects List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of projects that matched your query.
-          format: int32
-          example: 5
-        projects:
-          type: array
-          description: List of projects.
-          items:
-            $ref: '#/components/schemas/project'
-          example: []
+          description: Credits additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
       required:
-      - total
-      - projects
+      - bandwidth
+      - executions
+      - realtime
+      - realtimeMessages
+      - storage
+      - users
+      - GBHours
+      - imageTransformations
       example:
-        total: 5
-        projects: ''
-    projectService:
-      description: ProjectService
+        bandwidth: null
+        executions: null
+        member: null
+        realtime: null
+        realtimeMessages: null
+        realtimeBandwidth: null
+        storage: null
+        users: null
+        GBHours: null
+        imageTransformations: null
+        credits: null
+    additionalResource:
+      description: AdditionalResource
       type: object
       properties:
-        $id:
-          description: Service ID.
-          example: sites
-          title: ProjectServiceId
+        name:
           type: string
-          oneOf:
-          - type: string
-            enum:
-            - account
-            title: account
-          - type: string
-            enum:
-            - avatars
-            title: avatars
-          - type: string
-            enum:
-            - databases
-            title: databases
-          - type: string
-            enum:
-            - tablesdb
-            title: tablesdb
-          - type: string
-            enum:
-            - locale
-            title: locale
-          - type: string
-            enum:
-            - health
-            title: health
-          - type: string
-            enum:
-            - project
-            title: project
-          - type: string
-            enum:
-            - storage
-            title: storage
-          - type: string
-            enum:
-            - teams
-            title: teams
-          - type: string
-            enum:
-            - users
-            title: users
-          - type: string
-            enum:
-            - vcs
-            title: vcs
-          - type: string
-            enum:
-            - sites
-            title: sites
-          - type: string
-            enum:
-            - functions
-            title: functions
-          - type: string
-            enum:
-            - proxy
-            title: proxy
-          - type: string
-            enum:
-            - graphql
-            title: graphql
-          - type: string
-            enum:
-            - migrations
-            title: migrations
-          - type: string
-            enum:
-            - messaging
-            title: messaging
-          - type: string
-            enum:
-            - advisor
-            title: advisor
-        enabled:
-          type: boolean
-          description: Service status.
-          example: false
+          description: Resource name
+          example: ''
+        unit:
+          type: string
+          description: Resource unit
+          example: GB
+        currency:
+          type: string
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
       required:
-      - $id
-      - enabled
+      - name
+      - unit
+      - currency
+      - price
+      - value
+      - invoiceDesc
       example:
-        $id: sites
-        enabled: false
+        name: ''
+        unit: GB
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
     appInstallationList:
       description: App installations list
       type: object
@@ -3709,6 +3593,122 @@ components:
       example:
         total: 5
         installations: ''
+    billingPlanLimits:
+      description: PlanLimits
+      type: object
+      properties:
+        credits:
+          type:
+          - integer
+          - 'null'
+          description: Credits limit per billing cycle
+          format: int32
+          example: 100
+        dailyCredits:
+          type:
+          - integer
+          - 'null'
+          description: Daily credits limit (if applicable)
+          format: int32
+          example: 5
+      example:
+        credits: 100
+        dailyCredits: 5
+    billingPlanAddon:
+      description: Addon
+      type: object
+      properties:
+        seats:
+          type:
+          - object
+          - 'null'
+          description: Addon seats
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+        projects:
+          type:
+          - object
+          - 'null'
+          description: Addon projects
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+      example:
+        seats: null
+        projects: null
+    block:
+      description: Block
+      type: object
+      properties:
+        $createdAt:
+          type: string
+          description: Block creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        resourceType:
+          type: string
+          description: Resource type that is blocked
+          example: project
+        resourceId:
+          type: string
+          description: Resource identifier that is blocked
+          example: 5e5ea5c16897e
+        mode:
+          type: string
+          description: Block mode. full blocks reads and writes; readOnly blocks writes only.
+          example: readOnly
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Reason for the block. Can be null if no reason was provided.
+          example: Payment overdue
+        expiredAt:
+          type:
+          - string
+          - 'null'
+          description: Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+          example: '2020-10-15T06:38:00.000+00:00'
+        projectName:
+          type: string
+          description: Name of the project this block applies to.
+          example: My Project
+        region:
+          type: string
+          description: Region of the project this block applies to.
+          example: fra
+        organizationName:
+          type: string
+          description: Name of the organization that owns the project.
+          example: Acme Inc.
+        organizationId:
+          type: string
+          description: ID of the organization that owns the project.
+          example: 5e5ea5c16897e
+        billingPlan:
+          type: string
+          description: Billing plan of the organization that owns the project.
+          example: pro
+      required:
+      - $createdAt
+      - resourceType
+      - resourceId
+      - mode
+      - projectName
+      - region
+      - organizationName
+      - organizationId
+      - billingPlan
+      example:
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        resourceType: project
+        resourceId: 5e5ea5c16897e
+        mode: readOnly
+        reason: Payment overdue
+        expiredAt: '2020-10-15T06:38:00.000+00:00'
+        projectName: My Project
+        region: fra
+        organizationName: Acme Inc.
+        organizationId: 5e5ea5c16897e
+        billingPlan: pro
   securitySchemes:
     Project:
       type: apiKey
