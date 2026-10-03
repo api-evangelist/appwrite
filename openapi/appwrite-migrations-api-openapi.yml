@@ -1876,27 +1876,6 @@ components:
         version: 1.4.0
         oauth2-provider: 5
         backup-policy: 5
-    migrationList:
-      description: Migrations List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of migrations that matched your query.
-          format: int32
-          example: 5
-        migrations:
-          type: array
-          description: List of migrations.
-          items:
-            $ref: '#/components/schemas/migration'
-          example: []
-      required:
-      - total
-      - migrations
-      example:
-        total: 5
-        migrations: ''
     migration:
       description: Migration
       type: object
@@ -2052,6 +2031,27 @@ components:
         resourceData: '[{"resource":"Database","id":"public","status":"SUCCESS","message":""}]'
         errors: []
         options: '{"bucketId": "exports", "notify": false}'
+    migrationList:
+      description: Migrations List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of migrations that matched your query.
+          format: int32
+          example: 5
+        migrations:
+          type: array
+          description: List of migrations.
+          items:
+            $ref: '#/components/schemas/migration'
+          example: []
+      required:
+      - total
+      - migrations
+      example:
+        total: 5
+        migrations: ''
   securitySchemes:
     Project:
       type: apiKey

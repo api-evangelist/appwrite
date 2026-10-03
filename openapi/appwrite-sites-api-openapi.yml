@@ -3840,6 +3840,81 @@ paths:
         in: path
 components:
   schemas:
+    templateSiteList:
+      description: Site Templates List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of templates that matched your query.
+          format: int32
+          example: 5
+        templates:
+          type: array
+          description: List of templates.
+          items:
+            $ref: '#/components/schemas/templateSite'
+          example: []
+      required:
+      - total
+      - templates
+      example:
+        total: 5
+        templates: ''
+    framework:
+      description: Framework
+      type: object
+      properties:
+        key:
+          type: string
+          description: Framework key.
+          example: sveltekit
+        name:
+          type: string
+          description: Framework Name.
+          example: SvelteKit
+        buildRuntime:
+          type: string
+          description: Default runtime version.
+          example: node-22
+        runtimes:
+          type: array
+          description: List of supported runtime versions.
+          items:
+            type: string
+          example:
+          - static-1
+          - node-22
+        adapters:
+          type: array
+          description: List of supported adapters.
+          items:
+            $ref: '#/components/schemas/frameworkAdapter'
+          example:
+          - key: static
+            buildRuntime: node-22
+            buildCommand: npm run build
+            installCommand: npm install
+            outputDirectory: ./dist
+      required:
+      - key
+      - name
+      - buildRuntime
+      - runtimes
+      - adapters
+      example:
+        key: sveltekit
+        name: SvelteKit
+        buildRuntime: node-22
+        runtimes:
+        - static-1
+        - node-22
+        adapters:
+        - key: static
+          buildRuntime: node-22
+          buildCommand: npm run build
+          installCommand: npm install
+          outputDirectory: ./dist
     execution:
       description: Execution
       type: object
@@ -4018,6 +4093,163 @@ components:
         errors: ''
         duration: 0.4
         scheduledAt: '2020-10-15T06:38:00.000+00:00'
+    variable:
+      description: Variable
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Variable ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Variable creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Variable creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        key:
+          type: string
+          description: Variable key.
+          example: API_KEY
+        value:
+          type: string
+          description: Variable value.
+          example: myPa$$word1
+        secret:
+          type: boolean
+          description: Variable secret flag. Secret variables can only be updated or deleted, but never read.
+          example: false
+        resourceType:
+          type: string
+          description: Service to which the variable belongs. Possible values are "project", "function"
+          example: function
+        resourceId:
+          type: string
+          description: ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
+          example: myAwesomeFunction
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - key
+      - value
+      - secret
+      - resourceType
+      - resourceId
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        key: API_KEY
+        value: myPa$$word1
+        secret: false
+        resourceType: function
+        resourceId: myAwesomeFunction
+    headers:
+      description: Headers
+      type: object
+      properties:
+        name:
+          type: string
+          description: Header name.
+          example: Content-Type
+        value:
+          type: string
+          description: Header value.
+          example: application/json
+      required:
+      - name
+      - value
+      example:
+        name: Content-Type
+        value: application/json
+    frameworkAdapter:
+      description: Framework Adapter
+      type: object
+      properties:
+        key:
+          type: string
+          description: Adapter key.
+          example: static
+        installCommand:
+          type: string
+          description: Default command to download dependencies.
+          example: npm install
+        buildCommand:
+          type: string
+          description: Default command to build site into output directory.
+          example: npm run build
+        outputDirectory:
+          type: string
+          description: Default output directory of build.
+          example: ./dist
+        fallbackFile:
+          type:
+          - string
+          - 'null'
+          description: Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
+          example: index.html
+      required:
+      - key
+      - installCommand
+      - buildCommand
+      - outputDirectory
+      example:
+        key: static
+        installCommand: npm install
+        buildCommand: npm run build
+        outputDirectory: ./dist
+        fallbackFile: index.html
+    templateVariable:
+      description: Template Variable
+      type: object
+      properties:
+        name:
+          type: string
+          description: Variable Name.
+          example: APPWRITE_DATABASE_ID
+        description:
+          type: string
+          description: Variable Description.
+          example: The ID of the Appwrite database that contains the collection to sync.
+        value:
+          type: string
+          description: Variable Value.
+          example: '512'
+        secret:
+          type: boolean
+          description: Variable secret flag. Secret variables can only be updated or deleted, but never read.
+          example: false
+        placeholder:
+          type: string
+          description: Variable Placeholder.
+          example: 64a55...7b912
+        required:
+          type: boolean
+          description: Is the variable required?
+          example: false
+        type:
+          type: string
+          description: Variable Type.
+          example: password
+      required:
+      - name
+      - description
+      - value
+      - secret
+      - placeholder
+      - required
+      - type
+      example:
+        name: APPWRITE_DATABASE_ID
+        description: The ID of the Appwrite database that contains the collection to sync.
+        value: '512'
+        secret: false
+        placeholder: 64a55...7b912
+        required: false
+        type: password
     site:
       description: Site
       type: object
@@ -4253,249 +4485,27 @@ components:
         buildRuntime: node-22
         adapter: static
         fallbackFile: index.html
-    specification:
-      description: Specification
-      type: object
-      properties:
-        memory:
-          type: integer
-          description: Memory size in MB.
-          format: int32
-          example: 512
-        cpus:
-          type: number
-          description: Number of CPUs.
-          format: double
-          example: 1
-        enabled:
-          type: boolean
-          description: Is size enabled.
-          example: true
-        slug:
-          type: string
-          description: Size slug.
-          example: s-1vcpu-512mb
-      required:
-      - memory
-      - cpus
-      - enabled
-      - slug
-      example:
-        memory: 512
-        cpus: 1
-        enabled: true
-        slug: s-1vcpu-512mb
-    framework:
-      description: Framework
-      type: object
-      properties:
-        key:
-          type: string
-          description: Framework key.
-          example: sveltekit
-        name:
-          type: string
-          description: Framework Name.
-          example: SvelteKit
-        buildRuntime:
-          type: string
-          description: Default runtime version.
-          example: node-22
-        runtimes:
-          type: array
-          description: List of supported runtime versions.
-          items:
-            type: string
-          example:
-          - static-1
-          - node-22
-        adapters:
-          type: array
-          description: List of supported adapters.
-          items:
-            $ref: '#/components/schemas/frameworkAdapter'
-          example:
-          - key: static
-            buildRuntime: node-22
-            buildCommand: npm run build
-            installCommand: npm install
-            outputDirectory: ./dist
-      required:
-      - key
-      - name
-      - buildRuntime
-      - runtimes
-      - adapters
-      example:
-        key: sveltekit
-        name: SvelteKit
-        buildRuntime: node-22
-        runtimes:
-        - static-1
-        - node-22
-        adapters:
-        - key: static
-          buildRuntime: node-22
-          buildCommand: npm run build
-          installCommand: npm install
-          outputDirectory: ./dist
-    templateFramework:
-      description: Template Framework
-      type: object
-      properties:
-        key:
-          type: string
-          description: Parent framework key.
-          example: sveltekit
-        name:
-          type: string
-          description: Framework Name.
-          example: SvelteKit
-        installCommand:
-          type: string
-          description: The install command used to install the dependencies.
-          example: npm install
-        buildCommand:
-          type: string
-          description: The build command used to build the deployment.
-          example: npm run build
-        outputDirectory:
-          type: string
-          description: The output directory to store the build output.
-          example: ./build
-        providerRootDirectory:
-          type: string
-          description: Path to site in VCS (Version Control System) repository
-          example: ./svelte-kit/starter
-        buildRuntime:
-          type: string
-          description: Runtime used during build step of template.
-          example: node-22
-        adapter:
-          type: string
-          description: Site framework runtime
-          example: ssr
-        fallbackFile:
-          type:
-          - string
-          - 'null'
-          description: Fallback file for SPA. Only relevant for static serve runtime.
-          example: index.html
-      required:
-      - key
-      - name
-      - installCommand
-      - buildCommand
-      - outputDirectory
-      - providerRootDirectory
-      - buildRuntime
-      - adapter
-      example:
-        key: sveltekit
-        name: SvelteKit
-        installCommand: npm install
-        buildCommand: npm run build
-        outputDirectory: ./build
-        providerRootDirectory: ./svelte-kit/starter
-        buildRuntime: node-22
-        adapter: ssr
-        fallbackFile: index.html
-    specificationList:
-      description: Specifications List
+    variableList:
+      description: Variables List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of specifications that matched your query.
+          description: Total number of variables that matched your query.
           format: int32
           example: 5
-        specifications:
+        variables:
           type: array
-          description: List of specifications.
+          description: List of variables.
           items:
-            $ref: '#/components/schemas/specification'
+            $ref: '#/components/schemas/variable'
           example: []
       required:
       - total
-      - specifications
+      - variables
       example:
         total: 5
-        specifications: ''
-    siteList:
-      description: Sites List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of sites that matched your query.
-          format: int32
-          example: 5
-        sites:
-          type: array
-          description: List of sites.
-          items:
-            $ref: '#/components/schemas/site'
-          example: []
-      required:
-      - total
-      - sites
-      example:
-        total: 5
-        sites: ''
-    variable:
-      description: Variable
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Variable ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Variable creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Variable creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        key:
-          type: string
-          description: Variable key.
-          example: API_KEY
-        value:
-          type: string
-          description: Variable value.
-          example: myPa$$word1
-        secret:
-          type: boolean
-          description: Variable secret flag. Secret variables can only be updated or deleted, but never read.
-          example: false
-        resourceType:
-          type: string
-          description: Service to which the variable belongs. Possible values are "project", "function"
-          example: function
-        resourceId:
-          type: string
-          description: ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
-          example: myAwesomeFunction
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - key
-      - value
-      - secret
-      - resourceType
-      - resourceId
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        key: API_KEY
-        value: myPa$$word1
-        secret: false
-        resourceType: function
-        resourceId: myAwesomeFunction
+        variables: ''
     executionList:
       description: Executions List
       type: object
@@ -4517,43 +4527,27 @@ components:
       example:
         total: 5
         executions: ''
-    frameworkAdapter:
-      description: Framework Adapter
+    specificationList:
+      description: Specifications List
       type: object
       properties:
-        key:
-          type: string
-          description: Adapter key.
-          example: static
-        installCommand:
-          type: string
-          description: Default command to download dependencies.
-          example: npm install
-        buildCommand:
-          type: string
-          description: Default command to build site into output directory.
-          example: npm run build
-        outputDirectory:
-          type: string
-          description: Default output directory of build.
-          example: ./dist
-        fallbackFile:
-          type:
-          - string
-          - 'null'
-          description: Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
-          example: index.html
+        total:
+          type: integer
+          description: Total number of specifications that matched your query.
+          format: int32
+          example: 5
+        specifications:
+          type: array
+          description: List of specifications.
+          items:
+            $ref: '#/components/schemas/specification'
+          example: []
       required:
-      - key
-      - installCommand
-      - buildCommand
-      - outputDirectory
+      - total
+      - specifications
       example:
-        key: static
-        installCommand: npm install
-        buildCommand: npm run build
-        outputDirectory: ./dist
-        fallbackFile: index.html
+        total: 5
+        specifications: ''
     templateSite:
       description: Template Site
       type: object
@@ -4646,90 +4640,88 @@ components:
         providerOwner: appwrite
         providerVersion: main
         variables: []
-    templateSiteList:
-      description: Site Templates List
+    templateFramework:
+      description: Template Framework
+      type: object
+      properties:
+        key:
+          type: string
+          description: Parent framework key.
+          example: sveltekit
+        name:
+          type: string
+          description: Framework Name.
+          example: SvelteKit
+        installCommand:
+          type: string
+          description: The install command used to install the dependencies.
+          example: npm install
+        buildCommand:
+          type: string
+          description: The build command used to build the deployment.
+          example: npm run build
+        outputDirectory:
+          type: string
+          description: The output directory to store the build output.
+          example: ./build
+        providerRootDirectory:
+          type: string
+          description: Path to site in VCS (Version Control System) repository
+          example: ./svelte-kit/starter
+        buildRuntime:
+          type: string
+          description: Runtime used during build step of template.
+          example: node-22
+        adapter:
+          type: string
+          description: Site framework runtime
+          example: ssr
+        fallbackFile:
+          type:
+          - string
+          - 'null'
+          description: Fallback file for SPA. Only relevant for static serve runtime.
+          example: index.html
+      required:
+      - key
+      - name
+      - installCommand
+      - buildCommand
+      - outputDirectory
+      - providerRootDirectory
+      - buildRuntime
+      - adapter
+      example:
+        key: sveltekit
+        name: SvelteKit
+        installCommand: npm install
+        buildCommand: npm run build
+        outputDirectory: ./build
+        providerRootDirectory: ./svelte-kit/starter
+        buildRuntime: node-22
+        adapter: ssr
+        fallbackFile: index.html
+    siteList:
+      description: Sites List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of templates that matched your query.
+          description: Total number of sites that matched your query.
           format: int32
           example: 5
-        templates:
+        sites:
           type: array
-          description: List of templates.
+          description: List of sites.
           items:
-            $ref: '#/components/schemas/templateSite'
+            $ref: '#/components/schemas/site'
           example: []
       required:
       - total
-      - templates
+      - sites
       example:
         total: 5
-        templates: ''
-    variableList:
-      description: Variables List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of variables that matched your query.
-          format: int32
-          example: 5
-        variables:
-          type: array
-          description: List of variables.
-          items:
-            $ref: '#/components/schemas/variable'
-          example: []
-      required:
-      - total
-      - variables
-      example:
-        total: 5
-        variables: ''
-    frameworkList:
-      description: Frameworks List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of frameworks that matched your query.
-          format: int32
-          example: 5
-        frameworks:
-          type: array
-          description: List of frameworks.
-          items:
-            $ref: '#/components/schemas/framework'
-          example: []
-      required:
-      - total
-      - frameworks
-      example:
-        total: 5
-        frameworks: ''
-    deploymentList:
-      description: Deployments List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of deployments that matched your query.
-          format: int32
-          example: 5
-        deployments:
-          type: array
-          description: List of deployments.
-          items:
-            $ref: '#/components/schemas/deployment'
-          example: []
-      required:
-      - total
-      - deployments
-      example:
-        total: 5
-        deployments: ''
+        sites: ''
     deployment:
       description: Deployment
       type: object
@@ -4927,72 +4919,80 @@ components:
         providerCommitUrl: https://github.com/vermakhushboo/g4-node-function/commit/60c0416257a9cbcdd96b2d370c38d8f8d150ccfb
         providerBranch: 0.7.x
         providerBranchUrl: https://github.com/vermakhushboo/appwrite/tree/0.7.x
-    headers:
-      description: Headers
+    deploymentList:
+      description: Deployments List
       type: object
       properties:
-        name:
-          type: string
-          description: Header name.
-          example: Content-Type
-        value:
-          type: string
-          description: Header value.
-          example: application/json
+        total:
+          type: integer
+          description: Total number of deployments that matched your query.
+          format: int32
+          example: 5
+        deployments:
+          type: array
+          description: List of deployments.
+          items:
+            $ref: '#/components/schemas/deployment'
+          example: []
       required:
-      - name
-      - value
+      - total
+      - deployments
       example:
-        name: Content-Type
-        value: application/json
-    templateVariable:
-      description: Template Variable
+        total: 5
+        deployments: ''
+    specification:
+      description: Specification
       type: object
       properties:
-        name:
-          type: string
-          description: Variable Name.
-          example: APPWRITE_DATABASE_ID
-        description:
-          type: string
-          description: Variable Description.
-          example: The ID of the Appwrite database that contains the collection to sync.
-        value:
-          type: string
-          description: Variable Value.
-          example: '512'
-        secret:
+        memory:
+          type: integer
+          description: Memory size in MB.
+          format: int32
+          example: 512
+        cpus:
+          type: number
+          description: Number of CPUs.
+          format: double
+          example: 1
+        enabled:
           type: boolean
-          description: Variable secret flag. Secret variables can only be updated or deleted, but never read.
-          example: false
-        placeholder:
+          description: Is size enabled.
+          example: true
+        slug:
           type: string
-          description: Variable Placeholder.
-          example: 64a55...7b912
-        required:
-          type: boolean
-          description: Is the variable required?
-          example: false
-        type:
-          type: string
-          description: Variable Type.
-          example: password
+          description: Size slug.
+          example: s-1vcpu-512mb
       required:
-      - name
-      - description
-      - value
-      - secret
-      - placeholder
-      - required
-      - type
+      - memory
+      - cpus
+      - enabled
+      - slug
       example:
-        name: APPWRITE_DATABASE_ID
-        description: The ID of the Appwrite database that contains the collection to sync.
-        value: '512'
-        secret: false
-        placeholder: 64a55...7b912
-        required: false
-        type: password
+        memory: 512
+        cpus: 1
+        enabled: true
+        slug: s-1vcpu-512mb
+    frameworkList:
+      description: Frameworks List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of frameworks that matched your query.
+          format: int32
+          example: 5
+        frameworks:
+          type: array
+          description: List of frameworks.
+          items:
+            $ref: '#/components/schemas/framework'
+          example: []
+      required:
+      - total
+      - frameworks
+      example:
+        total: 5
+        frameworks: ''
   securitySchemes:
     Project:
       type: apiKey

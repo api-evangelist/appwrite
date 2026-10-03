@@ -1302,27 +1302,6 @@ components:
           values:
           - 127.0.0.1
         config: []
-    wafRuleList:
-      description: WAF rule list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of rules that matched your query.
-          format: int32
-          example: 5
-        rules:
-          type: array
-          description: List of rules.
-          items:
-            $ref: '#/components/schemas/wafRule'
-          example: []
-      required:
-      - total
-      - rules
-      example:
-        total: 5
-        rules: ''
     wafRuleRateLimit:
       description: WafRuleRateLimit
       type: object
@@ -1761,8 +1740,8 @@ components:
         challengeType: compute
         difficulty: 3
         ttl: 1800
-    wafRule:
-      description: WafRule
+    wafRuleDeny:
+      description: WafRuleDeny
       type: object
       properties:
         $id:
@@ -1885,8 +1864,29 @@ components:
           values:
           - 127.0.0.1
         config: []
-    wafRuleDeny:
-      description: WafRuleDeny
+    wafRuleList:
+      description: WAF rule list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of rules that matched your query.
+          format: int32
+          example: 5
+        rules:
+          type: array
+          description: List of rules.
+          items:
+            $ref: '#/components/schemas/wafRule'
+          example: []
+      required:
+      - total
+      - rules
+      example:
+        total: 5
+        rules: ''
+    wafRule:
+      description: WafRule
       type: object
       properties:
         $id:

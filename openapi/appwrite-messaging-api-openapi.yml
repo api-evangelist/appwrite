@@ -4250,126 +4250,6 @@ paths:
         in: path
 components:
   schemas:
-    subscriberList:
-      description: Subscriber list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of subscribers that matched your query.
-          format: int32
-          example: 5
-        subscribers:
-          type: array
-          description: List of subscribers.
-          items:
-            $ref: '#/components/schemas/subscriber'
-          example: []
-      required:
-      - total
-      - subscribers
-      example:
-        total: 5
-        subscribers: ''
-    providerList:
-      description: Provider list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of providers that matched your query.
-          format: int32
-          example: 5
-        providers:
-          type: array
-          description: List of providers.
-          items:
-            $ref: '#/components/schemas/provider'
-          example: []
-      required:
-      - total
-      - providers
-      example:
-        total: 5
-        providers: ''
-    subscriber:
-      description: Subscriber
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Subscriber ID.
-          example: '259125845563242502'
-        $createdAt:
-          type: string
-          description: Subscriber creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Subscriber update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        targetId:
-          type: string
-          description: Target ID.
-          example: '259125845563242502'
-        target:
-          type: object
-          description: Target.
-          example:
-            $id: '259125845563242502'
-            $createdAt: '2020-10-15T06:38:00.000+00:00'
-            $updatedAt: '2020-10-15T06:38:00.000+00:00'
-            providerType: email
-            providerId: '259125845563242502'
-            name: ageon-app-email
-            identifier: random-mail@email.org
-            userId: 5e5ea5c16897e
-          allOf:
-          - $ref: '#/components/schemas/target'
-        userId:
-          type: string
-          description: Topic ID.
-          example: 5e5ea5c16897e
-        userName:
-          type: string
-          description: User Name.
-          example: Aegon Targaryen
-        topicId:
-          type: string
-          description: Topic ID.
-          example: '259125845563242502'
-        providerType:
-          type: string
-          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
-          example: email
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - targetId
-      - target
-      - userId
-      - userName
-      - topicId
-      - providerType
-      example:
-        $id: '259125845563242502'
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        targetId: '259125845563242502'
-        target:
-          $id: '259125845563242502'
-          $createdAt: '2020-10-15T06:38:00.000+00:00'
-          $updatedAt: '2020-10-15T06:38:00.000+00:00'
-          providerType: email
-          providerId: '259125845563242502'
-          name: ageon-app-email
-          identifier: random-mail@email.org
-          userId: 5e5ea5c16897e
-        userId: 5e5ea5c16897e
-        userName: Aegon Targaryen
-        topicId: '259125845563242502'
-        providerType: email
     topic:
       description: Topic
       type: object
@@ -4451,27 +4331,67 @@ components:
       example:
         total: 5
         targets: ''
-    topicList:
-      description: Topic list
+    target:
+      description: Target
       type: object
       properties:
-        total:
-          type: integer
-          description: Total number of topics that matched your query.
-          format: int32
-          example: 5
-        topics:
-          type: array
-          description: List of topics.
-          items:
-            $ref: '#/components/schemas/topic'
-          example: []
+        $id:
+          type: string
+          description: Target ID.
+          example: '259125845563242502'
+        $createdAt:
+          type: string
+          description: Target creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Target update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Target Name.
+          example: Apple iPhone 12
+        userId:
+          type: string
+          description: User ID.
+          example: '259125845563242502'
+        providerId:
+          type:
+          - string
+          - 'null'
+          description: Provider ID.
+          example: '259125845563242502'
+        providerType:
+          type: string
+          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
+          example: email
+        identifier:
+          type: string
+          description: The target identifier.
+          example: token
+        expired:
+          type: boolean
+          description: Is the target expired.
+          example: false
       required:
-      - total
-      - topics
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - userId
+      - providerType
+      - identifier
+      - expired
       example:
-        total: 5
-        topics: ''
+        $id: '259125845563242502'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Apple iPhone 12
+        userId: '259125845563242502'
+        providerId: '259125845563242502'
+        providerType: email
+        identifier: token
+        expired: false
     provider:
       description: Provider
       type: object
@@ -4537,6 +4457,126 @@ components:
           key: '123456789'
         options:
           from: sender-email@mydomain
+    topicList:
+      description: Topic list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of topics that matched your query.
+          format: int32
+          example: 5
+        topics:
+          type: array
+          description: List of topics.
+          items:
+            $ref: '#/components/schemas/topic'
+          example: []
+      required:
+      - total
+      - topics
+      example:
+        total: 5
+        topics: ''
+    subscriber:
+      description: Subscriber
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Subscriber ID.
+          example: '259125845563242502'
+        $createdAt:
+          type: string
+          description: Subscriber creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Subscriber update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        targetId:
+          type: string
+          description: Target ID.
+          example: '259125845563242502'
+        target:
+          type: object
+          description: Target.
+          example:
+            $id: '259125845563242502'
+            $createdAt: '2020-10-15T06:38:00.000+00:00'
+            $updatedAt: '2020-10-15T06:38:00.000+00:00'
+            providerType: email
+            providerId: '259125845563242502'
+            name: ageon-app-email
+            identifier: random-mail@email.org
+            userId: 5e5ea5c16897e
+          allOf:
+          - $ref: '#/components/schemas/target'
+        userId:
+          type: string
+          description: Topic ID.
+          example: 5e5ea5c16897e
+        userName:
+          type: string
+          description: User Name.
+          example: Aegon Targaryen
+        topicId:
+          type: string
+          description: Topic ID.
+          example: '259125845563242502'
+        providerType:
+          type: string
+          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
+          example: email
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - targetId
+      - target
+      - userId
+      - userName
+      - topicId
+      - providerType
+      example:
+        $id: '259125845563242502'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        targetId: '259125845563242502'
+        target:
+          $id: '259125845563242502'
+          $createdAt: '2020-10-15T06:38:00.000+00:00'
+          $updatedAt: '2020-10-15T06:38:00.000+00:00'
+          providerType: email
+          providerId: '259125845563242502'
+          name: ageon-app-email
+          identifier: random-mail@email.org
+          userId: 5e5ea5c16897e
+        userId: 5e5ea5c16897e
+        userName: Aegon Targaryen
+        topicId: '259125845563242502'
+        providerType: email
+    subscriberList:
+      description: Subscriber list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of subscribers that matched your query.
+          format: int32
+          example: 5
+        subscribers:
+          type: array
+          description: List of subscribers.
+          items:
+            $ref: '#/components/schemas/subscriber'
+          example: []
+      required:
+      - total
+      - subscribers
+      example:
+        total: 5
+        subscribers: ''
     messageList:
       description: Message list
       type: object
@@ -4558,6 +4598,27 @@ components:
       example:
         total: 5
         messages: ''
+    providerList:
+      description: Provider list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of providers that matched your query.
+          format: int32
+          example: 5
+        providers:
+          type: array
+          description: List of providers.
+          items:
+            $ref: '#/components/schemas/provider'
+          example: []
+      required:
+      - total
+      - providers
+      example:
+        total: 5
+        providers: ''
     message:
       description: Message
       type: object
@@ -4688,67 +4749,6 @@ components:
           subject: Welcome to Appwrite
           content: Hi there, welcome to Appwrite family.
         status: processing
-    target:
-      description: Target
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Target ID.
-          example: '259125845563242502'
-        $createdAt:
-          type: string
-          description: Target creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Target update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Target Name.
-          example: Apple iPhone 12
-        userId:
-          type: string
-          description: User ID.
-          example: '259125845563242502'
-        providerId:
-          type:
-          - string
-          - 'null'
-          description: Provider ID.
-          example: '259125845563242502'
-        providerType:
-          type: string
-          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
-          example: email
-        identifier:
-          type: string
-          description: The target identifier.
-          example: token
-        expired:
-          type: boolean
-          description: Is the target expired.
-          example: false
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - userId
-      - providerType
-      - identifier
-      - expired
-      example:
-        $id: '259125845563242502'
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Apple iPhone 12
-        userId: '259125845563242502'
-        providerId: '259125845563242502'
-        providerType: email
-        identifier: token
-        expired: false
   securitySchemes:
     Project:
       type: apiKey

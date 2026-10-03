@@ -920,6 +920,66 @@ paths:
         in: query
 components:
   schemas:
+    usageMetric:
+      description: usageMetric
+      type: object
+      properties:
+        metric:
+          type: string
+          description: Metric key this series describes.
+          example: files.storage
+        points:
+          type: array
+          description: Data points in the requested order.
+          items:
+            $ref: '#/components/schemas/usageDataPoint'
+          example: []
+      required:
+      - metric
+      - points
+      example:
+        metric: files.storage
+        points: ''
+    usageEventList:
+      description: usageEventList
+      type: object
+      properties:
+        interval:
+          type: string
+          description: Requested interval, or an empty string for a flat aggregate.
+          example: 1h
+        metrics:
+          type: array
+          description: One series per requested event metric.
+          items:
+            $ref: '#/components/schemas/usageMetric'
+          example: []
+      required:
+      - interval
+      - metrics
+      example:
+        interval: 1h
+        metrics: ''
+    usageGaugeList:
+      description: usageGaugeList
+      type: object
+      properties:
+        interval:
+          type: string
+          description: Requested interval, or an empty string for a flat aggregate.
+          example: 1h
+        metrics:
+          type: array
+          description: One series per requested gauge metric.
+          items:
+            $ref: '#/components/schemas/usageMetric'
+          example: []
+      required:
+      - interval
+      - metrics
+      example:
+        interval: 1h
+        metrics: ''
     usageDataPoint:
       description: usageDataPoint
       type: object
@@ -1129,66 +1189,6 @@ components:
         connectionUsageType: residential
         connectionOrganization: Google LLC
         teamId: team_abc
-    usageMetric:
-      description: usageMetric
-      type: object
-      properties:
-        metric:
-          type: string
-          description: Metric key this series describes.
-          example: files.storage
-        points:
-          type: array
-          description: Data points in the requested order.
-          items:
-            $ref: '#/components/schemas/usageDataPoint'
-          example: []
-      required:
-      - metric
-      - points
-      example:
-        metric: files.storage
-        points: ''
-    usageGaugeList:
-      description: usageGaugeList
-      type: object
-      properties:
-        interval:
-          type: string
-          description: Requested interval, or an empty string for a flat aggregate.
-          example: 1h
-        metrics:
-          type: array
-          description: One series per requested gauge metric.
-          items:
-            $ref: '#/components/schemas/usageMetric'
-          example: []
-      required:
-      - interval
-      - metrics
-      example:
-        interval: 1h
-        metrics: ''
-    usageEventList:
-      description: usageEventList
-      type: object
-      properties:
-        interval:
-          type: string
-          description: Requested interval, or an empty string for a flat aggregate.
-          example: 1h
-        metrics:
-          type: array
-          description: One series per requested event metric.
-          items:
-            $ref: '#/components/schemas/usageMetric'
-          example: []
-      required:
-      - interval
-      - metrics
-      example:
-        interval: 1h
-        metrics: ''
   securitySchemes:
     Project:
       type: apiKey

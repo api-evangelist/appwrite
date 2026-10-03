@@ -275,49 +275,6 @@ paths:
         in: path
 components:
   schemas:
-    insightCTA:
-      description: InsightCTA
-      type: object
-      properties:
-        label:
-          type: string
-          description: Human-readable label for the CTA, used in UI.
-          example: Create missing index
-        service:
-          type: string
-          description: 'Public API service (SDK namespace) the client should invoke. Must match the engine that owns the resource — for index suggestions: databases (legacy), tablesDB, documentsDB, or vectorsDB.'
-          example: tablesDB
-        method:
-          type: string
-          description: Public API method on the chosen service the client should invoke when this CTA is triggered.
-          example: createIndex
-        params:
-          type: object
-          additionalProperties: true
-          description: Parameter map the client should pass to the service method when this CTA is triggered. Keys match the target API's parameter names (e.g. databaseId/tableId/columns for tablesDB, databaseId/collectionId/attributes for the legacy Databases API).
-          example:
-            databaseId: main
-            tableId: orders
-            key: _idx_status
-            type: key
-            columns:
-            - status
-      required:
-      - label
-      - service
-      - method
-      - params
-      example:
-        label: Create missing index
-        service: tablesDB
-        method: createIndex
-        params:
-          databaseId: main
-          tableId: orders
-          key: _idx_status
-          type: key
-          columns:
-          - status
     insight:
       description: Insight
       type: object
@@ -431,6 +388,49 @@ components:
         analyzedAt: '2020-10-15T06:38:00.000+00:00'
         dismissedAt: '2020-10-15T06:38:00.000+00:00'
         dismissedBy: 5e5ea5c16897e
+    insightCTA:
+      description: InsightCTA
+      type: object
+      properties:
+        label:
+          type: string
+          description: Human-readable label for the CTA, used in UI.
+          example: Create missing index
+        service:
+          type: string
+          description: 'Public API service (SDK namespace) the client should invoke. Must match the engine that owns the resource — for index suggestions: databases (legacy), tablesDB, documentsDB, or vectorsDB.'
+          example: tablesDB
+        method:
+          type: string
+          description: Public API method on the chosen service the client should invoke when this CTA is triggered.
+          example: createIndex
+        params:
+          type: object
+          additionalProperties: true
+          description: Parameter map the client should pass to the service method when this CTA is triggered. Keys match the target API's parameter names (e.g. databaseId/tableId/columns for tablesDB, databaseId/collectionId/attributes for the legacy Databases API).
+          example:
+            databaseId: main
+            tableId: orders
+            key: _idx_status
+            type: key
+            columns:
+            - status
+      required:
+      - label
+      - service
+      - method
+      - params
+      example:
+        label: Create missing index
+        service: tablesDB
+        method: createIndex
+        params:
+          databaseId: main
+          tableId: orders
+          key: _idx_status
+          type: key
+          columns:
+          - status
     insightList:
       description: Insights List
       type: object
@@ -452,27 +452,6 @@ components:
       example:
         total: 5
         insights: ''
-    reportList:
-      description: Reports List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of reports that matched your query.
-          format: int32
-          example: 5
-        reports:
-          type: array
-          description: List of reports.
-          items:
-            $ref: '#/components/schemas/report'
-          example: []
-      required:
-      - total
-      - reports
-      example:
-        total: 5
-        reports: ''
     report:
       description: Report
       type: object
@@ -560,6 +539,27 @@ components:
         - accessibility
         insights: []
         analyzedAt: '2020-10-15T06:38:00.000+00:00'
+    reportList:
+      description: Reports List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of reports that matched your query.
+          format: int32
+          example: 5
+        reports:
+          type: array
+          description: List of reports.
+          items:
+            $ref: '#/components/schemas/report'
+          example: []
+      required:
+      - total
+      - reports
+      example:
+        total: 5
+        reports: ''
   securitySchemes:
     Project:
       type: apiKey

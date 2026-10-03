@@ -2298,75 +2298,27 @@ paths:
               - targetVersion
 components:
   schemas:
-    dedicatedDatabasePooler:
-      description: PoolerConfig
+    backupPolicyList:
+      description: Backup policy list
       type: object
       properties:
-        enabled:
-          type: boolean
-          description: Whether connection pooling is enabled.
-          example: true
-        mode:
-          type: string
-          description: 'Connection pool mode. Possible values: transaction (releases connections back to pool after each transaction), session (holds connections for the entire client session).'
-          example: transaction
-        maxConnections:
+        total:
           type: integer
-          description: Client-connection ceiling the pooler accepts. Enforced on MySQL and MariaDB; on PostgreSQL the pooler has no client cap, so this reports the database's advertised networkMaxConnections and cannot be set here.
+          description: Total number of policies that matched your query.
           format: int32
-          example: 200
-        defaultPoolSize:
-          type: integer
-          description: Default pool size per user.
-          format: int32
-          example: 25
-        port:
-          type: integer
-          description: Pooler listening port.
-          format: int32
-          example: 6432
-        readWriteSplitting:
-          type: boolean
-          description: Whether SELECTs are routed to HA replicas while writes and locked reads stay on the primary. Active only when HA is enabled.
-          example: true
-        poolerCpuRequest:
-          type: string
-          description: Effective CPU request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (5% of DB CPU, floor 100m) unless overridden.
-          example: 100m
-        poolerCpuLimit:
-          type: string
-          description: Effective CPU limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (10% of DB CPU, floor 200m) unless overridden.
-          example: 200m
-        poolerMemoryRequest:
-          type: string
-          description: Effective memory request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (7.5% of DB memory, floor 64Mi) unless overridden.
-          example: 64Mi
-        poolerMemoryLimit:
-          type: string
-          description: Effective memory limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (15% of DB memory, floor 128Mi) unless overridden.
-          example: 128Mi
+          example: 5
+        policies:
+          type: array
+          description: List of policies.
+          items:
+            $ref: '#/components/schemas/backupPolicy'
+          example: []
       required:
-      - enabled
-      - mode
-      - maxConnections
-      - defaultPoolSize
-      - port
-      - readWriteSplitting
-      - poolerCpuRequest
-      - poolerCpuLimit
-      - poolerMemoryRequest
-      - poolerMemoryLimit
+      - total
+      - policies
       example:
-        enabled: true
-        mode: transaction
-        maxConnections: 200
-        defaultPoolSize: 25
-        port: 6432
-        readWriteSplitting: true
-        poolerCpuRequest: 100m
-        poolerCpuLimit: 200m
-        poolerMemoryRequest: 64Mi
-        poolerMemoryLimit: 128Mi
+        total: 5
+        policies: ''
     dedicatedDatabaseBackup:
       description: Backup
       type: object
@@ -2481,167 +2433,6 @@ components:
         expiresAt: '2020-10-15T06:38:00.000+00:00'
         logPosition: 000000010000000000000003|0/3000148
         error: ''
-    dedicatedDatabaseBranch:
-      description: Branch
-      type: object
-      properties:
-        branchId:
-          type: string
-          description: Branch identifier.
-          example: a1b2c3d4
-        branchName:
-          type: string
-          description: Branch name.
-          example: branch-a1b2c3d4
-        namespace:
-          type: string
-          description: Kubernetes namespace where the branch is deployed.
-          example: db-myproject-mydb-branch-a1b2c3d4
-        expiresAt:
-          type: integer
-          description: Unix timestamp when the branch expires.
-          format: int32
-          example: 1711411200
-        host:
-          type: string
-          description: Branch hostname for direct connections.
-          example: db-myproject-mydb-a1b2c3d4.fra.appwrite.center
-        port:
-          type: integer
-          description: Branch port. Null until the backing reports one.
-          format: int32
-          example: 5432
-        database:
-          type: string
-          description: Advertised catalog the client connects to. MySQL/MariaDB use default; Postgres uses the routing label.
-          example: db-myproject-mydb-a1b2c3d4
-        username:
-          type: string
-          description: Database username. Shared with the parent database.
-          example: appwrite
-        password:
-          type: string
-          description: Database password. Shared with the parent database.
-          example: '********'
-        ssl:
-          type: boolean
-          description: Whether SSL is required.
-          example: false
-        engine:
-          type: string
-          description: 'Database engine. Possible values: postgresql, mysql, mongodb.'
-          example: postgresql
-        connectionString:
-          type: string
-          description: Full connection string for the branch.
-          example: postgresql://appwrite:****@db-myproject-mydb-a1b2c3d4.fra.appwrite.center:5432/db-myproject-mydb-a1b2c3d4?sslmode=require
-      required:
-      - branchId
-      - branchName
-      - namespace
-      - expiresAt
-      - host
-      - port
-      - database
-      - username
-      - password
-      - ssl
-      - engine
-      - connectionString
-      example:
-        branchId: a1b2c3d4
-        branchName: branch-a1b2c3d4
-        namespace: db-myproject-mydb-branch-a1b2c3d4
-        expiresAt: 1711411200
-        host: db-myproject-mydb-a1b2c3d4.fra.appwrite.center
-        port: 5432
-        database: db-myproject-mydb-a1b2c3d4
-        username: appwrite
-        password: '********'
-        ssl: false
-        engine: postgresql
-        connectionString: postgresql://appwrite:****@db-myproject-mydb-a1b2c3d4.fra.appwrite.center:5432/db-myproject-mydb-a1b2c3d4?sslmode=require
-    backupPolicyList:
-      description: Backup policy list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of policies that matched your query.
-          format: int32
-          example: 5
-        policies:
-          type: array
-          description: List of policies.
-          items:
-            $ref: '#/components/schemas/backupPolicy'
-          example: []
-      required:
-      - total
-      - policies
-      example:
-        total: 5
-        policies: ''
-    dedicatedDatabaseOperationList:
-      description: OperationList
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of operations.
-          format: int32
-          example: 5
-        operations:
-          type: array
-          description: List of operations.
-          items:
-            $ref: '#/components/schemas/dedicatedDatabaseOperation'
-          example: []
-      required:
-      - total
-      - operations
-      example:
-        total: 5
-        operations: ''
-    dedicatedDatabaseMember:
-      description: Member
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Member identifier.
-          example: '1'
-        role:
-          type: string
-          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology and this member has not been probed, so no member can be named the write target).'
-          example: replica
-        status:
-          type: string
-          description: 'Member pod status. Possible values: pending (configured but absent from the backend topology, so nothing is bringing it up), provisioning (pod missing or Pending), starting (Running but not Ready), active (Running and Ready), failed (Failed phase or CrashLoopBackOff container), or the lowercased pod phase reported by the cluster.'
-          example: active
-        replicating:
-          type:
-          - boolean
-          - 'null'
-          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not active, or whose probe did not answer, has none yet. False is a reading and null is the absence of one, so the two are not interchangeable. Read it beside lagSeconds before expecting a failover that names no target to find a promotable standby: a member streaming at a known lag is one, and a member reporting null is not evidence either way.'
-          example: true
-        lagSeconds:
-          type:
-          - number
-          - 'null'
-          description: 'Replication lag in seconds. Null when the lag is not known: a primary has none to report, and a member the backend has not probed has none yet. Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
-          format: double
-          example: 0.5
-      required:
-      - $id
-      - role
-      - status
-      example:
-        $id: '1'
-        role: replica
-        status: active
-        replicating: true
-        lagSeconds: 0.5
     dedicatedDatabaseBranchList:
       description: BranchList
       type: object
@@ -2663,6 +2454,781 @@ components:
       example:
         total: 2
         branches: []
+    dedicatedDatabasePITRWindows:
+      description: PITRWindows
+      type: object
+      properties:
+        earliest:
+          type: string
+          description: Earliest available recovery point.
+          example: '2020-10-15T06:38:00.000+00:00'
+        latest:
+          type: string
+          description: Latest available recovery point.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - earliest
+      - latest
+      example:
+        earliest: '2020-10-15T06:38:00.000+00:00'
+        latest: '2020-10-15T06:38:00.000+00:00'
+    dedicatedDatabaseRestoration:
+      description: Restoration
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Restoration ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Restoration creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        databaseId:
+          type: string
+          description: Database ID being restored into.
+          example: 5e5ea5c16897e
+        sourceDatabaseId:
+          type: string
+          description: Source database ID when restoring a backup into another database.
+          example: 5e5ea5c16897e
+        projectId:
+          type: string
+          description: Project ID.
+          example: 5e5ea5c16897e
+        backupId:
+          type: string
+          description: Backup ID used for restoration (null for PITR).
+          example: 5e5ea5c16897e
+        type:
+          type: string
+          description: 'Restoration type. Possible values: backup (restore from a specific backup snapshot), pitr (point-in-time recovery to a specific timestamp).'
+          example: backup
+        status:
+          type: string
+          description: 'Restoration status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error).'
+          example: completed
+        targetTime:
+          type: string
+          description: Target time for PITR restoration in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        startedAt:
+          type: string
+          description: Restoration start time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        completedAt:
+          type: string
+          description: Restoration completion time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        error:
+          type: string
+          description: Error message if restoration failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - databaseId
+      - sourceDatabaseId
+      - projectId
+      - backupId
+      - type
+      - status
+      - targetTime
+      - startedAt
+      - completedAt
+      - error
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        databaseId: 5e5ea5c16897e
+        sourceDatabaseId: 5e5ea5c16897e
+        projectId: 5e5ea5c16897e
+        backupId: 5e5ea5c16897e
+        type: backup
+        status: completed
+        targetTime: '2020-10-15T06:38:00.000+00:00'
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        completedAt: '2020-10-15T06:38:00.000+00:00'
+        error: ''
+    dedicatedDatabaseOperation:
+      description: Operation
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Operation ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Operation creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        databaseId:
+          type: string
+          description: Database ID the operation ran against.
+          example: 5e5ea5c16897e
+        type:
+          type: string
+          description: Operation type, such as provision, update, credentials-update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
+          example: update
+        status:
+          type: string
+          description: 'Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).'
+          example: completed
+        attempts:
+          type: integer
+          description: Number of times this operation has been attempted.
+          format: int32
+          example: 1
+        requestedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation was requested, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation started, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        completedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the operation reached a terminal state, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        errorCode:
+          type: string
+          description: Machine-readable failure code. `Interrupted` marks an attempt that ended before its outcome could be confirmed.
+          example: Interrupted
+        errorMessage:
+          type: string
+          description: Failure message if the operation failed.
+          example: ''
+      required:
+      - $id
+      - $createdAt
+      - databaseId
+      - type
+      - status
+      - attempts
+      - errorCode
+      - errorMessage
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        databaseId: 5e5ea5c16897e
+        type: update
+        status: completed
+        attempts: 1
+        requestedAt: '2020-10-15T06:38:00.000+00:00'
+        startedAt: '2020-10-15T06:38:00.000+00:00'
+        completedAt: '2020-10-15T06:38:00.000+00:00'
+        errorCode: Interrupted
+        errorMessage: ''
+    dedicatedDatabaseExtensions:
+      description: Extensions
+      type: object
+      properties:
+        installed:
+          type: array
+          description: List of installed extensions.
+          items:
+            type: string
+          example:
+          - pgvector
+          - uuid-ossp
+        available:
+          type: array
+          description: List of available extensions that can be installed.
+          items:
+            type: string
+          example:
+          - postgis
+          - pg_trgm
+        metadata:
+          type: array
+          description: Curated metadata (display name, description, category) for each available extension.
+          items:
+            $ref: '#/components/schemas/postgresExtension'
+          example: []
+      required:
+      - installed
+      - available
+      - metadata
+      example:
+        installed:
+        - pgvector
+        - uuid-ossp
+        available:
+        - postgis
+        - pg_trgm
+        metadata: []
+    dedicatedDatabaseExecutionColumn:
+      description: ExecutionColumn
+      type: object
+      properties:
+        name:
+          type: string
+          description: Column name as returned by the database.
+          example: id
+        type:
+          type: string
+          description: Engine-specific column type (e.g. int4, text, timestamptz).
+          example: int4
+      required:
+      - name
+      - type
+      example:
+        name: id
+        type: int4
+    dedicatedDatabaseSpecificationList:
+      description: SpecificationList
+      type: object
+      properties:
+        specifications:
+          type: array
+          description: List of dedicated database specifications.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseSpecification'
+          example: []
+        total:
+          type: integer
+          description: Total number of specifications.
+          format: int32
+          example: 9
+      required:
+      - specifications
+      - total
+      example:
+        specifications: []
+        total: 9
+    databaseStatus:
+      description: Status
+      type: object
+      properties:
+        health:
+          type: string
+          description: 'Overall health status: healthy, degraded, unhealthy, or unknown when nothing could be measured.'
+          example: healthy
+        ready:
+          type: boolean
+          description: Whether the database is ready to accept connections.
+          example: true
+        engine:
+          type: string
+          description: 'Database engine: postgresql, mysql, or mongodb.'
+          example: postgresql
+        version:
+          type: string
+          description: Database engine version.
+          example: '17'
+        uptime:
+          type: integer
+          description: Database uptime in seconds.
+          format: int32
+          example: 86400
+        connections:
+          type: object
+          description: Connection statistics.
+          example:
+            current: 12
+            max: 100
+          allOf:
+          - $ref: '#/components/schemas/databaseStatusConnections'
+        syncMode:
+          type: string
+          description: 'Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.'
+          example: async
+        effectiveSyncMode:
+          type:
+          - string
+          - 'null'
+          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read.
+          example: async
+        syncDegraded:
+          type: boolean
+          description: Whether the enforced replication is weaker than the requested syncMode.
+          example: false
+        syncAcknowledgements:
+          type: integer
+          description: Number of standby acknowledgements the primary waits for before a write is committed.
+          format: int32
+          example: 1
+        syncStandbyCount:
+          type: integer
+          description: Number of standbys registered with the primary for synchronous replication.
+          format: int32
+          example: 2
+        syncStateConfirmed:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
+          example: true
+        replicas:
+          type: array
+          description: List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
+          items:
+            $ref: '#/components/schemas/databaseStatusReplica'
+          example:
+          - index: 0
+            role: primary
+            healthy: true
+            replicating: null
+            lagSeconds: null
+          - index: 1
+            role: replica
+            healthy: true
+            replicating: true
+            lagSeconds: 0.2
+        volumes:
+          type: array
+          description: Storage volume information.
+          items:
+            $ref: '#/components/schemas/databaseStatusVolume'
+          example:
+          - data:
+              path: /var/lib/postgresql/data
+              usedPercent: 45%
+              available: 55GB
+              mounted: true
+      required:
+      - health
+      - ready
+      - engine
+      - version
+      - uptime
+      - connections
+      - syncMode
+      - syncDegraded
+      - syncAcknowledgements
+      - syncStandbyCount
+      - replicas
+      - volumes
+      example:
+        health: healthy
+        ready: true
+        engine: postgresql
+        version: '17'
+        uptime: 86400
+        connections:
+          current: 12
+          max: 100
+        syncMode: async
+        effectiveSyncMode: async
+        syncDegraded: false
+        syncAcknowledgements: 1
+        syncStandbyCount: 2
+        syncStateConfirmed: true
+        replicas:
+        - index: 0
+          role: primary
+          healthy: true
+          replicating: null
+          lagSeconds: null
+        - index: 1
+          role: replica
+          healthy: true
+          replicating: true
+          lagSeconds: 0.2
+        volumes:
+          data:
+            path: /var/lib/postgresql/data
+            usedPercent: 45%
+            available: 55GB
+            mounted: true
+    dedicatedDatabaseReplicas:
+      description: Replicas
+      type: object
+      properties:
+        replicas:
+          type: integer
+          description: Number of configured replicas. Zero means high availability is disabled.
+          format: int32
+          example: 2
+        syncMode:
+          type: string
+          description: 'Requested replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm). This is what was asked for; compare it with effectiveSyncMode for what the primary is enforcing.'
+          example: async
+        effectiveSyncMode:
+          type:
+          - string
+          - 'null'
+          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read. A value below the requested syncMode means writes are being acknowledged with weaker durability than configured.
+          example: async
+        syncDegraded:
+          type: boolean
+          description: Whether the enforced replication is weaker than the requested syncMode.
+          example: false
+        syncAcknowledgements:
+          type: integer
+          description: Number of standby acknowledgements the primary waits for before a write is committed. Zero means writes are acknowledged locally.
+          format: int32
+          example: 1
+        syncStandbyCount:
+          type: integer
+          description: Number of standbys registered with the primary for synchronous replication.
+          format: int32
+          example: 2
+        syncStateConfirmed:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
+          example: true
+        members:
+          type: array
+          description: Per-pod statuses for the primary and every replica.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseMember'
+          example: []
+      required:
+      - replicas
+      - syncMode
+      - syncDegraded
+      - syncAcknowledgements
+      - syncStandbyCount
+      - members
+      example:
+        replicas: 2
+        syncMode: async
+        effectiveSyncMode: async
+        syncDegraded: false
+        syncAcknowledgements: 1
+        syncStandbyCount: 2
+        syncStateConfirmed: true
+        members: []
+    dedicatedDatabasePooler:
+      description: PoolerConfig
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether connection pooling is enabled.
+          example: true
+        mode:
+          type: string
+          description: 'Connection pool mode. Possible values: transaction (releases connections back to pool after each transaction), session (holds connections for the entire client session).'
+          example: transaction
+        maxConnections:
+          type: integer
+          description: Client-connection ceiling the pooler accepts. Enforced on MySQL and MariaDB; on PostgreSQL the pooler has no client cap, so this reports the database's advertised networkMaxConnections and cannot be set here.
+          format: int32
+          example: 200
+        defaultPoolSize:
+          type: integer
+          description: Default pool size per user.
+          format: int32
+          example: 25
+        port:
+          type: integer
+          description: Pooler listening port.
+          format: int32
+          example: 6432
+        readWriteSplitting:
+          type: boolean
+          description: Whether SELECTs are routed to HA replicas while writes and locked reads stay on the primary. Active only when HA is enabled.
+          example: true
+        poolerCpuRequest:
+          type: string
+          description: Effective CPU request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (5% of DB CPU, floor 100m) unless overridden.
+          example: 100m
+        poolerCpuLimit:
+          type: string
+          description: Effective CPU limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (10% of DB CPU, floor 200m) unless overridden.
+          example: 200m
+        poolerMemoryRequest:
+          type: string
+          description: Effective memory request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (7.5% of DB memory, floor 64Mi) unless overridden.
+          example: 64Mi
+        poolerMemoryLimit:
+          type: string
+          description: Effective memory limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (15% of DB memory, floor 128Mi) unless overridden.
+          example: 128Mi
+      required:
+      - enabled
+      - mode
+      - maxConnections
+      - defaultPoolSize
+      - port
+      - readWriteSplitting
+      - poolerCpuRequest
+      - poolerCpuLimit
+      - poolerMemoryRequest
+      - poolerMemoryLimit
+      example:
+        enabled: true
+        mode: transaction
+        maxConnections: 200
+        defaultPoolSize: 25
+        port: 6432
+        readWriteSplitting: true
+        poolerCpuRequest: 100m
+        poolerCpuLimit: 200m
+        poolerMemoryRequest: 64Mi
+        poolerMemoryLimit: 128Mi
+    postgresExtension:
+      description: Postgres extension
+      type: object
+      properties:
+        key:
+          type: string
+          description: Extension key used with CREATE EXTENSION.
+          example: vector
+        name:
+          type: string
+          description: Human-readable extension name.
+          example: pgvector
+        description:
+          type: string
+          description: Short description of what the extension provides.
+          example: Vector data type and similarity search for embeddings.
+        category:
+          type: string
+          description: Category the extension belongs to.
+          example: search
+      required:
+      - key
+      - name
+      - description
+      - category
+      example:
+        key: vector
+        name: pgvector
+        description: Vector data type and similarity search for embeddings.
+        category: search
+    databaseStatusVolume:
+      description: Volume
+      type: object
+      properties:
+        path:
+          type: string
+          description: Mount path of the volume.
+          example: /var/lib/postgresql/data
+        usedPercent:
+          type: string
+          description: Percentage of storage used.
+          example: 45%
+        available:
+          type: string
+          description: Available storage space.
+          example: 55GB
+        mounted:
+          type: boolean
+          description: Whether the volume is mounted.
+          example: true
+      required:
+      - path
+      - usedPercent
+      - available
+      - mounted
+      example:
+        path: /var/lib/postgresql/data
+        usedPercent: 45%
+        available: 55GB
+        mounted: true
+    databaseStatusReplica:
+      description: Replica
+      type: object
+      properties:
+        index:
+          type: integer
+          description: 'Member index within the database. Read `role` for which member accepts writes: a failover moves the primary without renumbering the indexes.'
+          format: int32
+          example: 0
+        role:
+          type: string
+          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology, so no member can be named the write target).'
+          example: primary
+        healthy:
+          type: boolean
+          description: Whether the replica is healthy.
+          example: true
+        replicating:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not healthy, or whose probe did not answer, has none yet. `healthy` is a reachability probe of the member itself and says nothing about replication, so a healthy member may still not be replicating.'
+          example: true
+        lagSeconds:
+          type:
+          - number
+          - 'null'
+          description: 'Replication lag in seconds (null for primary). Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
+          format: double
+          example: 0.2
+      required:
+      - index
+      - role
+      - healthy
+      example:
+        index: 0
+        role: primary
+        healthy: true
+        replicating: true
+        lagSeconds: 0.2
+    dedicatedDatabaseExecution:
+      description: Execution
+      type: object
+      properties:
+        rows:
+          type: array
+          description: Result rows as a list of column-name => value maps. Empty for non-returning statements.
+          items:
+            type: object
+          example:
+          - id: 1
+            name: example
+        rowCount:
+          type: integer
+          description: Number of rows returned (for SELECT) or affected (for INSERT/UPDATE/DELETE).
+          format: int32
+          example: 1
+        columns:
+          type: array
+          description: Column metadata in result-set order.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseExecutionColumn'
+          example: []
+        durationMs:
+          type: integer
+          description: Server-side execution time in milliseconds.
+          format: int32
+          example: 12
+        truncated:
+          type: boolean
+          description: True when the configured row or byte cap was hit and the result was truncated.
+          example: false
+        bytes:
+          type: integer
+          description: Serialised payload size in bytes.
+          format: int32
+          example: 1024
+      required:
+      - rows
+      - rowCount
+      - columns
+      - durationMs
+      - truncated
+      - bytes
+      example:
+        rows:
+        - id: 1
+          name: example
+        rowCount: 1
+        columns: []
+        durationMs: 12
+        truncated: false
+        bytes: 1024
+    backupPolicy:
+      description: backup
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Backup policy ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Backup policy name.
+          example: Hourly backups
+        $createdAt:
+          type: string
+          description: Policy creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Policy update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        services:
+          type: array
+          description: The services that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''storage'']'
+        resources:
+          type: array
+          description: The resources that are backed up by this policy.
+          items:
+            type: string
+          example:
+          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: The resource ID to backup. Set only if this policy should backup a single resource.
+          example: DB1
+        resourceType:
+          type:
+          - string
+          - 'null'
+          description: The resource type to backup. Set only if this policy should backup a single resource.
+          example: database
+        retention:
+          type: integer
+          description: How many days to keep the backup before it will be automatically deleted.
+          format: int32
+          example: 7
+        schedule:
+          type: string
+          description: Policy backup schedule in CRON format.
+          example: 0 * * * *
+        type:
+          type: string
+          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).'
+          example: full
+        enabled:
+          type: boolean
+          description: Is this policy enabled.
+          example: true
+      required:
+      - $id
+      - name
+      - $createdAt
+      - $updatedAt
+      - services
+      - resources
+      - retention
+      - schedule
+      - type
+      - enabled
+      example:
+        $id: 5e5ea5c16897e
+        name: Hourly backups
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        services: '[''databases'', ''storage'']'
+        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
+        resourceId: DB1
+        resourceType: database
+        retention: 7
+        schedule: 0 * * * *
+        type: full
+        enabled: true
+    dedicatedDatabaseRestorationList:
+      description: Dedicated database restorations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of restorations that matched your query.
+          format: int32
+          example: 5
+        restorations:
+          type: array
+          description: List of restorations.
+          items:
+            $ref: '#/components/schemas/dedicatedDatabaseRestoration'
+          example: []
+      required:
+      - total
+      - restorations
+      example:
+        total: 5
+        restorations: ''
     dedicatedDatabase:
       description: DedicatedDatabase
       type: object
@@ -3011,522 +3577,27 @@ components:
         sqlApiMaxBytes: 10485760
         sqlApiTimeoutSeconds: 30
         error: ''
-    databaseStatus:
-      description: Status
-      type: object
-      properties:
-        health:
-          type: string
-          description: 'Overall health status: healthy, degraded, unhealthy, or unknown when nothing could be measured.'
-          example: healthy
-        ready:
-          type: boolean
-          description: Whether the database is ready to accept connections.
-          example: true
-        engine:
-          type: string
-          description: 'Database engine: postgresql, mysql, or mongodb.'
-          example: postgresql
-        version:
-          type: string
-          description: Database engine version.
-          example: '17'
-        uptime:
-          type: integer
-          description: Database uptime in seconds.
-          format: int32
-          example: 86400
-        connections:
-          type: object
-          description: Connection statistics.
-          example:
-            current: 12
-            max: 100
-          allOf:
-          - $ref: '#/components/schemas/databaseStatusConnections'
-        syncMode:
-          type: string
-          description: 'Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.'
-          example: async
-        effectiveSyncMode:
-          type:
-          - string
-          - 'null'
-          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read.
-          example: async
-        syncDegraded:
-          type: boolean
-          description: Whether the enforced replication is weaker than the requested syncMode.
-          example: false
-        syncAcknowledgements:
-          type: integer
-          description: Number of standby acknowledgements the primary waits for before a write is committed.
-          format: int32
-          example: 1
-        syncStandbyCount:
-          type: integer
-          description: Number of standbys registered with the primary for synchronous replication.
-          format: int32
-          example: 2
-        syncStateConfirmed:
-          type:
-          - boolean
-          - 'null'
-          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
-          example: true
-        replicas:
-          type: array
-          description: List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
-          items:
-            $ref: '#/components/schemas/databaseStatusReplica'
-          example:
-          - index: 0
-            role: primary
-            healthy: true
-            replicating: null
-            lagSeconds: null
-          - index: 1
-            role: replica
-            healthy: true
-            replicating: true
-            lagSeconds: 0.2
-        volumes:
-          type: array
-          description: Storage volume information.
-          items:
-            $ref: '#/components/schemas/databaseStatusVolume'
-          example:
-          - data:
-              path: /var/lib/postgresql/data
-              usedPercent: 45%
-              available: 55GB
-              mounted: true
-      required:
-      - health
-      - ready
-      - engine
-      - version
-      - uptime
-      - connections
-      - syncMode
-      - syncDegraded
-      - syncAcknowledgements
-      - syncStandbyCount
-      - replicas
-      - volumes
-      example:
-        health: healthy
-        ready: true
-        engine: postgresql
-        version: '17'
-        uptime: 86400
-        connections:
-          current: 12
-          max: 100
-        syncMode: async
-        effectiveSyncMode: async
-        syncDegraded: false
-        syncAcknowledgements: 1
-        syncStandbyCount: 2
-        syncStateConfirmed: true
-        replicas:
-        - index: 0
-          role: primary
-          healthy: true
-          replicating: null
-          lagSeconds: null
-        - index: 1
-          role: replica
-          healthy: true
-          replicating: true
-          lagSeconds: 0.2
-        volumes:
-          data:
-            path: /var/lib/postgresql/data
-            usedPercent: 45%
-            available: 55GB
-            mounted: true
-    dedicatedDatabasePITRWindows:
-      description: PITRWindows
-      type: object
-      properties:
-        earliest:
-          type: string
-          description: Earliest available recovery point.
-          example: '2020-10-15T06:38:00.000+00:00'
-        latest:
-          type: string
-          description: Latest available recovery point.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - earliest
-      - latest
-      example:
-        earliest: '2020-10-15T06:38:00.000+00:00'
-        latest: '2020-10-15T06:38:00.000+00:00'
-    dedicatedDatabaseExtensions:
-      description: Extensions
-      type: object
-      properties:
-        installed:
-          type: array
-          description: List of installed extensions.
-          items:
-            type: string
-          example:
-          - pgvector
-          - uuid-ossp
-        available:
-          type: array
-          description: List of available extensions that can be installed.
-          items:
-            type: string
-          example:
-          - postgis
-          - pg_trgm
-        metadata:
-          type: array
-          description: Curated metadata (display name, description, category) for each available extension.
-          items:
-            $ref: '#/components/schemas/postgresExtension'
-          example: []
-      required:
-      - installed
-      - available
-      - metadata
-      example:
-        installed:
-        - pgvector
-        - uuid-ossp
-        available:
-        - postgis
-        - pg_trgm
-        metadata: []
-    dedicatedDatabaseList:
-      description: Dedicated databases list
+    dedicatedDatabaseOperationList:
+      description: OperationList
       type: object
       properties:
         total:
           type: integer
-          description: Total number of databases that matched your query.
+          description: Total number of operations.
           format: int32
           example: 5
-        databases:
+        operations:
           type: array
-          description: List of databases.
+          description: List of operations.
           items:
-            $ref: '#/components/schemas/dedicatedDatabase'
+            $ref: '#/components/schemas/dedicatedDatabaseOperation'
           example: []
       required:
       - total
-      - databases
+      - operations
       example:
         total: 5
-        databases: ''
-    dedicatedDatabaseRestorationList:
-      description: Dedicated database restorations list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of restorations that matched your query.
-          format: int32
-          example: 5
-        restorations:
-          type: array
-          description: List of restorations.
-          items:
-            $ref: '#/components/schemas/dedicatedDatabaseRestoration'
-          example: []
-      required:
-      - total
-      - restorations
-      example:
-        total: 5
-        restorations: ''
-    dedicatedDatabaseOperation:
-      description: Operation
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Operation ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Operation creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        databaseId:
-          type: string
-          description: Database ID the operation ran against.
-          example: 5e5ea5c16897e
-        type:
-          type: string
-          description: Operation type, such as provision, update, credentials-update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
-          example: update
-        status:
-          type: string
-          description: 'Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).'
-          example: completed
-        attempts:
-          type: integer
-          description: Number of times this operation has been attempted.
-          format: int32
-          example: 1
-        requestedAt:
-          type:
-          - string
-          - 'null'
-          description: Time the operation was requested, in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        startedAt:
-          type:
-          - string
-          - 'null'
-          description: Time the operation started, in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        completedAt:
-          type:
-          - string
-          - 'null'
-          description: Time the operation reached a terminal state, in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        errorCode:
-          type: string
-          description: Machine-readable failure code. `Interrupted` marks an attempt that ended before its outcome could be confirmed.
-          example: Interrupted
-        errorMessage:
-          type: string
-          description: Failure message if the operation failed.
-          example: ''
-      required:
-      - $id
-      - $createdAt
-      - databaseId
-      - type
-      - status
-      - attempts
-      - errorCode
-      - errorMessage
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        databaseId: 5e5ea5c16897e
-        type: update
-        status: completed
-        attempts: 1
-        requestedAt: '2020-10-15T06:38:00.000+00:00'
-        startedAt: '2020-10-15T06:38:00.000+00:00'
-        completedAt: '2020-10-15T06:38:00.000+00:00'
-        errorCode: Interrupted
-        errorMessage: ''
-    postgresExtension:
-      description: Postgres extension
-      type: object
-      properties:
-        key:
-          type: string
-          description: Extension key used with CREATE EXTENSION.
-          example: vector
-        name:
-          type: string
-          description: Human-readable extension name.
-          example: pgvector
-        description:
-          type: string
-          description: Short description of what the extension provides.
-          example: Vector data type and similarity search for embeddings.
-        category:
-          type: string
-          description: Category the extension belongs to.
-          example: search
-      required:
-      - key
-      - name
-      - description
-      - category
-      example:
-        key: vector
-        name: pgvector
-        description: Vector data type and similarity search for embeddings.
-        category: search
-    dedicatedDatabaseExecutionColumn:
-      description: ExecutionColumn
-      type: object
-      properties:
-        name:
-          type: string
-          description: Column name as returned by the database.
-          example: id
-        type:
-          type: string
-          description: Engine-specific column type (e.g. int4, text, timestamptz).
-          example: int4
-      required:
-      - name
-      - type
-      example:
-        name: id
-        type: int4
-    databaseStatusConnections:
-      description: Connections
-      type: object
-      properties:
-        current:
-          type: integer
-          description: Current number of active connections.
-          format: int32
-          example: 12
-        max:
-          type: integer
-          description: The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
-          format: int32
-          example: 100
-      required:
-      - current
-      - max
-      example:
-        current: 12
-        max: 100
-    dedicatedDatabaseSpecificationList:
-      description: SpecificationList
-      type: object
-      properties:
-        specifications:
-          type: array
-          description: List of dedicated database specifications.
-          items:
-            $ref: '#/components/schemas/dedicatedDatabaseSpecification'
-          example: []
-        total:
-          type: integer
-          description: Total number of specifications.
-          format: int32
-          example: 9
-      required:
-      - specifications
-      - total
-      example:
-        specifications: []
-        total: 9
-    dedicatedDatabaseRestoration:
-      description: Restoration
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Restoration ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Restoration creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        databaseId:
-          type: string
-          description: Database ID being restored into.
-          example: 5e5ea5c16897e
-        sourceDatabaseId:
-          type: string
-          description: Source database ID when restoring a backup into another database.
-          example: 5e5ea5c16897e
-        projectId:
-          type: string
-          description: Project ID.
-          example: 5e5ea5c16897e
-        backupId:
-          type: string
-          description: Backup ID used for restoration (null for PITR).
-          example: 5e5ea5c16897e
-        type:
-          type: string
-          description: 'Restoration type. Possible values: backup (restore from a specific backup snapshot), pitr (point-in-time recovery to a specific timestamp).'
-          example: backup
-        status:
-          type: string
-          description: 'Restoration status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error).'
-          example: completed
-        targetTime:
-          type: string
-          description: Target time for PITR restoration in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        startedAt:
-          type: string
-          description: Restoration start time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        completedAt:
-          type: string
-          description: Restoration completion time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        error:
-          type: string
-          description: Error message if restoration failed.
-          example: ''
-      required:
-      - $id
-      - $createdAt
-      - databaseId
-      - sourceDatabaseId
-      - projectId
-      - backupId
-      - type
-      - status
-      - targetTime
-      - startedAt
-      - completedAt
-      - error
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        databaseId: 5e5ea5c16897e
-        sourceDatabaseId: 5e5ea5c16897e
-        projectId: 5e5ea5c16897e
-        backupId: 5e5ea5c16897e
-        type: backup
-        status: completed
-        targetTime: '2020-10-15T06:38:00.000+00:00'
-        startedAt: '2020-10-15T06:38:00.000+00:00'
-        completedAt: '2020-10-15T06:38:00.000+00:00'
-        error: ''
-    databaseStatusReplica:
-      description: Replica
-      type: object
-      properties:
-        index:
-          type: integer
-          description: 'Member index within the database. Read `role` for which member accepts writes: a failover moves the primary without renumbering the indexes.'
-          format: int32
-          example: 0
-        role:
-          type: string
-          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology, so no member can be named the write target).'
-          example: primary
-        healthy:
-          type: boolean
-          description: Whether the replica is healthy.
-          example: true
-        replicating:
-          type:
-          - boolean
-          - 'null'
-          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not healthy, or whose probe did not answer, has none yet. `healthy` is a reachability probe of the member itself and says nothing about replication, so a healthy member may still not be replicating.'
-          example: true
-        lagSeconds:
-          type:
-          - number
-          - 'null'
-          description: 'Replication lag in seconds (null for primary). Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
-          format: double
-          example: 0.2
-      required:
-      - index
-      - role
-      - healthy
-      example:
-        index: 0
-        role: primary
-        healthy: true
-        replicating: true
-        lagSeconds: 0.2
+        operations: ''
     dedicatedDatabaseBackupStorage:
       description: BackupStorageConfig
       type: object
@@ -3563,205 +3634,27 @@ components:
         region: us-east-1
         prefix: backups/
         endpoint: https://minio.example.com
-    dedicatedDatabaseBackupList:
-      description: BackupList
+    dedicatedDatabaseList:
+      description: Dedicated databases list
       type: object
       properties:
         total:
           type: integer
-          description: Total number of backups.
+          description: Total number of databases that matched your query.
           format: int32
           example: 5
-        backups:
+        databases:
           type: array
-          description: List of backups.
+          description: List of databases.
           items:
-            $ref: '#/components/schemas/dedicatedDatabaseBackup'
+            $ref: '#/components/schemas/dedicatedDatabase'
           example: []
       required:
       - total
-      - backups
+      - databases
       example:
         total: 5
-        backups: []
-    backupPolicy:
-      description: backup
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Backup policy ID.
-          example: 5e5ea5c16897e
-        name:
-          type: string
-          description: Backup policy name.
-          example: Hourly backups
-        $createdAt:
-          type: string
-          description: Policy creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Policy update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        services:
-          type: array
-          description: The services that are backed up by this policy.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''storage'']'
-        resources:
-          type: array
-          description: The resources that are backed up by this policy.
-          items:
-            type: string
-          example:
-          - '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId:
-          type:
-          - string
-          - 'null'
-          description: The resource ID to backup. Set only if this policy should backup a single resource.
-          example: DB1
-        resourceType:
-          type:
-          - string
-          - 'null'
-          description: The resource type to backup. Set only if this policy should backup a single resource.
-          example: database
-        retention:
-          type: integer
-          description: How many days to keep the backup before it will be automatically deleted.
-          format: int32
-          example: 7
-        schedule:
-          type: string
-          description: Policy backup schedule in CRON format.
-          example: 0 * * * *
-        type:
-          type: string
-          description: 'Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).'
-          example: full
-        enabled:
-          type: boolean
-          description: Is this policy enabled.
-          example: true
-      required:
-      - $id
-      - name
-      - $createdAt
-      - $updatedAt
-      - services
-      - resources
-      - retention
-      - schedule
-      - type
-      - enabled
-      example:
-        $id: 5e5ea5c16897e
-        name: Hourly backups
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        services: '[''databases'', ''storage'']'
-        resources: '[''databases'', ''collections'', ''attributes'', ''indexes'']'
-        resourceId: DB1
-        resourceType: database
-        retention: 7
-        schedule: 0 * * * *
-        type: full
-        enabled: true
-    databaseStatusVolume:
-      description: Volume
-      type: object
-      properties:
-        path:
-          type: string
-          description: Mount path of the volume.
-          example: /var/lib/postgresql/data
-        usedPercent:
-          type: string
-          description: Percentage of storage used.
-          example: 45%
-        available:
-          type: string
-          description: Available storage space.
-          example: 55GB
-        mounted:
-          type: boolean
-          description: Whether the volume is mounted.
-          example: true
-      required:
-      - path
-      - usedPercent
-      - available
-      - mounted
-      example:
-        path: /var/lib/postgresql/data
-        usedPercent: 45%
-        available: 55GB
-        mounted: true
-    dedicatedDatabaseReplicas:
-      description: Replicas
-      type: object
-      properties:
-        replicas:
-          type: integer
-          description: Number of configured replicas. Zero means high availability is disabled.
-          format: int32
-          example: 2
-        syncMode:
-          type: string
-          description: 'Requested replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm). This is what was asked for; compare it with effectiveSyncMode for what the primary is enforcing.'
-          example: async
-        effectiveSyncMode:
-          type:
-          - string
-          - 'null'
-          description: Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read. A value below the requested syncMode means writes are being acknowledged with weaker durability than configured.
-          example: async
-        syncDegraded:
-          type: boolean
-          description: Whether the enforced replication is weaker than the requested syncMode.
-          example: false
-        syncAcknowledgements:
-          type: integer
-          description: Number of standby acknowledgements the primary waits for before a write is committed. Zero means writes are acknowledged locally.
-          format: int32
-          example: 1
-        syncStandbyCount:
-          type: integer
-          description: Number of standbys registered with the primary for synchronous replication.
-          format: int32
-          example: 2
-        syncStateConfirmed:
-          type:
-          - boolean
-          - 'null'
-          description: 'Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.'
-          example: true
-        members:
-          type: array
-          description: Per-pod statuses for the primary and every replica.
-          items:
-            $ref: '#/components/schemas/dedicatedDatabaseMember'
-          example: []
-      required:
-      - replicas
-      - syncMode
-      - syncDegraded
-      - syncAcknowledgements
-      - syncStandbyCount
-      - members
-      example:
-        replicas: 2
-        syncMode: async
-        effectiveSyncMode: async
-        syncDegraded: false
-        syncAcknowledgements: 1
-        syncStandbyCount: 2
-        syncStateConfirmed: true
-        members: []
+        databases: ''
     dedicatedDatabaseSpecification:
       description: Specification
       type: object
@@ -3856,59 +3749,166 @@ components:
         includedStorage: 25
         includedBandwidth: 200
         enabled: true
-    dedicatedDatabaseExecution:
-      description: Execution
+    dedicatedDatabaseBackupList:
+      description: BackupList
       type: object
       properties:
-        rows:
-          type: array
-          description: Result rows as a list of column-name => value maps. Empty for non-returning statements.
-          items:
-            type: object
-          example:
-          - id: 1
-            name: example
-        rowCount:
+        total:
           type: integer
-          description: Number of rows returned (for SELECT) or affected (for INSERT/UPDATE/DELETE).
+          description: Total number of backups.
           format: int32
-          example: 1
-        columns:
+          example: 5
+        backups:
           type: array
-          description: Column metadata in result-set order.
+          description: List of backups.
           items:
-            $ref: '#/components/schemas/dedicatedDatabaseExecutionColumn'
+            $ref: '#/components/schemas/dedicatedDatabaseBackup'
           example: []
-        durationMs:
+      required:
+      - total
+      - backups
+      example:
+        total: 5
+        backups: []
+    dedicatedDatabaseMember:
+      description: Member
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Member identifier.
+          example: '1'
+        role:
+          type: string
+          description: 'Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology and this member has not been probed, so no member can be named the write target).'
+          example: replica
+        status:
+          type: string
+          description: 'Member pod status. Possible values: pending (configured but absent from the backend topology, so nothing is bringing it up), provisioning (pod missing or Pending), starting (Running but not Ready), active (Running and Ready), failed (Failed phase or CrashLoopBackOff container), or the lowercased pod phase reported by the cluster.'
+          example: active
+        replicating:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the engine reports this member''s replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not active, or whose probe did not answer, has none yet. False is a reading and null is the absence of one, so the two are not interchangeable. Read it beside lagSeconds before expecting a failover that names no target to find a promotable standby: a member streaming at a known lag is one, and a member reporting null is not evidence either way.'
+          example: true
+        lagSeconds:
+          type:
+          - number
+          - 'null'
+          description: 'Replication lag in seconds. Null when the lag is not known: a primary has none to report, and a member the backend has not probed has none yet. Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.'
+          format: double
+          example: 0.5
+      required:
+      - $id
+      - role
+      - status
+      example:
+        $id: '1'
+        role: replica
+        status: active
+        replicating: true
+        lagSeconds: 0.5
+    databaseStatusConnections:
+      description: Connections
+      type: object
+      properties:
+        current:
           type: integer
-          description: Server-side execution time in milliseconds.
+          description: Current number of active connections.
           format: int32
           example: 12
-        truncated:
-          type: boolean
-          description: True when the configured row or byte cap was hit and the result was truncated.
-          example: false
-        bytes:
+        max:
           type: integer
-          description: Serialised payload size in bytes.
+          description: The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
           format: int32
-          example: 1024
+          example: 100
       required:
-      - rows
-      - rowCount
-      - columns
-      - durationMs
-      - truncated
-      - bytes
+      - current
+      - max
       example:
-        rows:
-        - id: 1
-          name: example
-        rowCount: 1
-        columns: []
-        durationMs: 12
-        truncated: false
-        bytes: 1024
+        current: 12
+        max: 100
+    dedicatedDatabaseBranch:
+      description: Branch
+      type: object
+      properties:
+        branchId:
+          type: string
+          description: Branch identifier.
+          example: a1b2c3d4
+        branchName:
+          type: string
+          description: Branch name.
+          example: branch-a1b2c3d4
+        namespace:
+          type: string
+          description: Kubernetes namespace where the branch is deployed.
+          example: db-myproject-mydb-branch-a1b2c3d4
+        expiresAt:
+          type: integer
+          description: Unix timestamp when the branch expires.
+          format: int32
+          example: 1711411200
+        host:
+          type: string
+          description: Branch hostname for direct connections.
+          example: db-myproject-mydb-a1b2c3d4.fra.appwrite.center
+        port:
+          type: integer
+          description: Branch port. Null until the backing reports one.
+          format: int32
+          example: 5432
+        database:
+          type: string
+          description: Advertised catalog the client connects to. MySQL/MariaDB use default; Postgres uses the routing label.
+          example: db-myproject-mydb-a1b2c3d4
+        username:
+          type: string
+          description: Database username. Shared with the parent database.
+          example: appwrite
+        password:
+          type: string
+          description: Database password. Shared with the parent database.
+          example: '********'
+        ssl:
+          type: boolean
+          description: Whether SSL is required.
+          example: false
+        engine:
+          type: string
+          description: 'Database engine. Possible values: postgresql, mysql, mongodb.'
+          example: postgresql
+        connectionString:
+          type: string
+          description: Full connection string for the branch.
+          example: postgresql://appwrite:****@db-myproject-mydb-a1b2c3d4.fra.appwrite.center:5432/db-myproject-mydb-a1b2c3d4?sslmode=require
+      required:
+      - branchId
+      - branchName
+      - namespace
+      - expiresAt
+      - host
+      - port
+      - database
+      - username
+      - password
+      - ssl
+      - engine
+      - connectionString
+      example:
+        branchId: a1b2c3d4
+        branchName: branch-a1b2c3d4
+        namespace: db-myproject-mydb-branch-a1b2c3d4
+        expiresAt: 1711411200
+        host: db-myproject-mydb-a1b2c3d4.fra.appwrite.center
+        port: 5432
+        database: db-myproject-mydb-a1b2c3d4
+        username: appwrite
+        password: '********'
+        ssl: false
+        engine: postgresql
+        connectionString: postgresql://appwrite:****@db-myproject-mydb-a1b2c3d4.fra.appwrite.center:5432/db-myproject-mydb-a1b2c3d4?sslmode=require
   securitySchemes:
     Project:
       type: apiKey

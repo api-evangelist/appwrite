@@ -576,6 +576,36 @@ components:
       example:
         total: 5
         rules: ''
+    proxyInvalidation:
+      description: Invalidation
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain name.
+          example: appwrite.company.com
+        type:
+          type: string
+          description: Invalidation type. Possible values are "tag", "path", or "all".
+          example: tag
+        reference:
+          type: string
+          description: Invalidated reference. Depending on type this is a cache tag name, a URL path, or empty when type is all.
+          example: products
+        status:
+          type: string
+          description: Invalidation status.
+          example: success
+      required:
+      - domain
+      - type
+      - reference
+      - status
+      example:
+        domain: appwrite.company.com
+        type: tag
+        reference: products
+        status: success
     proxyRule:
       description: Rule
       type: object
@@ -696,36 +726,6 @@ components:
         status: verified
         logs: Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.
         renewAt: datetime
-    proxyInvalidation:
-      description: Invalidation
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain name.
-          example: appwrite.company.com
-        type:
-          type: string
-          description: Invalidation type. Possible values are "tag", "path", or "all".
-          example: tag
-        reference:
-          type: string
-          description: Invalidated reference. Depending on type this is a cache tag name, a URL path, or empty when type is all.
-          example: products
-        status:
-          type: string
-          description: Invalidation status.
-          example: success
-      required:
-      - domain
-      - type
-      - reference
-      - status
-      example:
-        domain: appwrite.company.com
-        type: tag
-        reference: products
-        status: success
   securitySchemes:
     Project:
       type: apiKey

@@ -357,27 +357,95 @@ paths:
         JWT: []
 components:
   schemas:
-    localeCodeList:
-      description: Locale codes list
+    languageList:
+      description: Languages List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of localeCodes that matched your query.
+          description: Total number of languages that matched your query.
           format: int32
           example: 5
-        localeCodes:
+        languages:
           type: array
-          description: List of localeCodes.
+          description: List of languages.
           items:
-            $ref: '#/components/schemas/localeCode'
+            $ref: '#/components/schemas/language'
           example: []
       required:
       - total
-      - localeCodes
+      - languages
       example:
         total: 5
-        localeCodes: ''
+        languages: ''
+    currency:
+      description: Currency
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Currency symbol.
+          example: $
+        name:
+          type: string
+          description: Currency name.
+          example: US dollar
+        symbolNative:
+          type: string
+          description: Currency native symbol.
+          example: $
+        decimalDigits:
+          type: integer
+          description: Number of decimal digits.
+          format: int32
+          example: 2
+        rounding:
+          type: number
+          description: Currency digit rounding.
+          format: double
+          example: 0
+        code:
+          type: string
+          description: Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format.
+          example: USD
+        namePlural:
+          type: string
+          description: Currency plural name
+          example: US dollars
+      required:
+      - symbol
+      - name
+      - symbolNative
+      - decimalDigits
+      - rounding
+      - code
+      - namePlural
+      example:
+        symbol: $
+        name: US dollar
+        symbolNative: $
+        decimalDigits: 2
+        rounding: 0
+        code: USD
+        namePlural: US dollars
+    country:
+      description: Country
+      type: object
+      properties:
+        name:
+          type: string
+          description: Country name.
+          example: United States
+        code:
+          type: string
+          description: Country two-character ISO 3166-1 alpha code.
+          example: US
+      required:
+      - name
+      - code
+      example:
+        name: United States
+        code: US
     currencyList:
       description: Currencies List
       type: object
@@ -399,30 +467,6 @@ components:
       example:
         total: 5
         currencies: ''
-    phone:
-      description: Phone
-      type: object
-      properties:
-        code:
-          type: string
-          description: Phone code.
-          example: '+1'
-        countryCode:
-          type: string
-          description: Country two-character ISO 3166-1 alpha code.
-          example: US
-        countryName:
-          type: string
-          description: Country name.
-          example: United States
-      required:
-      - code
-      - countryCode
-      - countryName
-      example:
-        code: '+1'
-        countryCode: US
-        countryName: United States
     locale:
       description: Locale
       type: object
@@ -550,6 +594,30 @@ components:
         connectionType: cable
         connectionUsageType: residential
         connectionOrganization: Google LLC
+    phone:
+      description: Phone
+      type: object
+      properties:
+        code:
+          type: string
+          description: Phone code.
+          example: '+1'
+        countryCode:
+          type: string
+          description: Country two-character ISO 3166-1 alpha code.
+          example: US
+        countryName:
+          type: string
+          description: Country name.
+          example: United States
+      required:
+      - code
+      - countryCode
+      - countryName
+      example:
+        code: '+1'
+        countryCode: US
+        countryName: United States
     continentList:
       description: Continents List
       type: object
@@ -571,6 +639,69 @@ components:
       example:
         total: 5
         continents: ''
+    countryList:
+      description: Countries List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of countries that matched your query.
+          format: int32
+          example: 5
+        countries:
+          type: array
+          description: List of countries.
+          items:
+            $ref: '#/components/schemas/country'
+          example: []
+      required:
+      - total
+      - countries
+      example:
+        total: 5
+        countries: ''
+    phoneList:
+      description: Phones List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of phones that matched your query.
+          format: int32
+          example: 5
+        phones:
+          type: array
+          description: List of phones.
+          items:
+            $ref: '#/components/schemas/phone'
+          example: []
+      required:
+      - total
+      - phones
+      example:
+        total: 5
+        phones: ''
+    localeCodeList:
+      description: Locale codes list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of localeCodes that matched your query.
+          format: int32
+          example: 5
+        localeCodes:
+          type: array
+          description: List of localeCodes.
+          items:
+            $ref: '#/components/schemas/localeCode'
+          example: []
+      required:
+      - total
+      - localeCodes
+      example:
+        total: 5
+        localeCodes: ''
     language:
       description: Language
       type: object
@@ -595,155 +726,6 @@ components:
         name: Italian
         code: it
         nativeName: Italiano
-    phoneList:
-      description: Phones List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of phones that matched your query.
-          format: int32
-          example: 5
-        phones:
-          type: array
-          description: List of phones.
-          items:
-            $ref: '#/components/schemas/phone'
-          example: []
-      required:
-      - total
-      - phones
-      example:
-        total: 5
-        phones: ''
-    country:
-      description: Country
-      type: object
-      properties:
-        name:
-          type: string
-          description: Country name.
-          example: United States
-        code:
-          type: string
-          description: Country two-character ISO 3166-1 alpha code.
-          example: US
-      required:
-      - name
-      - code
-      example:
-        name: United States
-        code: US
-    countryList:
-      description: Countries List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of countries that matched your query.
-          format: int32
-          example: 5
-        countries:
-          type: array
-          description: List of countries.
-          items:
-            $ref: '#/components/schemas/country'
-          example: []
-      required:
-      - total
-      - countries
-      example:
-        total: 5
-        countries: ''
-    continent:
-      description: Continent
-      type: object
-      properties:
-        name:
-          type: string
-          description: Continent name.
-          example: Europe
-        code:
-          type: string
-          description: Continent two letter code.
-          example: EU
-      required:
-      - name
-      - code
-      example:
-        name: Europe
-        code: EU
-    languageList:
-      description: Languages List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of languages that matched your query.
-          format: int32
-          example: 5
-        languages:
-          type: array
-          description: List of languages.
-          items:
-            $ref: '#/components/schemas/language'
-          example: []
-      required:
-      - total
-      - languages
-      example:
-        total: 5
-        languages: ''
-    currency:
-      description: Currency
-      type: object
-      properties:
-        symbol:
-          type: string
-          description: Currency symbol.
-          example: $
-        name:
-          type: string
-          description: Currency name.
-          example: US dollar
-        symbolNative:
-          type: string
-          description: Currency native symbol.
-          example: $
-        decimalDigits:
-          type: integer
-          description: Number of decimal digits.
-          format: int32
-          example: 2
-        rounding:
-          type: number
-          description: Currency digit rounding.
-          format: double
-          example: 0
-        code:
-          type: string
-          description: Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format.
-          example: USD
-        namePlural:
-          type: string
-          description: Currency plural name
-          example: US dollars
-      required:
-      - symbol
-      - name
-      - symbolNative
-      - decimalDigits
-      - rounding
-      - code
-      - namePlural
-      example:
-        symbol: $
-        name: US dollar
-        symbolNative: $
-        decimalDigits: 2
-        rounding: 0
-        code: USD
-        namePlural: US dollars
     localeCode:
       description: LocaleCode
       type: object
@@ -762,6 +744,24 @@ components:
       example:
         code: en-us
         name: US
+    continent:
+      description: Continent
+      type: object
+      properties:
+        name:
+          type: string
+          description: Continent name.
+          example: Europe
+        code:
+          type: string
+          description: Continent two letter code.
+          example: EU
+      required:
+      - name
+      - code
+      example:
+        name: Europe
+        code: EU
   securitySchemes:
     Project:
       type: apiKey

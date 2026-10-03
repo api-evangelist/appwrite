@@ -762,27 +762,6 @@ paths:
         in: path
 components:
   schemas:
-    backupArchiveList:
-      description: Backup archive list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of archives that matched your query.
-          format: int32
-          example: 5
-        archives:
-          type: array
-          description: List of archives.
-          items:
-            $ref: '#/components/schemas/backupArchive'
-          example: []
-      required:
-      - total
-      - archives
-      example:
-        total: 5
-        archives: ''
     backupPolicyList:
       description: Backup policy list
       type: object
@@ -912,6 +891,27 @@ components:
         schedule: 0 * * * *
         type: full
         enabled: true
+    backupArchiveList:
+      description: Backup archive list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of archives that matched your query.
+          format: int32
+          example: 5
+        archives:
+          type: array
+          description: List of archives.
+          items:
+            $ref: '#/components/schemas/backupArchive'
+          example: []
+      required:
+      - total
+      - archives
+      example:
+        total: 5
+        archives: ''
     backupRestoration:
       description: Restoration
       type: object

@@ -1203,197 +1203,6 @@ paths:
               - prefs
 components:
   schemas:
-    membershipList:
-      description: Memberships List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of memberships that matched your query.
-          format: int32
-          example: 5
-        memberships:
-          type: array
-          description: List of memberships.
-          items:
-            $ref: '#/components/schemas/membership'
-          example: []
-      required:
-      - total
-      - memberships
-      example:
-        total: 5
-        memberships: ''
-    teamList:
-      description: Teams List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of teams that matched your query.
-          format: int32
-          example: 5
-        teams:
-          type: array
-          description: List of teams.
-          items:
-            $ref: '#/components/schemas/team'
-          example: []
-      required:
-      - total
-      - teams
-      example:
-        total: 5
-        teams: ''
-    team:
-      description: Team
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Team creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Team update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Team name.
-          example: VIP
-        total:
-          type: integer
-          description: Total number of team members.
-          format: int32
-          example: 7
-        prefs:
-          type: object
-          description: Team preferences as a key-value object
-          example:
-            theme: pink
-            timezone: UTC
-          allOf:
-          - $ref: '#/components/schemas/preferences'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - total
-      - prefs
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: VIP
-        total: 7
-        prefs:
-          theme: pink
-          timezone: UTC
-    logList:
-      description: Logs List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of logs that matched your query.
-          format: int32
-          example: 5
-        logs:
-          type: array
-          description: List of logs.
-          items:
-            $ref: '#/components/schemas/log'
-          example: []
-      required:
-      - total
-      - logs
-      example:
-        total: 5
-        logs: ''
-    appInstallation:
-      description: AppInstallation
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Installation ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Installation creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Installation update time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        appId:
-          type: string
-          description: ID of the installed application.
-          example: 5e5ea5c16897e
-        teamId:
-          type: string
-          description: ID of the team the application is installed on.
-          example: 5e5ea5c16897e
-        scopes:
-          type: array
-          description: Scopes granted to the application. Snapshot of the application's installation scopes taken when the installation was created or last updated.
-          items:
-            type: string
-          example:
-          - organization:organization.read
-        authorizationDetails:
-          type: array
-          description: Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
-          items:
-            type: object
-          example:
-          - type: project
-            identifiers:
-            - '*'
-        createdById:
-          type: string
-          description: ID of the user who created the installation.
-          example: 5e5ea5c16897e
-        createdByName:
-          type: string
-          description: Name of the user who created the installation.
-          example: Walter White
-        lastAccessedAt:
-          type:
-          - string
-          - 'null'
-          description: Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - appId
-      - teamId
-      - scopes
-      - authorizationDetails
-      - createdById
-      - createdByName
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        appId: 5e5ea5c16897e
-        teamId: 5e5ea5c16897e
-        scopes:
-        - organization:organization.read
-        authorizationDetails:
-        - type: project
-          identifiers:
-          - '*'
-        createdById: 5e5ea5c16897e
-        createdByName: Walter White
-        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
     log:
       description: Log
       type: object
@@ -1540,6 +1349,97 @@ components:
         language: en
         timezone: UTC
         darkTheme: true
+    team:
+      description: Team
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Team creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Team update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Team name.
+          example: VIP
+        total:
+          type: integer
+          description: Total number of team members.
+          format: int32
+          example: 7
+        prefs:
+          type: object
+          description: Team preferences as a key-value object
+          example:
+            theme: pink
+            timezone: UTC
+          allOf:
+          - $ref: '#/components/schemas/preferences'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - total
+      - prefs
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: VIP
+        total: 7
+        prefs:
+          theme: pink
+          timezone: UTC
+    teamList:
+      description: Teams List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of teams that matched your query.
+          format: int32
+          example: 5
+        teams:
+          type: array
+          description: List of teams.
+          items:
+            $ref: '#/components/schemas/team'
+          example: []
+      required:
+      - total
+      - teams
+      example:
+        total: 5
+        teams: ''
+    membershipList:
+      description: Memberships List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of memberships that matched your query.
+          format: int32
+          example: 5
+        memberships:
+          type: array
+          description: List of memberships.
+          items:
+            $ref: '#/components/schemas/membership'
+          example: []
+      required:
+      - total
+      - memberships
+      example:
+        total: 5
+        memberships: ''
     membership:
       description: Membership
       type: object
@@ -1640,6 +1540,27 @@ components:
         userAccessedAt: '2020-10-15T06:38:00.000+00:00'
         roles:
         - owner
+    logList:
+      description: Logs List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of logs that matched your query.
+          format: int32
+          example: 5
+        logs:
+          type: array
+          description: List of logs.
+          items:
+            $ref: '#/components/schemas/log'
+          example: []
+      required:
+      - total
+      - logs
+      example:
+        total: 5
+        logs: ''
     appInstallationList:
       description: App installations list
       type: object
@@ -1661,6 +1582,85 @@ components:
       example:
         total: 5
         installations: ''
+    appInstallation:
+      description: AppInstallation
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Installation ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Installation creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Installation update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        appId:
+          type: string
+          description: ID of the installed application.
+          example: 5e5ea5c16897e
+        teamId:
+          type: string
+          description: ID of the team the application is installed on.
+          example: 5e5ea5c16897e
+        scopes:
+          type: array
+          description: Scopes granted to the application. Snapshot of the application's installation scopes taken when the installation was created or last updated.
+          items:
+            type: string
+          example:
+          - organization:organization.read
+        authorizationDetails:
+          type: array
+          description: Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
+          items:
+            type: object
+          example:
+          - type: project
+            identifiers:
+            - '*'
+        createdById:
+          type: string
+          description: ID of the user who created the installation.
+          example: 5e5ea5c16897e
+        createdByName:
+          type: string
+          description: Name of the user who created the installation.
+          example: Walter White
+        lastAccessedAt:
+          type:
+          - string
+          - 'null'
+          description: Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - appId
+      - teamId
+      - scopes
+      - authorizationDetails
+      - createdById
+      - createdByName
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        appId: 5e5ea5c16897e
+        teamId: 5e5ea5c16897e
+        scopes:
+        - organization:organization.read
+        authorizationDetails:
+        - type: project
+          identifiers:
+          - '*'
+        createdById: 5e5ea5c16897e
+        createdByName: Walter White
+        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
   securitySchemes:
     Project:
       type: apiKey

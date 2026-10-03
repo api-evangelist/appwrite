@@ -697,8 +697,95 @@ components:
         provider: github
         organization: appwrite
         providerInstallationId: '5322'
-    providerRepositoryFramework:
-      description: ProviderRepositoryFramework
+    detectionVariable:
+      description: DetectionVariable
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of environment variable
+          example: NODE_ENV
+        value:
+          type: string
+          description: Value of environment variable
+          example: production
+      required:
+      - name
+      - value
+      example:
+        name: NODE_ENV
+        value: production
+    installationList:
+      description: Installations List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of installations that matched your query.
+          format: int32
+          example: 5
+        installations:
+          type: array
+          description: List of installations.
+          items:
+            $ref: '#/components/schemas/installation'
+          example: []
+      required:
+      - total
+      - installations
+      example:
+        total: 5
+        installations: ''
+    providerRepositoryFrameworkList:
+      description: Framework Provider Repositories List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of frameworkProviderRepositories that matched your query.
+          format: int32
+          example: 5
+        frameworkProviderRepositories:
+          type: array
+          description: List of frameworkProviderRepositories.
+          items:
+            $ref: '#/components/schemas/providerRepositoryFramework'
+          example: []
+        type:
+          type: string
+          description: Provider repository list type.
+          example: framework
+      required:
+      - total
+      - frameworkProviderRepositories
+      - type
+      example:
+        total: 5
+        frameworkProviderRepositories: ''
+        type: framework
+    vcsContentList:
+      description: VCS Content List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of contents that matched your query.
+          format: int32
+          example: 5
+        contents:
+          type: array
+          description: List of contents.
+          items:
+            $ref: '#/components/schemas/vcsContent'
+          example: []
+      required:
+      - total
+      - contents
+      example:
+        total: 5
+        contents: ''
+    providerRepository:
+      description: ProviderRepository
       type: object
       properties:
         id:
@@ -745,10 +832,6 @@ components:
           example:
           - PORT
           - NODE_ENV
-        framework:
-          type: string
-          description: Auto-detected framework. Empty if type is not "framework".
-          example: nextjs
       required:
       - id
       - name
@@ -760,7 +843,6 @@ components:
       - authorized
       - pushedAt
       - variables
-      - framework
       example:
         id: 5e5ea5c16897e
         name: appwrite
@@ -774,7 +856,6 @@ components:
         variables:
         - PORT
         - NODE_ENV
-        framework: nextjs
     providerRepositoryRuntime:
       description: ProviderRepositoryRuntime
       type: object
@@ -853,27 +934,6 @@ components:
         - PORT
         - NODE_ENV
         runtime: node-22
-    branchList:
-      description: Branches List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of branches that matched your query.
-          format: int32
-          example: 5
-        branches:
-          type: array
-          description: List of branches.
-          items:
-            $ref: '#/components/schemas/branch'
-          example: []
-      required:
-      - total
-      - branches
-      example:
-        total: 5
-        branches: ''
     vcsNamespace:
       description: VcsNamespace
       type: object
@@ -910,33 +970,33 @@ components:
         path: appwrite
         type: user
         avatarUrl: https://example.com/avatar.png
-    providerRepositoryFrameworkList:
-      description: Framework Provider Repositories List
+    vcsContent:
+      description: VcsContents
       type: object
       properties:
-        total:
-          type: integer
-          description: Total number of frameworkProviderRepositories that matched your query.
+        size:
+          type:
+          - integer
+          - 'null'
+          description: Content size in bytes. Only files have size, and for directories, 0 is returned.
           format: int32
-          example: 5
-        frameworkProviderRepositories:
-          type: array
-          description: List of frameworkProviderRepositories.
-          items:
-            $ref: '#/components/schemas/providerRepositoryFramework'
-          example: []
-        type:
+          example: 1523
+        isDirectory:
+          type:
+          - boolean
+          - 'null'
+          description: If a content is a directory. Directories can be used to check nested contents.
+          example: true
+        name:
           type: string
-          description: Provider repository list type.
-          example: framework
+          description: Name of directory or file.
+          example: Main.java
       required:
-      - total
-      - frameworkProviderRepositories
-      - type
+      - name
       example:
-        total: 5
-        frameworkProviderRepositories: ''
-        type: framework
+        size: 1523
+        isDirectory: true
+        name: Main.java
     detectionRuntime:
       description: DetectionRuntime
       type: object
@@ -981,27 +1041,138 @@ components:
         runtime: node
         entrypoint: index.js
         commands: npm install && npm run build
-    installationList:
-      description: Installations List
+    branchList:
+      description: Branches List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of installations that matched your query.
+          description: Total number of branches that matched your query.
           format: int32
           example: 5
-        installations:
+        branches:
           type: array
-          description: List of installations.
+          description: List of branches.
           items:
-            $ref: '#/components/schemas/installation'
+            $ref: '#/components/schemas/branch'
           example: []
       required:
       - total
-      - installations
+      - branches
       example:
         total: 5
-        installations: ''
+        branches: ''
+    branch:
+      description: Branch
+      type: object
+      properties:
+        name:
+          type: string
+          description: Branch Name.
+          example: main
+      required:
+      - name
+      example:
+        name: main
+    vcsNamespaceList:
+      description: VCS Namespaces List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of namespaces that matched your query.
+          format: int32
+          example: 5
+        namespaces:
+          type: array
+          description: List of namespaces.
+          items:
+            $ref: '#/components/schemas/vcsNamespace'
+          example: []
+      required:
+      - total
+      - namespaces
+      example:
+        total: 5
+        namespaces: ''
+    providerRepositoryFramework:
+      description: ProviderRepositoryFramework
+      type: object
+      properties:
+        id:
+          type: string
+          description: VCS (Version Control System) repository ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: VCS (Version Control System) repository name.
+          example: appwrite
+        organization:
+          type: string
+          description: VCS (Version Control System) organization name
+          example: appwrite
+        provider:
+          type: string
+          description: VCS (Version Control System) provider name.
+          example: github
+        private:
+          type: boolean
+          description: Is VCS (Version Control System) repository private?
+          example: true
+        defaultBranch:
+          type: string
+          description: VCS (Version Control System) repository's default branch name.
+          example: main
+        providerInstallationId:
+          type: string
+          description: VCS (Version Control System) installation ID.
+          example: '108104697'
+        authorized:
+          type: boolean
+          description: Is VCS (Version Control System) repository authorized for the installation?
+          example: true
+        pushedAt:
+          type: string
+          description: Last commit date in ISO 8601 format.
+          example: datetime
+        variables:
+          type: array
+          description: Environment variables found in .env files
+          items:
+            type: string
+          example:
+          - PORT
+          - NODE_ENV
+        framework:
+          type: string
+          description: Auto-detected framework. Empty if type is not "framework".
+          example: nextjs
+      required:
+      - id
+      - name
+      - organization
+      - provider
+      - private
+      - defaultBranch
+      - providerInstallationId
+      - authorized
+      - pushedAt
+      - variables
+      - framework
+      example:
+        id: 5e5ea5c16897e
+        name: appwrite
+        organization: appwrite
+        provider: github
+        private: true
+        defaultBranch: main
+        providerInstallationId: '108104697'
+        authorized: true
+        pushedAt: datetime
+        variables:
+        - PORT
+        - NODE_ENV
+        framework: nextjs
     detectionFramework:
       description: DetectionFramework
       type: object
@@ -1052,177 +1223,6 @@ components:
         installCommand: npm install
         buildCommand: npm run build
         outputDirectory: dist
-    vcsContent:
-      description: VcsContents
-      type: object
-      properties:
-        size:
-          type:
-          - integer
-          - 'null'
-          description: Content size in bytes. Only files have size, and for directories, 0 is returned.
-          format: int32
-          example: 1523
-        isDirectory:
-          type:
-          - boolean
-          - 'null'
-          description: If a content is a directory. Directories can be used to check nested contents.
-          example: true
-        name:
-          type: string
-          description: Name of directory or file.
-          example: Main.java
-      required:
-      - name
-      example:
-        size: 1523
-        isDirectory: true
-        name: Main.java
-    vcsNamespaceList:
-      description: VCS Namespaces List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of namespaces that matched your query.
-          format: int32
-          example: 5
-        namespaces:
-          type: array
-          description: List of namespaces.
-          items:
-            $ref: '#/components/schemas/vcsNamespace'
-          example: []
-      required:
-      - total
-      - namespaces
-      example:
-        total: 5
-        namespaces: ''
-    detectionVariable:
-      description: DetectionVariable
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of environment variable
-          example: NODE_ENV
-        value:
-          type: string
-          description: Value of environment variable
-          example: production
-      required:
-      - name
-      - value
-      example:
-        name: NODE_ENV
-        value: production
-    branch:
-      description: Branch
-      type: object
-      properties:
-        name:
-          type: string
-          description: Branch Name.
-          example: main
-      required:
-      - name
-      example:
-        name: main
-    providerRepository:
-      description: ProviderRepository
-      type: object
-      properties:
-        id:
-          type: string
-          description: VCS (Version Control System) repository ID.
-          example: 5e5ea5c16897e
-        name:
-          type: string
-          description: VCS (Version Control System) repository name.
-          example: appwrite
-        organization:
-          type: string
-          description: VCS (Version Control System) organization name
-          example: appwrite
-        provider:
-          type: string
-          description: VCS (Version Control System) provider name.
-          example: github
-        private:
-          type: boolean
-          description: Is VCS (Version Control System) repository private?
-          example: true
-        defaultBranch:
-          type: string
-          description: VCS (Version Control System) repository's default branch name.
-          example: main
-        providerInstallationId:
-          type: string
-          description: VCS (Version Control System) installation ID.
-          example: '108104697'
-        authorized:
-          type: boolean
-          description: Is VCS (Version Control System) repository authorized for the installation?
-          example: true
-        pushedAt:
-          type: string
-          description: Last commit date in ISO 8601 format.
-          example: datetime
-        variables:
-          type: array
-          description: Environment variables found in .env files
-          items:
-            type: string
-          example:
-          - PORT
-          - NODE_ENV
-      required:
-      - id
-      - name
-      - organization
-      - provider
-      - private
-      - defaultBranch
-      - providerInstallationId
-      - authorized
-      - pushedAt
-      - variables
-      example:
-        id: 5e5ea5c16897e
-        name: appwrite
-        organization: appwrite
-        provider: github
-        private: true
-        defaultBranch: main
-        providerInstallationId: '108104697'
-        authorized: true
-        pushedAt: datetime
-        variables:
-        - PORT
-        - NODE_ENV
-    vcsContentList:
-      description: VCS Content List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of contents that matched your query.
-          format: int32
-          example: 5
-        contents:
-          type: array
-          description: List of contents.
-          items:
-            $ref: '#/components/schemas/vcsContent'
-          example: []
-      required:
-      - total
-      - contents
-      example:
-        total: 5
-        contents: ''
     providerRepositoryRuntimeList:
       description: Runtime Provider Repositories List
       type: object

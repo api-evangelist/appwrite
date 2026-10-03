@@ -3229,142 +3229,112 @@ paths:
               - content
 components:
   schemas:
-    dnsRecord:
-      description: DNSRecord
+    domainPurchase:
+      description: DomainPurchase
       type: object
       properties:
         $id:
           type: string
-          description: DNS Record ID.
-          example: 5f40a6e10c65e
+          description: Purchase/invoice ID.
+          example: 5e5ea5c16897e
         $createdAt:
           type: string
-          description: DNS Record creation time in ISO 8601 format.
+          description: Purchase creation time in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
         $updatedAt:
           type: string
-          description: DNS Record update date in ISO 8601 format.
+          description: Purchase update date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        type:
+        domainId:
           type: string
-          description: DNS record type (e.g. A, CNAME, MX).
-          example: A
-        name:
+          description: Domain document ID.
+          example: 5e5ea5c16897e
+        domain:
           type: string
-          description: Record name or subdomain.
-          example: mail
-        value:
+          description: Domain name.
+          example: example.com
+        organizationId:
           type: string
-          description: Value of the record (IP address, domain, etc.).
-          example: 192.0.2.1
-        ttl:
-          type: integer
-          description: Time to live (in seconds).
-          format: int32
-          example: 86400
-        priority:
-          type: integer
-          description: Record priority (commonly used for MX).
-          format: int32
-          example: 10
-        lock:
-          type: boolean
-          description: Whether this record is locked (read-only).
-          example: false
-        weight:
-          type: integer
-          description: Record weight (used for SRV records).
-          format: int32
-          example: 10
-        port:
-          type: integer
-          description: Target port (used for SRV records).
-          format: int32
-          example: 443
-        comment:
+          description: Team ID that owns the domain.
+          example: 5e5ea5c16897e
+        status:
+          description: Domain purchase status.
+          example: pending
+          title: DomainPurchaseStatus
           type: string
-          description: Comment for the DNS record.
-          example: Mail server record
+          oneOf:
+          - type: string
+            enum:
+            - pending
+            title: pending
+          - type: string
+            enum:
+            - succeeded
+            title: succeeded
+          - type: string
+            enum:
+            - failed
+            title: failed
+          - type: string
+            enum:
+            - cancelled
+            title: cancelled
+        clientSecret:
+          type: string
+          description: Stripe client secret for 3DS; empty when not applicable.
+          example: ''
+        amount:
+          type: number
+          description: Purchase amount.
+          format: double
+          example: 25.99
+        currency:
+          type: string
+          description: Currency code.
+          example: USD
       required:
       - $id
       - $createdAt
       - $updatedAt
-      - type
-      - name
-      - value
-      - ttl
-      - priority
-      - lock
-      - weight
-      - port
-      - comment
+      - domainId
+      - domain
+      - organizationId
+      - status
+      - clientSecret
+      - amount
+      - currency
       example:
-        $id: 5f40a6e10c65e
+        $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        type: A
-        name: mail
-        value: 192.0.2.1
-        ttl: 86400
-        priority: 10
-        lock: false
-        weight: 10
-        port: 443
-        comment: Mail server record
-    dnsRecordsList:
-      description: DNS records list
+        domainId: 5e5ea5c16897e
+        domain: example.com
+        organizationId: 5e5ea5c16897e
+        status: pending
+        clientSecret: ''
+        amount: 25.99
+        currency: USD
+    domainsList:
+      description: Domains list
       type: object
       properties:
         total:
           type: integer
-          description: Total number of dnsRecords that matched your query.
+          description: Total number of domains that matched your query.
           format: int32
           example: 5
-        dnsRecords:
+        domains:
           type: array
-          description: List of dnsRecords.
+          description: List of domains.
           items:
-            $ref: '#/components/schemas/dnsRecord'
+            $ref: '#/components/schemas/domain'
           example: []
       required:
       - total
-      - dnsRecords
+      - domains
       example:
         total: 5
-        dnsRecords: ''
-    domainPricesList:
-      description: Domain prices list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of prices that matched your query.
-          format: int32
-          example: 5
-        prices:
-          type: array
-          description: List of prices.
-          items:
-            $ref: '#/components/schemas/domainPrice'
-          example: []
-      required:
-      - total
-      - prices
-      example:
-        total: 5
-        prices: ''
-    domainTransferOut:
-      description: domainTransferOut
-      type: object
-      properties:
-        authCode:
-          type: string
-          description: Domain transfer authorization code.
-          example: mock_1a2b3c4d
-      required:
-      - authCode
-      example:
-        authCode: mock_1a2b3c4d
+        domains: ''
     domainSuggestion:
       description: DomainSuggestion
       type: object
@@ -3397,145 +3367,6 @@ components:
         premium: true
         price: 25.99
         available: true
-    domainPrice:
-      description: DomainPrice
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain name.
-          example: example.com
-        tld:
-          type: string
-          description: Top-level domain for the requested domain.
-          example: com
-        available:
-          type: boolean
-          description: Whether the domain is currently available for registration.
-          example: true
-        price:
-          type:
-          - number
-          - 'null'
-          description: Domain registration price. Null when the price could not be resolved, for example for an unsupported TLD.
-          format: double
-          example: 25.99
-        periodYears:
-          type: integer
-          description: Price period in years.
-          format: int32
-          example: 1
-        premium:
-          type: boolean
-          description: Whether the domain is a premium domain.
-          example: false
-        renewalPrice:
-          type:
-          - number
-          - 'null'
-          description: Domain renewal price for the same period. Null when the domain was not priced or the registrar has no renewal price for it.
-          format: double
-          example: 27.99
-        renewalPeriodYears:
-          type: integer
-          description: Renewal price period in years.
-          format: int32
-          example: 1
-      required:
-      - domain
-      - tld
-      - available
-      - periodYears
-      - premium
-      - renewalPeriodYears
-      example:
-        domain: example.com
-        tld: com
-        available: true
-        price: 25.99
-        periodYears: 1
-        premium: false
-        renewalPrice: 27.99
-        renewalPeriodYears: 1
-    domainTransferStatus:
-      description: domainTransferStatus
-      type: object
-      properties:
-        status:
-          description: Transfer status.
-          example: pending_registry
-          title: DomainTransferStatusEnum
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - transferrable
-            title: transferrable
-          - type: string
-            enum:
-            - not_transferrable
-            title: not_transferrable
-          - type: string
-            enum:
-            - pending_owner
-            title: pending_owner
-          - type: string
-            enum:
-            - pending_admin
-            title: pending_admin
-          - type: string
-            enum:
-            - pending_registry
-            title: pending_registry
-          - type: string
-            enum:
-            - completed
-            title: completed
-          - type: string
-            enum:
-            - cancelled
-            title: cancelled
-          - type: string
-            enum:
-            - service_unavailable
-            title: service_unavailable
-        reason:
-          type: string
-          description: Additional transfer status information.
-          example: Transfer in progress
-        timestamp:
-          type: string
-          description: Transfer status timestamp in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - status
-      - reason
-      - timestamp
-      example:
-        status: pending_registry
-        reason: Transfer in progress
-        timestamp: '2020-10-15T06:38:00.000+00:00'
-    domainsList:
-      description: Domains list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of domains that matched your query.
-          format: int32
-          example: 5
-        domains:
-          type: array
-          description: List of domains.
-          items:
-            $ref: '#/components/schemas/domain'
-          example: []
-      required:
-      - total
-      - domains
-      example:
-        total: 5
-        domains: ''
     domain:
       description: Domain
       type: object
@@ -3658,91 +3489,146 @@ components:
         transferStatus: pending_registry
         teamId: 5e5ea5c16897e
         dnsRecords: []
-    domainPurchase:
-      description: DomainPurchase
+    dnsRecord:
+      description: DNSRecord
       type: object
       properties:
         $id:
           type: string
-          description: Purchase/invoice ID.
-          example: 5e5ea5c16897e
+          description: DNS Record ID.
+          example: 5f40a6e10c65e
         $createdAt:
           type: string
-          description: Purchase creation time in ISO 8601 format.
+          description: DNS Record creation time in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
         $updatedAt:
           type: string
-          description: Purchase update date in ISO 8601 format.
+          description: DNS Record update date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        domainId:
+        type:
           type: string
-          description: Domain document ID.
-          example: 5e5ea5c16897e
-        domain:
+          description: DNS record type (e.g. A, CNAME, MX).
+          example: A
+        name:
           type: string
-          description: Domain name.
-          example: example.com
-        organizationId:
+          description: Record name or subdomain.
+          example: mail
+        value:
           type: string
-          description: Team ID that owns the domain.
-          example: 5e5ea5c16897e
-        status:
-          description: Domain purchase status.
-          example: pending
-          title: DomainPurchaseStatus
+          description: Value of the record (IP address, domain, etc.).
+          example: 192.0.2.1
+        ttl:
+          type: integer
+          description: Time to live (in seconds).
+          format: int32
+          example: 86400
+        priority:
+          type: integer
+          description: Record priority (commonly used for MX).
+          format: int32
+          example: 10
+        lock:
+          type: boolean
+          description: Whether this record is locked (read-only).
+          example: false
+        weight:
+          type: integer
+          description: Record weight (used for SRV records).
+          format: int32
+          example: 10
+        port:
+          type: integer
+          description: Target port (used for SRV records).
+          format: int32
+          example: 443
+        comment:
           type: string
-          oneOf:
-          - type: string
-            enum:
-            - pending
-            title: pending
-          - type: string
-            enum:
-            - succeeded
-            title: succeeded
-          - type: string
-            enum:
-            - failed
-            title: failed
-          - type: string
-            enum:
-            - cancelled
-            title: cancelled
-        clientSecret:
-          type: string
-          description: Stripe client secret for 3DS; empty when not applicable.
-          example: ''
-        amount:
-          type: number
-          description: Purchase amount.
-          format: double
-          example: 25.99
-        currency:
-          type: string
-          description: Currency code.
-          example: USD
+          description: Comment for the DNS record.
+          example: Mail server record
       required:
       - $id
       - $createdAt
       - $updatedAt
-      - domainId
-      - domain
-      - organizationId
-      - status
-      - clientSecret
-      - amount
-      - currency
+      - type
+      - name
+      - value
+      - ttl
+      - priority
+      - lock
+      - weight
+      - port
+      - comment
       example:
-        $id: 5e5ea5c16897e
+        $id: 5f40a6e10c65e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        domainId: 5e5ea5c16897e
-        domain: example.com
-        organizationId: 5e5ea5c16897e
-        status: pending
-        clientSecret: ''
-        amount: 25.99
-        currency: USD
+        type: A
+        name: mail
+        value: 192.0.2.1
+        ttl: 86400
+        priority: 10
+        lock: false
+        weight: 10
+        port: 443
+        comment: Mail server record
+    domainTransferStatus:
+      description: domainTransferStatus
+      type: object
+      properties:
+        status:
+          description: Transfer status.
+          example: pending_registry
+          title: DomainTransferStatusEnum
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - transferrable
+            title: transferrable
+          - type: string
+            enum:
+            - not_transferrable
+            title: not_transferrable
+          - type: string
+            enum:
+            - pending_owner
+            title: pending_owner
+          - type: string
+            enum:
+            - pending_admin
+            title: pending_admin
+          - type: string
+            enum:
+            - pending_registry
+            title: pending_registry
+          - type: string
+            enum:
+            - completed
+            title: completed
+          - type: string
+            enum:
+            - cancelled
+            title: cancelled
+          - type: string
+            enum:
+            - service_unavailable
+            title: service_unavailable
+        reason:
+          type: string
+          description: Additional transfer status information.
+          example: Transfer in progress
+        timestamp:
+          type: string
+          description: Transfer status timestamp in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - status
+      - reason
+      - timestamp
+      example:
+        status: pending_registry
+        reason: Transfer in progress
+        timestamp: '2020-10-15T06:38:00.000+00:00'
     domainSuggestionsList:
       description: Domain suggestions list
       type: object
@@ -3764,6 +3650,120 @@ components:
       example:
         total: 5
         suggestions: ''
+    domainPricesList:
+      description: Domain prices list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of prices that matched your query.
+          format: int32
+          example: 5
+        prices:
+          type: array
+          description: List of prices.
+          items:
+            $ref: '#/components/schemas/domainPrice'
+          example: []
+      required:
+      - total
+      - prices
+      example:
+        total: 5
+        prices: ''
+    domainTransferOut:
+      description: domainTransferOut
+      type: object
+      properties:
+        authCode:
+          type: string
+          description: Domain transfer authorization code.
+          example: mock_1a2b3c4d
+      required:
+      - authCode
+      example:
+        authCode: mock_1a2b3c4d
+    domainPrice:
+      description: DomainPrice
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain name.
+          example: example.com
+        tld:
+          type: string
+          description: Top-level domain for the requested domain.
+          example: com
+        available:
+          type: boolean
+          description: Whether the domain is currently available for registration.
+          example: true
+        price:
+          type:
+          - number
+          - 'null'
+          description: Domain registration price. Null when the price could not be resolved, for example for an unsupported TLD.
+          format: double
+          example: 25.99
+        periodYears:
+          type: integer
+          description: Price period in years.
+          format: int32
+          example: 1
+        premium:
+          type: boolean
+          description: Whether the domain is a premium domain.
+          example: false
+        renewalPrice:
+          type:
+          - number
+          - 'null'
+          description: Domain renewal price for the same period. Null when the domain was not priced or the registrar has no renewal price for it.
+          format: double
+          example: 27.99
+        renewalPeriodYears:
+          type: integer
+          description: Renewal price period in years.
+          format: int32
+          example: 1
+      required:
+      - domain
+      - tld
+      - available
+      - periodYears
+      - premium
+      - renewalPeriodYears
+      example:
+        domain: example.com
+        tld: com
+        available: true
+        price: 25.99
+        periodYears: 1
+        premium: false
+        renewalPrice: 27.99
+        renewalPeriodYears: 1
+    dnsRecordsList:
+      description: DNS records list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of dnsRecords that matched your query.
+          format: int32
+          example: 5
+        dnsRecords:
+          type: array
+          description: List of dnsRecords.
+          items:
+            $ref: '#/components/schemas/dnsRecord'
+          example: []
+      required:
+      - total
+      - dnsRecords
+      example:
+        total: 5
+        dnsRecords: ''
   securitySchemes:
     Project:
       type: apiKey

@@ -513,60 +513,6 @@ paths:
               - usage
 components:
   schemas:
-    managerTags:
-      description: Tags
-      type: object
-      properties:
-        project:
-          type:
-          - string
-          - 'null'
-          description: Project cache tag.
-          example: 5e5ea5c16897e
-        team:
-          type:
-          - string
-          - 'null'
-          description: Team cache tag.
-          example: 5e5ea5c16897f
-        deployment:
-          type:
-          - string
-          - 'null'
-          description: Deployment cache tag.
-          example: 5e5ea5c168981
-        domain:
-          type:
-          - string
-          - 'null'
-          description: Domain cache tag.
-          example: function.example.com
-        resource:
-          type:
-          - string
-          - 'null'
-          description: Resource type cache tag.
-          example: function
-        function:
-          type:
-          - string
-          - 'null'
-          description: Function cache tag.
-          example: 5e5ea5c168980
-        site:
-          type:
-          - string
-          - 'null'
-          description: Site cache tag.
-          example: 5e5ea5c168980
-      example:
-        project: 5e5ea5c16897e
-        team: 5e5ea5c16897f
-        deployment: 5e5ea5c168981
-        domain: function.example.com
-        resource: function
-        function: 5e5ea5c168980
-        site: 5e5ea5c168980
     managerRuntime:
       description: Runtime
       type: object
@@ -682,6 +628,60 @@ components:
         image: ''
         command: nohup helpers/start.sh "node index.js"
         tags: ''
+    managerTags:
+      description: Tags
+      type: object
+      properties:
+        project:
+          type:
+          - string
+          - 'null'
+          description: Project cache tag.
+          example: 5e5ea5c16897e
+        team:
+          type:
+          - string
+          - 'null'
+          description: Team cache tag.
+          example: 5e5ea5c16897f
+        deployment:
+          type:
+          - string
+          - 'null'
+          description: Deployment cache tag.
+          example: 5e5ea5c168981
+        domain:
+          type:
+          - string
+          - 'null'
+          description: Domain cache tag.
+          example: function.example.com
+        resource:
+          type:
+          - string
+          - 'null'
+          description: Resource type cache tag.
+          example: function
+        function:
+          type:
+          - string
+          - 'null'
+          description: Function cache tag.
+          example: 5e5ea5c168980
+        site:
+          type:
+          - string
+          - 'null'
+          description: Site cache tag.
+          example: 5e5ea5c168980
+      example:
+        project: 5e5ea5c16897e
+        team: 5e5ea5c16897f
+        deployment: 5e5ea5c168981
+        domain: function.example.com
+        resource: function
+        function: 5e5ea5c168980
+        site: 5e5ea5c168980
   securitySchemes:
     Project:
       type: apiKey

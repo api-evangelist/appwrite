@@ -331,6 +331,48 @@ paths:
               - organizationId
 components:
   schemas:
+    affiliateRewardList:
+      description: Affiliate rewards list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of rewards that matched your query.
+          format: int32
+          example: 5
+        rewards:
+          type: array
+          description: List of rewards.
+          items:
+            $ref: '#/components/schemas/affiliateReward'
+          example: []
+      required:
+      - total
+      - rewards
+      example:
+        total: 5
+        rewards: ''
+    affiliateLinkList:
+      description: Affiliate links list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of links that matched your query.
+          format: int32
+          example: 5
+        links:
+          type: array
+          description: List of links.
+          items:
+            $ref: '#/components/schemas/affiliateLink'
+          example: []
+      required:
+      - total
+      - links
+      example:
+        total: 5
+        links: ''
     affiliateReferralList:
       description: Affiliate referrals list
       type: object
@@ -530,48 +572,6 @@ components:
         attributedAt: '2020-10-15T06:38:00.000+00:00'
         expiresAt: '2020-10-15T06:38:00.000+00:00'
         convertedAt: '2020-10-15T06:38:00.000+00:00'
-    affiliateRewardList:
-      description: Affiliate rewards list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of rewards that matched your query.
-          format: int32
-          example: 5
-        rewards:
-          type: array
-          description: List of rewards.
-          items:
-            $ref: '#/components/schemas/affiliateReward'
-          example: []
-      required:
-      - total
-      - rewards
-      example:
-        total: 5
-        rewards: ''
-    affiliateLinkList:
-      description: Affiliate links list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of links that matched your query.
-          format: int32
-          example: 5
-        links:
-          type: array
-          description: List of links.
-          items:
-            $ref: '#/components/schemas/affiliateLink'
-          example: []
-      required:
-      - total
-      - links
-      example:
-        total: 5
-        links: ''
   securitySchemes:
     Project:
       type: apiKey
