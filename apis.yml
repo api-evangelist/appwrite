@@ -1086,6 +1086,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
@@ -1101,6 +1103,9 @@ apis:
   - type: GraphQLSchema
     url: graphql/appwrite-schema.graphql
 common:
+- type: CapabilityMap
+  url: capabilities/appwrite-capability-edges.yml
+  name: Appwrite Business Capability Map
 - type: Overlay
   url: overlays/appwrite-oauth2-overlay.yaml
 - type: Overlay
