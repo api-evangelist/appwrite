@@ -3314,59 +3314,27 @@ components:
         clientSecret: ''
         amount: 25.99
         currency: USD
-    domainsList:
-      description: Domains list
+    domainPricesList:
+      description: Domain prices list
       type: object
       properties:
         total:
           type: integer
-          description: Total number of domains that matched your query.
+          description: Total number of prices that matched your query.
           format: int32
           example: 5
-        domains:
+        prices:
           type: array
-          description: List of domains.
+          description: List of prices.
           items:
-            $ref: '#/components/schemas/domain'
+            $ref: '#/components/schemas/domainPrice'
           example: []
       required:
       - total
-      - domains
+      - prices
       example:
         total: 5
-        domains: ''
-    domainSuggestion:
-      description: DomainSuggestion
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain suggestion.
-          example: example.com
-        premium:
-          type: boolean
-          description: Is the domain premium?
-          example: true
-        price:
-          type:
-          - number
-          - 'null'
-          description: Domain price.
-          format: double
-          example: 25.99
-        available:
-          type: boolean
-          description: Is the domain available?
-          example: true
-      required:
-      - domain
-      - premium
-      - available
-      example:
-        domain: example.com
-        premium: true
-        price: 25.99
-        available: true
+        prices: ''
     domain:
       description: Domain
       type: object
@@ -3489,6 +3457,219 @@ components:
         transferStatus: pending_registry
         teamId: 5e5ea5c16897e
         dnsRecords: []
+    domainsList:
+      description: Domains list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of domains that matched your query.
+          format: int32
+          example: 5
+        domains:
+          type: array
+          description: List of domains.
+          items:
+            $ref: '#/components/schemas/domain'
+          example: []
+      required:
+      - total
+      - domains
+      example:
+        total: 5
+        domains: ''
+    domainSuggestionsList:
+      description: Domain suggestions list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of suggestions that matched your query.
+          format: int32
+          example: 5
+        suggestions:
+          type: array
+          description: List of suggestions.
+          items:
+            $ref: '#/components/schemas/domainSuggestion'
+          example: []
+      required:
+      - total
+      - suggestions
+      example:
+        total: 5
+        suggestions: ''
+    domainPrice:
+      description: DomainPrice
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain name.
+          example: example.com
+        tld:
+          type: string
+          description: Top-level domain for the requested domain.
+          example: com
+        available:
+          type: boolean
+          description: Whether the domain is currently available for registration.
+          example: true
+        price:
+          type:
+          - number
+          - 'null'
+          description: Domain registration price. Null when the price could not be resolved, for example for an unsupported TLD.
+          format: double
+          example: 25.99
+        periodYears:
+          type: integer
+          description: Price period in years.
+          format: int32
+          example: 1
+        premium:
+          type: boolean
+          description: Whether the domain is a premium domain.
+          example: false
+        renewalPrice:
+          type:
+          - number
+          - 'null'
+          description: Domain renewal price for the same period. Null when the domain was not priced or the registrar has no renewal price for it.
+          format: double
+          example: 27.99
+        renewalPeriodYears:
+          type: integer
+          description: Renewal price period in years.
+          format: int32
+          example: 1
+      required:
+      - domain
+      - tld
+      - available
+      - periodYears
+      - premium
+      - renewalPeriodYears
+      example:
+        domain: example.com
+        tld: com
+        available: true
+        price: 25.99
+        periodYears: 1
+        premium: false
+        renewalPrice: 27.99
+        renewalPeriodYears: 1
+    domainTransferStatus:
+      description: domainTransferStatus
+      type: object
+      properties:
+        status:
+          description: Transfer status.
+          example: pending_registry
+          title: DomainTransferStatusEnum
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - transferrable
+            title: transferrable
+          - type: string
+            enum:
+            - not_transferrable
+            title: not_transferrable
+          - type: string
+            enum:
+            - pending_owner
+            title: pending_owner
+          - type: string
+            enum:
+            - pending_admin
+            title: pending_admin
+          - type: string
+            enum:
+            - pending_registry
+            title: pending_registry
+          - type: string
+            enum:
+            - completed
+            title: completed
+          - type: string
+            enum:
+            - cancelled
+            title: cancelled
+          - type: string
+            enum:
+            - service_unavailable
+            title: service_unavailable
+        reason:
+          type: string
+          description: Additional transfer status information.
+          example: Transfer in progress
+        timestamp:
+          type: string
+          description: Transfer status timestamp in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - status
+      - reason
+      - timestamp
+      example:
+        status: pending_registry
+        reason: Transfer in progress
+        timestamp: '2020-10-15T06:38:00.000+00:00'
+    dnsRecordsList:
+      description: DNS records list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of dnsRecords that matched your query.
+          format: int32
+          example: 5
+        dnsRecords:
+          type: array
+          description: List of dnsRecords.
+          items:
+            $ref: '#/components/schemas/dnsRecord'
+          example: []
+      required:
+      - total
+      - dnsRecords
+      example:
+        total: 5
+        dnsRecords: ''
+    domainSuggestion:
+      description: DomainSuggestion
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Domain suggestion.
+          example: example.com
+        premium:
+          type: boolean
+          description: Is the domain premium?
+          example: true
+        price:
+          type:
+          - number
+          - 'null'
+          description: Domain price.
+          format: double
+          example: 25.99
+        available:
+          type: boolean
+          description: Is the domain available?
+          example: true
+      required:
+      - domain
+      - premium
+      - available
+      example:
+        domain: example.com
+        premium: true
+        price: 25.99
+        available: true
     dnsRecord:
       description: DNSRecord
       type: object
@@ -3571,106 +3752,6 @@ components:
         weight: 10
         port: 443
         comment: Mail server record
-    domainTransferStatus:
-      description: domainTransferStatus
-      type: object
-      properties:
-        status:
-          description: Transfer status.
-          example: pending_registry
-          title: DomainTransferStatusEnum
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - transferrable
-            title: transferrable
-          - type: string
-            enum:
-            - not_transferrable
-            title: not_transferrable
-          - type: string
-            enum:
-            - pending_owner
-            title: pending_owner
-          - type: string
-            enum:
-            - pending_admin
-            title: pending_admin
-          - type: string
-            enum:
-            - pending_registry
-            title: pending_registry
-          - type: string
-            enum:
-            - completed
-            title: completed
-          - type: string
-            enum:
-            - cancelled
-            title: cancelled
-          - type: string
-            enum:
-            - service_unavailable
-            title: service_unavailable
-        reason:
-          type: string
-          description: Additional transfer status information.
-          example: Transfer in progress
-        timestamp:
-          type: string
-          description: Transfer status timestamp in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - status
-      - reason
-      - timestamp
-      example:
-        status: pending_registry
-        reason: Transfer in progress
-        timestamp: '2020-10-15T06:38:00.000+00:00'
-    domainSuggestionsList:
-      description: Domain suggestions list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of suggestions that matched your query.
-          format: int32
-          example: 5
-        suggestions:
-          type: array
-          description: List of suggestions.
-          items:
-            $ref: '#/components/schemas/domainSuggestion'
-          example: []
-      required:
-      - total
-      - suggestions
-      example:
-        total: 5
-        suggestions: ''
-    domainPricesList:
-      description: Domain prices list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of prices that matched your query.
-          format: int32
-          example: 5
-        prices:
-          type: array
-          description: List of prices.
-          items:
-            $ref: '#/components/schemas/domainPrice'
-          example: []
-      required:
-      - total
-      - prices
-      example:
-        total: 5
-        prices: ''
     domainTransferOut:
       description: domainTransferOut
       type: object
@@ -3683,87 +3764,6 @@ components:
       - authCode
       example:
         authCode: mock_1a2b3c4d
-    domainPrice:
-      description: DomainPrice
-      type: object
-      properties:
-        domain:
-          type: string
-          description: Domain name.
-          example: example.com
-        tld:
-          type: string
-          description: Top-level domain for the requested domain.
-          example: com
-        available:
-          type: boolean
-          description: Whether the domain is currently available for registration.
-          example: true
-        price:
-          type:
-          - number
-          - 'null'
-          description: Domain registration price. Null when the price could not be resolved, for example for an unsupported TLD.
-          format: double
-          example: 25.99
-        periodYears:
-          type: integer
-          description: Price period in years.
-          format: int32
-          example: 1
-        premium:
-          type: boolean
-          description: Whether the domain is a premium domain.
-          example: false
-        renewalPrice:
-          type:
-          - number
-          - 'null'
-          description: Domain renewal price for the same period. Null when the domain was not priced or the registrar has no renewal price for it.
-          format: double
-          example: 27.99
-        renewalPeriodYears:
-          type: integer
-          description: Renewal price period in years.
-          format: int32
-          example: 1
-      required:
-      - domain
-      - tld
-      - available
-      - periodYears
-      - premium
-      - renewalPeriodYears
-      example:
-        domain: example.com
-        tld: com
-        available: true
-        price: 25.99
-        periodYears: 1
-        premium: false
-        renewalPrice: 27.99
-        renewalPeriodYears: 1
-    dnsRecordsList:
-      description: DNS records list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of dnsRecords that matched your query.
-          format: int32
-          example: 5
-        dnsRecords:
-          type: array
-          description: List of dnsRecords.
-          items:
-            $ref: '#/components/schemas/dnsRecord'
-          example: []
-      required:
-      - total
-      - dnsRecords
-      example:
-        total: 5
-        dnsRecords: ''
   securitySchemes:
     Project:
       type: apiKey

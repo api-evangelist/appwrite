@@ -275,6 +275,178 @@ paths:
         in: path
 components:
   schemas:
+    reportList:
+      description: Reports List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of reports that matched your query.
+          format: int32
+          example: 5
+        reports:
+          type: array
+          description: List of reports.
+          items:
+            $ref: '#/components/schemas/report'
+          example: []
+      required:
+      - total
+      - reports
+      example:
+        total: 5
+        reports: ''
+    insightList:
+      description: Insights List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of insights that matched your query.
+          format: int32
+          example: 5
+        insights:
+          type: array
+          description: List of insights.
+          items:
+            $ref: '#/components/schemas/insight'
+          example: []
+      required:
+      - total
+      - insights
+      example:
+        total: 5
+        insights: ''
+    report:
+      description: Report
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Report ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Report creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Report update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        appId:
+          type: string
+          description: ID of the third-party app that submitted the report.
+          example: 5e5ea5c16897e
+        type:
+          type: string
+          description: Analyzer that produced this report. e.g. lighthouse, audit, databaseAnalyzer.
+          example: lighthouse
+        title:
+          type: string
+          description: Short, human-readable title for the report.
+          example: Lighthouse audit for https://appwrite.io/
+        summary:
+          type: string
+          description: Markdown summary describing the report.
+          example: Performance score 78. 4 opportunities found.
+        targetType:
+          type: string
+          description: Plural noun describing what the report analyzes, e.g. databases, sites, urls.
+          example: urls
+        target:
+          type: string
+          description: Free-form target identifier (URL for lighthouse, resource ID for db).
+          example: https://appwrite.io/
+        categories:
+          type: array
+          description: Categories covered by the report, e.g. performance, accessibility.
+          items:
+            type: string
+          example:
+          - performance
+          - accessibility
+        insights:
+          type: array
+          description: Insights nested under this report.
+          items:
+            $ref: '#/components/schemas/insight'
+          example: []
+        analyzedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the report was analyzed in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - appId
+      - type
+      - title
+      - summary
+      - targetType
+      - target
+      - categories
+      - insights
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        appId: 5e5ea5c16897e
+        type: lighthouse
+        title: Lighthouse audit for https://appwrite.io/
+        summary: Performance score 78. 4 opportunities found.
+        targetType: urls
+        target: https://appwrite.io/
+        categories:
+        - performance
+        - accessibility
+        insights: []
+        analyzedAt: '2020-10-15T06:38:00.000+00:00'
+    insightCTA:
+      description: InsightCTA
+      type: object
+      properties:
+        label:
+          type: string
+          description: Human-readable label for the CTA, used in UI.
+          example: Create missing index
+        service:
+          type: string
+          description: 'Public API service (SDK namespace) the client should invoke. Must match the engine that owns the resource — for index suggestions: databases (legacy), tablesDB, documentsDB, or vectorsDB.'
+          example: tablesDB
+        method:
+          type: string
+          description: Public API method on the chosen service the client should invoke when this CTA is triggered.
+          example: createIndex
+        params:
+          type: object
+          additionalProperties: true
+          description: Parameter map the client should pass to the service method when this CTA is triggered. Keys match the target API's parameter names (e.g. databaseId/tableId/columns for tablesDB, databaseId/collectionId/attributes for the legacy Databases API).
+          example:
+            databaseId: main
+            tableId: orders
+            key: _idx_status
+            type: key
+            columns:
+            - status
+      required:
+      - label
+      - service
+      - method
+      - params
+      example:
+        label: Create missing index
+        service: tablesDB
+        method: createIndex
+        params:
+          databaseId: main
+          tableId: orders
+          key: _idx_status
+          type: key
+          columns:
+          - status
     insight:
       description: Insight
       type: object
@@ -388,178 +560,6 @@ components:
         analyzedAt: '2020-10-15T06:38:00.000+00:00'
         dismissedAt: '2020-10-15T06:38:00.000+00:00'
         dismissedBy: 5e5ea5c16897e
-    insightCTA:
-      description: InsightCTA
-      type: object
-      properties:
-        label:
-          type: string
-          description: Human-readable label for the CTA, used in UI.
-          example: Create missing index
-        service:
-          type: string
-          description: 'Public API service (SDK namespace) the client should invoke. Must match the engine that owns the resource — for index suggestions: databases (legacy), tablesDB, documentsDB, or vectorsDB.'
-          example: tablesDB
-        method:
-          type: string
-          description: Public API method on the chosen service the client should invoke when this CTA is triggered.
-          example: createIndex
-        params:
-          type: object
-          additionalProperties: true
-          description: Parameter map the client should pass to the service method when this CTA is triggered. Keys match the target API's parameter names (e.g. databaseId/tableId/columns for tablesDB, databaseId/collectionId/attributes for the legacy Databases API).
-          example:
-            databaseId: main
-            tableId: orders
-            key: _idx_status
-            type: key
-            columns:
-            - status
-      required:
-      - label
-      - service
-      - method
-      - params
-      example:
-        label: Create missing index
-        service: tablesDB
-        method: createIndex
-        params:
-          databaseId: main
-          tableId: orders
-          key: _idx_status
-          type: key
-          columns:
-          - status
-    insightList:
-      description: Insights List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of insights that matched your query.
-          format: int32
-          example: 5
-        insights:
-          type: array
-          description: List of insights.
-          items:
-            $ref: '#/components/schemas/insight'
-          example: []
-      required:
-      - total
-      - insights
-      example:
-        total: 5
-        insights: ''
-    report:
-      description: Report
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Report ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Report creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Report update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        appId:
-          type: string
-          description: ID of the third-party app that submitted the report.
-          example: 5e5ea5c16897e
-        type:
-          type: string
-          description: Analyzer that produced this report. e.g. lighthouse, audit, databaseAnalyzer.
-          example: lighthouse
-        title:
-          type: string
-          description: Short, human-readable title for the report.
-          example: Lighthouse audit for https://appwrite.io/
-        summary:
-          type: string
-          description: Markdown summary describing the report.
-          example: Performance score 78. 4 opportunities found.
-        targetType:
-          type: string
-          description: Plural noun describing what the report analyzes, e.g. databases, sites, urls.
-          example: urls
-        target:
-          type: string
-          description: Free-form target identifier (URL for lighthouse, resource ID for db).
-          example: https://appwrite.io/
-        categories:
-          type: array
-          description: Categories covered by the report, e.g. performance, accessibility.
-          items:
-            type: string
-          example:
-          - performance
-          - accessibility
-        insights:
-          type: array
-          description: Insights nested under this report.
-          items:
-            $ref: '#/components/schemas/insight'
-          example: []
-        analyzedAt:
-          type:
-          - string
-          - 'null'
-          description: Time the report was analyzed in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - appId
-      - type
-      - title
-      - summary
-      - targetType
-      - target
-      - categories
-      - insights
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        appId: 5e5ea5c16897e
-        type: lighthouse
-        title: Lighthouse audit for https://appwrite.io/
-        summary: Performance score 78. 4 opportunities found.
-        targetType: urls
-        target: https://appwrite.io/
-        categories:
-        - performance
-        - accessibility
-        insights: []
-        analyzedAt: '2020-10-15T06:38:00.000+00:00'
-    reportList:
-      description: Reports List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of reports that matched your query.
-          format: int32
-          example: 5
-        reports:
-          type: array
-          description: List of reports.
-          items:
-            $ref: '#/components/schemas/report'
-          example: []
-      required:
-      - total
-      - reports
-      example:
-        total: 5
-        reports: ''
   securitySchemes:
     Project:
       type: apiKey

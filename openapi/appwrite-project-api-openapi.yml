@@ -9586,6 +9586,120 @@ paths:
         in: path
 components:
   schemas:
+    policyPasswordDictionary:
+      description: Policy Password Dictionary
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        enabled:
+          type: boolean
+          description: Whether password dictionary policy is enabled.
+          example: true
+      required:
+      - $id
+      - enabled
+      example:
+        $id: password-dictionary
+        enabled: true
+    oAuth2TikTok:
+      description: OAuth2TikTok
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: TikTok OAuth2 client key.
+          example: awz000000000tyw0
+        clientSecret:
+          type: string
+          description: TikTok OAuth2 client secret.
+          example: 6wXewM00000000000000000000yXnite
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: awz000000000tyw0
+        clientSecret: 6wXewM00000000000000000000yXnite
+    oAuth2Etsy:
+      description: OAuth2Etsy
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        keyString:
+          type: string
+          description: Etsy OAuth2 keystring.
+          example: nsgzxh0000000000008j85a2
+        sharedSecret:
+          type: string
+          description: Etsy OAuth2 shared secret.
+          example: tp000000ru
+      required:
+      - $id
+      - enabled
+      - keyString
+      - sharedSecret
+      example:
+        $id: github
+        enabled: false
+        keyString: nsgzxh0000000000008j85a2
+        sharedSecret: tp000000ru
+    oAuth2FusionAuth:
+      description: OAuth2FusionAuth
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: FusionAuth OAuth2 client ID.
+          example: b2222c00-0000-0000-0000-000000862097
+        clientSecret:
+          type: string
+          description: FusionAuth OAuth2 client secret.
+          example: Jx4s0C0000000000000000000000000000000wGqLsc
+        endpoint:
+          type: string
+          description: FusionAuth OAuth2 endpoint domain.
+          example: example.fusionauth.io
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      - endpoint
+      example:
+        $id: github
+        enabled: false
+        clientId: b2222c00-0000-0000-0000-000000862097
+        clientSecret: Jx4s0C0000000000000000000000000000000wGqLsc
+        endpoint: example.fusionauth.io
     projectProtocol:
       description: ProjectProtocol
       type: object
@@ -9618,8 +9732,8 @@ components:
       example:
         $id: graphql
         enabled: false
-    oAuth2Box:
-      description: OAuth2Box
+    oAuth2Yandex:
+      description: OAuth2Yandex
       type: object
       properties:
         $id:
@@ -9632,12 +9746,12 @@ components:
           example: false
         clientId:
           type: string
-          description: Box OAuth2 client ID.
-          example: deglcs00000000000000000000x2og6y
+          description: Yandex OAuth2 client ID.
+          example: 6a8a6a0000000000000000000091483c
         clientSecret:
           type: string
-          description: Box OAuth2 client secret.
-          example: OKM1f100000000000000000000eshEif
+          description: Yandex OAuth2 client secret.
+          example: bbf98500000000000000000000c75a63
       required:
       - $id
       - enabled
@@ -9646,1447 +9760,8 @@ components:
       example:
         $id: github
         enabled: false
-        clientId: deglcs00000000000000000000x2og6y
-        clientSecret: OKM1f100000000000000000000eshEif
-    metric:
-      description: Metric
-      type: object
-      properties:
-        value:
-          type: integer
-          description: The value of this metric at the timestamp.
-          format: int32
-          example: 1
-        date:
-          type: string
-          description: The date at which this metric was aggregated in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - value
-      - date
-      example:
-        value: 1
-        date: '2020-10-15T06:38:00.000+00:00'
-    policyMembershipPrivacy:
-      description: Policy Membership Privacy
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        userId:
-          type: boolean
-          description: Whether user ID is visible in memberships.
-          example: true
-        userEmail:
-          type: boolean
-          description: Whether user email is visible in memberships.
-          example: true
-        userPhone:
-          type: boolean
-          description: Whether user phone is visible in memberships.
-          example: true
-        userName:
-          type: boolean
-          description: Whether user name is visible in memberships.
-          example: true
-        userMFA:
-          type: boolean
-          description: Whether user MFA status is visible in memberships.
-          example: true
-        userAccessedAt:
-          type: boolean
-          description: Whether user last access time is visible in memberships.
-          example: true
-      required:
-      - $id
-      - userId
-      - userEmail
-      - userPhone
-      - userName
-      - userMFA
-      - userAccessedAt
-      example:
-        $id: password-dictionary
-        userId: true
-        userEmail: true
-        userPhone: true
-        userName: true
-        userMFA: true
-        userAccessedAt: true
-    oAuth2Keycloak:
-      description: OAuth2Keycloak
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Keycloak OAuth2 client ID.
-          example: appwrite-o0000000st-app
-        clientSecret:
-          type: string
-          description: Keycloak OAuth2 client secret.
-          example: jdjrJd00000000000000000000HUsaZO
-        endpoint:
-          type: string
-          description: Keycloak OAuth2 endpoint domain.
-          example: keycloak.example.com
-        realmName:
-          type: string
-          description: Keycloak OAuth2 realm name.
-          example: appwrite-realm
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      - endpoint
-      - realmName
-      example:
-        $id: github
-        enabled: false
-        clientId: appwrite-o0000000st-app
-        clientSecret: jdjrJd00000000000000000000HUsaZO
-        endpoint: keycloak.example.com
-        realmName: appwrite-realm
-    oAuth2Authentik:
-      description: OAuth2Authentik
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Authentik OAuth2 client ID.
-          example: dTKOPa0000000000000000000000000000e7G8hv
-        clientSecret:
-          type: string
-          description: Authentik OAuth2 client secret.
-          example: ntQadq000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Hp5WK
-        endpoint:
-          type: string
-          description: Authentik OAuth2 endpoint domain.
-          example: example.authentik.com
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      - endpoint
-      example:
-        $id: github
-        enabled: false
-        clientId: dTKOPa0000000000000000000000000000e7G8hv
-        clientSecret: ntQadq000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Hp5WK
-        endpoint: example.authentik.com
-    keyList:
-      description: API Keys List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of keys that matched your query.
-          format: int32
-          example: 5
-        keys:
-          type: array
-          description: List of keys.
-          items:
-            $ref: '#/components/schemas/key'
-          example: []
-      required:
-      - total
-      - keys
-      example:
-        total: 5
-        keys: ''
-    ephemeralKey:
-      description: Ephemeral Key
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Key ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Key creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Key update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Key name.
-          example: My API Key
-        expire:
-          type: string
-          description: Key expiration date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        scopes:
-          type: array
-          description: Allowed permission scopes.
-          items:
-            type: string
-          example:
-          - users.read
-        secret:
-          type: string
-          description: Secret key.
-          example: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
-          example: '2020-10-15T06:38:00.000+00:00'
-        sdks:
-          type: array
-          description: List of SDK user agents that used this key.
-          items:
-            type: string
-          example:
-          - appwrite:flutter
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - expire
-      - scopes
-      - secret
-      - accessedAt
-      - sdks
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: My API Key
-        expire: '2020-10-15T06:38:00.000+00:00'
-        scopes: users.read
-        secret: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt: '2020-10-15T06:38:00.000+00:00'
-        sdks: appwrite:flutter
-    oAuth2Disqus:
-      description: OAuth2Disqus
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        publicKey:
-          type: string
-          description: Disqus OAuth2 public key.
-          example: cgegH70000000000000000000000000000000000000000000000000000Hr1nYX
-        secretKey:
-          type: string
-          description: Disqus OAuth2 secret key.
-          example: W7Bykj00000000000000000000000000000000000000000000000000003o43w9
-      required:
-      - $id
-      - enabled
-      - publicKey
-      - secretKey
-      example:
-        $id: github
-        enabled: false
-        publicKey: cgegH70000000000000000000000000000000000000000000000000000Hr1nYX
-        secretKey: W7Bykj00000000000000000000000000000000000000000000000000003o43w9
-    oAuth2TikTok:
-      description: OAuth2TikTok
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: TikTok OAuth2 client key.
-          example: awz000000000tyw0
-        clientSecret:
-          type: string
-          description: TikTok OAuth2 client secret.
-          example: 6wXewM00000000000000000000yXnite
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: awz000000000tyw0
-        clientSecret: 6wXewM00000000000000000000yXnite
-    policyMfaFactors:
-      description: Policy MFA Factors
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        totp:
-          type: boolean
-          description: Whether TOTP can be used to complete an MFA challenge.
-          example: true
-        email:
-          type: boolean
-          description: Whether email can be used to complete an MFA challenge.
-          example: true
-        phone:
-          type: boolean
-          description: Whether phone (SMS) can be used to complete an MFA challenge.
-          example: true
-        custom:
-          type: boolean
-          description: Whether the custom factor can be used to complete an MFA challenge.
-          example: true
-      required:
-      - $id
-      - totp
-      - email
-      - phone
-      - custom
-      example:
-        $id: password-dictionary
-        totp: true
-        email: true
-        phone: true
-        custom: true
-    variable:
-      description: Variable
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Variable ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Variable creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Variable creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        key:
-          type: string
-          description: Variable key.
-          example: API_KEY
-        value:
-          type: string
-          description: Variable value.
-          example: myPa$$word1
-        secret:
-          type: boolean
-          description: Variable secret flag. Secret variables can only be updated or deleted, but never read.
-          example: false
-        resourceType:
-          type: string
-          description: Service to which the variable belongs. Possible values are "project", "function"
-          example: function
-        resourceId:
-          type: string
-          description: ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
-          example: myAwesomeFunction
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - key
-      - value
-      - secret
-      - resourceType
-      - resourceId
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        key: API_KEY
-        value: myPa$$word1
-        secret: false
-        resourceType: function
-        resourceId: myAwesomeFunction
-    oAuth2Kakao:
-      description: OAuth2Kakao
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Kakao OAuth2 REST API key.
-          example: 839ff5000000000000000000013206de
-        clientSecret:
-          type: string
-          description: Kakao OAuth2 client secret.
-          example: jLNVOK00000000000000000000yJebea
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: 839ff5000000000000000000013206de
-        clientSecret: jLNVOK00000000000000000000yJebea
-    policyPasswordPersonalData:
-      description: Policy Password Personal Data
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        enabled:
-          type: boolean
-          description: Whether password personal data policy is enabled.
-          example: true
-      required:
-      - $id
-      - enabled
-      example:
-        $id: password-dictionary
-        enabled: true
-    oAuth2HuggingFace:
-      description: OAuth2HuggingFace
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Hugging Face OAuth2 client ID.
-          example: 2ab9cff9-d711-40ad-a91e-b08a49c42d24
-        clientSecret:
-          type: string
-          description: Hugging Face OAuth2 client secret.
-          example: oauth_app_secret_wcLhRtl000000000000000000000xbNdLt
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: 2ab9cff9-d711-40ad-a91e-b08a49c42d24
-        clientSecret: oauth_app_secret_wcLhRtl000000000000000000000xbNdLt
-    policyPasswordDictionary:
-      description: Policy Password Dictionary
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        enabled:
-          type: boolean
-          description: Whether password dictionary policy is enabled.
-          example: true
-      required:
-      - $id
-      - enabled
-      example:
-        $id: password-dictionary
-        enabled: true
-    platformList:
-      description: Platforms List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of platforms in the given project.
-          format: int32
-          example: 5
-        platforms:
-          type: array
-          description: List of platforms.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/platformWeb'
-            - $ref: '#/components/schemas/platformApple'
-            - $ref: '#/components/schemas/platformAndroid'
-            - $ref: '#/components/schemas/platformWindows'
-            - $ref: '#/components/schemas/platformLinux'
-            discriminator:
-              propertyName: type
-              mapping:
-                web: '#/components/schemas/platformWeb'
-                apple: '#/components/schemas/platformApple'
-                android: '#/components/schemas/platformAndroid'
-                windows: '#/components/schemas/platformWindows'
-                linux: '#/components/schemas/platformLinux'
-          example: []
-      required:
-      - total
-      - platforms
-      example:
-        total: 5
-        platforms: ''
-    oAuth2Apple:
-      description: OAuth2Apple
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: apple
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        serviceId:
-          type: string
-          description: Apple OAuth2 service ID.
-          example: ip.appwrite.app.web
-        keyId:
-          type: string
-          description: Apple OAuth2 key ID.
-          example: P4000000N8
-        teamId:
-          type: string
-          description: Apple OAuth2 team ID.
-          example: D4000000R6
-        p8File:
-          type: string
-          description: Apple OAuth2 .p8 private key file contents. The secret key wrapped by the PEM markers is 200 characters long.
-          example: REDACTED_PRIVATE_KEY_EXAMPLE
-      required:
-      - $id
-      - enabled
-      - serviceId
-      - keyId
-      - teamId
-      - p8File
-      example:
-        $id: apple
-        enabled: false
-        serviceId: ip.appwrite.app.web
-        keyId: P4000000N8
-        teamId: D4000000R6
-        p8File: REDACTED_PRIVATE_KEY_EXAMPLE
-    oAuth2Paypal:
-      description: OAuth2Paypal
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: PayPal OAuth2 client ID.
-          example: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
-        secretKey:
-          type: string
-          description: PayPal OAuth2 secret key.
-          example: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
-      required:
-      - $id
-      - enabled
-      - clientId
-      - secretKey
-      example:
-        $id: github
-        enabled: false
-        clientId: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
-        secretKey: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
-    project:
-      description: Project
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Project ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Project creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Project update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Project name.
-          example: New Project
-        teamId:
-          type: string
-          description: Project team ID.
-          example: '1592981250'
-        region:
-          type: string
-          description: Project region
-          example: fra
-        devKeys:
-          type: array
-          description: 'Deprecated since 1.9.5: List of dev keys.'
-          items:
-            $ref: '#/components/schemas/devKey'
-          example: []
-        smtpEnabled:
-          type: boolean
-          description: Status for custom SMTP
-          example: false
-        smtpSenderName:
-          type: string
-          description: SMTP sender name
-          example: John Appwrite
-        smtpSenderEmail:
-          type: string
-          description: SMTP sender email
-          example: john@appwrite.io
-        smtpReplyToName:
-          type: string
-          description: SMTP reply to name
-          example: Support Team
-        smtpReplyToEmail:
-          type: string
-          description: SMTP reply to email
-          example: support@appwrite.io
-        smtpHost:
-          type: string
-          description: SMTP server host name
-          example: mail.appwrite.io
-        smtpPort:
-          type: integer
-          description: SMTP server port
-          format: int32
-          example: 25
-        smtpUsername:
-          type: string
-          description: SMTP server username
-          example: emailuser
-        smtpPassword:
-          type: string
-          description: SMTP server password. This property is write-only and always returned empty.
-          format: password
-          example: smtp-password
-        smtpSecure:
-          type: string
-          description: SMTP server secure protocol
-          example: tls
-        pingCount:
-          type: integer
-          description: Number of times the ping was received for this project.
-          format: int32
-          example: 1
-        pingedAt:
-          type: string
-          description: Last ping datetime in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        labels:
-          type: array
-          description: Labels for the project.
-          items:
-            type: string
-          example:
-          - vip
-        status:
-          type: string
-          description: Project status
-          example: active
-        onboarding:
-          type: object
-          additionalProperties: true
-          description: Stage progress (completed or skipped) with timestamps and actor types, keyed by stage id.
-          example: {}
-        authMethods:
-          type: array
-          description: List of auth methods.
-          items:
-            $ref: '#/components/schemas/projectAuthMethod'
-          example: []
-        services:
-          type: array
-          description: List of services.
-          items:
-            $ref: '#/components/schemas/projectService'
-          example: []
-        protocols:
-          type: array
-          description: List of protocols.
-          items:
-            $ref: '#/components/schemas/projectProtocol'
-          example: []
-        blocks:
-          type: array
-          description: Project blocks information
-          items:
-            $ref: '#/components/schemas/block'
-          example: []
-        consoleAccessedAt:
-          type: string
-          description: Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
-          example: '2020-10-15T06:38:00.000+00:00'
-        wafEnabled:
-          type:
-          - boolean
-          - 'null'
-          description: Whether WAF enforcement is enabled for the project.
-          example: true
-        billingLimits:
-          type:
-          - object
-          - 'null'
-          description: Billing limits reached
-          allOf:
-          - $ref: '#/components/schemas/billingLimits'
-        oAuth2ServerEnabled:
-          type:
-          - boolean
-          - 'null'
-          description: OAuth2 server status
-          example: false
-        oAuth2ServerAuthorizationUrl:
-          type:
-          - string
-          - 'null'
-          description: OAuth2 server authorization URL
-          example: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
-        oAuth2ServerScopes:
-          type:
-          - array
-          - 'null'
-          description: OAuth2 server allowed scopes
-          items:
-            type: string
-          example:
-          - read
-          - write
-        oAuth2ServerDefaultScopes:
-          type:
-          - array
-          - 'null'
-          description: OAuth2 server scopes used when an authorization request omits the scope parameter
-          items:
-            type: string
-          example:
-          - read
-        oAuth2ServerInstallationScopes:
-          type:
-          - array
-          - 'null'
-          description: Scopes an application may request when installed on a team
-          items:
-            type: string
-          example:
-          - project:all
-        oAuth2ServerAuthorizationDetailsTypes:
-          type:
-          - array
-          - 'null'
-          description: OAuth2 server accepted RFC 9396 authorization_details types
-          items:
-            type: string
-          example:
-          - calendar
-        oAuth2ServerAccessTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server access token duration in seconds for confidential clients
-          format: int32
-          example: 3600
-        oAuth2ServerRefreshTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server refresh token duration in seconds for confidential clients
-          format: int32
-          example: 86400
-        oAuth2ServerPublicAccessTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
-          format: int32
-          example: 3600
-        oAuth2ServerPublicRefreshTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
-          format: int32
-          example: 2592000
-        oAuth2ServerInstallationAccessTokenDuration:
-          type:
-          - integer
-          - 'null'
-          description: OAuth2 server access token duration in seconds for app installation access tokens
-          format: int32
-          example: 3600
-        oAuth2ServerConfidentialPkce:
-          type:
-          - boolean
-          - 'null'
-          description: When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
-          example: false
-        oAuth2ServerVerificationUrl:
-          type:
-          - string
-          - 'null'
-          description: URL to your application page where users enter the device flow user code. Empty when the Device Authorization Grant is not configured.
-          example: https://cloud.appwrite.io/device
-        oAuth2ServerUserCodeLength:
-          type:
-          - integer
-          - 'null'
-          description: Number of characters in the device flow user code, excluding the formatting separator.
-          format: int32
-          example: 8
-        oAuth2ServerUserCodeFormat:
-          type:
-          - string
-          - 'null'
-          description: 'Character set for device flow user codes: `numeric`, `alphabetic`, or `alphanumeric`.'
-          example: alphanumeric
-        oAuth2ServerDeviceCodeDuration:
-          type:
-          - integer
-          - 'null'
-          description: Lifetime in seconds of device flow device codes and user codes.
-          format: int32
-          example: 600
-        oAuth2ServerDiscoveryUrl:
-          type:
-          - string
-          - 'null'
-          description: OAuth2 server discovery URL
-          example: https://auth.example.com/.well-known/openid-configuration
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - teamId
-      - region
-      - devKeys
-      - smtpEnabled
-      - smtpSenderName
-      - smtpSenderEmail
-      - smtpReplyToName
-      - smtpReplyToEmail
-      - smtpHost
-      - smtpPort
-      - smtpUsername
-      - smtpPassword
-      - smtpSecure
-      - pingCount
-      - pingedAt
-      - labels
-      - status
-      - onboarding
-      - authMethods
-      - services
-      - protocols
-      - blocks
-      - consoleAccessedAt
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: New Project
-        teamId: '1592981250'
-        region: fra
-        devKeys: {}
-        smtpEnabled: false
-        smtpSenderName: John Appwrite
-        smtpSenderEmail: john@appwrite.io
-        smtpReplyToName: Support Team
-        smtpReplyToEmail: support@appwrite.io
-        smtpHost: mail.appwrite.io
-        smtpPort: 25
-        smtpUsername: emailuser
-        smtpPassword: smtp-password
-        smtpSecure: tls
-        pingCount: 1
-        pingedAt: '2020-10-15T06:38:00.000+00:00'
-        labels:
-        - vip
-        status: active
-        onboarding: {}
-        authMethods: {}
-        services: {}
-        protocols: {}
-        blocks: ''
-        consoleAccessedAt: '2020-10-15T06:38:00.000+00:00'
-        wafEnabled: true
-        billingLimits: ''
-        oAuth2ServerEnabled: false
-        oAuth2ServerAuthorizationUrl: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
-        oAuth2ServerScopes:
-        - read
-        - write
-        oAuth2ServerDefaultScopes:
-        - read
-        oAuth2ServerInstallationScopes:
-        - project:all
-        oAuth2ServerAuthorizationDetailsTypes:
-        - calendar
-        oAuth2ServerAccessTokenDuration: 3600
-        oAuth2ServerRefreshTokenDuration: 86400
-        oAuth2ServerPublicAccessTokenDuration: 3600
-        oAuth2ServerPublicRefreshTokenDuration: 2592000
-        oAuth2ServerInstallationAccessTokenDuration: 3600
-        oAuth2ServerConfidentialPkce: false
-        oAuth2ServerVerificationUrl: https://cloud.appwrite.io/device
-        oAuth2ServerUserCodeLength: 8
-        oAuth2ServerUserCodeFormat: alphanumeric
-        oAuth2ServerDeviceCodeDuration: 600
-        oAuth2ServerDiscoveryUrl: https://auth.example.com/.well-known/openid-configuration
-    oAuth2Discord:
-      description: OAuth2Discord
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Discord OAuth2 client ID.
-          example: '950722000000343754'
-        clientSecret:
-          type: string
-          description: Discord OAuth2 client secret.
-          example: YmPXnM000000000000000000002zFg5D
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: '950722000000343754'
-        clientSecret: YmPXnM000000000000000000002zFg5D
-    oAuth2Zoom:
-      description: OAuth2Zoom
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Zoom OAuth2 client ID.
-          example: QMAC00000000000000w0AQ
-        clientSecret:
-          type: string
-          description: Zoom OAuth2 client secret.
-          example: GAWsG4000000000000000000007U01ON
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: QMAC00000000000000w0AQ
-        clientSecret: GAWsG4000000000000000000007U01ON
-    devKey:
-      description: DevKey
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Key ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Key creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Key update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Key name.
-          example: Dev API Key
-        expire:
-          type: string
-          description: Key expiration date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        secret:
-          type: string
-          description: Secret key.
-          example: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
-          example: '2020-10-15T06:38:00.000+00:00'
-        sdks:
-          type: array
-          description: List of SDK user agents that used this key.
-          items:
-            type: string
-          example:
-          - appwrite:flutter
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - expire
-      - secret
-      - accessedAt
-      - sdks
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Dev API Key
-        expire: '2020-10-15T06:38:00.000+00:00'
-        secret: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt: '2020-10-15T06:38:00.000+00:00'
-        sdks: appwrite:flutter
-    policyDenyFreeEmail:
-      description: Policy Deny Free Email
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        enabled:
-          type: boolean
-          description: Whether the deny free email policy is enabled.
-          example: true
-      required:
-      - $id
-      - enabled
-      example:
-        $id: password-dictionary
-        enabled: true
-    oAuth2Appwrite:
-      description: OAuth2Appwrite
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Appwrite OAuth2 client ID.
-          example: 6a42000000000000b5a0
-        clientSecret:
-          type: string
-          description: Appwrite OAuth2 client secret.
-          example: b86afd000000000000000000000000000000000000000000000000000ced5f93
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: 6a42000000000000b5a0
-        clientSecret: b86afd000000000000000000000000000000000000000000000000000ced5f93
-    oAuth2Autodesk:
-      description: OAuth2Autodesk
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Autodesk OAuth2 client ID.
-          example: 5zw90v00000000000000000000kVYXN7
-        clientSecret:
-          type: string
-          description: Autodesk OAuth2 client secret.
-          example: 7I000000000000MW
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: 5zw90v00000000000000000000kVYXN7
-        clientSecret: 7I000000000000MW
-    oAuth2Twitch:
-      description: OAuth2Twitch
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Twitch OAuth2 client ID.
-          example: vvi0in000000000000000000ikmt9p
-        clientSecret:
-          type: string
-          description: Twitch OAuth2 client secret.
-          example: pmapue000000000000000000zylw3v
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: vvi0in000000000000000000ikmt9p
-        clientSecret: pmapue000000000000000000zylw3v
-    emailTemplate:
-      description: EmailTemplate
-      type: object
-      properties:
-        templateId:
-          type: string
-          description: Template type
-          example: verification
-        locale:
-          type: string
-          description: Template locale
-          example: en_us
-        message:
-          type: string
-          description: Template message
-          example: Click on the link to verify your account.
-        senderName:
-          type: string
-          description: Name of the sender
-          example: My User
-        senderEmail:
-          type: string
-          description: Email of the sender
-          example: mail@appwrite.io
-        replyToEmail:
-          type: string
-          description: Reply to email address
-          example: emails@appwrite.io
-        replyToName:
-          type: string
-          description: Reply to name
-          example: Support Team
-        subject:
-          type: string
-          description: Email subject
-          example: Please verify your email address
-      required:
-      - templateId
-      - locale
-      - message
-      - senderName
-      - senderEmail
-      - replyToEmail
-      - replyToName
-      - subject
-      example:
-        templateId: verification
-        locale: en_us
-        message: Click on the link to verify your account.
-        senderName: My User
-        senderEmail: mail@appwrite.io
-        replyToEmail: emails@appwrite.io
-        replyToName: Support Team
-        subject: Please verify your email address
-    policyDenyAliasedEmail:
-      description: Policy Deny Aliased Email
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        enabled:
-          type: boolean
-          description: Whether the deny aliased email policy is enabled.
-          example: true
-      required:
-      - $id
-      - enabled
-      example:
-        $id: password-dictionary
-        enabled: true
-    emailTemplateList:
-      description: Email Templates List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of templates that matched your query.
-          format: int32
-          example: 5
-        templates:
-          type: array
-          description: List of templates.
-          items:
-            $ref: '#/components/schemas/emailTemplate'
-          example: []
-      required:
-      - total
-      - templates
-      example:
-        total: 5
-        templates: ''
-    policySessionLimit:
-      description: Policy Session Limit
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        total:
-          type: integer
-          description: Maximum number of sessions allowed per user. A value of 0 means the policy is disabled.
-          format: int32
-          example: 10
-      required:
-      - $id
-      - total
-      example:
-        $id: password-dictionary
-        total: 10
-    oAuth2Github:
-      description: OAuth2GitHub
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: GitHub OAuth2 client ID. For GitHub Apps, use the "App ID" when both an App ID and client ID are available.
-          example: e4d87900000000540733
-        clientSecret:
-          type: string
-          description: GitHub OAuth2 client secret.
-          example: 5e07c00000000000000000000000000000198bcc
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: e4d87900000000540733
-        clientSecret: 5e07c00000000000000000000000000000198bcc
-    oAuth2Spotify:
-      description: OAuth2Spotify
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Spotify OAuth2 client ID.
-          example: 6ec271000000000000000000009beace
-        clientSecret:
-          type: string
-          description: Spotify OAuth2 client secret.
-          example: db068a000000000000000000008b5b9f
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: 6ec271000000000000000000009beace
-        clientSecret: db068a000000000000000000008b5b9f
-    oAuth2Dailymotion:
-      description: OAuth2Dailymotion
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        apiKey:
-          type: string
-          description: Dailymotion OAuth2 API key.
-          example: 07a9000000000000067f
-        apiSecret:
-          type: string
-          description: Dailymotion OAuth2 API secret.
-          example: a399a90000000000000000000000000000d90639
-      required:
-      - $id
-      - enabled
-      - apiKey
-      - apiSecret
-      example:
-        $id: github
-        enabled: false
-        apiKey: 07a9000000000000067f
-        apiSecret: a399a90000000000000000000000000000d90639
-    platformWeb:
-      description: Platform Web
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Platform ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Platform creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Platform update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Platform name.
-          example: My Web App
-        type:
-          description: 'Platform type. Possible values are: windows, apple, android, linux, web.'
-          example: web
-          title: PlatformType
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - windows
-            title: windows
-          - type: string
-            enum:
-            - apple
-            title: apple
-          - type: string
-            enum:
-            - android
-            title: android
-          - type: string
-            enum:
-            - linux
-            title: linux
-          - type: string
-            enum:
-            - web
-            title: web
-        hostname:
-          type: string
-          description: Web app hostname. Empty string for other platforms.
-          example: app.example.com
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - type
-      - hostname
-      - key
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: My Web App
-        type: web
-        hostname: app.example.com
-    policyDenyDisposableEmail:
-      description: Policy Deny Disposable Email
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Policy ID.
-          example: password-dictionary
-        enabled:
-          type: boolean
-          description: Whether the deny disposable email policy is enabled.
-          example: true
-      required:
-      - $id
-      - enabled
-      example:
-        $id: password-dictionary
-        enabled: true
+        clientId: 6a8a6a0000000000000000000091483c
+        clientSecret: bbf98500000000000000000000c75a63
     usageProject:
       description: Project
       type: object
@@ -11596,6 +10271,311 @@ components:
         realtimeConnections: []
         realtimeMessages: []
         realtimeBandwidth: []
+    oAuth2Apple:
+      description: OAuth2Apple
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: apple
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        serviceId:
+          type: string
+          description: Apple OAuth2 service ID.
+          example: ip.appwrite.app.web
+        keyId:
+          type: string
+          description: Apple OAuth2 key ID.
+          example: P4000000N8
+        teamId:
+          type: string
+          description: Apple OAuth2 team ID.
+          example: D4000000R6
+        p8File:
+          type: string
+          description: Apple OAuth2 .p8 private key file contents. The secret key wrapped by the PEM markers is 200 characters long.
+          example: REDACTED_PRIVATE_KEY_EXAMPLE
+      required:
+      - $id
+      - enabled
+      - serviceId
+      - keyId
+      - teamId
+      - p8File
+      example:
+        $id: apple
+        enabled: false
+        serviceId: ip.appwrite.app.web
+        keyId: P4000000N8
+        teamId: D4000000R6
+        p8File: REDACTED_PRIVATE_KEY_EXAMPLE
+    oAuth2Slack:
+      description: OAuth2Slack
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Slack OAuth2 client ID.
+          example: '23000000089.15000000000023'
+        clientSecret:
+          type: string
+          description: Slack OAuth2 client secret.
+          example: 81656000000000000000000000f3d2fd
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: '23000000089.15000000000023'
+        clientSecret: 81656000000000000000000000f3d2fd
+    oAuth2Authentik:
+      description: OAuth2Authentik
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Authentik OAuth2 client ID.
+          example: dTKOPa0000000000000000000000000000e7G8hv
+        clientSecret:
+          type: string
+          description: Authentik OAuth2 client secret.
+          example: ntQadq000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Hp5WK
+        endpoint:
+          type: string
+          description: Authentik OAuth2 endpoint domain.
+          example: example.authentik.com
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      - endpoint
+      example:
+        $id: github
+        enabled: false
+        clientId: dTKOPa0000000000000000000000000000e7G8hv
+        clientSecret: ntQadq000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Hp5WK
+        endpoint: example.authentik.com
+    oAuth2Yahoo:
+      description: OAuth2Yahoo
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Yahoo OAuth2 client ID.
+          example: dj0yJm000000000000000000000000000000000000000000000000000000000000000000000000000000000000Z4PWRm
+        clientSecret:
+          type: string
+          description: Yahoo OAuth2 client secret.
+          example: cf978f0000000000000000000000000000c5e2e9
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: dj0yJm000000000000000000000000000000000000000000000000000000000000000000000000000000000000Z4PWRm
+        clientSecret: cf978f0000000000000000000000000000c5e2e9
+    policyPasswordPersonalData:
+      description: Policy Password Personal Data
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        enabled:
+          type: boolean
+          description: Whether password personal data policy is enabled.
+          example: true
+      required:
+      - $id
+      - enabled
+      example:
+        $id: password-dictionary
+        enabled: true
+    keyList:
+      description: API Keys List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of keys that matched your query.
+          format: int32
+          example: 5
+        keys:
+          type: array
+          description: List of keys.
+          items:
+            $ref: '#/components/schemas/key'
+          example: []
+      required:
+      - total
+      - keys
+      example:
+        total: 5
+        keys: ''
+    platformWindows:
+      description: Platform Windows
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Platform ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Platform creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Platform update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Platform name.
+          example: My Web App
+        type:
+          description: 'Platform type. Possible values are: windows, apple, android, linux, web.'
+          example: web
+          title: PlatformType
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - windows
+            title: windows
+          - type: string
+            enum:
+            - apple
+            title: apple
+          - type: string
+            enum:
+            - android
+            title: android
+          - type: string
+            enum:
+            - linux
+            title: linux
+          - type: string
+            enum:
+            - web
+            title: web
+        packageIdentifierName:
+          type: string
+          description: Windows package identifier name.
+          example: com.company.appname
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - type
+      - packageIdentifierName
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My Web App
+        type: web
+        packageIdentifierName: com.company.appname
+    platformLinux:
+      description: Platform Linux
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Platform ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Platform creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Platform update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Platform name.
+          example: My Web App
+        type:
+          description: 'Platform type. Possible values are: windows, apple, android, linux, web.'
+          example: web
+          title: PlatformType
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - windows
+            title: windows
+          - type: string
+            enum:
+            - apple
+            title: apple
+          - type: string
+            enum:
+            - android
+            title: android
+          - type: string
+            enum:
+            - linux
+            title: linux
+          - type: string
+            enum:
+            - web
+            title: web
+        packageName:
+          type: string
+          description: Linux package name.
+          example: com.company.appname
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - type
+      - packageName
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My Web App
+        type: web
+        packageName: com.company.appname
     policyUserLimit:
       description: Policy User Limit
       type: object
@@ -11615,38 +10595,95 @@ components:
       example:
         $id: password-dictionary
         total: 100
-    oAuth2Salesforce:
-      description: OAuth2Salesforce
+    billingLimits:
+      description: Limits
+      type: object
+      properties:
+        bandwidth:
+          type:
+          - integer
+          - 'null'
+          description: Bandwidth limit
+          format: int32
+          example: 5
+        storage:
+          type:
+          - integer
+          - 'null'
+          description: Storage limit
+          format: int32
+          example: 150
+        users:
+          type:
+          - integer
+          - 'null'
+          description: Users limit
+          format: int32
+          example: 200000
+        executions:
+          type:
+          - integer
+          - 'null'
+          description: Executions limit
+          format: int32
+          example: 750000
+        GBHours:
+          type:
+          - integer
+          - 'null'
+          description: GBHours limit
+          format: int32
+          example: 100
+        imageTransformations:
+          type:
+          - integer
+          - 'null'
+          description: Image transformations limit
+          format: int32
+          example: 100
+        authPhone:
+          type:
+          - integer
+          - 'null'
+          description: Auth phone limit
+          format: int32
+          example: 10
+        budgetLimit:
+          type:
+          - integer
+          - 'null'
+          description: Budget limit percentage
+          format: int32
+          example: 100
+      example:
+        bandwidth: 5
+        storage: 150
+        users: 200000
+        executions: 750000
+        GBHours: 100
+        imageTransformations: 100
+        authPhone: 10
+        budgetLimit: 100
+    policyDenyDisposableEmail:
+      description: Policy Deny Disposable Email
       type: object
       properties:
         $id:
           type: string
-          description: OAuth2 provider ID.
-          example: github
+          description: Policy ID.
+          example: password-dictionary
         enabled:
           type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        customerKey:
-          type: string
-          description: Salesforce OAuth2 consumer key.
-          example: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
-        customerSecret:
-          type: string
-          description: Salesforce OAuth2 consumer secret.
-          example: 3w000000000000e2
+          description: Whether the deny disposable email policy is enabled.
+          example: true
       required:
       - $id
       - enabled
-      - customerKey
-      - customerSecret
       example:
-        $id: github
-        enabled: false
-        customerKey: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
-        customerSecret: 3w000000000000e2
-    oAuth2Amazon:
-      description: OAuth2Amazon
+        $id: password-dictionary
+        enabled: true
+    oAuth2Discord:
+      description: OAuth2Discord
       type: object
       properties:
         $id:
@@ -11659,12 +10696,12 @@ components:
           example: false
         clientId:
           type: string
-          description: Amazon OAuth2 client ID.
-          example: amzn1.application-oa2-client.87400c00000000000000000000063d5b2
+          description: Discord OAuth2 client ID.
+          example: '950722000000343754'
         clientSecret:
           type: string
-          description: Amazon OAuth2 client secret.
-          example: 79ffe4000000000000000000000000000000000000000000000000000002de55
+          description: Discord OAuth2 client secret.
+          example: YmPXnM000000000000000000002zFg5D
       required:
       - $id
       - enabled
@@ -11673,26 +10710,38 @@ components:
       example:
         $id: github
         enabled: false
-        clientId: amzn1.application-oa2-client.87400c00000000000000000000063d5b2
-        clientSecret: 79ffe4000000000000000000000000000000000000000000000000000002de55
-    policyDenyCorporateEmail:
-      description: Policy Deny Corporate Email
+        clientId: '950722000000343754'
+        clientSecret: YmPXnM000000000000000000002zFg5D
+    oAuth2Zoom:
+      description: OAuth2Zoom
       type: object
       properties:
         $id:
           type: string
-          description: Policy ID.
-          example: password-dictionary
+          description: OAuth2 provider ID.
+          example: github
         enabled:
           type: boolean
-          description: Whether the deny non-corporate email policy is enabled.
-          example: true
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Zoom OAuth2 client ID.
+          example: QMAC00000000000000w0AQ
+        clientSecret:
+          type: string
+          description: Zoom OAuth2 client secret.
+          example: GAWsG4000000000000000000007U01ON
       required:
       - $id
       - enabled
+      - clientId
+      - clientSecret
       example:
-        $id: password-dictionary
-        enabled: true
+        $id: github
+        enabled: false
+        clientId: QMAC00000000000000w0AQ
+        clientSecret: GAWsG4000000000000000000007U01ON
     projectService:
       description: ProjectService
       type: object
@@ -11785,8 +10834,38 @@ components:
       example:
         $id: sites
         enabled: false
-    oAuth2Okta:
-      description: OAuth2Okta
+    oAuth2Facebook:
+      description: OAuth2Facebook
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        appId:
+          type: string
+          description: Facebook OAuth2 app ID.
+          example: '260600000007694'
+        appSecret:
+          type: string
+          description: Facebook OAuth2 app secret.
+          example: 2d0b2800000000000000000000d38af4
+      required:
+      - $id
+      - enabled
+      - appId
+      - appSecret
+      example:
+        $id: github
+        enabled: false
+        appId: '260600000007694'
+        appSecret: REDACTED_LARK_APP_SECRET
+    oAuth2Kakao:
+      description: OAuth2Kakao
       type: object
       properties:
         $id:
@@ -11799,128 +10878,22 @@ components:
           example: false
         clientId:
           type: string
-          description: Okta OAuth2 client ID.
-          example: 0oa00000000000000698
+          description: Kakao OAuth2 REST API key.
+          example: 839ff5000000000000000000013206de
         clientSecret:
           type: string
-          description: Okta OAuth2 client secret.
-          example: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
-        domain:
-          type: string
-          description: Okta OAuth2 domain.
-          example: trial-6400025.okta.com
-        authorizationServerId:
-          type: string
-          description: Okta OAuth2 authorization server ID.
-          example: aus000000000000000h7z
+          description: Kakao OAuth2 client secret.
+          example: jLNVOK00000000000000000000yJebea
       required:
       - $id
       - enabled
       - clientId
       - clientSecret
-      - domain
-      - authorizationServerId
       example:
         $id: github
         enabled: false
-        clientId: 0oa00000000000000698
-        clientSecret: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
-        domain: trial-6400025.okta.com
-        authorizationServerId: aus000000000000000h7z
-    platformWindows:
-      description: Platform Windows
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Platform ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Platform creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Platform update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Platform name.
-          example: My Web App
-        type:
-          description: 'Platform type. Possible values are: windows, apple, android, linux, web.'
-          example: web
-          title: PlatformType
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - windows
-            title: windows
-          - type: string
-            enum:
-            - apple
-            title: apple
-          - type: string
-            enum:
-            - android
-            title: android
-          - type: string
-            enum:
-            - linux
-            title: linux
-          - type: string
-            enum:
-            - web
-            title: web
-        packageIdentifierName:
-          type: string
-          description: Windows package identifier name.
-          example: com.company.appname
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - type
-      - packageIdentifierName
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: My Web App
-        type: web
-        packageIdentifierName: com.company.appname
-    oAuth2Dropbox:
-      description: OAuth2Dropbox
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        appKey:
-          type: string
-          description: Dropbox OAuth2 app key.
-          example: jl000000000009t
-        appSecret:
-          type: string
-          description: Dropbox OAuth2 app secret.
-          example: g200000000000vw
-      required:
-      - $id
-      - enabled
-      - appKey
-      - appSecret
-      example:
-        $id: github
-        enabled: false
-        appKey: jl000000000009t
-        appSecret: g200000000000vw
+        clientId: 839ff5000000000000000000013206de
+        clientSecret: jLNVOK00000000000000000000yJebea
     policySessionDuration:
       description: Policy Session Duration
       type: object
@@ -11940,8 +10913,8 @@ components:
       example:
         $id: password-dictionary
         duration: 3600
-    oAuth2Yandex:
-      description: OAuth2Yandex
+    oAuth2Disqus:
+      description: OAuth2Disqus
       type: object
       properties:
         $id:
@@ -11952,24 +10925,24 @@ components:
           type: boolean
           description: OAuth2 provider is active and can be used to create sessions.
           example: false
-        clientId:
+        publicKey:
           type: string
-          description: Yandex OAuth2 client ID.
-          example: 6a8a6a0000000000000000000091483c
-        clientSecret:
+          description: Disqus OAuth2 public key.
+          example: cgegH70000000000000000000000000000000000000000000000000000Hr1nYX
+        secretKey:
           type: string
-          description: Yandex OAuth2 client secret.
-          example: bbf98500000000000000000000c75a63
+          description: Disqus OAuth2 secret key.
+          example: W7Bykj00000000000000000000000000000000000000000000000000003o43w9
       required:
       - $id
       - enabled
-      - clientId
-      - clientSecret
+      - publicKey
+      - secretKey
       example:
         $id: github
         enabled: false
-        clientId: 6a8a6a0000000000000000000091483c
-        clientSecret: bbf98500000000000000000000c75a63
+        publicKey: cgegH70000000000000000000000000000000000000000000000000000Hr1nYX
+        secretKey: W7Bykj00000000000000000000000000000000000000000000000000003o43w9
     platformAndroid:
       description: Platform Android
       type: object
@@ -12034,8 +11007,8 @@ components:
         name: My Web App
         type: web
         applicationId: com.company.appname
-    oAuth2Stripe:
-      description: OAuth2Stripe
+    oAuth2Github:
+      description: OAuth2GitHub
       type: object
       properties:
         $id:
@@ -12048,24 +11021,24 @@ components:
           example: false
         clientId:
           type: string
-          description: Stripe OAuth2 client ID.
-          example: ca_UKibXX0000000000000000000006byvR
-        apiSecretKey:
+          description: GitHub OAuth2 client ID. For GitHub Apps, use the "App ID" when both an App ID and client ID are available.
+          example: e4d87900000000540733
+        clientSecret:
           type: string
-          description: Stripe OAuth2 API secret key.
-          example: sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp
+          description: GitHub OAuth2 client secret.
+          example: 5e07c00000000000000000000000000000198bcc
       required:
       - $id
       - enabled
       - clientId
-      - apiSecretKey
+      - clientSecret
       example:
         $id: github
         enabled: false
-        clientId: ca_UKibXX0000000000000000000006byvR
-        apiSecretKey: sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp
-    key:
-      description: Key
+        clientId: e4d87900000000540733
+        clientSecret: 5e07c00000000000000000000000000000198bcc
+    devKey:
+      description: DevKey
       type: object
       properties:
         $id:
@@ -12083,18 +11056,11 @@ components:
         name:
           type: string
           description: Key name.
-          example: My API Key
+          example: Dev API Key
         expire:
           type: string
           description: Key expiration date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        scopes:
-          type: array
-          description: Allowed permission scopes.
-          items:
-            type: string
-          example:
-          - users.read
         secret:
           type: string
           description: Secret key.
@@ -12116,7 +11082,6 @@ components:
       - $updatedAt
       - name
       - expire
-      - scopes
       - secret
       - accessedAt
       - sdks
@@ -12124,14 +11089,56 @@ components:
         $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: My API Key
+        name: Dev API Key
         expire: '2020-10-15T06:38:00.000+00:00'
-        scopes: users.read
         secret: 919c2d18fb5d4...a2ae413da83346ad2
         accessedAt: '2020-10-15T06:38:00.000+00:00'
         sdks: appwrite:flutter
-    oAuth2FusionAuth:
-      description: OAuth2FusionAuth
+    policyPasswordStrength:
+      description: Policy Password Strength
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        min:
+          type: integer
+          description: Minimum password length required for user passwords.
+          format: int32
+          example: 12
+        uppercase:
+          type: boolean
+          description: Whether passwords must include at least one uppercase letter.
+          example: true
+        lowercase:
+          type: boolean
+          description: Whether passwords must include at least one lowercase letter.
+          example: true
+        number:
+          type: boolean
+          description: Whether passwords must include at least one number.
+          example: true
+        symbols:
+          type: boolean
+          description: Whether passwords must include at least one symbol.
+          example: true
+      required:
+      - $id
+      - min
+      - uppercase
+      - lowercase
+      - number
+      - symbols
+      example:
+        $id: password-dictionary
+        min: 12
+        uppercase: true
+        lowercase: true
+        number: true
+        symbols: true
+    oAuth2Auth0:
+      description: OAuth2Auth0
       type: object
       properties:
         $id:
@@ -12144,16 +11151,16 @@ components:
           example: false
         clientId:
           type: string
-          description: FusionAuth OAuth2 client ID.
-          example: b2222c00-0000-0000-0000-000000862097
+          description: Auth0 OAuth2 client ID.
+          example: OaOkIA000000000000000000005KLSYq
         clientSecret:
           type: string
-          description: FusionAuth OAuth2 client secret.
-          example: Jx4s0C0000000000000000000000000000000wGqLsc
+          description: Auth0 OAuth2 client secret.
+          example: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
         endpoint:
           type: string
-          description: FusionAuth OAuth2 endpoint domain.
-          example: example.fusionauth.io
+          description: Auth0 OAuth2 endpoint domain.
+          example: example.us.auth0.com
       required:
       - $id
       - enabled
@@ -12163,9 +11170,678 @@ components:
       example:
         $id: github
         enabled: false
-        clientId: b2222c00-0000-0000-0000-000000862097
-        clientSecret: Jx4s0C0000000000000000000000000000000wGqLsc
-        endpoint: example.fusionauth.io
+        clientId: OaOkIA000000000000000000005KLSYq
+        clientSecret: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
+        endpoint: example.us.auth0.com
+    projectAuthMethod:
+      description: ProjectAuthMethod
+      type: object
+      properties:
+        $id:
+          description: Auth method ID.
+          example: email-password
+          title: ProjectAuthMethodId
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - email-password
+            title: email-password
+          - type: string
+            enum:
+            - magic-url
+            title: magic-url
+          - type: string
+            enum:
+            - email-otp
+            title: email-otp
+          - type: string
+            enum:
+            - anonymous
+            title: anonymous
+          - type: string
+            enum:
+            - invites
+            title: invites
+          - type: string
+            enum:
+            - jwt
+            title: jwt
+          - type: string
+            enum:
+            - phone
+            title: phone
+        enabled:
+          type: boolean
+          description: Auth method status.
+          example: false
+      required:
+      - $id
+      - enabled
+      example:
+        $id: email-password
+        enabled: false
+    oAuth2Bitly:
+      description: OAuth2Bitly
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Bitly OAuth2 client ID.
+          example: d95151000000000000000000000000000067af9b
+        clientSecret:
+          type: string
+          description: Bitly OAuth2 client secret.
+          example: a13e250000000000000000000000000000d73095
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: d95151000000000000000000000000000067af9b
+        clientSecret: a13e250000000000000000000000000000d73095
+    oAuth2Paypal:
+      description: OAuth2Paypal
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: PayPal OAuth2 client ID.
+          example: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
+        secretKey:
+          type: string
+          description: PayPal OAuth2 secret key.
+          example: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
+      required:
+      - $id
+      - enabled
+      - clientId
+      - secretKey
+      example:
+        $id: github
+        enabled: false
+        clientId: AdhIEG7-000000000000-0000000000000000000000000000000-0000000000000000000000-2pyB
+        secretKey: EH8KCXtew--000000000000000000000000000000000000000_C-1_5UP_000000000000000CB7KDp
+    policySessionLimit:
+      description: Policy Session Limit
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        total:
+          type: integer
+          description: Maximum number of sessions allowed per user. A value of 0 means the policy is disabled.
+          format: int32
+          example: 10
+      required:
+      - $id
+      - total
+      example:
+        $id: password-dictionary
+        total: 10
+    variableList:
+      description: Variables List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of variables that matched your query.
+          format: int32
+          example: 5
+        variables:
+          type: array
+          description: List of variables.
+          items:
+            $ref: '#/components/schemas/variable'
+          example: []
+      required:
+      - total
+      - variables
+      example:
+        total: 5
+        variables: ''
+    metricBreakdown:
+      description: Metric Breakdown
+      type: object
+      properties:
+        resourceId:
+          type:
+          - string
+          - 'null'
+          description: Resource ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Resource name.
+          example: Documents
+        value:
+          type: integer
+          description: The value of this metric at the timestamp.
+          format: int32
+          example: 1
+        estimate:
+          type:
+          - number
+          - 'null'
+          description: The estimated value of this metric at the end of the period.
+          format: double
+          example: 1
+      required:
+      - name
+      - value
+      example:
+        resourceId: 5e5ea5c16897e
+        name: Documents
+        value: 1
+        estimate: 1
+    oAuth2Twitch:
+      description: OAuth2Twitch
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Twitch OAuth2 client ID.
+          example: vvi0in000000000000000000ikmt9p
+        clientSecret:
+          type: string
+          description: Twitch OAuth2 client secret.
+          example: pmapue000000000000000000zylw3v
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: vvi0in000000000000000000ikmt9p
+        clientSecret: pmapue000000000000000000zylw3v
+    policySessionInvalidation:
+      description: Policy Session Invalidation
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        enabled:
+          type: boolean
+          description: Whether session invalidation policy is enabled.
+          example: true
+      required:
+      - $id
+      - enabled
+      example:
+        $id: password-dictionary
+        enabled: true
+    policyList:
+      description: Policies List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of policies in the given project.
+          format: int32
+          example: 10
+        policies:
+          type: array
+          description: List of policies.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/policyPasswordDictionary'
+            - $ref: '#/components/schemas/policyPasswordHistory'
+            - $ref: '#/components/schemas/policyPasswordStrength'
+            - $ref: '#/components/schemas/policyPasswordPersonalData'
+            - $ref: '#/components/schemas/policySessionAlert'
+            - $ref: '#/components/schemas/policySessionDuration'
+            - $ref: '#/components/schemas/policySessionInvalidation'
+            - $ref: '#/components/schemas/policySessionLimit'
+            - $ref: '#/components/schemas/policyUserLimit'
+            - $ref: '#/components/schemas/policyMembershipPrivacy'
+            - $ref: '#/components/schemas/policyMfaFactors'
+            - $ref: '#/components/schemas/policyDenyAliasedEmail'
+            - $ref: '#/components/schemas/policyDenyDisposableEmail'
+            - $ref: '#/components/schemas/policyDenyFreeEmail'
+            - $ref: '#/components/schemas/policyDenyCorporateEmail'
+            discriminator:
+              propertyName: $id
+              mapping:
+                password-dictionary: '#/components/schemas/policyPasswordDictionary'
+                password-history: '#/components/schemas/policyPasswordHistory'
+                password-strength: '#/components/schemas/policyPasswordStrength'
+                password-personal-data: '#/components/schemas/policyPasswordPersonalData'
+                session-alert: '#/components/schemas/policySessionAlert'
+                session-duration: '#/components/schemas/policySessionDuration'
+                session-invalidation: '#/components/schemas/policySessionInvalidation'
+                session-limit: '#/components/schemas/policySessionLimit'
+                user-limit: '#/components/schemas/policyUserLimit'
+                membership-privacy: '#/components/schemas/policyMembershipPrivacy'
+                mfa-factors: '#/components/schemas/policyMfaFactors'
+                deny-aliased-email: '#/components/schemas/policyDenyAliasedEmail'
+                deny-disposable-email: '#/components/schemas/policyDenyDisposableEmail'
+                deny-free-email: '#/components/schemas/policyDenyFreeEmail'
+                deny-corporate-email: '#/components/schemas/policyDenyCorporateEmail'
+          example: []
+      required:
+      - total
+      - policies
+      example:
+        total: 10
+        policies: ''
+    oAuth2Figma:
+      description: OAuth2Figma
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Figma OAuth2 client ID.
+          example: byay5H0000000000VtiI40
+        clientSecret:
+          type: string
+          description: Figma OAuth2 client secret.
+          example: yEpOYn0000000000000000004iIsU5
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: byay5H0000000000VtiI40
+        clientSecret: yEpOYn0000000000000000004iIsU5
+    oAuth2Google:
+      description: OAuth2Google
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Google OAuth2 client ID.
+          example: 000000000000-REDACTEDGOOGLEOAUTHCLIENTID.apps.googleusercontent.com
+        clientSecret:
+          type: string
+          description: Google OAuth2 client secret.
+          example: GOCSPX-REDACTED_GOOGLE_OAUTH_CLIENT_SECRET
+        prompt:
+          type: array
+          description: Google OAuth2 prompt values.
+          items:
+            type: string
+            oneOf:
+            - type: string
+              enum:
+              - none
+              title: none
+            - type: string
+              enum:
+              - consent
+              title: consent
+            - type: string
+              enum:
+              - select_account
+              title: select_account
+          example:
+          - consent
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      - prompt
+      example:
+        $id: github
+        enabled: false
+        clientId: 000000000000-REDACTEDGOOGLEOAUTHCLIENTID.apps.googleusercontent.com
+        clientSecret: GOCSPX-REDACTED_GOOGLE_OAUTH_CLIENT_SECRET
+        prompt:
+        - consent
+    oAuth2WordPress:
+      description: OAuth2WordPress
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: WordPress OAuth2 client ID.
+          example: '130005'
+        clientSecret:
+          type: string
+          description: WordPress OAuth2 client secret.
+          example: PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: '130005'
+        clientSecret: PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk
+    policyPasswordHistory:
+      description: Policy Password History
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        total:
+          type: integer
+          description: Password history length. A value of 0 means the policy is disabled.
+          format: int32
+          example: 5
+      required:
+      - $id
+      - total
+      example:
+        $id: password-dictionary
+        total: 5
+    oAuth2Spotify:
+      description: OAuth2Spotify
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Spotify OAuth2 client ID.
+          example: 6ec271000000000000000000009beace
+        clientSecret:
+          type: string
+          description: Spotify OAuth2 client secret.
+          example: db068a000000000000000000008b5b9f
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: 6ec271000000000000000000009beace
+        clientSecret: db068a000000000000000000008b5b9f
+    oAuth2Tradeshift:
+      description: OAuth2Tradeshift
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        oauth2ClientId:
+          type: string
+          description: Tradeshift OAuth2 client ID.
+          example: appwrite-test-org.appwrite-test-app
+        oauth2ClientSecret:
+          type: string
+          description: Tradeshift OAuth2 client secret.
+          example: 7cb52700-0000-0000-0000-000000ca5b83
+      required:
+      - $id
+      - enabled
+      - oauth2ClientId
+      - oauth2ClientSecret
+      example:
+        $id: github
+        enabled: false
+        oauth2ClientId: appwrite-test-org.appwrite-test-app
+        oauth2ClientSecret: 7cb52700-0000-0000-0000-000000ca5b83
+    oAuth2Microsoft:
+      description: OAuth2Microsoft
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        applicationId:
+          type: string
+          description: Microsoft OAuth2 application ID.
+          example: 00001111-aaaa-2222-bbbb-3333cccc4444
+        applicationSecret:
+          type: string
+          description: Microsoft OAuth2 application secret.
+          example: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
+        tenant:
+          type: string
+          description: Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID.
+          example: common
+      required:
+      - $id
+      - enabled
+      - applicationId
+      - applicationSecret
+      - tenant
+      example:
+        $id: github
+        enabled: false
+        applicationId: 00001111-aaaa-2222-bbbb-3333cccc4444
+        applicationSecret: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
+        tenant: common
+    oAuth2Gitlab:
+      description: OAuth2Gitlab
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        applicationId:
+          type: string
+          description: GitLab OAuth2 application ID.
+          example: d41ffe0000000000000000000000000000000000000000000000000000d5e252
+        secret:
+          type: string
+          description: GitLab OAuth2 secret.
+          example: gloas-838cfa0000000000000000000000000000000000000000000000000000ecbb38
+        endpoint:
+          type: string
+          description: GitLab OAuth2 endpoint URL. Defaults to https://gitlab.com for self-hosted instances.
+          example: https://gitlab.com
+      required:
+      - $id
+      - enabled
+      - applicationId
+      - secret
+      - endpoint
+      example:
+        $id: github
+        enabled: false
+        applicationId: d41ffe0000000000000000000000000000000000000000000000000000d5e252
+        secret: gloas-838cfa0000000000000000000000000000000000000000000000000000ecbb38
+        endpoint: https://gitlab.com
+    oAuth2Keycloak:
+      description: OAuth2Keycloak
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Keycloak OAuth2 client ID.
+          example: appwrite-o0000000st-app
+        clientSecret:
+          type: string
+          description: Keycloak OAuth2 client secret.
+          example: jdjrJd00000000000000000000HUsaZO
+        endpoint:
+          type: string
+          description: Keycloak OAuth2 endpoint domain.
+          example: keycloak.example.com
+        realmName:
+          type: string
+          description: Keycloak OAuth2 realm name.
+          example: appwrite-realm
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      - endpoint
+      - realmName
+      example:
+        $id: github
+        enabled: false
+        clientId: appwrite-o0000000st-app
+        clientSecret: jdjrJd00000000000000000000HUsaZO
+        endpoint: keycloak.example.com
+        realmName: appwrite-realm
+    oAuth2HuggingFace:
+      description: OAuth2HuggingFace
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Hugging Face OAuth2 client ID.
+          example: 2ab9cff9-d711-40ad-a91e-b08a49c42d24
+        clientSecret:
+          type: string
+          description: Hugging Face OAuth2 client secret.
+          example: oauth_app_secret_wcLhRtl000000000000000000000xbNdLt
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: 2ab9cff9-d711-40ad-a91e-b08a49c42d24
+        clientSecret: oauth_app_secret_wcLhRtl000000000000000000000xbNdLt
+    metric:
+      description: Metric
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The value of this metric at the timestamp.
+          format: int32
+          example: 1
+        date:
+          type: string
+          description: The date at which this metric was aggregated in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - value
+      - date
+      example:
+        value: 1
+        date: '2020-10-15T06:38:00.000+00:00'
+    oAuth2Autodesk:
+      description: OAuth2Autodesk
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Autodesk OAuth2 client ID.
+          example: 5zw90v00000000000000000000kVYXN7
+        clientSecret:
+          type: string
+          description: Autodesk OAuth2 client secret.
+          example: 7I000000000000MW
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: 5zw90v00000000000000000000kVYXN7
+        clientSecret: 7I000000000000MW
     block:
       description: Block
       type: object
@@ -12240,74 +11916,8 @@ components:
         organizationName: Acme Inc.
         organizationId: 5e5ea5c16897e
         billingPlan: pro
-    oAuth2Notion:
-      description: OAuth2Notion
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        oauthClientId:
-          type: string
-          description: Notion OAuth2 client ID.
-          example: 341d8700-0000-0000-0000-000000446ee3
-        oauthClientSecret:
-          type: string
-          description: Notion OAuth2 client secret.
-          example: secret_dLUr4b000000000000000000000000000000lFHAa9
-      required:
-      - $id
-      - enabled
-      - oauthClientId
-      - oauthClientSecret
-      example:
-        $id: github
-        enabled: false
-        oauthClientId: 341d8700-0000-0000-0000-000000446ee3
-        oauthClientSecret: secret_dLUr4b000000000000000000000000000000lFHAa9
-    oAuth2Gitlab:
-      description: OAuth2Gitlab
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        applicationId:
-          type: string
-          description: GitLab OAuth2 application ID.
-          example: d41ffe0000000000000000000000000000000000000000000000000000d5e252
-        secret:
-          type: string
-          description: GitLab OAuth2 secret.
-          example: gloas-838cfa0000000000000000000000000000000000000000000000000000ecbb38
-        endpoint:
-          type: string
-          description: GitLab OAuth2 endpoint URL. Defaults to https://gitlab.com for self-hosted instances.
-          example: https://gitlab.com
-      required:
-      - $id
-      - enabled
-      - applicationId
-      - secret
-      - endpoint
-      example:
-        $id: github
-        enabled: false
-        applicationId: d41ffe0000000000000000000000000000000000000000000000000000d5e252
-        secret: gloas-838cfa0000000000000000000000000000000000000000000000000000ecbb38
-        endpoint: https://gitlab.com
-    policySessionAlert:
-      description: Policy Session Alert
+    policyDenyAliasedEmail:
+      description: Policy Deny Aliased Email
       type: object
       properties:
         $id:
@@ -12316,7 +11926,7 @@ components:
           example: password-dictionary
         enabled:
           type: boolean
-          description: Whether session alert policy is enabled.
+          description: Whether the deny aliased email policy is enabled.
           example: true
       required:
       - $id
@@ -12324,8 +11934,8 @@ components:
       example:
         $id: password-dictionary
         enabled: true
-    oAuth2Cloudflare:
-      description: OAuth2Cloudflare
+    oAuth2Linkedin:
+      description: OAuth2Linkedin
       type: object
       properties:
         $id:
@@ -12338,43 +11948,54 @@ components:
           example: false
         clientId:
           type: string
-          description: Cloudflare OAuth2 client ID.
-          example: 4b866000000000000000000000c9e4e2
-        clientSecret:
+          description: LinkedIn OAuth2 client ID.
+          example: 770000000000dv
+        primaryClientSecret:
           type: string
-          description: Cloudflare OAuth2 client secret.
-          example: cfoc_5Q6YRl0000000000000000000000000000000000003d214f
+          description: LinkedIn OAuth2 primary client secret.
+          example: WPL_AP1.REDACTED_LINKEDIN_CLIENT_SECRET/HtlYw==
       required:
       - $id
       - enabled
       - clientId
-      - clientSecret
+      - primaryClientSecret
       example:
         $id: github
         enabled: false
-        clientId: 4b866000000000000000000000c9e4e2
-        clientSecret: cfoc_5Q6YRl0000000000000000000000000000000000003d214f
-    policyPasswordHistory:
-      description: Policy Password History
+        clientId: 770000000000dv
+        primaryClientSecret: WPL_AP1.REDACTED_LINKEDIN_CLIENT_SECRET/HtlYw==
+    oAuth2Salesforce:
+      description: OAuth2Salesforce
       type: object
       properties:
         $id:
           type: string
-          description: Policy ID.
-          example: password-dictionary
-        total:
-          type: integer
-          description: Password history length. A value of 0 means the policy is disabled.
-          format: int32
-          example: 5
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        customerKey:
+          type: string
+          description: Salesforce OAuth2 consumer key.
+          example: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
+        customerSecret:
+          type: string
+          description: Salesforce OAuth2 consumer secret.
+          example: 3w000000000000e2
       required:
       - $id
-      - total
+      - enabled
+      - customerKey
+      - customerSecret
       example:
-        $id: password-dictionary
-        total: 5
-    oAuth2Bitly:
-      description: OAuth2Bitly
+        $id: github
+        enabled: false
+        customerKey: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
+        customerSecret: 3w000000000000e2
+    oAuth2Okta:
+      description: OAuth2Okta
       type: object
       properties:
         $id:
@@ -12387,54 +12008,417 @@ components:
           example: false
         clientId:
           type: string
-          description: Bitly OAuth2 client ID.
-          example: d95151000000000000000000000000000067af9b
+          description: Okta OAuth2 client ID.
+          example: 0oa00000000000000698
         clientSecret:
           type: string
-          description: Bitly OAuth2 client secret.
-          example: a13e250000000000000000000000000000d73095
+          description: Okta OAuth2 client secret.
+          example: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
+        domain:
+          type: string
+          description: Okta OAuth2 domain.
+          example: trial-6400025.okta.com
+        authorizationServerId:
+          type: string
+          description: Okta OAuth2 authorization server ID.
+          example: aus000000000000000h7z
       required:
       - $id
       - enabled
       - clientId
       - clientSecret
+      - domain
+      - authorizationServerId
       example:
         $id: github
         enabled: false
-        clientId: d95151000000000000000000000000000067af9b
-        clientSecret: a13e250000000000000000000000000000d73095
-    mockNumber:
-      description: Mock Number
+        clientId: 0oa00000000000000698
+        clientSecret: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
+        domain: trial-6400025.okta.com
+        authorizationServerId: aus000000000000000h7z
+    project:
+      description: Project
       type: object
       properties:
-        number:
+        $id:
           type: string
-          description: Mock phone number for testing phone authentication. Useful for testing phone authentication without sending an SMS.
-          example: '+1612842323'
-        otp:
-          type: string
-          description: 'Mock OTP for the number. '
-          example: '123456'
+          description: Project ID.
+          example: 5e5ea5c16897e
         $createdAt:
           type: string
-          description: Attribute creation date in ISO 8601 format.
+          description: Project creation date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
         $updatedAt:
           type: string
-          description: Attribute update date in ISO 8601 format.
+          description: Project update date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Project name.
+          example: New Project
+        teamId:
+          type: string
+          description: Project team ID.
+          example: '1592981250'
+        region:
+          type: string
+          description: Project region
+          example: fra
+        devKeys:
+          type: array
+          description: 'Deprecated since 1.9.5: List of dev keys.'
+          items:
+            $ref: '#/components/schemas/devKey'
+          example: []
+        smtpEnabled:
+          type: boolean
+          description: Status for custom SMTP
+          example: false
+        smtpSenderName:
+          type: string
+          description: SMTP sender name
+          example: John Appwrite
+        smtpSenderEmail:
+          type: string
+          description: SMTP sender email
+          example: john@appwrite.io
+        smtpReplyToName:
+          type: string
+          description: SMTP reply to name
+          example: Support Team
+        smtpReplyToEmail:
+          type: string
+          description: SMTP reply to email
+          example: support@appwrite.io
+        smtpHost:
+          type: string
+          description: SMTP server host name
+          example: mail.appwrite.io
+        smtpPort:
+          type: integer
+          description: SMTP server port
+          format: int32
+          example: 25
+        smtpUsername:
+          type: string
+          description: SMTP server username
+          example: emailuser
+        smtpPassword:
+          type: string
+          description: SMTP server password. This property is write-only and always returned empty.
+          format: password
+          example: smtp-password
+        smtpSecure:
+          type: string
+          description: SMTP server secure protocol
+          example: tls
+        pingCount:
+          type: integer
+          description: Number of times the ping was received for this project.
+          format: int32
+          example: 1
+        pingedAt:
+          type: string
+          description: Last ping datetime in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        labels:
+          type: array
+          description: Labels for the project.
+          items:
+            type: string
+          example:
+          - vip
+        status:
+          type: string
+          description: Project status
+          example: active
+        onboarding:
+          type: object
+          additionalProperties: true
+          description: Stage progress (completed or skipped) with timestamps and actor types, keyed by stage id.
+          example: {}
+        authMethods:
+          type: array
+          description: List of auth methods.
+          items:
+            $ref: '#/components/schemas/projectAuthMethod'
+          example: []
+        services:
+          type: array
+          description: List of services.
+          items:
+            $ref: '#/components/schemas/projectService'
+          example: []
+        protocols:
+          type: array
+          description: List of protocols.
+          items:
+            $ref: '#/components/schemas/projectProtocol'
+          example: []
+        blocks:
+          type: array
+          description: Project blocks information
+          items:
+            $ref: '#/components/schemas/block'
+          example: []
+        consoleAccessedAt:
+          type: string
+          description: Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
+          example: '2020-10-15T06:38:00.000+00:00'
+        wafEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether WAF enforcement is enabled for the project.
+          example: true
+        billingLimits:
+          type:
+          - object
+          - 'null'
+          description: Billing limits reached
+          allOf:
+          - $ref: '#/components/schemas/billingLimits'
+        oAuth2ServerEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: OAuth2 server status
+          example: false
+        oAuth2ServerAuthorizationUrl:
+          type:
+          - string
+          - 'null'
+          description: OAuth2 server authorization URL
+          example: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
+        oAuth2ServerScopes:
+          type:
+          - array
+          - 'null'
+          description: OAuth2 server allowed scopes
+          items:
+            type: string
+          example:
+          - read
+          - write
+        oAuth2ServerDefaultScopes:
+          type:
+          - array
+          - 'null'
+          description: OAuth2 server scopes used when an authorization request omits the scope parameter
+          items:
+            type: string
+          example:
+          - read
+        oAuth2ServerInstallationScopes:
+          type:
+          - array
+          - 'null'
+          description: Scopes an application may request when installed on a team
+          items:
+            type: string
+          example:
+          - project:all
+        oAuth2ServerAuthorizationDetailsTypes:
+          type:
+          - array
+          - 'null'
+          description: OAuth2 server accepted RFC 9396 authorization_details types
+          items:
+            type: string
+          example:
+          - calendar
+        oAuth2ServerAccessTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server access token duration in seconds for confidential clients
+          format: int32
+          example: 3600
+        oAuth2ServerRefreshTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server refresh token duration in seconds for confidential clients
+          format: int32
+          example: 86400
+        oAuth2ServerPublicAccessTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
+          format: int32
+          example: 3600
+        oAuth2ServerPublicRefreshTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
+          format: int32
+          example: 2592000
+        oAuth2ServerInstallationAccessTokenDuration:
+          type:
+          - integer
+          - 'null'
+          description: OAuth2 server access token duration in seconds for app installation access tokens
+          format: int32
+          example: 3600
+        oAuth2ServerConfidentialPkce:
+          type:
+          - boolean
+          - 'null'
+          description: When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+          example: false
+        oAuth2ServerVerificationUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to your application page where users enter the device flow user code. Empty when the Device Authorization Grant is not configured.
+          example: https://cloud.appwrite.io/device
+        oAuth2ServerUserCodeLength:
+          type:
+          - integer
+          - 'null'
+          description: Number of characters in the device flow user code, excluding the formatting separator.
+          format: int32
+          example: 8
+        oAuth2ServerUserCodeFormat:
+          type:
+          - string
+          - 'null'
+          description: 'Character set for device flow user codes: `numeric`, `alphabetic`, or `alphanumeric`.'
+          example: alphanumeric
+        oAuth2ServerDeviceCodeDuration:
+          type:
+          - integer
+          - 'null'
+          description: Lifetime in seconds of device flow device codes and user codes.
+          format: int32
+          example: 600
+        oAuth2ServerDiscoveryUrl:
+          type:
+          - string
+          - 'null'
+          description: OAuth2 server discovery URL
+          example: https://auth.example.com/.well-known/openid-configuration
       required:
-      - number
-      - otp
+      - $id
       - $createdAt
       - $updatedAt
+      - name
+      - teamId
+      - region
+      - devKeys
+      - smtpEnabled
+      - smtpSenderName
+      - smtpSenderEmail
+      - smtpReplyToName
+      - smtpReplyToEmail
+      - smtpHost
+      - smtpPort
+      - smtpUsername
+      - smtpPassword
+      - smtpSecure
+      - pingCount
+      - pingedAt
+      - labels
+      - status
+      - onboarding
+      - authMethods
+      - services
+      - protocols
+      - blocks
+      - consoleAccessedAt
       example:
-        number: '+1612842323'
-        otp: '123456'
+        $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-    policySessionInvalidation:
-      description: Policy Session Invalidation
+        name: New Project
+        teamId: '1592981250'
+        region: fra
+        devKeys: {}
+        smtpEnabled: false
+        smtpSenderName: John Appwrite
+        smtpSenderEmail: john@appwrite.io
+        smtpReplyToName: Support Team
+        smtpReplyToEmail: support@appwrite.io
+        smtpHost: mail.appwrite.io
+        smtpPort: 25
+        smtpUsername: emailuser
+        smtpPassword: smtp-password
+        smtpSecure: tls
+        pingCount: 1
+        pingedAt: '2020-10-15T06:38:00.000+00:00'
+        labels:
+        - vip
+        status: active
+        onboarding: {}
+        authMethods: {}
+        services: {}
+        protocols: {}
+        blocks: ''
+        consoleAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        wafEnabled: true
+        billingLimits: ''
+        oAuth2ServerEnabled: false
+        oAuth2ServerAuthorizationUrl: https://cloud.appwrite.io/oauth2/.well-known/openid-configuration
+        oAuth2ServerScopes:
+        - read
+        - write
+        oAuth2ServerDefaultScopes:
+        - read
+        oAuth2ServerInstallationScopes:
+        - project:all
+        oAuth2ServerAuthorizationDetailsTypes:
+        - calendar
+        oAuth2ServerAccessTokenDuration: 3600
+        oAuth2ServerRefreshTokenDuration: 86400
+        oAuth2ServerPublicAccessTokenDuration: 3600
+        oAuth2ServerPublicRefreshTokenDuration: 2592000
+        oAuth2ServerInstallationAccessTokenDuration: 3600
+        oAuth2ServerConfidentialPkce: false
+        oAuth2ServerVerificationUrl: https://cloud.appwrite.io/device
+        oAuth2ServerUserCodeLength: 8
+        oAuth2ServerUserCodeFormat: alphanumeric
+        oAuth2ServerDeviceCodeDuration: 600
+        oAuth2ServerDiscoveryUrl: https://auth.example.com/.well-known/openid-configuration
+    policyMfaFactors:
+      description: Policy MFA Factors
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        totp:
+          type: boolean
+          description: Whether TOTP can be used to complete an MFA challenge.
+          example: true
+        email:
+          type: boolean
+          description: Whether email can be used to complete an MFA challenge.
+          example: true
+        phone:
+          type: boolean
+          description: Whether phone (SMS) can be used to complete an MFA challenge.
+          example: true
+        custom:
+          type: boolean
+          description: Whether the custom factor can be used to complete an MFA challenge.
+          example: true
+      required:
+      - $id
+      - totp
+      - email
+      - phone
+      - custom
+      example:
+        $id: password-dictionary
+        totp: true
+        email: true
+        phone: true
+        custom: true
+    policyDenyCorporateEmail:
+      description: Policy Deny Corporate Email
       type: object
       properties:
         $id:
@@ -12443,7 +12427,7 @@ components:
           example: password-dictionary
         enabled:
           type: boolean
-          description: Whether session invalidation policy is enabled.
+          description: Whether the deny non-corporate email policy is enabled.
           example: true
       required:
       - $id
@@ -12451,95 +12435,120 @@ components:
       example:
         $id: password-dictionary
         enabled: true
-    oAuth2Oidc:
-      description: OAuth2Oidc
+    policyMembershipPrivacy:
+      description: Policy Membership Privacy
       type: object
       properties:
         $id:
           type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
+          description: Policy ID.
+          example: password-dictionary
+        userId:
           type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: OpenID Connect OAuth2 client ID.
-          example: qibI2x0000000000000000000000000006L2YFoG
-        clientSecret:
-          type: string
-          description: OpenID Connect OAuth2 client secret.
-          example: Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV
-        wellKnownURL:
-          type: string
-          description: OpenID Connect well-known configuration URL. When set, authorization, token, and user info endpoints can be discovered automatically.
-          example: https://myoauth.com/.well-known/openid-configuration
-        authorizationURL:
-          type: string
-          description: OpenID Connect authorization endpoint URL.
-          example: https://myoauth.com/oauth2/authorize
-        tokenURL:
-          type: string
-          description: OpenID Connect token endpoint URL.
-          example: https://myoauth.com/oauth2/token
-        userInfoURL:
-          type: string
-          description: OpenID Connect user info endpoint URL.
-          example: https://myoauth.com/oauth2/userinfo
-        prompt:
-          type: array
-          description: OpenID Connect prompt values controlling the authentication and consent screens.
-          items:
-            type: string
-            oneOf:
-            - type: string
-              enum:
-              - none
-              title: none
-            - type: string
-              enum:
-              - login
-              title: login
-            - type: string
-              enum:
-              - consent
-              title: consent
-            - type: string
-              enum:
-              - select_account
-              title: select_account
-          example:
-          - consent
-        maxAge:
-          type:
-          - integer
-          - 'null'
-          description: Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds.
-          format: int32
-          example: 3600
+          description: Whether user ID is visible in memberships.
+          example: true
+        userEmail:
+          type: boolean
+          description: Whether user email is visible in memberships.
+          example: true
+        userPhone:
+          type: boolean
+          description: Whether user phone is visible in memberships.
+          example: true
+        userName:
+          type: boolean
+          description: Whether user name is visible in memberships.
+          example: true
+        userMFA:
+          type: boolean
+          description: Whether user MFA status is visible in memberships.
+          example: true
+        userAccessedAt:
+          type: boolean
+          description: Whether user last access time is visible in memberships.
+          example: true
       required:
       - $id
-      - enabled
-      - clientId
-      - clientSecret
-      - wellKnownURL
-      - authorizationURL
-      - tokenURL
-      - userInfoURL
-      - prompt
+      - userId
+      - userEmail
+      - userPhone
+      - userName
+      - userMFA
+      - userAccessedAt
       example:
-        $id: github
-        enabled: false
-        clientId: qibI2x0000000000000000000000000006L2YFoG
-        clientSecret: Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV
-        wellKnownURL: https://myoauth.com/.well-known/openid-configuration
-        authorizationURL: https://myoauth.com/oauth2/authorize
-        tokenURL: https://myoauth.com/oauth2/token
-        userInfoURL: https://myoauth.com/oauth2/userinfo
-        prompt:
-        - consent
-        maxAge: 3600
+        $id: password-dictionary
+        userId: true
+        userEmail: true
+        userPhone: true
+        userName: true
+        userMFA: true
+        userAccessedAt: true
+    key:
+      description: Key
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Key ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Key creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Key update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Key name.
+          example: My API Key
+        expire:
+          type: string
+          description: Key expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        scopes:
+          type: array
+          description: Allowed permission scopes.
+          items:
+            type: string
+          example:
+          - users.read
+        secret:
+          type: string
+          description: Secret key.
+          example: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+          example: '2020-10-15T06:38:00.000+00:00'
+        sdks:
+          type: array
+          description: List of SDK user agents that used this key.
+          items:
+            type: string
+          example:
+          - appwrite:flutter
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - expire
+      - scopes
+      - secret
+      - accessedAt
+      - sdks
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My API Key
+        expire: '2020-10-15T06:38:00.000+00:00'
+        scopes: users.read
+        secret: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt: '2020-10-15T06:38:00.000+00:00'
+        sdks: appwrite:flutter
     oAuth2ProviderList:
       description: OAuth2 Providers List
       type: object
@@ -12658,8 +12667,8 @@ components:
       example:
         total: 5
         providers: ''
-    oAuth2Zoho:
-      description: OAuth2Zoho
+    oAuth2Cloudflare:
+      description: OAuth2Cloudflare
       type: object
       properties:
         $id:
@@ -12672,12 +12681,12 @@ components:
           example: false
         clientId:
           type: string
-          description: Zoho OAuth2 client ID.
-          example: 1000.83C178000000000000000000RPNX0B
+          description: Cloudflare OAuth2 client ID.
+          example: 4b866000000000000000000000c9e4e2
         clientSecret:
           type: string
-          description: Zoho OAuth2 client secret.
-          example: fb5cac000000000000000000000000000000a68f6e
+          description: Cloudflare OAuth2 client secret.
+          example: cfoc_5Q6YRl0000000000000000000000000000000000003d214f
       required:
       - $id
       - enabled
@@ -12686,10 +12695,10 @@ components:
       example:
         $id: github
         enabled: false
-        clientId: 1000.83C178000000000000000000RPNX0B
-        clientSecret: fb5cac000000000000000000000000000000a68f6e
-    oAuth2Bitbucket:
-      description: OAuth2Bitbucket
+        clientId: 4b866000000000000000000000c9e4e2
+        clientSecret: cfoc_5Q6YRl0000000000000000000000000000000000003d214f
+    oAuth2Dailymotion:
+      description: OAuth2Dailymotion
       type: object
       properties:
         $id:
@@ -12700,202 +12709,24 @@ components:
           type: boolean
           description: OAuth2 provider is active and can be used to create sessions.
           example: false
-        key:
+        apiKey:
           type: string
-          description: Bitbucket OAuth2 key.
-          example: Knt70000000000ByRc
-        secret:
+          description: Dailymotion OAuth2 API key.
+          example: 07a9000000000000067f
+        apiSecret:
           type: string
-          description: Bitbucket OAuth2 secret.
-          example: NMfLZJ00000000000000000000TLQdDx
+          description: Dailymotion OAuth2 API secret.
+          example: a399a90000000000000000000000000000d90639
       required:
       - $id
       - enabled
-      - key
-      - secret
+      - apiKey
+      - apiSecret
       example:
         $id: github
         enabled: false
-        key: Knt70000000000ByRc
-        secret: NMfLZJ00000000000000000000TLQdDx
-    projectAuthMethod:
-      description: ProjectAuthMethod
-      type: object
-      properties:
-        $id:
-          description: Auth method ID.
-          example: email-password
-          title: ProjectAuthMethodId
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - email-password
-            title: email-password
-          - type: string
-            enum:
-            - magic-url
-            title: magic-url
-          - type: string
-            enum:
-            - email-otp
-            title: email-otp
-          - type: string
-            enum:
-            - anonymous
-            title: anonymous
-          - type: string
-            enum:
-            - invites
-            title: invites
-          - type: string
-            enum:
-            - jwt
-            title: jwt
-          - type: string
-            enum:
-            - phone
-            title: phone
-        enabled:
-          type: boolean
-          description: Auth method status.
-          example: false
-      required:
-      - $id
-      - enabled
-      example:
-        $id: email-password
-        enabled: false
-    oAuth2Kick:
-      description: OAuth2Kick
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Kick OAuth2 client ID.
-          example: 01KQ7C00000000000001MFHS32
-        clientSecret:
-          type: string
-          description: Kick OAuth2 client secret.
-          example: 34ac5600000000000000000000000000000000000000000000000000e830c8b
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: 01KQ7C00000000000001MFHS32
-        clientSecret: 34ac5600000000000000000000000000000000000000000000000000e830c8b
-    oAuth2Microsoft:
-      description: OAuth2Microsoft
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        applicationId:
-          type: string
-          description: Microsoft OAuth2 application ID.
-          example: 00001111-aaaa-2222-bbbb-3333cccc4444
-        applicationSecret:
-          type: string
-          description: Microsoft OAuth2 application secret.
-          example: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
-        tenant:
-          type: string
-          description: Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID.
-          example: common
-      required:
-      - $id
-      - enabled
-      - applicationId
-      - applicationSecret
-      - tenant
-      example:
-        $id: github
-        enabled: false
-        applicationId: 00001111-aaaa-2222-bbbb-3333cccc4444
-        applicationSecret: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
-        tenant: common
-    oAuth2Podio:
-      description: OAuth2Podio
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Podio OAuth2 client ID.
-          example: appwrite-oauth-test-app
-        clientSecret:
-          type: string
-          description: Podio OAuth2 client secret.
-          example: Rn247T0000000000000000000000000000000000000000000000000000W2zWTN
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: appwrite-oauth-test-app
-        clientSecret: Rn247T0000000000000000000000000000000000000000000000000000W2zWTN
-    metricBreakdown:
-      description: Metric Breakdown
-      type: object
-      properties:
-        resourceId:
-          type:
-          - string
-          - 'null'
-          description: Resource ID.
-          example: 5e5ea5c16897e
-        name:
-          type: string
-          description: Resource name.
-          example: Documents
-        value:
-          type: integer
-          description: The value of this metric at the timestamp.
-          format: int32
-          example: 1
-        estimate:
-          type:
-          - number
-          - 'null'
-          description: The estimated value of this metric at the end of the period.
-          format: double
-          example: 1
-      required:
-      - name
-      - value
-      example:
-        resourceId: 5e5ea5c16897e
-        name: Documents
-        value: 1
-        estimate: 1
+        apiKey: 07a9000000000000067f
+        apiSecret: a399a90000000000000000000000000000d90639
     oAuth2Resend:
       description: OAuth2Resend
       type: object
@@ -12926,8 +12757,8 @@ components:
         enabled: false
         clientId: f47ac10b-58cc-4372-a567-0e02b2c3d479
         clientSecret: 9c1e4b00000000000000000000000000000000000000000000000000a72d5f4
-    oAuth2Linkedin:
-      description: OAuth2Linkedin
+    oAuth2X:
+      description: OAuth2X
       type: object
       properties:
         $id:
@@ -12938,107 +12769,26 @@ components:
           type: boolean
           description: OAuth2 provider is active and can be used to create sessions.
           example: false
-        clientId:
+        customerKey:
           type: string
-          description: LinkedIn OAuth2 client ID.
-          example: 770000000000dv
-        primaryClientSecret:
+          description: X OAuth2 customer key.
+          example: slzZV0000000000000NFLaWT
+        secretKey:
           type: string
-          description: LinkedIn OAuth2 primary client secret.
-          example: WPL_AP1.REDACTED_LINKEDIN_CLIENT_SECRET/HtlYw==
+          description: X OAuth2 secret key.
+          example: tkEPkp00000000000000000000000000000000000000FTxbI9
       required:
       - $id
       - enabled
-      - clientId
-      - primaryClientSecret
+      - customerKey
+      - secretKey
       example:
         $id: github
         enabled: false
-        clientId: 770000000000dv
-        primaryClientSecret: WPL_AP1.REDACTED_LINKEDIN_CLIENT_SECRET/HtlYw==
-    oAuth2Facebook:
-      description: OAuth2Facebook
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        appId:
-          type: string
-          description: Facebook OAuth2 app ID.
-          example: '260600000007694'
-        appSecret:
-          type: string
-          description: Facebook OAuth2 app secret.
-          example: 2d0b2800000000000000000000d38af4
-      required:
-      - $id
-      - enabled
-      - appId
-      - appSecret
-      example:
-        $id: github
-        enabled: false
-        appId: '260600000007694'
-        appSecret: REDACTED_LARK_APP_SECRET
-    variableList:
-      description: Variables List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of variables that matched your query.
-          format: int32
-          example: 5
-        variables:
-          type: array
-          description: List of variables.
-          items:
-            $ref: '#/components/schemas/variable'
-          example: []
-      required:
-      - total
-      - variables
-      example:
-        total: 5
-        variables: ''
-    oAuth2Yahoo:
-      description: OAuth2Yahoo
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Yahoo OAuth2 client ID.
-          example: dj0yJm000000000000000000000000000000000000000000000000000000000000000000000000000000000000Z4PWRm
-        clientSecret:
-          type: string
-          description: Yahoo OAuth2 client secret.
-          example: cf978f0000000000000000000000000000c5e2e9
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: dj0yJm000000000000000000000000000000000000000000000000000000000000000000000000000000000000Z4PWRm
-        clientSecret: cf978f0000000000000000000000000000c5e2e9
-    platformLinux:
-      description: Platform Linux
+        customerKey: slzZV0000000000000NFLaWT
+        secretKey: tkEPkp00000000000000000000000000000000000000FTxbI9
+    platformWeb:
+      description: Platform Web
       type: object
       properties:
         $id:
@@ -13083,26 +12833,48 @@ components:
             enum:
             - web
             title: web
-        packageName:
+        hostname:
           type: string
-          description: Linux package name.
-          example: com.company.appname
+          description: Web app hostname. Empty string for other platforms.
+          example: app.example.com
       required:
       - $id
       - $createdAt
       - $updatedAt
       - name
       - type
-      - packageName
+      - hostname
+      - key
       example:
         $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
         name: My Web App
         type: web
-        packageName: com.company.appname
-    oAuth2Slack:
-      description: OAuth2Slack
+        hostname: app.example.com
+    emailTemplateList:
+      description: Email Templates List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of templates that matched your query.
+          format: int32
+          example: 5
+        templates:
+          type: array
+          description: List of templates.
+          items:
+            $ref: '#/components/schemas/emailTemplate'
+          example: []
+      required:
+      - total
+      - templates
+      example:
+        total: 5
+        templates: ''
+    oAuth2Zoho:
+      description: OAuth2Zoho
       type: object
       properties:
         $id:
@@ -13115,12 +12887,12 @@ components:
           example: false
         clientId:
           type: string
-          description: Slack OAuth2 client ID.
-          example: '23000000089.15000000000023'
+          description: Zoho OAuth2 client ID.
+          example: 1000.83C178000000000000000000RPNX0B
         clientSecret:
           type: string
-          description: Slack OAuth2 client secret.
-          example: 81656000000000000000000000f3d2fd
+          description: Zoho OAuth2 client secret.
+          example: fb5cac000000000000000000000000000000a68f6e
       required:
       - $id
       - enabled
@@ -13129,8 +12901,554 @@ components:
       example:
         $id: github
         enabled: false
-        clientId: '23000000089.15000000000023'
-        clientSecret: 81656000000000000000000000f3d2fd
+        clientId: 1000.83C178000000000000000000RPNX0B
+        clientSecret: fb5cac000000000000000000000000000000a68f6e
+    policyDenyFreeEmail:
+      description: Policy Deny Free Email
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Policy ID.
+          example: password-dictionary
+        enabled:
+          type: boolean
+          description: Whether the deny free email policy is enabled.
+          example: true
+      required:
+      - $id
+      - enabled
+      example:
+        $id: password-dictionary
+        enabled: true
+    oAuth2Appwrite:
+      description: OAuth2Appwrite
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Appwrite OAuth2 client ID.
+          example: 6a42000000000000b5a0
+        clientSecret:
+          type: string
+          description: Appwrite OAuth2 client secret.
+          example: b86afd000000000000000000000000000000000000000000000000000ced5f93
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: 6a42000000000000b5a0
+        clientSecret: b86afd000000000000000000000000000000000000000000000000000ced5f93
+    platformList:
+      description: Platforms List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of platforms in the given project.
+          format: int32
+          example: 5
+        platforms:
+          type: array
+          description: List of platforms.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/platformWeb'
+            - $ref: '#/components/schemas/platformApple'
+            - $ref: '#/components/schemas/platformAndroid'
+            - $ref: '#/components/schemas/platformWindows'
+            - $ref: '#/components/schemas/platformLinux'
+            discriminator:
+              propertyName: type
+              mapping:
+                web: '#/components/schemas/platformWeb'
+                apple: '#/components/schemas/platformApple'
+                android: '#/components/schemas/platformAndroid'
+                windows: '#/components/schemas/platformWindows'
+                linux: '#/components/schemas/platformLinux'
+          example: []
+      required:
+      - total
+      - platforms
+      example:
+        total: 5
+        platforms: ''
+    oAuth2Box:
+      description: OAuth2Box
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Box OAuth2 client ID.
+          example: deglcs00000000000000000000x2og6y
+        clientSecret:
+          type: string
+          description: Box OAuth2 client secret.
+          example: OKM1f100000000000000000000eshEif
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: deglcs00000000000000000000x2og6y
+        clientSecret: OKM1f100000000000000000000eshEif
+    oAuth2Amazon:
+      description: OAuth2Amazon
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Amazon OAuth2 client ID.
+          example: amzn1.application-oa2-client.87400c00000000000000000000063d5b2
+        clientSecret:
+          type: string
+          description: Amazon OAuth2 client secret.
+          example: 79ffe4000000000000000000000000000000000000000000000000000002de55
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      example:
+        $id: github
+        enabled: false
+        clientId: amzn1.application-oa2-client.87400c00000000000000000000063d5b2
+        clientSecret: 79ffe4000000000000000000000000000000000000000000000000000002de55
+    oAuth2Notion:
+      description: OAuth2Notion
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        oauthClientId:
+          type: string
+          description: Notion OAuth2 client ID.
+          example: 341d8700-0000-0000-0000-000000446ee3
+        oauthClientSecret:
+          type: string
+          description: Notion OAuth2 client secret.
+          example: secret_dLUr4b000000000000000000000000000000lFHAa9
+      required:
+      - $id
+      - enabled
+      - oauthClientId
+      - oauthClientSecret
+      example:
+        $id: github
+        enabled: false
+        oauthClientId: 341d8700-0000-0000-0000-000000446ee3
+        oauthClientSecret: secret_dLUr4b000000000000000000000000000000lFHAa9
+    emailTemplate:
+      description: EmailTemplate
+      type: object
+      properties:
+        templateId:
+          type: string
+          description: Template type
+          example: verification
+        locale:
+          type: string
+          description: Template locale
+          example: en_us
+        message:
+          type: string
+          description: Template message
+          example: Click on the link to verify your account.
+        senderName:
+          type: string
+          description: Name of the sender
+          example: My User
+        senderEmail:
+          type: string
+          description: Email of the sender
+          example: mail@appwrite.io
+        replyToEmail:
+          type: string
+          description: Reply to email address
+          example: emails@appwrite.io
+        replyToName:
+          type: string
+          description: Reply to name
+          example: Support Team
+        subject:
+          type: string
+          description: Email subject
+          example: Please verify your email address
+      required:
+      - templateId
+      - locale
+      - message
+      - senderName
+      - senderEmail
+      - replyToEmail
+      - replyToName
+      - subject
+      example:
+        templateId: verification
+        locale: en_us
+        message: Click on the link to verify your account.
+        senderName: My User
+        senderEmail: mail@appwrite.io
+        replyToEmail: emails@appwrite.io
+        replyToName: Support Team
+        subject: Please verify your email address
+    mockNumberList:
+      description: Mock Numbers List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of mockNumbers that matched your query.
+          format: int32
+          example: 5
+        mockNumbers:
+          type: array
+          description: List of mockNumbers.
+          items:
+            $ref: '#/components/schemas/mockNumber'
+          example: []
+      required:
+      - total
+      - mockNumbers
+      example:
+        total: 5
+        mockNumbers: ''
+    oAuth2Oidc:
+      description: OAuth2Oidc
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: OpenID Connect OAuth2 client ID.
+          example: qibI2x0000000000000000000000000006L2YFoG
+        clientSecret:
+          type: string
+          description: OpenID Connect OAuth2 client secret.
+          example: Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV
+        wellKnownURL:
+          type: string
+          description: OpenID Connect well-known configuration URL. When set, authorization, token, and user info endpoints can be discovered automatically.
+          example: https://myoauth.com/.well-known/openid-configuration
+        authorizationURL:
+          type: string
+          description: OpenID Connect authorization endpoint URL.
+          example: https://myoauth.com/oauth2/authorize
+        tokenURL:
+          type: string
+          description: OpenID Connect token endpoint URL.
+          example: https://myoauth.com/oauth2/token
+        userInfoURL:
+          type: string
+          description: OpenID Connect user info endpoint URL.
+          example: https://myoauth.com/oauth2/userinfo
+        prompt:
+          type: array
+          description: OpenID Connect prompt values controlling the authentication and consent screens.
+          items:
+            type: string
+            oneOf:
+            - type: string
+              enum:
+              - none
+              title: none
+            - type: string
+              enum:
+              - login
+              title: login
+            - type: string
+              enum:
+              - consent
+              title: consent
+            - type: string
+              enum:
+              - select_account
+              title: select_account
+          example:
+          - consent
+        maxAge:
+          type:
+          - integer
+          - 'null'
+          description: Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds.
+          format: int32
+          example: 3600
+      required:
+      - $id
+      - enabled
+      - clientId
+      - clientSecret
+      - wellKnownURL
+      - authorizationURL
+      - tokenURL
+      - userInfoURL
+      - prompt
+      example:
+        $id: github
+        enabled: false
+        clientId: qibI2x0000000000000000000000000006L2YFoG
+        clientSecret: Ah68ed000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003qpcHV
+        wellKnownURL: https://myoauth.com/.well-known/openid-configuration
+        authorizationURL: https://myoauth.com/oauth2/authorize
+        tokenURL: https://myoauth.com/oauth2/token
+        userInfoURL: https://myoauth.com/oauth2/userinfo
+        prompt:
+        - consent
+        maxAge: 3600
+    variable:
+      description: Variable
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Variable ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Variable creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Variable creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        key:
+          type: string
+          description: Variable key.
+          example: API_KEY
+        value:
+          type: string
+          description: Variable value.
+          example: myPa$$word1
+        secret:
+          type: boolean
+          description: Variable secret flag. Secret variables can only be updated or deleted, but never read.
+          example: false
+        resourceType:
+          type: string
+          description: Service to which the variable belongs. Possible values are "project", "function"
+          example: function
+        resourceId:
+          type: string
+          description: ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
+          example: myAwesomeFunction
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - key
+      - value
+      - secret
+      - resourceType
+      - resourceId
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        key: API_KEY
+        value: myPa$$word1
+        secret: false
+        resourceType: function
+        resourceId: myAwesomeFunction
+    oAuth2Stripe:
+      description: OAuth2Stripe
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        clientId:
+          type: string
+          description: Stripe OAuth2 client ID.
+          example: ca_UKibXX0000000000000000000006byvR
+        apiSecretKey:
+          type: string
+          description: Stripe OAuth2 API secret key.
+          example: sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp
+      required:
+      - $id
+      - enabled
+      - clientId
+      - apiSecretKey
+      example:
+        $id: github
+        enabled: false
+        clientId: ca_UKibXX0000000000000000000006byvR
+        apiSecretKey: sk_51SfOd000000000000000000000000000000000000000000000000000000000000000000000000000000000000000QGWYfp
+    ephemeralKey:
+      description: Ephemeral Key
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Key ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Key creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Key update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Key name.
+          example: My API Key
+        expire:
+          type: string
+          description: Key expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        scopes:
+          type: array
+          description: Allowed permission scopes.
+          items:
+            type: string
+          example:
+          - users.read
+        secret:
+          type: string
+          description: Secret key.
+          example: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+          example: '2020-10-15T06:38:00.000+00:00'
+        sdks:
+          type: array
+          description: List of SDK user agents that used this key.
+          items:
+            type: string
+          example:
+          - appwrite:flutter
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - expire
+      - scopes
+      - secret
+      - accessedAt
+      - sdks
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My API Key
+        expire: '2020-10-15T06:38:00.000+00:00'
+        scopes: users.read
+        secret: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt: '2020-10-15T06:38:00.000+00:00'
+        sdks: appwrite:flutter
+    oAuth2Dropbox:
+      description: OAuth2Dropbox
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        appKey:
+          type: string
+          description: Dropbox OAuth2 app key.
+          example: jl000000000009t
+        appSecret:
+          type: string
+          description: Dropbox OAuth2 app secret.
+          example: g200000000000vw
+      required:
+      - $id
+      - enabled
+      - appKey
+      - appSecret
+      example:
+        $id: github
+        enabled: false
+        appKey: jl000000000009t
+        appSecret: g200000000000vw
+    oAuth2Bitbucket:
+      description: OAuth2Bitbucket
+      type: object
+      properties:
+        $id:
+          type: string
+          description: OAuth2 provider ID.
+          example: github
+        enabled:
+          type: boolean
+          description: OAuth2 provider is active and can be used to create sessions.
+          example: false
+        key:
+          type: string
+          description: Bitbucket OAuth2 key.
+          example: Knt70000000000ByRc
+        secret:
+          type: string
+          description: Bitbucket OAuth2 secret.
+          example: NMfLZJ00000000000000000000TLQdDx
+      required:
+      - $id
+      - enabled
+      - key
+      - secret
+      example:
+        $id: github
+        enabled: false
+        key: Knt70000000000ByRc
+        secret: NMfLZJ00000000000000000000TLQdDx
     platformApple:
       description: Platform Apple
       type: object
@@ -13195,8 +13513,38 @@ components:
         name: My Web App
         type: web
         bundleIdentifier: com.company.appname
-    oAuth2Auth0:
-      description: OAuth2Auth0
+    mockNumber:
+      description: Mock Number
+      type: object
+      properties:
+        number:
+          type: string
+          description: Mock phone number for testing phone authentication. Useful for testing phone authentication without sending an SMS.
+          example: '+1612842323'
+        otp:
+          type: string
+          description: 'Mock OTP for the number. '
+          example: '123456'
+        $createdAt:
+          type: string
+          description: Attribute creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Attribute update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - number
+      - otp
+      - $createdAt
+      - $updatedAt
+      example:
+        number: '+1612842323'
+        otp: '123456'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+    oAuth2Kick:
+      description: OAuth2Kick
       type: object
       properties:
         $id:
@@ -13209,30 +13557,24 @@ components:
           example: false
         clientId:
           type: string
-          description: Auth0 OAuth2 client ID.
-          example: OaOkIA000000000000000000005KLSYq
+          description: Kick OAuth2 client ID.
+          example: 01KQ7C00000000000001MFHS32
         clientSecret:
           type: string
-          description: Auth0 OAuth2 client secret.
-          example: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
-        endpoint:
-          type: string
-          description: Auth0 OAuth2 endpoint domain.
-          example: example.us.auth0.com
+          description: Kick OAuth2 client secret.
+          example: 34ac5600000000000000000000000000000000000000000000000000e830c8b
       required:
       - $id
       - enabled
       - clientId
       - clientSecret
-      - endpoint
       example:
         $id: github
         enabled: false
-        clientId: OaOkIA000000000000000000005KLSYq
-        clientSecret: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
-        endpoint: example.us.auth0.com
-    oAuth2Tradeshift:
-      description: OAuth2Tradeshift
+        clientId: 01KQ7C00000000000001MFHS32
+        clientSecret: 34ac5600000000000000000000000000000000000000000000000000e830c8b
+    oAuth2Podio:
+      description: OAuth2Podio
       type: object
       properties:
         $id:
@@ -13243,384 +13585,42 @@ components:
           type: boolean
           description: OAuth2 provider is active and can be used to create sessions.
           example: false
-        oauth2ClientId:
+        clientId:
           type: string
-          description: Tradeshift OAuth2 client ID.
-          example: appwrite-test-org.appwrite-test-app
-        oauth2ClientSecret:
+          description: Podio OAuth2 client ID.
+          example: appwrite-oauth-test-app
+        clientSecret:
           type: string
-          description: Tradeshift OAuth2 client secret.
-          example: 7cb52700-0000-0000-0000-000000ca5b83
+          description: Podio OAuth2 client secret.
+          example: Rn247T0000000000000000000000000000000000000000000000000000W2zWTN
       required:
       - $id
       - enabled
-      - oauth2ClientId
-      - oauth2ClientSecret
+      - clientId
+      - clientSecret
       example:
         $id: github
         enabled: false
-        oauth2ClientId: appwrite-test-org.appwrite-test-app
-        oauth2ClientSecret: 7cb52700-0000-0000-0000-000000ca5b83
-    oAuth2Etsy:
-      description: OAuth2Etsy
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        keyString:
-          type: string
-          description: Etsy OAuth2 keystring.
-          example: nsgzxh0000000000008j85a2
-        sharedSecret:
-          type: string
-          description: Etsy OAuth2 shared secret.
-          example: tp000000ru
-      required:
-      - $id
-      - enabled
-      - keyString
-      - sharedSecret
-      example:
-        $id: github
-        enabled: false
-        keyString: nsgzxh0000000000008j85a2
-        sharedSecret: tp000000ru
-    policyPasswordStrength:
-      description: Policy Password Strength
+        clientId: appwrite-oauth-test-app
+        clientSecret: Rn247T0000000000000000000000000000000000000000000000000000W2zWTN
+    policySessionAlert:
+      description: Policy Session Alert
       type: object
       properties:
         $id:
           type: string
           description: Policy ID.
           example: password-dictionary
-        min:
-          type: integer
-          description: Minimum password length required for user passwords.
-          format: int32
-          example: 12
-        uppercase:
+        enabled:
           type: boolean
-          description: Whether passwords must include at least one uppercase letter.
-          example: true
-        lowercase:
-          type: boolean
-          description: Whether passwords must include at least one lowercase letter.
-          example: true
-        number:
-          type: boolean
-          description: Whether passwords must include at least one number.
-          example: true
-        symbols:
-          type: boolean
-          description: Whether passwords must include at least one symbol.
+          description: Whether session alert policy is enabled.
           example: true
       required:
       - $id
-      - min
-      - uppercase
-      - lowercase
-      - number
-      - symbols
+      - enabled
       example:
         $id: password-dictionary
-        min: 12
-        uppercase: true
-        lowercase: true
-        number: true
-        symbols: true
-    oAuth2Figma:
-      description: OAuth2Figma
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Figma OAuth2 client ID.
-          example: byay5H0000000000VtiI40
-        clientSecret:
-          type: string
-          description: Figma OAuth2 client secret.
-          example: yEpOYn0000000000000000004iIsU5
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: byay5H0000000000VtiI40
-        clientSecret: yEpOYn0000000000000000004iIsU5
-    policyList:
-      description: Policies List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of policies in the given project.
-          format: int32
-          example: 10
-        policies:
-          type: array
-          description: List of policies.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/policyPasswordDictionary'
-            - $ref: '#/components/schemas/policyPasswordHistory'
-            - $ref: '#/components/schemas/policyPasswordStrength'
-            - $ref: '#/components/schemas/policyPasswordPersonalData'
-            - $ref: '#/components/schemas/policySessionAlert'
-            - $ref: '#/components/schemas/policySessionDuration'
-            - $ref: '#/components/schemas/policySessionInvalidation'
-            - $ref: '#/components/schemas/policySessionLimit'
-            - $ref: '#/components/schemas/policyUserLimit'
-            - $ref: '#/components/schemas/policyMembershipPrivacy'
-            - $ref: '#/components/schemas/policyMfaFactors'
-            - $ref: '#/components/schemas/policyDenyAliasedEmail'
-            - $ref: '#/components/schemas/policyDenyDisposableEmail'
-            - $ref: '#/components/schemas/policyDenyFreeEmail'
-            - $ref: '#/components/schemas/policyDenyCorporateEmail'
-            discriminator:
-              propertyName: $id
-              mapping:
-                password-dictionary: '#/components/schemas/policyPasswordDictionary'
-                password-history: '#/components/schemas/policyPasswordHistory'
-                password-strength: '#/components/schemas/policyPasswordStrength'
-                password-personal-data: '#/components/schemas/policyPasswordPersonalData'
-                session-alert: '#/components/schemas/policySessionAlert'
-                session-duration: '#/components/schemas/policySessionDuration'
-                session-invalidation: '#/components/schemas/policySessionInvalidation'
-                session-limit: '#/components/schemas/policySessionLimit'
-                user-limit: '#/components/schemas/policyUserLimit'
-                membership-privacy: '#/components/schemas/policyMembershipPrivacy'
-                mfa-factors: '#/components/schemas/policyMfaFactors'
-                deny-aliased-email: '#/components/schemas/policyDenyAliasedEmail'
-                deny-disposable-email: '#/components/schemas/policyDenyDisposableEmail'
-                deny-free-email: '#/components/schemas/policyDenyFreeEmail'
-                deny-corporate-email: '#/components/schemas/policyDenyCorporateEmail'
-          example: []
-      required:
-      - total
-      - policies
-      example:
-        total: 10
-        policies: ''
-    mockNumberList:
-      description: Mock Numbers List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of mockNumbers that matched your query.
-          format: int32
-          example: 5
-        mockNumbers:
-          type: array
-          description: List of mockNumbers.
-          items:
-            $ref: '#/components/schemas/mockNumber'
-          example: []
-      required:
-      - total
-      - mockNumbers
-      example:
-        total: 5
-        mockNumbers: ''
-    billingLimits:
-      description: Limits
-      type: object
-      properties:
-        bandwidth:
-          type:
-          - integer
-          - 'null'
-          description: Bandwidth limit
-          format: int32
-          example: 5
-        storage:
-          type:
-          - integer
-          - 'null'
-          description: Storage limit
-          format: int32
-          example: 150
-        users:
-          type:
-          - integer
-          - 'null'
-          description: Users limit
-          format: int32
-          example: 200000
-        executions:
-          type:
-          - integer
-          - 'null'
-          description: Executions limit
-          format: int32
-          example: 750000
-        GBHours:
-          type:
-          - integer
-          - 'null'
-          description: GBHours limit
-          format: int32
-          example: 100
-        imageTransformations:
-          type:
-          - integer
-          - 'null'
-          description: Image transformations limit
-          format: int32
-          example: 100
-        authPhone:
-          type:
-          - integer
-          - 'null'
-          description: Auth phone limit
-          format: int32
-          example: 10
-        budgetLimit:
-          type:
-          - integer
-          - 'null'
-          description: Budget limit percentage
-          format: int32
-          example: 100
-      example:
-        bandwidth: 5
-        storage: 150
-        users: 200000
-        executions: 750000
-        GBHours: 100
-        imageTransformations: 100
-        authPhone: 10
-        budgetLimit: 100
-    oAuth2WordPress:
-      description: OAuth2WordPress
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: WordPress OAuth2 client ID.
-          example: '130005'
-        clientSecret:
-          type: string
-          description: WordPress OAuth2 client secret.
-          example: PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      example:
-        $id: github
-        enabled: false
-        clientId: '130005'
-        clientSecret: PlBfJS0000000000000000000000000000000000000000000000000000EdUZJk
-    oAuth2Google:
-      description: OAuth2Google
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        clientId:
-          type: string
-          description: Google OAuth2 client ID.
-          example: 000000000000-REDACTEDGOOGLEOAUTHCLIENTID.apps.googleusercontent.com
-        clientSecret:
-          type: string
-          description: Google OAuth2 client secret.
-          example: GOCSPX-REDACTED_GOOGLE_OAUTH_CLIENT_SECRET
-        prompt:
-          type: array
-          description: Google OAuth2 prompt values.
-          items:
-            type: string
-            oneOf:
-            - type: string
-              enum:
-              - none
-              title: none
-            - type: string
-              enum:
-              - consent
-              title: consent
-            - type: string
-              enum:
-              - select_account
-              title: select_account
-          example:
-          - consent
-      required:
-      - $id
-      - enabled
-      - clientId
-      - clientSecret
-      - prompt
-      example:
-        $id: github
-        enabled: false
-        clientId: 000000000000-REDACTEDGOOGLEOAUTHCLIENTID.apps.googleusercontent.com
-        clientSecret: GOCSPX-REDACTED_GOOGLE_OAUTH_CLIENT_SECRET
-        prompt:
-        - consent
-    oAuth2X:
-      description: OAuth2X
-      type: object
-      properties:
-        $id:
-          type: string
-          description: OAuth2 provider ID.
-          example: github
-        enabled:
-          type: boolean
-          description: OAuth2 provider is active and can be used to create sessions.
-          example: false
-        customerKey:
-          type: string
-          description: X OAuth2 customer key.
-          example: slzZV0000000000000NFLaWT
-        secretKey:
-          type: string
-          description: X OAuth2 secret key.
-          example: tkEPkp00000000000000000000000000000000000000FTxbI9
-      required:
-      - $id
-      - enabled
-      - customerKey
-      - secretKey
-      example:
-        $id: github
-        enabled: false
-        customerKey: slzZV0000000000000NFLaWT
-        secretKey: tkEPkp00000000000000000000000000000000000000FTxbI9
+        enabled: true
   securitySchemes:
     Project:
       type: apiKey

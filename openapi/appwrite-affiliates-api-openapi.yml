@@ -331,27 +331,6 @@ paths:
               - organizationId
 components:
   schemas:
-    affiliateRewardList:
-      description: Affiliate rewards list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of rewards that matched your query.
-          format: int32
-          example: 5
-        rewards:
-          type: array
-          description: List of rewards.
-          items:
-            $ref: '#/components/schemas/affiliateReward'
-          example: []
-      required:
-      - total
-      - rewards
-      example:
-        total: 5
-        rewards: ''
     affiliateLinkList:
       description: Affiliate links list
       type: object
@@ -373,27 +352,94 @@ components:
       example:
         total: 5
         links: ''
-    affiliateReferralList:
-      description: Affiliate referrals list
+    affiliateRewardList:
+      description: Affiliate rewards list
       type: object
       properties:
         total:
           type: integer
-          description: Total number of referrals that matched your query.
+          description: Total number of rewards that matched your query.
           format: int32
           example: 5
-        referrals:
+        rewards:
           type: array
-          description: List of referrals.
+          description: List of rewards.
           items:
-            $ref: '#/components/schemas/affiliateReferral'
+            $ref: '#/components/schemas/affiliateReward'
           example: []
       required:
       - total
-      - referrals
+      - rewards
       example:
         total: 5
-        referrals: ''
+        rewards: ''
+    affiliateReferral:
+      description: AffiliateReferral
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Referral ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Referral creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Referral update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        linkId:
+          type: string
+          description: Affiliate link ID used for attribution.
+          example: my-campaign
+        referredUserMaskedId:
+          type: string
+          description: Privacy-safe truncated referred user ID.
+          example: '****97e'
+        referredUserCountry:
+          type: string
+          description: ISO 3166-1 alpha-2 country code of the referred user at signup, when available.
+          example: us
+        status:
+          type: string
+          description: Referral status. Can be one of `pending`, `converted`, or `expired`. `expired` is derived from `expiresAt` when still pending.
+          example: pending
+        attributedAt:
+          type: string
+          description: Attribution time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        expiresAt:
+          type: string
+          description: Attribution expiry time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        convertedAt:
+          type:
+          - string
+          - 'null'
+          description: Conversion time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - linkId
+      - referredUserMaskedId
+      - referredUserCountry
+      - status
+      - attributedAt
+      - expiresAt
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        linkId: my-campaign
+        referredUserMaskedId: '****97e'
+        referredUserCountry: us
+        status: pending
+        attributedAt: '2020-10-15T06:38:00.000+00:00'
+        expiresAt: '2020-10-15T06:38:00.000+00:00'
+        convertedAt: '2020-10-15T06:38:00.000+00:00'
     affiliateReward:
       description: AffiliateReward
       type: object
@@ -463,6 +509,27 @@ components:
         status: pending
         teamId: 5e5ea5c16897e
         creditId: 5e5ea5c16897e
+    affiliateReferralList:
+      description: Affiliate referrals list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of referrals that matched your query.
+          format: int32
+          example: 5
+        referrals:
+          type: array
+          description: List of referrals.
+          items:
+            $ref: '#/components/schemas/affiliateReferral'
+          example: []
+      required:
+      - total
+      - referrals
+      example:
+        total: 5
+        referrals: ''
     affiliateLink:
       description: AffiliateLink
       type: object
@@ -505,73 +572,6 @@ components:
         userId: 5e5ea5c16897e
         name: Launch campaign
         status: active
-    affiliateReferral:
-      description: AffiliateReferral
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Referral ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Referral creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Referral update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        linkId:
-          type: string
-          description: Affiliate link ID used for attribution.
-          example: my-campaign
-        referredUserMaskedId:
-          type: string
-          description: Privacy-safe truncated referred user ID.
-          example: '****97e'
-        referredUserCountry:
-          type: string
-          description: ISO 3166-1 alpha-2 country code of the referred user at signup, when available.
-          example: us
-        status:
-          type: string
-          description: Referral status. Can be one of `pending`, `converted`, or `expired`. `expired` is derived from `expiresAt` when still pending.
-          example: pending
-        attributedAt:
-          type: string
-          description: Attribution time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        expiresAt:
-          type: string
-          description: Attribution expiry time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        convertedAt:
-          type:
-          - string
-          - 'null'
-          description: Conversion time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - linkId
-      - referredUserMaskedId
-      - referredUserCountry
-      - status
-      - attributedAt
-      - expiresAt
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        linkId: my-campaign
-        referredUserMaskedId: '****97e'
-        referredUserCountry: us
-        status: pending
-        attributedAt: '2020-10-15T06:38:00.000+00:00'
-        expiresAt: '2020-10-15T06:38:00.000+00:00'
-        convertedAt: '2020-10-15T06:38:00.000+00:00'
   securitySchemes:
     Project:
       type: apiKey

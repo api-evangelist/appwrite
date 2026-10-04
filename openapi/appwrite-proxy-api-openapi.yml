@@ -555,27 +555,6 @@ paths:
         in: path
 components:
   schemas:
-    proxyRuleList:
-      description: Rule List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of rules that matched your query.
-          format: int32
-          example: 5
-        rules:
-          type: array
-          description: List of rules.
-          items:
-            $ref: '#/components/schemas/proxyRule'
-          example: []
-      required:
-      - total
-      - rules
-      example:
-        total: 5
-        rules: ''
     proxyInvalidation:
       description: Invalidation
       type: object
@@ -606,6 +585,27 @@ components:
         type: tag
         reference: products
         status: success
+    proxyRuleList:
+      description: Rule List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of rules that matched your query.
+          format: int32
+          example: 5
+        rules:
+          type: array
+          description: List of rules.
+          items:
+            $ref: '#/components/schemas/proxyRule'
+          example: []
+      required:
+      - total
+      - rules
+      example:
+        total: 5
+        rules: ''
     proxyRule:
       description: Rule
       type: object

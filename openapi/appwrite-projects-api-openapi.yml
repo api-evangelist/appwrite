@@ -906,516 +906,6 @@ paths:
               - teamId
 components:
   schemas:
-    projectProtocol:
-      description: ProjectProtocol
-      type: object
-      properties:
-        $id:
-          description: Protocol ID.
-          example: graphql
-          title: ProjectProtocolId
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - rest
-            title: rest
-          - type: string
-            enum:
-            - graphql
-            title: graphql
-          - type: string
-            enum:
-            - websocket
-            title: websocket
-        enabled:
-          type: boolean
-          description: Protocol status.
-          example: false
-      required:
-      - $id
-      - enabled
-      example:
-        $id: graphql
-        enabled: false
-    addon:
-      description: Addon
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Addon ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Addon creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Addon update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        key:
-          type: string
-          description: Addon key
-          example: baa
-        resourceType:
-          type: string
-          description: Resource type (organization or project)
-          example: organization
-        resourceId:
-          type: string
-          description: Resource ID
-          example: 5e5ea5c16897e
-        status:
-          type: string
-          description: 'Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).'
-          example: active
-        currentValue:
-          type: integer
-          description: 'Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.'
-          format: int32
-          example: 1
-        nextValue:
-          type:
-          - integer
-          - 'null'
-          description: Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
-          format: int32
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - key
-      - resourceType
-      - resourceId
-      - status
-      - currentValue
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        key: baa
-        resourceType: organization
-        resourceId: 5e5ea5c16897e
-        status: active
-        currentValue: 1
-        nextValue: null
-    billingLimits:
-      description: Limits
-      type: object
-      properties:
-        bandwidth:
-          type:
-          - integer
-          - 'null'
-          description: Bandwidth limit
-          format: int32
-          example: 5
-        storage:
-          type:
-          - integer
-          - 'null'
-          description: Storage limit
-          format: int32
-          example: 150
-        users:
-          type:
-          - integer
-          - 'null'
-          description: Users limit
-          format: int32
-          example: 200000
-        executions:
-          type:
-          - integer
-          - 'null'
-          description: Executions limit
-          format: int32
-          example: 750000
-        GBHours:
-          type:
-          - integer
-          - 'null'
-          description: GBHours limit
-          format: int32
-          example: 100
-        imageTransformations:
-          type:
-          - integer
-          - 'null'
-          description: Image transformations limit
-          format: int32
-          example: 100
-        authPhone:
-          type:
-          - integer
-          - 'null'
-          description: Auth phone limit
-          format: int32
-          example: 10
-        budgetLimit:
-          type:
-          - integer
-          - 'null'
-          description: Budget limit percentage
-          format: int32
-          example: 100
-      example:
-        bandwidth: 5
-        storage: 150
-        users: 200000
-        executions: 750000
-        GBHours: 100
-        imageTransformations: 100
-        authPhone: 10
-        budgetLimit: 100
-    projectAuthMethod:
-      description: ProjectAuthMethod
-      type: object
-      properties:
-        $id:
-          description: Auth method ID.
-          example: email-password
-          title: ProjectAuthMethodId
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - email-password
-            title: email-password
-          - type: string
-            enum:
-            - magic-url
-            title: magic-url
-          - type: string
-            enum:
-            - email-otp
-            title: email-otp
-          - type: string
-            enum:
-            - anonymous
-            title: anonymous
-          - type: string
-            enum:
-            - invites
-            title: invites
-          - type: string
-            enum:
-            - jwt
-            title: jwt
-          - type: string
-            enum:
-            - phone
-            title: phone
-        enabled:
-          type: boolean
-          description: Auth method status.
-          example: false
-      required:
-      - $id
-      - enabled
-      example:
-        $id: email-password
-        enabled: false
-    schedule:
-      description: Schedule
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Schedule ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Schedule creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Schedule update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        resourceType:
-          type: string
-          description: The resource type associated with this schedule.
-          example: function
-        resourceId:
-          type: string
-          description: The resource ID associated with this schedule.
-          example: 5e5ea5c16897e
-        resourceUpdatedAt:
-          type: string
-          description: Change-tracking timestamp used by the scheduler to detect resource changes in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        projectId:
-          type: string
-          description: The project ID associated with this schedule.
-          example: 5e5ea5c16897e
-        schedule:
-          type: string
-          description: The CRON schedule expression.
-          example: 5 4 * * *
-        data:
-          type: object
-          additionalProperties: true
-          description: Schedule data used to store resource-specific context needed for execution.
-          example: {}
-        active:
-          type: boolean
-          description: Whether the schedule is active.
-          example: true
-        region:
-          type: string
-          description: The region where the schedule is deployed.
-          example: fra
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - resourceType
-      - resourceId
-      - resourceUpdatedAt
-      - projectId
-      - schedule
-      - data
-      - active
-      - region
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        resourceType: function
-        resourceId: 5e5ea5c16897e
-        resourceUpdatedAt: '2020-10-15T06:38:00.000+00:00'
-        projectId: 5e5ea5c16897e
-        schedule: 5 4 * * *
-        data: []
-        active: true
-        region: fra
-    block:
-      description: Block
-      type: object
-      properties:
-        $createdAt:
-          type: string
-          description: Block creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        resourceType:
-          type: string
-          description: Resource type that is blocked
-          example: project
-        resourceId:
-          type: string
-          description: Resource identifier that is blocked
-          example: 5e5ea5c16897e
-        mode:
-          type: string
-          description: Block mode. full blocks reads and writes; readOnly blocks writes only.
-          example: readOnly
-        reason:
-          type:
-          - string
-          - 'null'
-          description: Reason for the block. Can be null if no reason was provided.
-          example: Payment overdue
-        expiredAt:
-          type:
-          - string
-          - 'null'
-          description: Block expiration date in ISO 8601 format. Can be null if the block does not expire.
-          example: '2020-10-15T06:38:00.000+00:00'
-        projectName:
-          type: string
-          description: Name of the project this block applies to.
-          example: My Project
-        region:
-          type: string
-          description: Region of the project this block applies to.
-          example: fra
-        organizationName:
-          type: string
-          description: Name of the organization that owns the project.
-          example: Acme Inc.
-        organizationId:
-          type: string
-          description: ID of the organization that owns the project.
-          example: 5e5ea5c16897e
-        billingPlan:
-          type: string
-          description: Billing plan of the organization that owns the project.
-          example: pro
-      required:
-      - $createdAt
-      - resourceType
-      - resourceId
-      - mode
-      - projectName
-      - region
-      - organizationName
-      - organizationId
-      - billingPlan
-      example:
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        resourceType: project
-        resourceId: 5e5ea5c16897e
-        mode: readOnly
-        reason: Payment overdue
-        expiredAt: '2020-10-15T06:38:00.000+00:00'
-        projectName: My Project
-        region: fra
-        organizationName: Acme Inc.
-        organizationId: 5e5ea5c16897e
-        billingPlan: pro
-    stage:
-      description: Stage
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stage ID.
-          example: tablesDB.create
-        sdk:
-          type: string
-          description: SDK method key (namespace.name) for this stage.
-          example: tablesDB.create
-        status:
-          type: string
-          description: Stage status.
-          example: completed
-        at:
-          type: string
-          description: When the stage was completed or skipped, in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        actorType:
-          type: string
-          description: Actor type when the stage was recorded.
-          example: user
-      required:
-      - id
-      - sdk
-      - status
-      - at
-      - actorType
-      example:
-        id: tablesDB.create
-        sdk: tablesDB.create
-        status: completed
-        at: '2020-10-15T06:38:00.000+00:00'
-        actorType: user
-    projectService:
-      description: ProjectService
-      type: object
-      properties:
-        $id:
-          description: Service ID.
-          example: sites
-          title: ProjectServiceId
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - account
-            title: account
-          - type: string
-            enum:
-            - avatars
-            title: avatars
-          - type: string
-            enum:
-            - databases
-            title: databases
-          - type: string
-            enum:
-            - tablesdb
-            title: tablesdb
-          - type: string
-            enum:
-            - locale
-            title: locale
-          - type: string
-            enum:
-            - health
-            title: health
-          - type: string
-            enum:
-            - project
-            title: project
-          - type: string
-            enum:
-            - storage
-            title: storage
-          - type: string
-            enum:
-            - teams
-            title: teams
-          - type: string
-            enum:
-            - users
-            title: users
-          - type: string
-            enum:
-            - vcs
-            title: vcs
-          - type: string
-            enum:
-            - sites
-            title: sites
-          - type: string
-            enum:
-            - functions
-            title: functions
-          - type: string
-            enum:
-            - proxy
-            title: proxy
-          - type: string
-            enum:
-            - graphql
-            title: graphql
-          - type: string
-            enum:
-            - migrations
-            title: migrations
-          - type: string
-            enum:
-            - messaging
-            title: messaging
-          - type: string
-            enum:
-            - advisor
-            title: advisor
-        enabled:
-          type: boolean
-          description: Service status.
-          example: false
-      required:
-      - $id
-      - enabled
-      example:
-        $id: sites
-        enabled: false
-    stageList:
-      description: Stages List
-      type: object
-      properties:
-        stages:
-          type: array
-          description: List of stages.
-          items:
-            $ref: '#/components/schemas/stage'
-          example: []
-      required:
-      - stages
-      example:
-        stages: ''
     project:
       description: Project
       type: object
@@ -1761,6 +1251,413 @@ components:
         oAuth2ServerUserCodeFormat: alphanumeric
         oAuth2ServerDeviceCodeDuration: 600
         oAuth2ServerDiscoveryUrl: https://auth.example.com/.well-known/openid-configuration
+    block:
+      description: Block
+      type: object
+      properties:
+        $createdAt:
+          type: string
+          description: Block creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        resourceType:
+          type: string
+          description: Resource type that is blocked
+          example: project
+        resourceId:
+          type: string
+          description: Resource identifier that is blocked
+          example: 5e5ea5c16897e
+        mode:
+          type: string
+          description: Block mode. full blocks reads and writes; readOnly blocks writes only.
+          example: readOnly
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Reason for the block. Can be null if no reason was provided.
+          example: Payment overdue
+        expiredAt:
+          type:
+          - string
+          - 'null'
+          description: Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+          example: '2020-10-15T06:38:00.000+00:00'
+        projectName:
+          type: string
+          description: Name of the project this block applies to.
+          example: My Project
+        region:
+          type: string
+          description: Region of the project this block applies to.
+          example: fra
+        organizationName:
+          type: string
+          description: Name of the organization that owns the project.
+          example: Acme Inc.
+        organizationId:
+          type: string
+          description: ID of the organization that owns the project.
+          example: 5e5ea5c16897e
+        billingPlan:
+          type: string
+          description: Billing plan of the organization that owns the project.
+          example: pro
+      required:
+      - $createdAt
+      - resourceType
+      - resourceId
+      - mode
+      - projectName
+      - region
+      - organizationName
+      - organizationId
+      - billingPlan
+      example:
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        resourceType: project
+        resourceId: 5e5ea5c16897e
+        mode: readOnly
+        reason: Payment overdue
+        expiredAt: '2020-10-15T06:38:00.000+00:00'
+        projectName: My Project
+        region: fra
+        organizationName: Acme Inc.
+        organizationId: 5e5ea5c16897e
+        billingPlan: pro
+    stageList:
+      description: Stages List
+      type: object
+      properties:
+        stages:
+          type: array
+          description: List of stages.
+          items:
+            $ref: '#/components/schemas/stage'
+          example: []
+      required:
+      - stages
+      example:
+        stages: ''
+    addon:
+      description: Addon
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Addon ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Addon creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Addon update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        key:
+          type: string
+          description: Addon key
+          example: baa
+        resourceType:
+          type: string
+          description: Resource type (organization or project)
+          example: organization
+        resourceId:
+          type: string
+          description: Resource ID
+          example: 5e5ea5c16897e
+        status:
+          type: string
+          description: 'Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).'
+          example: active
+        currentValue:
+          type: integer
+          description: 'Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.'
+          format: int32
+          example: 1
+        nextValue:
+          type:
+          - integer
+          - 'null'
+          description: Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
+          format: int32
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - key
+      - resourceType
+      - resourceId
+      - status
+      - currentValue
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        key: baa
+        resourceType: organization
+        resourceId: 5e5ea5c16897e
+        status: active
+        currentValue: 1
+        nextValue: null
+    projectAuthMethod:
+      description: ProjectAuthMethod
+      type: object
+      properties:
+        $id:
+          description: Auth method ID.
+          example: email-password
+          title: ProjectAuthMethodId
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - email-password
+            title: email-password
+          - type: string
+            enum:
+            - magic-url
+            title: magic-url
+          - type: string
+            enum:
+            - email-otp
+            title: email-otp
+          - type: string
+            enum:
+            - anonymous
+            title: anonymous
+          - type: string
+            enum:
+            - invites
+            title: invites
+          - type: string
+            enum:
+            - jwt
+            title: jwt
+          - type: string
+            enum:
+            - phone
+            title: phone
+        enabled:
+          type: boolean
+          description: Auth method status.
+          example: false
+      required:
+      - $id
+      - enabled
+      example:
+        $id: email-password
+        enabled: false
+    schedule:
+      description: Schedule
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Schedule ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Schedule creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Schedule update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        resourceType:
+          type: string
+          description: The resource type associated with this schedule.
+          example: function
+        resourceId:
+          type: string
+          description: The resource ID associated with this schedule.
+          example: 5e5ea5c16897e
+        resourceUpdatedAt:
+          type: string
+          description: Change-tracking timestamp used by the scheduler to detect resource changes in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        projectId:
+          type: string
+          description: The project ID associated with this schedule.
+          example: 5e5ea5c16897e
+        schedule:
+          type: string
+          description: The CRON schedule expression.
+          example: 5 4 * * *
+        data:
+          type: object
+          additionalProperties: true
+          description: Schedule data used to store resource-specific context needed for execution.
+          example: {}
+        active:
+          type: boolean
+          description: Whether the schedule is active.
+          example: true
+        region:
+          type: string
+          description: The region where the schedule is deployed.
+          example: fra
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - resourceType
+      - resourceId
+      - resourceUpdatedAt
+      - projectId
+      - schedule
+      - data
+      - active
+      - region
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        resourceType: function
+        resourceId: 5e5ea5c16897e
+        resourceUpdatedAt: '2020-10-15T06:38:00.000+00:00'
+        projectId: 5e5ea5c16897e
+        schedule: 5 4 * * *
+        data: []
+        active: true
+        region: fra
+    billingLimits:
+      description: Limits
+      type: object
+      properties:
+        bandwidth:
+          type:
+          - integer
+          - 'null'
+          description: Bandwidth limit
+          format: int32
+          example: 5
+        storage:
+          type:
+          - integer
+          - 'null'
+          description: Storage limit
+          format: int32
+          example: 150
+        users:
+          type:
+          - integer
+          - 'null'
+          description: Users limit
+          format: int32
+          example: 200000
+        executions:
+          type:
+          - integer
+          - 'null'
+          description: Executions limit
+          format: int32
+          example: 750000
+        GBHours:
+          type:
+          - integer
+          - 'null'
+          description: GBHours limit
+          format: int32
+          example: 100
+        imageTransformations:
+          type:
+          - integer
+          - 'null'
+          description: Image transformations limit
+          format: int32
+          example: 100
+        authPhone:
+          type:
+          - integer
+          - 'null'
+          description: Auth phone limit
+          format: int32
+          example: 10
+        budgetLimit:
+          type:
+          - integer
+          - 'null'
+          description: Budget limit percentage
+          format: int32
+          example: 100
+      example:
+        bandwidth: 5
+        storage: 150
+        users: 200000
+        executions: 750000
+        GBHours: 100
+        imageTransformations: 100
+        authPhone: 10
+        budgetLimit: 100
+    devKeyList:
+      description: Dev Keys List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of devKeys that matched your query.
+          format: int32
+          example: 5
+        devKeys:
+          type: array
+          description: List of devKeys.
+          items:
+            $ref: '#/components/schemas/devKey'
+          example: []
+      required:
+      - total
+      - devKeys
+      example:
+        total: 5
+        devKeys: ''
+    stage:
+      description: Stage
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stage ID.
+          example: tablesDB.create
+        sdk:
+          type: string
+          description: SDK method key (namespace.name) for this stage.
+          example: tablesDB.create
+        status:
+          type: string
+          description: Stage status.
+          example: completed
+        at:
+          type: string
+          description: When the stage was completed or skipped, in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        actorType:
+          type: string
+          description: Actor type when the stage was recorded.
+          example: user
+      required:
+      - id
+      - sdk
+      - status
+      - at
+      - actorType
+      example:
+        id: tablesDB.create
+        sdk: tablesDB.create
+        status: completed
+        at: '2020-10-15T06:38:00.000+00:00'
+        actorType: user
     addonPrice:
       description: AddonPrice
       type: object
@@ -1819,6 +1716,38 @@ components:
         totalCycleDays: 30
         currency: USD
         billingCycleEnd: '2024-02-01T00:00:00.000+00:00'
+    projectProtocol:
+      description: ProjectProtocol
+      type: object
+      properties:
+        $id:
+          description: Protocol ID.
+          example: graphql
+          title: ProjectProtocolId
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - rest
+            title: rest
+          - type: string
+            enum:
+            - graphql
+            title: graphql
+          - type: string
+            enum:
+            - websocket
+            title: websocket
+        enabled:
+          type: boolean
+          description: Protocol status.
+          example: false
+      required:
+      - $id
+      - enabled
+      example:
+        $id: graphql
+        enabled: false
     devKey:
       description: DevKey
       type: object
@@ -1876,27 +1805,98 @@ components:
         secret: 919c2d18fb5d4...a2ae413da83346ad2
         accessedAt: '2020-10-15T06:38:00.000+00:00'
         sdks: appwrite:flutter
-    addonList:
-      description: Addons list
+    projectService:
+      description: ProjectService
       type: object
       properties:
-        total:
-          type: integer
-          description: Total number of addons that matched your query.
-          format: int32
-          example: 5
-        addons:
-          type: array
-          description: List of addons.
-          items:
-            $ref: '#/components/schemas/addon'
-          example: []
+        $id:
+          description: Service ID.
+          example: sites
+          title: ProjectServiceId
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - account
+            title: account
+          - type: string
+            enum:
+            - avatars
+            title: avatars
+          - type: string
+            enum:
+            - databases
+            title: databases
+          - type: string
+            enum:
+            - tablesdb
+            title: tablesdb
+          - type: string
+            enum:
+            - locale
+            title: locale
+          - type: string
+            enum:
+            - health
+            title: health
+          - type: string
+            enum:
+            - project
+            title: project
+          - type: string
+            enum:
+            - storage
+            title: storage
+          - type: string
+            enum:
+            - teams
+            title: teams
+          - type: string
+            enum:
+            - users
+            title: users
+          - type: string
+            enum:
+            - vcs
+            title: vcs
+          - type: string
+            enum:
+            - sites
+            title: sites
+          - type: string
+            enum:
+            - functions
+            title: functions
+          - type: string
+            enum:
+            - proxy
+            title: proxy
+          - type: string
+            enum:
+            - graphql
+            title: graphql
+          - type: string
+            enum:
+            - migrations
+            title: migrations
+          - type: string
+            enum:
+            - messaging
+            title: messaging
+          - type: string
+            enum:
+            - advisor
+            title: advisor
+        enabled:
+          type: boolean
+          description: Service status.
+          example: false
       required:
-      - total
-      - addons
+      - $id
+      - enabled
       example:
-        total: 5
-        addons: ''
+        $id: sites
+        enabled: false
     scheduleList:
       description: Schedules List
       type: object
@@ -1918,27 +1918,27 @@ components:
       example:
         total: 5
         schedules: ''
-    devKeyList:
-      description: Dev Keys List
+    addonList:
+      description: Addons list
       type: object
       properties:
         total:
           type: integer
-          description: Total number of devKeys that matched your query.
+          description: Total number of addons that matched your query.
           format: int32
           example: 5
-        devKeys:
+        addons:
           type: array
-          description: List of devKeys.
+          description: List of addons.
           items:
-            $ref: '#/components/schemas/devKey'
+            $ref: '#/components/schemas/addon'
           example: []
       required:
       - total
-      - devKeys
+      - addons
       example:
         total: 5
-        devKeys: ''
+        addons: ''
   securitySchemes:
     Project:
       type: apiKey

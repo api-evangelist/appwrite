@@ -116,27 +116,6 @@ paths:
         in: path
 components:
   schemas:
-    activityEventList:
-      description: Activity event list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of events that matched your query.
-          format: int32
-          example: 5
-        events:
-          type: array
-          description: List of events.
-          items:
-            $ref: '#/components/schemas/activityEvent'
-          example: []
-      required:
-      - total
-      - events
-      example:
-        total: 5
-        events: ''
     activityEvent:
       description: ActivityEvent
       type: object
@@ -317,6 +296,27 @@ components:
         hostname: appwrite.io
         sdk: web
         sdkVersion: 14.0.0
+    activityEventList:
+      description: Activity event list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of events that matched your query.
+          format: int32
+          example: 5
+        events:
+          type: array
+          description: List of events.
+          items:
+            $ref: '#/components/schemas/activityEvent'
+          example: []
+      required:
+      - total
+      - events
+      example:
+        total: 5
+        events: ''
   securitySchemes:
     Project:
       type: apiKey

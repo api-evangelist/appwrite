@@ -1418,166 +1418,57 @@ paths:
         in: path
 components:
   schemas:
-    appSecretPlaintext:
-      description: AppSecretPlaintext
+    oauth2Token:
+      description: OAuth2 Token
       type: object
       properties:
-        $id:
+        access_token:
           type: string
-          description: Secret ID.
-          example: 5e5ea5c16897e
-        $createdAt:
+          description: OAuth2 access token.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
+        token_type:
           type: string
-          description: Secret creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
+          description: OAuth2 token type.
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token lifetime in seconds.
+          format: int32
+          example: 3600
+        refresh_token:
           type: string
-          description: Secret update time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        appId:
+          description: OAuth2 refresh token.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+        scope:
           type: string
-          description: Application ID this secret belongs to.
-          example: 5e5ea5c16897e
-        secret:
-          type: string
-          description: Application client secret. Returned only when the secret is created; subsequent reads always return an empty value.
-          example: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
-        hint:
-          type: string
-          description: Last few characters of the client secret, used to help identify it.
-          example: f5c6c7
-        createdById:
-          type: string
-          description: ID of the user who created the secret.
-          example: 5e5ea5c16897e
-        createdByName:
-          type: string
-          description: Name of the user who created the secret.
-          example: Walter White
-        lastAccessedAt:
+          description: Space-separated scopes granted to the access token.
+          example: openid email profile
+        authorization_details:
           type:
           - string
           - 'null'
-          description: Time the secret was last used for authentication in ISO 8601 format. Null if never used.
-          example: '2020-10-15T06:38:00.000+00:00'
+          description: Granted RFC 9396 authorization details as a JSON string.
+          example: '[{"type":"calendar","identifier":"primary","actions":["read_events"]}]'
+        id_token:
+          type:
+          - string
+          - 'null'
+          description: OpenID Connect ID token. Returned when the `openid` scope is granted.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
       required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - appId
-      - secret
-      - hint
-      - createdById
-      - createdByName
+      - access_token
+      - token_type
+      - expires_in
+      - refresh_token
+      - scope
       example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        appId: 5e5ea5c16897e
-        secret: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
-        hint: f5c6c7
-        createdById: 5e5ea5c16897e
-        createdByName: Walter White
-        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
-    appsList:
-      description: Apps list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of apps that matched your query.
-          format: int32
-          example: 5
-        apps:
-          type: array
-          description: List of apps.
-          items:
-            $ref: '#/components/schemas/app'
-          example: []
-      required:
-      - total
-      - apps
-      example:
-        total: 5
-        apps: ''
-    appKeyList:
-      description: App keys list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of keys that matched your query.
-          format: int32
-          example: 5
-        keys:
-          type: array
-          description: List of keys.
-          items:
-            $ref: '#/components/schemas/appKey'
-          example: []
-      required:
-      - total
-      - keys
-      example:
-        total: 5
-        keys: ''
-    appSecretList:
-      description: App secrets list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of secrets that matched your query.
-          format: int32
-          example: 5
-        secrets:
-          type: array
-          description: List of secrets.
-          items:
-            $ref: '#/components/schemas/appSecret'
-          example: []
-      required:
-      - total
-      - secrets
-      example:
-        total: 5
-        secrets: ''
-    appScope:
-      description: AppScope
-      type: object
-      properties:
-        value:
-          type: string
-          description: Scope value as requested by apps.
-          example: organization:organization.read
-        description:
-          type: string
-          description: Human-readable description of what the scope grants.
-          example: Access to read the organization
-        type:
-          type: string
-          description: What the scope grants access to. One of `account`, `project`, or `organization`. Only `project` and `organization` scopes are installable.
-          example: organization
-        category:
-          type: string
-          description: Scope category, used to group scopes on consent and installation screens.
-          example: Organization
-        deprecated:
-          type: boolean
-          description: Whether the scope is deprecated. Deprecated scopes can still be requested but should not be offered for new grants.
-          example: false
-      required:
-      - value
-      - description
-      - type
-      - category
-      - deprecated
-      example:
-        value: organization:organization.read
-        description: Access to read the organization
-        type: organization
-        category: Organization
-        deprecated: false
+        access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
+        token_type: Bearer
+        expires_in: 3600
+        refresh_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+        scope: openid email profile
+        authorization_details: '[{"type":"calendar","identifier":"primary","actions":["read_events"]}]'
+        id_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
     appKey:
       description: AppKey
       type: object
@@ -1639,8 +1530,29 @@ components:
         createdById: 5e5ea5c16897e
         createdByName: Walter White
         lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
-    appSecret:
-      description: AppSecret
+    appSecretList:
+      description: App secrets list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of secrets that matched your query.
+          format: int32
+          example: 5
+        secrets:
+          type: array
+          description: List of secrets.
+          items:
+            $ref: '#/components/schemas/appSecret'
+          example: []
+      required:
+      - total
+      - secrets
+      example:
+        total: 5
+        secrets: ''
+    appSecretPlaintext:
+      description: AppSecretPlaintext
       type: object
       properties:
         $id:
@@ -1661,8 +1573,8 @@ components:
           example: 5e5ea5c16897e
         secret:
           type: string
-          description: Always empty. The application client secret is returned only once, in the response of the createSecret method.
-          example: ''
+          description: Application client secret. Returned only when the secret is created; subsequent reads always return an empty value.
+          example: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
         hint:
           type: string
           description: Last few characters of the client secret, used to help identify it.
@@ -1695,104 +1607,11 @@ components:
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
         appId: 5e5ea5c16897e
-        secret: ''
+        secret: 5f3c8d2a1b9e4f7a6c8b2d1e9f4a7b3c5d8e1f2a9b4c7d6e3f5a8b1c4d7e2f9a
         hint: f5c6c7
         createdById: 5e5ea5c16897e
         createdByName: Walter White
         lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
-    oauth2Token:
-      description: OAuth2 Token
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: OAuth2 access token.
-          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
-        token_type:
-          type: string
-          description: OAuth2 token type.
-          example: Bearer
-        expires_in:
-          type: integer
-          description: Access token lifetime in seconds.
-          format: int32
-          example: 3600
-        refresh_token:
-          type: string
-          description: OAuth2 refresh token.
-          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
-        scope:
-          type: string
-          description: Space-separated scopes granted to the access token.
-          example: openid email profile
-        authorization_details:
-          type:
-          - string
-          - 'null'
-          description: Granted RFC 9396 authorization details as a JSON string.
-          example: '[{"type":"calendar","identifier":"primary","actions":["read_events"]}]'
-        id_token:
-          type:
-          - string
-          - 'null'
-          description: OpenID Connect ID token. Returned when the `openid` scope is granted.
-          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      - refresh_token
-      - scope
-      example:
-        access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
-        token_type: Bearer
-        expires_in: 3600
-        refresh_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
-        scope: openid email profile
-        authorization_details: '[{"type":"calendar","identifier":"primary","actions":["read_events"]}]'
-        id_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...
-    appScopeList:
-      description: App scopes list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of scopes that matched your query.
-          format: int32
-          example: 5
-        scopes:
-          type: array
-          description: List of scopes.
-          items:
-            $ref: '#/components/schemas/appScope'
-          example: []
-      required:
-      - total
-      - scopes
-      example:
-        total: 5
-        scopes: ''
-    appInstallationList:
-      description: App installations list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of installations that matched your query.
-          format: int32
-          example: 5
-        installations:
-          type: array
-          description: List of installations.
-          items:
-            $ref: '#/components/schemas/appInstallation'
-          example: []
-      required:
-      - total
-      - installations
-      example:
-        total: 5
-        installations: ''
     app:
       description: App
       type: object
@@ -1987,6 +1806,187 @@ components:
         - organization:organization.read
         installationRedirectUrl: https://example.com/setup
         secrets: []
+    appInstallationList:
+      description: App installations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of installations that matched your query.
+          format: int32
+          example: 5
+        installations:
+          type: array
+          description: List of installations.
+          items:
+            $ref: '#/components/schemas/appInstallation'
+          example: []
+      required:
+      - total
+      - installations
+      example:
+        total: 5
+        installations: ''
+    appScope:
+      description: AppScope
+      type: object
+      properties:
+        value:
+          type: string
+          description: Scope value as requested by apps.
+          example: organization:organization.read
+        description:
+          type: string
+          description: Human-readable description of what the scope grants.
+          example: Access to read the organization
+        type:
+          type: string
+          description: What the scope grants access to. One of `account`, `project`, or `organization`. Only `project` and `organization` scopes are installable.
+          example: organization
+        category:
+          type: string
+          description: Scope category, used to group scopes on consent and installation screens.
+          example: Organization
+        deprecated:
+          type: boolean
+          description: Whether the scope is deprecated. Deprecated scopes can still be requested but should not be offered for new grants.
+          example: false
+      required:
+      - value
+      - description
+      - type
+      - category
+      - deprecated
+      example:
+        value: organization:organization.read
+        description: Access to read the organization
+        type: organization
+        category: Organization
+        deprecated: false
+    appSecret:
+      description: AppSecret
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Secret ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Secret creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Secret update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        appId:
+          type: string
+          description: Application ID this secret belongs to.
+          example: 5e5ea5c16897e
+        secret:
+          type: string
+          description: Always empty. The application client secret is returned only once, in the response of the createSecret method.
+          example: ''
+        hint:
+          type: string
+          description: Last few characters of the client secret, used to help identify it.
+          example: f5c6c7
+        createdById:
+          type: string
+          description: ID of the user who created the secret.
+          example: 5e5ea5c16897e
+        createdByName:
+          type: string
+          description: Name of the user who created the secret.
+          example: Walter White
+        lastAccessedAt:
+          type:
+          - string
+          - 'null'
+          description: Time the secret was last used for authentication in ISO 8601 format. Null if never used.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - appId
+      - secret
+      - hint
+      - createdById
+      - createdByName
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        appId: 5e5ea5c16897e
+        secret: ''
+        hint: f5c6c7
+        createdById: 5e5ea5c16897e
+        createdByName: Walter White
+        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
+    appsList:
+      description: Apps list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of apps that matched your query.
+          format: int32
+          example: 5
+        apps:
+          type: array
+          description: List of apps.
+          items:
+            $ref: '#/components/schemas/app'
+          example: []
+      required:
+      - total
+      - apps
+      example:
+        total: 5
+        apps: ''
+    appKeyList:
+      description: App keys list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of keys that matched your query.
+          format: int32
+          example: 5
+        keys:
+          type: array
+          description: List of keys.
+          items:
+            $ref: '#/components/schemas/appKey'
+          example: []
+      required:
+      - total
+      - keys
+      example:
+        total: 5
+        keys: ''
+    appScopeList:
+      description: App scopes list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of scopes that matched your query.
+          format: int32
+          example: 5
+        scopes:
+          type: array
+          description: List of scopes.
+          items:
+            $ref: '#/components/schemas/appScope'
+          example: []
+      required:
+      - total
+      - scopes
+      example:
+        total: 5
+        scopes: ''
     appInstallation:
       description: AppInstallation
       type: object

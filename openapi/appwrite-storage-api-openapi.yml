@@ -1140,27 +1140,108 @@ paths:
         in: query
 components:
   schemas:
-    fileList:
-      description: Files List
+    bucket:
+      description: Bucket
       type: object
       properties:
-        total:
-          type: integer
-          description: Total number of files that matched your query.
-          format: int32
-          example: 5
-        files:
+        $id:
+          type: string
+          description: Bucket ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Bucket creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Bucket update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
           type: array
-          description: List of files.
+          description: Bucket permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
           items:
-            $ref: '#/components/schemas/file'
-          example: []
+            type: string
+          example:
+          - read("any")
+        fileSecurity:
+          type: boolean
+          description: Whether file-level security is enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          example: true
+        name:
+          type: string
+          description: Bucket name.
+          example: Documents
+        enabled:
+          type: boolean
+          description: Bucket enabled.
+          example: false
+        maximumFileSize:
+          type: integer
+          description: Maximum file size supported.
+          format: int32
+          example: 100
+        allowedFileExtensions:
+          type: array
+          description: Allowed file extensions.
+          items:
+            type: string
+          example:
+          - jpg
+          - png
+        compression:
+          type: string
+          description: Compression algorithm chosen for compression. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
+          example: gzip
+        encryption:
+          type: boolean
+          description: Bucket is encrypted.
+          example: false
+        antivirus:
+          type: boolean
+          description: Virus scanning is enabled.
+          example: false
+        transformations:
+          type: boolean
+          description: Image transformations are enabled.
+          example: false
+        totalSize:
+          type: integer
+          description: Total size of this bucket in bytes.
+          format: int32
+          example: 128
       required:
-      - total
-      - files
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - fileSecurity
+      - name
+      - enabled
+      - maximumFileSize
+      - allowedFileExtensions
+      - compression
+      - encryption
+      - antivirus
+      - transformations
+      - totalSize
       example:
-        total: 5
-        files: ''
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        fileSecurity: true
+        name: Documents
+        enabled: false
+        maximumFileSize: 100
+        allowedFileExtensions:
+        - jpg
+        - png
+        compression: gzip
+        encryption: false
+        antivirus: false
+        transformations: false
+        totalSize: 128
     file:
       description: File
       type: object
@@ -1271,108 +1352,6 @@ components:
         chunksUploaded: 17890
         encryption: true
         compression: gzip
-    bucket:
-      description: Bucket
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Bucket ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Bucket creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Bucket update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Bucket permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        fileSecurity:
-          type: boolean
-          description: Whether file-level security is enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
-          example: true
-        name:
-          type: string
-          description: Bucket name.
-          example: Documents
-        enabled:
-          type: boolean
-          description: Bucket enabled.
-          example: false
-        maximumFileSize:
-          type: integer
-          description: Maximum file size supported.
-          format: int32
-          example: 100
-        allowedFileExtensions:
-          type: array
-          description: Allowed file extensions.
-          items:
-            type: string
-          example:
-          - jpg
-          - png
-        compression:
-          type: string
-          description: Compression algorithm chosen for compression. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
-          example: gzip
-        encryption:
-          type: boolean
-          description: Bucket is encrypted.
-          example: false
-        antivirus:
-          type: boolean
-          description: Virus scanning is enabled.
-          example: false
-        transformations:
-          type: boolean
-          description: Image transformations are enabled.
-          example: false
-        totalSize:
-          type: integer
-          description: Total size of this bucket in bytes.
-          format: int32
-          example: 128
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - fileSecurity
-      - name
-      - enabled
-      - maximumFileSize
-      - allowedFileExtensions
-      - compression
-      - encryption
-      - antivirus
-      - transformations
-      - totalSize
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        fileSecurity: true
-        name: Documents
-        enabled: false
-        maximumFileSize: 100
-        allowedFileExtensions:
-        - jpg
-        - png
-        compression: gzip
-        encryption: false
-        antivirus: false
-        transformations: false
-        totalSize: 128
     bucketList:
       description: Buckets List
       type: object
@@ -1394,6 +1373,27 @@ components:
       example:
         total: 5
         buckets: ''
+    fileList:
+      description: Files List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of files that matched your query.
+          format: int32
+          example: 5
+        files:
+          type: array
+          description: List of files.
+          items:
+            $ref: '#/components/schemas/file'
+          example: []
+      required:
+      - total
+      - files
+      example:
+        total: 5
+        files: ''
   securitySchemes:
     Project:
       type: apiKey

@@ -1675,6 +1675,182 @@ paths:
         in: path
 components:
   schemas:
+    migration:
+      description: Migration
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Migration ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Migration creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Variable creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        status:
+          type: string
+          description: 'Migration status ( pending, processing, failed, completed ) '
+          example: pending
+        stage:
+          type: string
+          description: Migration stage ( init, processing, source-check, destination-check, migrating, finished )
+          example: init
+        source:
+          type: string
+          description: A string containing the type of source of the migration.
+          example: Appwrite
+        destination:
+          type: string
+          description: A string containing the type of destination of the migration.
+          example: Appwrite
+        resources:
+          type: array
+          description: Resources to migrate.
+          items:
+            type: string
+          example:
+          - user
+        resourceId:
+          type: string
+          description: ID of the resource being migrated.
+          example: collectionId
+        resourceInternalId:
+          type: string
+          description: Internal ID of the resource being migrated.
+          example: '1'
+        resourceType:
+          type: string
+          description: Type of the resource being migrated.
+          example: collection
+        parentResourceId:
+          type: string
+          description: ID of the parent resource that contains the migrated resource.
+          example: databaseId
+        parentResourceInternalId:
+          type: string
+          description: Internal ID of the parent resource that contains the migrated resource.
+          example: '1'
+        parentResourceType:
+          type: string
+          description: Type of the parent resource that contains the migrated resource.
+          example: database
+        destinationResourceId:
+          type: string
+          description: ID of the destination resource created or overwritten by the migration.
+          example: databaseId
+        destinationResourceInternalId:
+          type: string
+          description: Internal ID of the destination resource created or overwritten by the migration.
+          example: '1'
+        destinationResourceType:
+          type: string
+          description: Type of the destination resource created or overwritten by the migration.
+          example: database
+        statusCounters:
+          type: object
+          additionalProperties: true
+          description: A group of counters that represent the total progress of the migration.
+          example:
+            Database:
+              PENDING: 0
+              SUCCESS: 1
+              ERROR: 0
+              SKIP: 0
+              PROCESSING: 0
+              WARNING: 0
+        resourceData:
+          type: array
+          description: An array of objects containing the report data of the resources that were migrated.
+          items:
+            type: object
+          example:
+          - resource: Database
+            id: public
+            status: SUCCESS
+            message: ''
+        errors:
+          type: array
+          description: All errors that occurred during the migration process.
+          items:
+            type: string
+          example: []
+        options:
+          type: object
+          additionalProperties: true
+          description: Migration options used during the migration process.
+          example:
+            bucketId: exports
+            notify: false
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - status
+      - stage
+      - source
+      - destination
+      - resources
+      - resourceId
+      - resourceInternalId
+      - resourceType
+      - parentResourceId
+      - parentResourceInternalId
+      - parentResourceType
+      - destinationResourceId
+      - destinationResourceInternalId
+      - destinationResourceType
+      - statusCounters
+      - resourceData
+      - errors
+      - options
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        status: pending
+        stage: init
+        source: Appwrite
+        destination: Appwrite
+        resources:
+        - user
+        resourceId: collectionId
+        resourceInternalId: '1'
+        resourceType: collection
+        parentResourceId: databaseId
+        parentResourceInternalId: '1'
+        parentResourceType: database
+        destinationResourceId: databaseId
+        destinationResourceInternalId: '1'
+        destinationResourceType: database
+        statusCounters: '{"Database": {"PENDING": 0, "SUCCESS": 1, "ERROR": 0, "SKIP": 0, "PROCESSING": 0, "WARNING": 0}}'
+        resourceData: '[{"resource":"Database","id":"public","status":"SUCCESS","message":""}]'
+        errors: []
+        options: '{"bucketId": "exports", "notify": false}'
+    migrationList:
+      description: Migrations List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of migrations that matched your query.
+          format: int32
+          example: 5
+        migrations:
+          type: array
+          description: List of migrations.
+          items:
+            $ref: '#/components/schemas/migration'
+          example: []
+      required:
+      - total
+      - migrations
+      example:
+        total: 5
+        migrations: ''
     migrationReport:
       description: Migration Report
       type: object
@@ -1876,182 +2052,6 @@ components:
         version: 1.4.0
         oauth2-provider: 5
         backup-policy: 5
-    migration:
-      description: Migration
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Migration ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Migration creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Variable creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        status:
-          type: string
-          description: 'Migration status ( pending, processing, failed, completed ) '
-          example: pending
-        stage:
-          type: string
-          description: Migration stage ( init, processing, source-check, destination-check, migrating, finished )
-          example: init
-        source:
-          type: string
-          description: A string containing the type of source of the migration.
-          example: Appwrite
-        destination:
-          type: string
-          description: A string containing the type of destination of the migration.
-          example: Appwrite
-        resources:
-          type: array
-          description: Resources to migrate.
-          items:
-            type: string
-          example:
-          - user
-        resourceId:
-          type: string
-          description: ID of the resource being migrated.
-          example: collectionId
-        resourceInternalId:
-          type: string
-          description: Internal ID of the resource being migrated.
-          example: '1'
-        resourceType:
-          type: string
-          description: Type of the resource being migrated.
-          example: collection
-        parentResourceId:
-          type: string
-          description: ID of the parent resource that contains the migrated resource.
-          example: databaseId
-        parentResourceInternalId:
-          type: string
-          description: Internal ID of the parent resource that contains the migrated resource.
-          example: '1'
-        parentResourceType:
-          type: string
-          description: Type of the parent resource that contains the migrated resource.
-          example: database
-        destinationResourceId:
-          type: string
-          description: ID of the destination resource created or overwritten by the migration.
-          example: databaseId
-        destinationResourceInternalId:
-          type: string
-          description: Internal ID of the destination resource created or overwritten by the migration.
-          example: '1'
-        destinationResourceType:
-          type: string
-          description: Type of the destination resource created or overwritten by the migration.
-          example: database
-        statusCounters:
-          type: object
-          additionalProperties: true
-          description: A group of counters that represent the total progress of the migration.
-          example:
-            Database:
-              PENDING: 0
-              SUCCESS: 1
-              ERROR: 0
-              SKIP: 0
-              PROCESSING: 0
-              WARNING: 0
-        resourceData:
-          type: array
-          description: An array of objects containing the report data of the resources that were migrated.
-          items:
-            type: object
-          example:
-          - resource: Database
-            id: public
-            status: SUCCESS
-            message: ''
-        errors:
-          type: array
-          description: All errors that occurred during the migration process.
-          items:
-            type: string
-          example: []
-        options:
-          type: object
-          additionalProperties: true
-          description: Migration options used during the migration process.
-          example:
-            bucketId: exports
-            notify: false
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - status
-      - stage
-      - source
-      - destination
-      - resources
-      - resourceId
-      - resourceInternalId
-      - resourceType
-      - parentResourceId
-      - parentResourceInternalId
-      - parentResourceType
-      - destinationResourceId
-      - destinationResourceInternalId
-      - destinationResourceType
-      - statusCounters
-      - resourceData
-      - errors
-      - options
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        status: pending
-        stage: init
-        source: Appwrite
-        destination: Appwrite
-        resources:
-        - user
-        resourceId: collectionId
-        resourceInternalId: '1'
-        resourceType: collection
-        parentResourceId: databaseId
-        parentResourceInternalId: '1'
-        parentResourceType: database
-        destinationResourceId: databaseId
-        destinationResourceInternalId: '1'
-        destinationResourceType: database
-        statusCounters: '{"Database": {"PENDING": 0, "SUCCESS": 1, "ERROR": 0, "SKIP": 0, "PROCESSING": 0, "WARNING": 0}}'
-        resourceData: '[{"resource":"Database","id":"public","status":"SUCCESS","message":""}]'
-        errors: []
-        options: '{"bucketId": "exports", "notify": false}'
-    migrationList:
-      description: Migrations List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of migrations that matched your query.
-          format: int32
-          example: 5
-        migrations:
-          type: array
-          description: List of migrations.
-          items:
-            $ref: '#/components/schemas/migration'
-          example: []
-      required:
-      - total
-      - migrations
-      example:
-        total: 5
-        migrations: ''
   securitySchemes:
     Project:
       type: apiKey

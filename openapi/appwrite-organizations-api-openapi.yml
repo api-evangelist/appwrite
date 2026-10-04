@@ -2305,1452 +2305,6 @@ paths:
                     type: string
 components:
   schemas:
-    estimation:
-      description: Estimation
-      type: object
-      properties:
-        amount:
-          type: number
-          description: Total amount
-          format: double
-          example: 50
-        grossAmount:
-          type: number
-          description: Gross payable amount
-          format: double
-          example: 50
-        discount:
-          type: number
-          description: Discount amount
-          format: double
-          example: 50
-        credits:
-          type: number
-          description: Credits amount
-          format: double
-          example: 50
-        items:
-          type: array
-          description: Estimation items
-          items:
-            $ref: '#/components/schemas/estimation_item'
-          example: []
-        discounts:
-          type: array
-          description: Estimation discount items
-          items:
-            $ref: '#/components/schemas/estimation_item'
-          example: []
-        trialDays:
-          type: integer
-          description: Trial days
-          format: int32
-          example: 14
-        trialEndDate:
-          type:
-          - string
-          - 'null'
-          description: Trial end date
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - amount
-      - grossAmount
-      - discount
-      - credits
-      - items
-      - discounts
-      - trialDays
-      example:
-        amount: 50
-        grossAmount: 50
-        discount: 50
-        credits: 50
-        items: []
-        discounts: []
-        trialDays: 14
-        trialEndDate: '2020-10-15T06:38:00.000+00:00'
-    estimationPlanChange:
-      description: EstimationPlanChange
-      type: object
-      properties:
-        currentBillingPlanId:
-          type: string
-          description: Current billing plan ID
-          example: tier-2
-        targetBillingPlanId:
-          type: string
-          description: Target billing plan ID
-          example: tier-0
-        direction:
-          type: string
-          description: 'Direction of plan change: upgrade, downgrade, or same'
-          example: downgrade
-        estimation:
-          type: object
-          description: Cost estimation details
-          allOf:
-          - $ref: '#/components/schemas/planChangeEstimationDetails'
-        limits:
-          type: object
-          description: Plan limits and compliance information
-          allOf:
-          - $ref: '#/components/schemas/planChangeLimits'
-      required:
-      - currentBillingPlanId
-      - targetBillingPlanId
-      - direction
-      - estimation
-      - limits
-      example:
-        currentBillingPlanId: tier-2
-        targetBillingPlanId: tier-0
-        direction: downgrade
-        estimation: null
-        limits: null
-    planChangeResourceCompliance:
-      description: PlanChangeResourceCompliance
-      type: object
-      properties:
-        type:
-          type: string
-          description: Resource type
-          example: databases
-        currentUsage:
-          type: integer
-          description: Current usage count
-          format: int32
-          example: 3
-        limit:
-          type: integer
-          description: Allowed limit in target plan
-          format: int32
-          example: 1
-        status:
-          type: string
-          description: Compliance status. Either `over_limit` or `within_limit`.
-          example: over_limit
-        excess:
-          type: integer
-          description: Number of resources exceeding the limit
-          format: int32
-          example: 2
-        resolutionHint:
-          type: string
-          description: Suggestion for resolving the compliance issue. Empty when the resource is within limits.
-          example: Delete or migrate 2 databases.
-      required:
-      - type
-      - currentUsage
-      - limit
-      - status
-      - excess
-      - resolutionHint
-      example:
-        type: databases
-        currentUsage: 3
-        limit: 1
-        status: over_limit
-        excess: 2
-        resolutionHint: Delete or migrate 2 databases.
-    billingPlanAddonDetails:
-      description: Details
-      type: object
-      properties:
-        supported:
-          type: boolean
-          description: Is the addon supported in the plan?
-          example: true
-        planIncluded:
-          type: integer
-          description: Addon plan included value
-          format: int32
-          example: 1
-        limit:
-          type: integer
-          description: Addon limit
-          format: int32
-          example: 5
-        type:
-          type: string
-          description: Addon type
-          example: numeric
-        currency:
-          type:
-          - string
-          - 'null'
-          description: Price currency
-          example: USD
-        price:
-          type: number
-          description: Price
-          format: double
-          example: 5
-        value:
-          type: integer
-          description: Resource value
-          format: int32
-          example: 25
-        invoiceDesc:
-          type: string
-          description: Description on invoice
-          example: ''
-      required:
-      - supported
-      - planIncluded
-      - limit
-      - type
-      - price
-      - value
-      - invoiceDesc
-      example:
-        supported: true
-        planIncluded: 1
-        limit: 5
-        type: numeric
-        currency: USD
-        price: 5
-        value: 25
-        invoiceDesc: ''
-    consoleRegion:
-      description: Region
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Region ID
-          example: eu-fr
-        name:
-          type: string
-          description: Region name
-          example: EU (Frankfurt)
-        available:
-          type:
-          - boolean
-          - 'null'
-          description: Does the organization have access to this region. Null when access has not been resolved.
-          example: false
-        disabled:
-          type: boolean
-          description: Does the backend support this region.
-          example: false
-        default:
-          type: boolean
-          description: Is this the region default.
-          example: true
-        flag:
-          type: string
-          description: Region flag code.
-          example: fr
-      required:
-      - $id
-      - name
-      - disabled
-      - default
-      - flag
-      example:
-        $id: eu-fr
-        name: EU (Frankfurt)
-        available: false
-        disabled: false
-        default: true
-        flag: fr
-    metric:
-      description: Metric
-      type: object
-      properties:
-        value:
-          type: integer
-          description: The value of this metric at the timestamp.
-          format: int32
-          example: 1
-        date:
-          type: string
-          description: The date at which this metric was aggregated in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - value
-      - date
-      example:
-        value: 1
-        date: '2020-10-15T06:38:00.000+00:00'
-    additionalResource:
-      description: AdditionalResource
-      type: object
-      properties:
-        name:
-          type: string
-          description: Resource name
-          example: ''
-        unit:
-          type: string
-          description: Resource unit
-          example: GB
-        currency:
-          type: string
-          description: Price currency
-          example: USD
-        price:
-          type: number
-          description: Price
-          format: double
-          example: 5
-        value:
-          type: integer
-          description: Resource value
-          format: int32
-          example: 25
-        invoiceDesc:
-          type: string
-          description: Description on invoice
-          example: ''
-      required:
-      - name
-      - unit
-      - currency
-      - price
-      - value
-      - invoiceDesc
-      example:
-        name: ''
-        unit: GB
-        currency: USD
-        price: 5
-        value: 25
-        invoiceDesc: ''
-    estimation_item:
-      description: Item
-      type: object
-      properties:
-        label:
-          type: string
-          description: Label
-          example: Plan name
-        value:
-          type: number
-          description: Gross payable amount
-          format: double
-          example: 50
-      required:
-      - label
-      - value
-      example:
-        label: Plan name
-        value: 50
-    invoice:
-      description: Invoice
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Invoice ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Invoice creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Invoice update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Invoice permissions. [Learn more about permissions](/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        teamId:
-          type: string
-          description: Project ID
-          example: 5e5ea5c16897e
-        aggregationId:
-          type: string
-          description: Aggregation ID
-          example: 5e5ea5c16897e
-        plan:
-          type: string
-          description: Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
-          example: tier-1
-        usage:
-          type: array
-          description: Usage breakdown per resource
-          items:
-            $ref: '#/components/schemas/usageResources'
-          example: []
-        amount:
-          type: number
-          description: Invoice Amount
-          format: double
-          example: 50
-        tax:
-          type: number
-          description: Tax percentage
-          format: double
-          example: 17
-        taxAmount:
-          type: number
-          description: Tax amount
-          format: double
-          example: 12.5
-        vat:
-          type: number
-          description: VAT percentage
-          format: double
-          example: 17
-        vatAmount:
-          type: number
-          description: VAT amount
-          format: double
-          example: 12.5
-        grossAmount:
-          type: number
-          description: Gross amount after vat, tax, and discounts applied.
-          format: double
-          example: 12.5
-        creditsUsed:
-          type: number
-          description: Credits used.
-          format: double
-          example: 30
-        currency:
-          type: string
-          description: Currency the invoice is in
-          example: USD
-        clientSecret:
-          type: string
-          description: Client secret for processing failed payments in front-end
-          example: pi_daslfasdfkla_asdkfl
-        status:
-          type: string
-          description: Invoice status
-          example: succeeded
-        type:
-          type: string
-          description: Invoice type. Can be one of `subscription`, `domain_purchase`, `domain_renewal`, `domain_transfer`, or `addon_*`.
-          example: subscription
-        lastError:
-          type: string
-          description: Last payment error associated with the invoice
-          example: Your card has insufficient balance.
-        dueAt:
-          type: string
-          description: Invoice due date.
-          example: '2020-10-15T06:38:00.000+00:00'
-        from:
-          type: string
-          description: Beginning date of the invoice
-          example: '2020-10-15T06:38:00.000+00:00'
-        to:
-          type: string
-          description: End date of the invoice
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - teamId
-      - aggregationId
-      - plan
-      - usage
-      - amount
-      - tax
-      - taxAmount
-      - vat
-      - vatAmount
-      - grossAmount
-      - creditsUsed
-      - currency
-      - clientSecret
-      - status
-      - type
-      - lastError
-      - dueAt
-      - from
-      - to
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        teamId: 5e5ea5c16897e
-        aggregationId: 5e5ea5c16897e
-        plan: tier-1
-        usage: []
-        amount: 50
-        tax: 17
-        taxAmount: 12.5
-        vat: 17
-        vatAmount: 12.5
-        grossAmount: 12.5
-        creditsUsed: 30
-        currency: USD
-        clientSecret: pi_daslfasdfkla_asdkfl
-        status: succeeded
-        type: subscription
-        lastError: Your card has insufficient balance.
-        dueAt: '2020-10-15T06:38:00.000+00:00'
-        from: '2020-10-15T06:38:00.000+00:00'
-        to: '2020-10-15T06:38:00.000+00:00'
-    paymentMethod:
-      description: paymentMethod
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Payment Method ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Payment method creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Payment method update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Payment method permissions. [Learn more about permissions](/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        providerMethodId:
-          type: string
-          description: Payment method ID from the payment provider
-          example: abdk3ed3sdkfj
-        clientSecret:
-          type: string
-          description: Client secret hash for payment setup
-          example: seti_ddfe
-        providerUserId:
-          type: string
-          description: User ID from the payment provider.
-          example: abdk3ed3sdkfj
-        userId:
-          type: string
-          description: ID of the Team.
-          example: 5e5ea5c16897e
-        expiryMonth:
-          type: integer
-          description: Expiry month of the payment method.
-          format: int32
-          example: 2
-        expiryYear:
-          type: integer
-          description: Expiry year of the payment method.
-          format: int32
-          example: 2024
-        last4:
-          type: string
-          description: Last 4 digit of the payment method
-          example: '4242'
-        brand:
-          type: string
-          description: Payment method brand
-          example: visa
-        name:
-          type: string
-          description: Name of the owner
-          example: John Doe
-        mandateId:
-          type: string
-          description: Mandate ID of the payment method
-          example: yxc
-        country:
-          type: string
-          description: Country of the payment method
-          example: de
-        state:
-          type: string
-          description: State of the payment method
-          example: ''
-        lastError:
-          type: string
-          description: Last payment error associated with the payment method.
-          example: Your card has insufficient funds.
-        default:
-          type: boolean
-          description: True when it's the default payment method.
-          example: false
-        expired:
-          type: boolean
-          description: True when payment method has expired.
-          example: false
-        failed:
-          type: boolean
-          description: True when payment method has failed to process multiple times.
-          example: false
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - providerMethodId
-      - clientSecret
-      - providerUserId
-      - userId
-      - expiryMonth
-      - expiryYear
-      - last4
-      - brand
-      - name
-      - mandateId
-      - country
-      - state
-      - lastError
-      - default
-      - expired
-      - failed
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        providerMethodId: abdk3ed3sdkfj
-        clientSecret: seti_ddfe
-        providerUserId: abdk3ed3sdkfj
-        userId: 5e5ea5c16897e
-        expiryMonth: 2
-        expiryYear: 2024
-        last4: '4242'
-        brand: visa
-        name: John Doe
-        mandateId: yxc
-        country: de
-        state: ''
-        lastError: Your card has insufficient funds.
-        default: false
-        expired: false
-        failed: false
-    addonPrice:
-      description: AddonPrice
-      type: object
-      properties:
-        addonKey:
-          type: string
-          description: Addon key.
-          example: baa
-        name:
-          type: string
-          description: Addon display name.
-          example: HIPAA BAA
-        monthlyPrice:
-          type: number
-          description: Full monthly price of the addon.
-          format: double
-          example: 350
-        proratedAmount:
-          type: number
-          description: Calculated prorated amount for the current billing cycle.
-          format: double
-          example: 175.5
-        remainingDays:
-          type: integer
-          description: Days remaining in the current billing cycle.
-          format: int32
-          example: 15
-        totalCycleDays:
-          type: integer
-          description: Total days in the billing cycle.
-          format: int32
-          example: 30
-        currency:
-          type: string
-          description: Currency code.
-          example: USD
-        billingCycleEnd:
-          type: string
-          description: When the current billing cycle ends.
-          example: '2024-02-01T00:00:00.000+00:00'
-      required:
-      - addonKey
-      - name
-      - monthlyPrice
-      - proratedAmount
-      - remainingDays
-      - totalCycleDays
-      - currency
-      - billingCycleEnd
-      example:
-        addonKey: baa
-        name: HIPAA BAA
-        monthlyPrice: 350
-        proratedAmount: 175.5
-        remainingDays: 15
-        totalCycleDays: 30
-        currency: USD
-        billingCycleEnd: '2024-02-01T00:00:00.000+00:00'
-    aggregationTeam:
-      description: Team
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Aggregation ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Aggregation creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Aggregation update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Aggregation permissions. [Learn more about permissions](/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        from:
-          type: string
-          description: Beginning date of the invoice
-          example: '2020-10-15T06:38:00.000+00:00'
-        to:
-          type: string
-          description: End date of the invoice
-          example: '2020-10-15T06:38:00.000+00:00'
-        usageStorage:
-          type: integer
-          description: Total storage usage
-          format: int32
-          example: 20009090
-        usageTotalStorage:
-          type: integer
-          description: Total storage usage with builds storage
-          format: int32
-          example: 20009090
-        usageFilesStorage:
-          type: integer
-          description: Total files storage usage
-          format: int32
-          example: 20009090
-        usageDeploymentsStorage:
-          type: integer
-          description: Total deployments storage usage
-          format: int32
-          example: 20009090
-        usageBuildsStorage:
-          type: integer
-          description: Total builds storage usage
-          format: int32
-          example: 20009090
-        usageDatabasesStorage:
-          type: integer
-          description: Total databases storage usage
-          format: int32
-          example: 2009090
-        usageFunctionsStorage:
-          type: integer
-          description: Total functions storage usage, deployments and builds together. Supersedes usageDeploymentsStorage and usageBuildsStorage.
-          format: int32
-          example: 20009090
-        usageSitesStorage:
-          type: integer
-          description: Total sites storage usage, deployments and builds together. Supersedes usageDeploymentsStorage and usageBuildsStorage.
-          format: int32
-          example: 20009090
-        usageUsers:
-          type: integer
-          description: Total active users for the billing period
-          format: int32
-          example: 2000
-        usageExecutions:
-          type: integer
-          description: Total number of executions for the billing period
-          format: int32
-          example: 2000
-        usageBandwidth:
-          type: integer
-          description: Total bandwidth usage for the billing period
-          format: int32
-          example: 2000
-        usageRealtime:
-          type: integer
-          description: Peak concurrent realtime connections for the billing period
-          format: int32
-          example: 200
-        usageRealtimeMessages:
-          type: integer
-          description: Total realtime messages sent for the billing period
-          format: int32
-          example: 10000
-        usageRealtimeBandwidth:
-          type: integer
-          description: Total realtime bandwidth usage for the billing period
-          format: int32
-          example: 5000000
-        additionalMembers:
-          type: integer
-          description: Additional members
-          format: int32
-          example: 5
-        additionalMemberAmount:
-          type: integer
-          description: Additional members cost
-          format: int32
-          example: 30
-        additionalStorageAmount:
-          type: integer
-          description: Additional storage usage cost
-          format: int32
-          example: 40
-        additionalUsersAmount:
-          type: integer
-          description: Additional users usage cost.
-          format: int32
-          example: 4
-        additionalExecutionsAmount:
-          type: integer
-          description: Additional executions usage cost
-          format: int32
-          example: 30
-        additionalBandwidthAmount:
-          type: integer
-          description: Additional bandwidth usage cost
-          format: int32
-          example: 40
-        additionalRealtimeAmount:
-          type: integer
-          description: Additional realtime usage cost
-          format: int32
-          example: 20
-        plan:
-          type: string
-          description: Billing plan
-          example: tier-0
-        amount:
-          type: integer
-          description: Aggregated amount
-          format: int32
-          example: 2
-        breakdown:
-          type: array
-          description: Aggregation project breakdown
-          items:
-            $ref: '#/components/schemas/aggregationBreakdown'
-          example: []
-        resources:
-          type: array
-          description: Usage resources
-          items:
-            $ref: '#/components/schemas/usageResources'
-          example: []
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - from
-      - to
-      - usageStorage
-      - usageTotalStorage
-      - usageFilesStorage
-      - usageDeploymentsStorage
-      - usageBuildsStorage
-      - usageDatabasesStorage
-      - usageFunctionsStorage
-      - usageSitesStorage
-      - usageUsers
-      - usageExecutions
-      - usageBandwidth
-      - usageRealtime
-      - usageRealtimeMessages
-      - usageRealtimeBandwidth
-      - additionalMembers
-      - additionalMemberAmount
-      - additionalStorageAmount
-      - additionalUsersAmount
-      - additionalExecutionsAmount
-      - additionalBandwidthAmount
-      - additionalRealtimeAmount
-      - plan
-      - amount
-      - breakdown
-      - resources
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        from: '2020-10-15T06:38:00.000+00:00'
-        to: '2020-10-15T06:38:00.000+00:00'
-        usageStorage: 20009090
-        usageTotalStorage: 20009090
-        usageFilesStorage: 20009090
-        usageDeploymentsStorage: 20009090
-        usageBuildsStorage: 20009090
-        usageDatabasesStorage: 2009090
-        usageFunctionsStorage: 20009090
-        usageSitesStorage: 20009090
-        usageUsers: 2000
-        usageExecutions: 2000
-        usageBandwidth: 2000
-        usageRealtime: 200
-        usageRealtimeMessages: 10000
-        usageRealtimeBandwidth: 5000000
-        additionalMembers: 5
-        additionalMemberAmount: 30
-        additionalStorageAmount: 40
-        additionalUsersAmount: 4
-        additionalExecutionsAmount: 30
-        additionalBandwidthAmount: 40
-        additionalRealtimeAmount: 20
-        plan: tier-0
-        amount: 2
-        breakdown: []
-        resources: []
-    aggregationBreakdown:
-      description: Breakdown
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Aggregation ID.
-          example: 5e5ea5c16897e
-        name:
-          type: string
-          description: Project name
-          example: ''
-        region:
-          type: string
-          description: Project region
-          example: fra
-        amount:
-          type: integer
-          description: Aggregated amount
-          format: int32
-          example: 2
-        resources:
-          type: array
-          description: ''
-          items:
-            $ref: '#/components/schemas/usageResources'
-          example: []
-      required:
-      - $id
-      - name
-      - region
-      - amount
-      - resources
-      example:
-        $id: 5e5ea5c16897e
-        name: ''
-        region: fra
-        amount: 2
-        resources: ''
-    billingPlanAddon:
-      description: Addon
-      type: object
-      properties:
-        seats:
-          type:
-          - object
-          - 'null'
-          description: Addon seats
-          allOf:
-          - $ref: '#/components/schemas/billingPlanAddonDetails'
-        projects:
-          type:
-          - object
-          - 'null'
-          description: Addon projects
-          allOf:
-          - $ref: '#/components/schemas/billingPlanAddonDetails'
-      example:
-        seats: null
-        projects: null
-    usageResources:
-      description: Resource
-      type: object
-      properties:
-        name:
-          type: string
-          description: Invoice name
-          example: ''
-        value:
-          type: integer
-          description: Invoice value
-          format: int32
-          example: 0
-        amount:
-          type: number
-          description: Invoice amount
-          format: double
-          example: 500
-        rate:
-          type: number
-          description: Invoice rate
-          format: double
-          example: 12.5
-        desc:
-          type: string
-          description: Invoice description
-          example: Your monthly recurring Pro plan.
-        resourceId:
-          type: string
-          description: Resource ID
-          example: ''
-        type:
-          type: string
-          description: Dedicated database engine type for per-database line items (e.g. postgresql). Empty for other resources.
-          example: postgresql
-        specification:
-          type: string
-          description: Dedicated database specification slug for per-database line items (e.g. s-2vcpu-2gb). Empty for other resources.
-          example: s-2vcpu-2gb
-      required:
-      - name
-      - value
-      - amount
-      - rate
-      - desc
-      - resourceId
-      - type
-      - specification
-      example:
-        name: ''
-        value: 0
-        amount: 500
-        rate: 12.5
-        desc: Your monthly recurring Pro plan.
-        resourceId: ''
-        type: postgresql
-        specification: s-2vcpu-2gb
-    estimationUpdatePlan:
-      description: UpdatePlan
-      type: object
-      properties:
-        amount:
-          type: number
-          description: Total amount
-          format: double
-          example: 50
-        grossAmount:
-          type: number
-          description: Gross payable amount
-          format: double
-          example: 50
-        discount:
-          type: number
-          description: Discount amount
-          format: double
-          example: 50
-        credits:
-          type: number
-          description: Credits amount
-          format: double
-          example: 50
-        items:
-          type: array
-          description: Estimation items
-          items:
-            $ref: '#/components/schemas/estimation_item'
-          example: []
-        discounts:
-          type: array
-          description: Estimation discount items
-          items:
-            $ref: '#/components/schemas/estimation_item'
-          example: []
-        trialDays:
-          type: integer
-          description: Trial days
-          format: int32
-          example: 14
-        trialEndDate:
-          type:
-          - string
-          - 'null'
-          description: Trial end date
-          example: '2020-10-15T06:38:00.000+00:00'
-        organizationCredits:
-          type: number
-          description: Organization's existing credits
-          format: double
-          example: 0
-      required:
-      - amount
-      - grossAmount
-      - discount
-      - credits
-      - items
-      - discounts
-      - trialDays
-      - organizationCredits
-      example:
-        amount: 50
-        grossAmount: 50
-        discount: 50
-        credits: 50
-        items: []
-        discounts: []
-        trialDays: 14
-        trialEndDate: '2020-10-15T06:38:00.000+00:00'
-        organizationCredits: 0
-    roles:
-      description: Roles
-      type: object
-      properties:
-        scopes:
-          type: array
-          description: Array of scopes accessible to current user.
-          items:
-            type: string
-          example:
-          - users.read
-        roles:
-          type: array
-          description: Array of roles assigned to current user.
-          items:
-            type: string
-          example:
-          - developer
-      required:
-      - scopes
-      - roles
-      example:
-        scopes: users.read
-        roles: developer
-    planChangeLimits:
-      description: PlanChangeLimits
-      type: object
-      properties:
-        canChangePlan:
-          type: boolean
-          description: Whether the plan change is allowed
-          example: false
-        unsupportedAddons:
-          type: array
-          description: Active addon keys that the target plan does not support. When non-empty, `canChangePlan` is false.
-          items:
-            type: string
-          example:
-          - baa
-        projects:
-          type: object
-          description: Project count against the target plan limit
-          example: {}
-          allOf:
-          - $ref: '#/components/schemas/planChangeResourceCompliance'
-        members:
-          type: object
-          description: Organization member count against the target plan limit
-          example: {}
-          allOf:
-          - $ref: '#/components/schemas/planChangeResourceCompliance'
-        domains:
-          type: object
-          description: Custom domain count against the target plan limit
-          example: {}
-          allOf:
-          - $ref: '#/components/schemas/planChangeResourceCompliance'
-        nonCompliantProjects:
-          type: integer
-          description: Number of projects exceeding target plan limits
-          format: int32
-          example: 2
-        projectCompliance:
-          type: array
-          description: Per-project compliance details. Populated for downgrades only.
-          items:
-            $ref: '#/components/schemas/planChangeProjectCompliance'
-          example: []
-      required:
-      - canChangePlan
-      - unsupportedAddons
-      - projects
-      - members
-      - domains
-      - nonCompliantProjects
-      - projectCompliance
-      example:
-        canChangePlan: false
-        unsupportedAddons:
-        - baa
-        projects: {}
-        members: {}
-        domains: {}
-        nonCompliantProjects: 2
-        projectCompliance: []
-    billingPlanDedicatedDatabaseLimits:
-      description: dedicatedDatabaseLimits
-      type: object
-      properties:
-        minCpu:
-          type:
-          - integer
-          - 'null'
-          description: Minimum CPU allocation in millicores.
-          format: int32
-          example: 125
-        maxCpu:
-          type:
-          - integer
-          - 'null'
-          description: Maximum CPU allocation in millicores.
-          format: int32
-          example: 32000
-        minMemoryMb:
-          type:
-          - integer
-          - 'null'
-          description: Minimum memory allocation in megabytes.
-          format: int32
-          example: 128
-        maxMemoryMb:
-          type:
-          - integer
-          - 'null'
-          description: Maximum memory allocation in megabytes.
-          format: int32
-          example: 262144
-        minStorageGb:
-          type:
-          - integer
-          - 'null'
-          description: Minimum storage allocation in gigabytes.
-          format: int32
-          example: 1
-        maxStorageGb:
-          type:
-          - integer
-          - 'null'
-          description: Maximum storage allocation in gigabytes.
-          format: int32
-          example: 16384
-        maxReplicas:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of high-availability replicas per dedicated database.
-          format: int32
-          example: 5
-        maxConnections:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of client connections.
-          format: int32
-          example: 10000
-        maxIpAllowlistSize:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of entries allowed in the IP allowlist.
-          format: int32
-          example: 100
-        maxExtensions:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of database extensions that can be enabled.
-          format: int32
-          example: 50
-        maxBackupRetentionDays:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of days a backup can be retained.
-          format: int32
-          example: 365
-        maxPitrRetentionDays:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of days of point-in-time recovery data that can be retained.
-          format: int32
-          example: 35
-        maxSqlApiMaxRows:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of rows a single SQL API query can return.
-          format: int32
-          example: 1000000
-        maxSqlApiMaxBytes:
-          type:
-          - integer
-          - 'null'
-          description: Maximum response size in bytes for a single SQL API query.
-          format: int32
-          example: 104857600
-        maxSqlApiTimeoutSeconds:
-          type:
-          - integer
-          - 'null'
-          description: Maximum execution time in seconds for a single SQL API query.
-          format: int32
-          example: 300
-        maxSqlApiAllowedStatements:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of SQL statement types that can be permitted through the SQL API.
-          format: int32
-          example: 10
-        allowedSqlStatements:
-          type:
-          - array
-          - 'null'
-          description: SQL statement types permitted through the SQL API.
-          items:
-            type: string
-          example:
-          - select
-          - insert
-          - update
-          - delete
-          - explain
-        allowedStorageClasses:
-          type:
-          - array
-          - 'null'
-          description: Storage classes available for dedicated databases.
-          items:
-            type: string
-          example:
-          - ssd
-        allowedSyncModes:
-          type:
-          - array
-          - 'null'
-          description: Replica synchronization modes available for dedicated databases.
-          items:
-            type: string
-          example:
-          - async
-          - sync
-          - quorum
-      example:
-        minCpu: 125
-        maxCpu: 32000
-        minMemoryMb: 128
-        maxMemoryMb: 262144
-        minStorageGb: 1
-        maxStorageGb: 16384
-        maxReplicas: 5
-        maxConnections: 10000
-        maxIpAllowlistSize: 100
-        maxExtensions: 50
-        maxBackupRetentionDays: 365
-        maxPitrRetentionDays: 35
-        maxSqlApiMaxRows: 1000000
-        maxSqlApiMaxBytes: 104857600
-        maxSqlApiTimeoutSeconds: 300
-        maxSqlApiAllowedStatements: 10
-        allowedSqlStatements:
-        - select
-        - insert
-        - update
-        - delete
-        - explain
-        allowedStorageClasses:
-        - ssd
-        allowedSyncModes:
-        - async
-        - sync
-        - quorum
-    estimationDeleteOrganization:
-      description: DeleteOrganization
-      type: object
-      properties:
-        unpaidInvoices:
-          type: array
-          description: List of unpaid invoices
-          items:
-            $ref: '#/components/schemas/invoice'
-          example: []
-      required:
-      - unpaidInvoices
-      example:
-        unpaidInvoices: []
-    planChangeEstimationDetails:
-      description: PlanChangeEstimationDetails
-      type: object
-      properties:
-        currency:
-          type: string
-          description: Currency code
-          example: USD
-        grossAmount:
-          type: number
-          description: Gross amount after all discounts and credits
-          format: double
-          example: 15
-        credits:
-          type: number
-          description: Credits applied from coupon
-          format: double
-          example: 0
-        organizationCredits:
-          type: number
-          description: Organization's existing credits applied
-          format: double
-          example: 5
-        discount:
-          type: number
-          description: Discount amount from prorated invoices
-          format: double
-          example: 0
-        amount:
-          type: number
-          description: Total amount before discounts and credits
-          format: double
-          example: 20
-        nextInvoiceDate:
-          type: string
-          description: Next invoice date
-          example: '2025-12-01T00:00:00.000Z'
-        items:
-          type: array
-          description: Line items breakdown
-          items:
-            type: object
-          example:
-          - label: Starter plan
-            value: 0
-          - label: Additional seats
-            value: 10
-        discounts:
-          type: array
-          description: Applied discounts breakdown
-          items:
-            type: object
-          example:
-          - label: Organization credits
-            value: 5
-      required:
-      - currency
-      - grossAmount
-      - credits
-      - organizationCredits
-      - discount
-      - amount
-      - nextInvoiceDate
-      - items
-      - discounts
-      example:
-        currency: USD
-        grossAmount: 15
-        credits: 0
-        organizationCredits: 5
-        discount: 0
-        amount: 20
-        nextInvoiceDate: '2025-12-01T00:00:00.000Z'
-        items:
-        - label: Starter plan
-          value: 0
-        - label: Additional seats
-          value: 10
-        discounts:
-        - label: Organization credits
-          value: 5
     billingPlan:
       description: billingPlan
       type: object
@@ -4272,56 +2826,92 @@ components:
         program: null
         databaseComputeCredit: 10
         dedicatedDatabases: null
-    preferences:
-      description: Preferences
-      type: object
-      additionalProperties: true
-      example:
-        language: en
-        timezone: UTC
-        darkTheme: true
-    paymentAuthentication:
-      description: PaymentAuthentication
+    usageBillingPlan:
+      description: usageBillingPlan
       type: object
       properties:
-        message:
-          type: string
-          description: Message for the end user to show on Console.
-          example: ''
-        clientSecret:
-          type: string
-          description: Stripe client secret to use for validation.
-          example: ''
-        organizationId:
-          type: string
-          description: Organization ID for which the payment authentication is needed.
-          example: ''
-        invoiceId:
-          type: string
-          description: Invoice ID against which the payment needs to be validated.
-          example: ''
-        addonId:
-          type: string
-          description: Addon ID to use when calling the addon validate endpoint. Empty when authentication is not for an addon.
-          example: ''
-        projectId:
-          type: string
-          description: Project ID for project-level addon payments. Empty for organization-level addons.
-          example: ''
+        bandwidth:
+          type: object
+          description: Bandwidth additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        executions:
+          type: object
+          description: Executions additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        member:
+          type:
+          - object
+          - 'null'
+          description: Member additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtime:
+          type: object
+          description: Realtime additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtimeMessages:
+          type: object
+          description: Realtime messages additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        realtimeBandwidth:
+          type:
+          - object
+          - 'null'
+          description: Realtime bandwidth additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        storage:
+          type: object
+          description: Storage additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        users:
+          type: object
+          description: User additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        GBHours:
+          type: object
+          description: GBHour additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        imageTransformations:
+          type: object
+          description: Image transformation additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
+        credits:
+          type:
+          - object
+          - 'null'
+          description: Credits additional resources
+          allOf:
+          - $ref: '#/components/schemas/additionalResource'
       required:
-      - message
-      - clientSecret
-      - organizationId
-      - invoiceId
-      - addonId
-      - projectId
+      - bandwidth
+      - executions
+      - realtime
+      - realtimeMessages
+      - storage
+      - users
+      - GBHours
+      - imageTransformations
       example:
-        message: ''
-        clientSecret: ''
-        organizationId: ''
-        invoiceId: ''
-        addonId: ''
-        projectId: ''
+        bandwidth: null
+        executions: null
+        member: null
+        realtime: null
+        realtimeMessages: null
+        realtimeBandwidth: null
+        storage: null
+        users: null
+        GBHours: null
+        imageTransformations: null
+        credits: null
     organization:
       description: Organization
       type: object
@@ -4570,114 +3160,959 @@ components:
         markedForDeletion: ''
         platform: imagine
         projects: ''
-    consoleRegionList:
-      description: Regions list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of regions that matched your query.
-          format: int32
-          example: 5
-        regions:
-          type: array
-          description: List of regions.
-          items:
-            $ref: '#/components/schemas/consoleRegion'
-          example: []
-      required:
-      - total
-      - regions
-      example:
-        total: 5
-        regions: ''
-    organizationList:
-      description: Organizations list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of teams that matched your query.
-          format: int32
-          example: 5
-        teams:
-          type: array
-          description: List of teams.
-          items:
-            $ref: '#/components/schemas/organization'
-          example: []
-      required:
-      - total
-      - teams
-      example:
-        total: 5
-        teams: ''
-    downgradeFeedback:
-      description: Downgrade Feedback
+    credit:
+      description: Credit
       type: object
       properties:
         $id:
           type: string
-          description: Feedback ID.
+          description: Credit ID.
           example: 5e5ea5c16897e
         $createdAt:
           type: string
-          description: Feedback creation date in ISO 8601 format.
+          description: Credit creation time in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
         $updatedAt:
           type: string
-          description: Feedback update date in ISO 8601 format.
+          description: Credit update date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        title:
+        $permissions:
+          type: array
+          description: Credit permissions. [Learn more about permissions](/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        couponId:
           type: string
-          description: Feedback reason
-          example: I encountered a bug and outage that caused my app to lose its value
-        message:
-          type: string
-          description: Feedback message
-          example: The platform experienced significant downtime which affected my users.
-        fromPlanId:
-          type: string
-          description: Plan ID downgrading from
-          example: pro
-        toPlanId:
-          type: string
-          description: Plan ID downgrading to
-          example: free
-        teamId:
-          type: string
-          description: Organization ID
-          example: 5e5ea5c16897e
+          description: coupon ID
+          example: NEWBONUS
         userId:
           type: string
-          description: User ID who submitted feedback
+          description: ID of the User.
           example: 5e5ea5c16897e
-        version:
+        teamId:
           type: string
-          description: Console version
-          example: 1.8.0
+          description: ID of the Team.
+          example: 5e5ea5c16897e
+        credits:
+          type: number
+          description: Provided credit amount
+          format: double
+          example: 50
+        total:
+          type: number
+          description: Provided credit amount
+          format: double
+          example: 50
+        expiration:
+          type: string
+          description: Credit expiration time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        status:
+          type: string
+          description: Status of the credit. Can be one of `disabled`, `active` or `expired`.
+          example: disabled
       required:
       - $id
       - $createdAt
       - $updatedAt
-      - title
-      - message
-      - fromPlanId
-      - toPlanId
-      - teamId
+      - $permissions
+      - couponId
       - userId
-      - version
+      - teamId
+      - credits
+      - total
+      - expiration
+      - status
       example:
         $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        title: I encountered a bug and outage that caused my app to lose its value
-        message: The platform experienced significant downtime which affected my users.
-        fromPlanId: pro
-        toPlanId: free
-        teamId: 5e5ea5c16897e
+        $permissions:
+        - read("any")
+        couponId: NEWBONUS
         userId: 5e5ea5c16897e
-        version: 1.8.0
+        teamId: 5e5ea5c16897e
+        credits: 50
+        total: 50
+        expiration: '2020-10-15T06:38:00.000+00:00'
+        status: disabled
+    addon:
+      description: Addon
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Addon ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Addon creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Addon update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        key:
+          type: string
+          description: Addon key
+          example: baa
+        resourceType:
+          type: string
+          description: Resource type (organization or project)
+          example: organization
+        resourceId:
+          type: string
+          description: Resource ID
+          example: 5e5ea5c16897e
+        status:
+          type: string
+          description: 'Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).'
+          example: active
+        currentValue:
+          type: integer
+          description: 'Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.'
+          format: int32
+          example: 1
+        nextValue:
+          type:
+          - integer
+          - 'null'
+          description: Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
+          format: int32
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - key
+      - resourceType
+      - resourceId
+      - status
+      - currentValue
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        key: baa
+        resourceType: organization
+        resourceId: 5e5ea5c16897e
+        status: active
+        currentValue: 1
+        nextValue: null
+    usageOrganizationProject:
+      description: OrganizationProject
+      type: object
+      properties:
+        projectId:
+          type: string
+          description: projectId
+          example: 5e5ea5c16897e
+        bandwidth:
+          type: integer
+          description: Aggregated stats for number of requests.
+          format: int32
+          example: 0
+        users:
+          type: integer
+          description: Aggregated stats for consumed bandwidth.
+          format: int32
+          example: 0
+        executions:
+          type: integer
+          description: Aggregated stats for function executions.
+          format: int32
+          example: 0
+        databasesReads:
+          type: integer
+          description: Aggregated stats for database reads.
+          format: int32
+          example: 0
+        databasesWrites:
+          type: integer
+          description: Aggregated stats for database writes.
+          format: int32
+          example: 0
+        executionsMBSeconds:
+          type: integer
+          description: Aggregated stats for function executions in mb seconds.
+          format: int32
+          example: 0
+        buildsMBSeconds:
+          type: integer
+          description: Aggregated stats for function builds in mb seconds.
+          format: int32
+          example: 0
+        storage:
+          type: integer
+          description: Aggregated stats for number of documents.
+          format: int32
+          example: 0
+        authPhoneTotal:
+          type: integer
+          description: Aggregated stats for phone authentication.
+          format: int32
+          example: 0
+        authPhoneEstimate:
+          type: number
+          description: Aggregated stats for phone authentication estimated cost.
+          format: double
+          example: 0
+        databasesReadsTotal:
+          type: integer
+          description: Aggregated stats for total databases reads.
+          format: int32
+          example: 0
+        databasesWritesTotal:
+          type: integer
+          description: Aggregated stats for total databases writes.
+          format: int32
+          example: 0
+        imageTransformations:
+          type: integer
+          description: Aggregated stats for file transformations.
+          format: int32
+          example: 0
+        imageTransformationsTotal:
+          type: integer
+          description: Aggregated stats for total file transformations.
+          format: int32
+          example: 0
+        screenshotsGenerated:
+          type: integer
+          description: Aggregated stats for file transformations.
+          format: int32
+          example: 0
+        screenshotsGeneratedTotal:
+          type: integer
+          description: Aggregated stats for total file transformations.
+          format: int32
+          example: 0
+        realtimeConnections:
+          type: integer
+          description: Aggregated stats for realtime connections.
+          format: int32
+          example: 0
+        realtimeMessages:
+          type: integer
+          description: Aggregated stats for realtime messages.
+          format: int32
+          example: 0
+        realtimeBandwidth:
+          type: integer
+          description: Aggregated stats for realtime bandwidth.
+          format: int32
+          example: 0
+      required:
+      - projectId
+      - bandwidth
+      - users
+      - executions
+      - databasesReads
+      - databasesWrites
+      - executionsMBSeconds
+      - buildsMBSeconds
+      - storage
+      - authPhoneTotal
+      - authPhoneEstimate
+      - databasesReadsTotal
+      - databasesWritesTotal
+      - imageTransformations
+      - imageTransformationsTotal
+      - screenshotsGenerated
+      - screenshotsGeneratedTotal
+      - realtimeConnections
+      - realtimeMessages
+      - realtimeBandwidth
+      example:
+        projectId: 5e5ea5c16897e
+        bandwidth: 0
+        users: 0
+        executions: []
+        databasesReads: 0
+        databasesWrites: 0
+        executionsMBSeconds: 0
+        buildsMBSeconds: 0
+        storage: []
+        authPhoneTotal: []
+        authPhoneEstimate: []
+        databasesReadsTotal: 0
+        databasesWritesTotal: 0
+        imageTransformations: 0
+        imageTransformationsTotal: 0
+        screenshotsGenerated: 0
+        screenshotsGeneratedTotal: 0
+        realtimeConnections: 0
+        realtimeMessages: 0
+        realtimeBandwidth: 0
+    usageResources:
+      description: Resource
+      type: object
+      properties:
+        name:
+          type: string
+          description: Invoice name
+          example: ''
+        value:
+          type: integer
+          description: Invoice value
+          format: int32
+          example: 0
+        amount:
+          type: number
+          description: Invoice amount
+          format: double
+          example: 500
+        rate:
+          type: number
+          description: Invoice rate
+          format: double
+          example: 12.5
+        desc:
+          type: string
+          description: Invoice description
+          example: Your monthly recurring Pro plan.
+        resourceId:
+          type: string
+          description: Resource ID
+          example: ''
+        type:
+          type: string
+          description: Dedicated database engine type for per-database line items (e.g. postgresql). Empty for other resources.
+          example: postgresql
+        specification:
+          type: string
+          description: Dedicated database specification slug for per-database line items (e.g. s-2vcpu-2gb). Empty for other resources.
+          example: s-2vcpu-2gb
+      required:
+      - name
+      - value
+      - amount
+      - rate
+      - desc
+      - resourceId
+      - type
+      - specification
+      example:
+        name: ''
+        value: 0
+        amount: 500
+        rate: 12.5
+        desc: Your monthly recurring Pro plan.
+        resourceId: ''
+        type: postgresql
+        specification: s-2vcpu-2gb
+    addonPrice:
+      description: AddonPrice
+      type: object
+      properties:
+        addonKey:
+          type: string
+          description: Addon key.
+          example: baa
+        name:
+          type: string
+          description: Addon display name.
+          example: HIPAA BAA
+        monthlyPrice:
+          type: number
+          description: Full monthly price of the addon.
+          format: double
+          example: 350
+        proratedAmount:
+          type: number
+          description: Calculated prorated amount for the current billing cycle.
+          format: double
+          example: 175.5
+        remainingDays:
+          type: integer
+          description: Days remaining in the current billing cycle.
+          format: int32
+          example: 15
+        totalCycleDays:
+          type: integer
+          description: Total days in the billing cycle.
+          format: int32
+          example: 30
+        currency:
+          type: string
+          description: Currency code.
+          example: USD
+        billingCycleEnd:
+          type: string
+          description: When the current billing cycle ends.
+          example: '2024-02-01T00:00:00.000+00:00'
+      required:
+      - addonKey
+      - name
+      - monthlyPrice
+      - proratedAmount
+      - remainingDays
+      - totalCycleDays
+      - currency
+      - billingCycleEnd
+      example:
+        addonKey: baa
+        name: HIPAA BAA
+        monthlyPrice: 350
+        proratedAmount: 175.5
+        remainingDays: 15
+        totalCycleDays: 30
+        currency: USD
+        billingCycleEnd: '2024-02-01T00:00:00.000+00:00'
+    preferences:
+      description: Preferences
+      type: object
+      additionalProperties: true
+      example:
+        language: en
+        timezone: UTC
+        darkTheme: true
+    consoleRegion:
+      description: Region
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Region ID
+          example: eu-fr
+        name:
+          type: string
+          description: Region name
+          example: EU (Frankfurt)
+        available:
+          type:
+          - boolean
+          - 'null'
+          description: Does the organization have access to this region. Null when access has not been resolved.
+          example: false
+        disabled:
+          type: boolean
+          description: Does the backend support this region.
+          example: false
+        default:
+          type: boolean
+          description: Is this the region default.
+          example: true
+        flag:
+          type: string
+          description: Region flag code.
+          example: fr
+      required:
+      - $id
+      - name
+      - disabled
+      - default
+      - flag
+      example:
+        $id: eu-fr
+        name: EU (Frankfurt)
+        available: false
+        disabled: false
+        default: true
+        flag: fr
+    billingPlanAddonDetails:
+      description: Details
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: Is the addon supported in the plan?
+          example: true
+        planIncluded:
+          type: integer
+          description: Addon plan included value
+          format: int32
+          example: 1
+        limit:
+          type: integer
+          description: Addon limit
+          format: int32
+          example: 5
+        type:
+          type: string
+          description: Addon type
+          example: numeric
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
+      required:
+      - supported
+      - planIncluded
+      - limit
+      - type
+      - price
+      - value
+      - invoiceDesc
+      example:
+        supported: true
+        planIncluded: 1
+        limit: 5
+        type: numeric
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
+    paymentAuthentication:
+      description: PaymentAuthentication
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message for the end user to show on Console.
+          example: ''
+        clientSecret:
+          type: string
+          description: Stripe client secret to use for validation.
+          example: ''
+        organizationId:
+          type: string
+          description: Organization ID for which the payment authentication is needed.
+          example: ''
+        invoiceId:
+          type: string
+          description: Invoice ID against which the payment needs to be validated.
+          example: ''
+        addonId:
+          type: string
+          description: Addon ID to use when calling the addon validate endpoint. Empty when authentication is not for an addon.
+          example: ''
+        projectId:
+          type: string
+          description: Project ID for project-level addon payments. Empty for organization-level addons.
+          example: ''
+      required:
+      - message
+      - clientSecret
+      - organizationId
+      - invoiceId
+      - addonId
+      - projectId
+      example:
+        message: ''
+        clientSecret: ''
+        organizationId: ''
+        invoiceId: ''
+        addonId: ''
+        projectId: ''
+    invoiceList:
+      description: Billing invoices list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of invoices that matched your query.
+          format: int32
+          example: 5
+        invoices:
+          type: array
+          description: List of invoices.
+          items:
+            $ref: '#/components/schemas/invoice'
+          example: []
+      required:
+      - total
+      - invoices
+      example:
+        total: 5
+        invoices: ''
+    creditList:
+      description: CreditList
+      type: object
+      properties:
+        credits:
+          type: array
+          description: Credits
+          items:
+            $ref: '#/components/schemas/credit'
+          example:
+          - 5
+        total:
+          type: integer
+          description: Total number of credits
+          format: int32
+          example: 5
+        available:
+          type: number
+          description: Total available credit balance in USD
+          format: double
+          example: 5
+      required:
+      - credits
+      - total
+      - available
+      example:
+        credits: 5
+        total: 5
+        available: 5
+    aggregationTeam:
+      description: Team
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Aggregation ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Aggregation creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Aggregation update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Aggregation permissions. [Learn more about permissions](/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        from:
+          type: string
+          description: Beginning date of the invoice
+          example: '2020-10-15T06:38:00.000+00:00'
+        to:
+          type: string
+          description: End date of the invoice
+          example: '2020-10-15T06:38:00.000+00:00'
+        usageStorage:
+          type: integer
+          description: Total storage usage
+          format: int32
+          example: 20009090
+        usageTotalStorage:
+          type: integer
+          description: Total storage usage with builds storage
+          format: int32
+          example: 20009090
+        usageFilesStorage:
+          type: integer
+          description: Total files storage usage
+          format: int32
+          example: 20009090
+        usageDeploymentsStorage:
+          type: integer
+          description: Total deployments storage usage
+          format: int32
+          example: 20009090
+        usageBuildsStorage:
+          type: integer
+          description: Total builds storage usage
+          format: int32
+          example: 20009090
+        usageDatabasesStorage:
+          type: integer
+          description: Total databases storage usage
+          format: int32
+          example: 2009090
+        usageFunctionsStorage:
+          type: integer
+          description: Total functions storage usage, deployments and builds together. Supersedes usageDeploymentsStorage and usageBuildsStorage.
+          format: int32
+          example: 20009090
+        usageSitesStorage:
+          type: integer
+          description: Total sites storage usage, deployments and builds together. Supersedes usageDeploymentsStorage and usageBuildsStorage.
+          format: int32
+          example: 20009090
+        usageUsers:
+          type: integer
+          description: Total active users for the billing period
+          format: int32
+          example: 2000
+        usageExecutions:
+          type: integer
+          description: Total number of executions for the billing period
+          format: int32
+          example: 2000
+        usageBandwidth:
+          type: integer
+          description: Total bandwidth usage for the billing period
+          format: int32
+          example: 2000
+        usageRealtime:
+          type: integer
+          description: Peak concurrent realtime connections for the billing period
+          format: int32
+          example: 200
+        usageRealtimeMessages:
+          type: integer
+          description: Total realtime messages sent for the billing period
+          format: int32
+          example: 10000
+        usageRealtimeBandwidth:
+          type: integer
+          description: Total realtime bandwidth usage for the billing period
+          format: int32
+          example: 5000000
+        additionalMembers:
+          type: integer
+          description: Additional members
+          format: int32
+          example: 5
+        additionalMemberAmount:
+          type: integer
+          description: Additional members cost
+          format: int32
+          example: 30
+        additionalStorageAmount:
+          type: integer
+          description: Additional storage usage cost
+          format: int32
+          example: 40
+        additionalUsersAmount:
+          type: integer
+          description: Additional users usage cost.
+          format: int32
+          example: 4
+        additionalExecutionsAmount:
+          type: integer
+          description: Additional executions usage cost
+          format: int32
+          example: 30
+        additionalBandwidthAmount:
+          type: integer
+          description: Additional bandwidth usage cost
+          format: int32
+          example: 40
+        additionalRealtimeAmount:
+          type: integer
+          description: Additional realtime usage cost
+          format: int32
+          example: 20
+        plan:
+          type: string
+          description: Billing plan
+          example: tier-0
+        amount:
+          type: integer
+          description: Aggregated amount
+          format: int32
+          example: 2
+        breakdown:
+          type: array
+          description: Aggregation project breakdown
+          items:
+            $ref: '#/components/schemas/aggregationBreakdown'
+          example: []
+        resources:
+          type: array
+          description: Usage resources
+          items:
+            $ref: '#/components/schemas/usageResources'
+          example: []
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - from
+      - to
+      - usageStorage
+      - usageTotalStorage
+      - usageFilesStorage
+      - usageDeploymentsStorage
+      - usageBuildsStorage
+      - usageDatabasesStorage
+      - usageFunctionsStorage
+      - usageSitesStorage
+      - usageUsers
+      - usageExecutions
+      - usageBandwidth
+      - usageRealtime
+      - usageRealtimeMessages
+      - usageRealtimeBandwidth
+      - additionalMembers
+      - additionalMemberAmount
+      - additionalStorageAmount
+      - additionalUsersAmount
+      - additionalExecutionsAmount
+      - additionalBandwidthAmount
+      - additionalRealtimeAmount
+      - plan
+      - amount
+      - breakdown
+      - resources
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        from: '2020-10-15T06:38:00.000+00:00'
+        to: '2020-10-15T06:38:00.000+00:00'
+        usageStorage: 20009090
+        usageTotalStorage: 20009090
+        usageFilesStorage: 20009090
+        usageDeploymentsStorage: 20009090
+        usageBuildsStorage: 20009090
+        usageDatabasesStorage: 2009090
+        usageFunctionsStorage: 20009090
+        usageSitesStorage: 20009090
+        usageUsers: 2000
+        usageExecutions: 2000
+        usageBandwidth: 2000
+        usageRealtime: 200
+        usageRealtimeMessages: 10000
+        usageRealtimeBandwidth: 5000000
+        additionalMembers: 5
+        additionalMemberAmount: 30
+        additionalStorageAmount: 40
+        additionalUsersAmount: 4
+        additionalExecutionsAmount: 30
+        additionalBandwidthAmount: 40
+        additionalRealtimeAmount: 20
+        plan: tier-0
+        amount: 2
+        breakdown: []
+        resources: []
+    planChangeResourceCompliance:
+      description: PlanChangeResourceCompliance
+      type: object
+      properties:
+        type:
+          type: string
+          description: Resource type
+          example: databases
+        currentUsage:
+          type: integer
+          description: Current usage count
+          format: int32
+          example: 3
+        limit:
+          type: integer
+          description: Allowed limit in target plan
+          format: int32
+          example: 1
+        status:
+          type: string
+          description: Compliance status. Either `over_limit` or `within_limit`.
+          example: over_limit
+        excess:
+          type: integer
+          description: Number of resources exceeding the limit
+          format: int32
+          example: 2
+        resolutionHint:
+          type: string
+          description: Suggestion for resolving the compliance issue. Empty when the resource is within limits.
+          example: Delete or migrate 2 databases.
+      required:
+      - type
+      - currentUsage
+      - limit
+      - status
+      - excess
+      - resolutionHint
+      example:
+        type: databases
+        currentUsage: 3
+        limit: 1
+        status: over_limit
+        excess: 2
+        resolutionHint: Delete or migrate 2 databases.
+    aggregationBreakdown:
+      description: Breakdown
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Aggregation ID.
+          example: 5e5ea5c16897e
+        name:
+          type: string
+          description: Project name
+          example: ''
+        region:
+          type: string
+          description: Project region
+          example: fra
+        amount:
+          type: integer
+          description: Aggregated amount
+          format: int32
+          example: 2
+        resources:
+          type: array
+          description: ''
+          items:
+            $ref: '#/components/schemas/usageResources'
+          example: []
+      required:
+      - $id
+      - name
+      - region
+      - amount
+      - resources
+      example:
+        $id: 5e5ea5c16897e
+        name: ''
+        region: fra
+        amount: 2
+        resources: ''
+    estimationDeleteOrganization:
+      description: DeleteOrganization
+      type: object
+      properties:
+        unpaidInvoices:
+          type: array
+          description: List of unpaid invoices
+          items:
+            $ref: '#/components/schemas/invoice'
+          example: []
+      required:
+      - unpaidInvoices
+      example:
+        unpaidInvoices: []
+    billingPlanAddon:
+      description: Addon
+      type: object
+      properties:
+        seats:
+          type:
+          - object
+          - 'null'
+          description: Addon seats
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+        projects:
+          type:
+          - object
+          - 'null'
+          description: Addon projects
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+      example:
+        seats: null
+        projects: null
     billingPlanSupportedAddons:
       description: BillingPlanSupportedAddons
       type: object
@@ -4702,6 +4137,241 @@ components:
         baa: true
         premiumGeoDB: true
         premiumGeoDBOrg: true
+    estimation_item:
+      description: Item
+      type: object
+      properties:
+        label:
+          type: string
+          description: Label
+          example: Plan name
+        value:
+          type: number
+          description: Gross payable amount
+          format: double
+          example: 50
+      required:
+      - label
+      - value
+      example:
+        label: Plan name
+        value: 50
+    estimationPlanChange:
+      description: EstimationPlanChange
+      type: object
+      properties:
+        currentBillingPlanId:
+          type: string
+          description: Current billing plan ID
+          example: tier-2
+        targetBillingPlanId:
+          type: string
+          description: Target billing plan ID
+          example: tier-0
+        direction:
+          type: string
+          description: 'Direction of plan change: upgrade, downgrade, or same'
+          example: downgrade
+        estimation:
+          type: object
+          description: Cost estimation details
+          allOf:
+          - $ref: '#/components/schemas/planChangeEstimationDetails'
+        limits:
+          type: object
+          description: Plan limits and compliance information
+          allOf:
+          - $ref: '#/components/schemas/planChangeLimits'
+      required:
+      - currentBillingPlanId
+      - targetBillingPlanId
+      - direction
+      - estimation
+      - limits
+      example:
+        currentBillingPlanId: tier-2
+        targetBillingPlanId: tier-0
+        direction: downgrade
+        estimation: null
+        limits: null
+    billingPlanDedicatedDatabaseLimits:
+      description: dedicatedDatabaseLimits
+      type: object
+      properties:
+        minCpu:
+          type:
+          - integer
+          - 'null'
+          description: Minimum CPU allocation in millicores.
+          format: int32
+          example: 125
+        maxCpu:
+          type:
+          - integer
+          - 'null'
+          description: Maximum CPU allocation in millicores.
+          format: int32
+          example: 32000
+        minMemoryMb:
+          type:
+          - integer
+          - 'null'
+          description: Minimum memory allocation in megabytes.
+          format: int32
+          example: 128
+        maxMemoryMb:
+          type:
+          - integer
+          - 'null'
+          description: Maximum memory allocation in megabytes.
+          format: int32
+          example: 262144
+        minStorageGb:
+          type:
+          - integer
+          - 'null'
+          description: Minimum storage allocation in gigabytes.
+          format: int32
+          example: 1
+        maxStorageGb:
+          type:
+          - integer
+          - 'null'
+          description: Maximum storage allocation in gigabytes.
+          format: int32
+          example: 16384
+        maxReplicas:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of high-availability replicas per dedicated database.
+          format: int32
+          example: 5
+        maxConnections:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of client connections.
+          format: int32
+          example: 10000
+        maxIpAllowlistSize:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of entries allowed in the IP allowlist.
+          format: int32
+          example: 100
+        maxExtensions:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of database extensions that can be enabled.
+          format: int32
+          example: 50
+        maxBackupRetentionDays:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of days a backup can be retained.
+          format: int32
+          example: 365
+        maxPitrRetentionDays:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of days of point-in-time recovery data that can be retained.
+          format: int32
+          example: 35
+        maxSqlApiMaxRows:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of rows a single SQL API query can return.
+          format: int32
+          example: 1000000
+        maxSqlApiMaxBytes:
+          type:
+          - integer
+          - 'null'
+          description: Maximum response size in bytes for a single SQL API query.
+          format: int32
+          example: 104857600
+        maxSqlApiTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          description: Maximum execution time in seconds for a single SQL API query.
+          format: int32
+          example: 300
+        maxSqlApiAllowedStatements:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of SQL statement types that can be permitted through the SQL API.
+          format: int32
+          example: 10
+        allowedSqlStatements:
+          type:
+          - array
+          - 'null'
+          description: SQL statement types permitted through the SQL API.
+          items:
+            type: string
+          example:
+          - select
+          - insert
+          - update
+          - delete
+          - explain
+        allowedStorageClasses:
+          type:
+          - array
+          - 'null'
+          description: Storage classes available for dedicated databases.
+          items:
+            type: string
+          example:
+          - ssd
+        allowedSyncModes:
+          type:
+          - array
+          - 'null'
+          description: Replica synchronization modes available for dedicated databases.
+          items:
+            type: string
+          example:
+          - async
+          - sync
+          - quorum
+      example:
+        minCpu: 125
+        maxCpu: 32000
+        minMemoryMb: 128
+        maxMemoryMb: 262144
+        minStorageGb: 1
+        maxStorageGb: 16384
+        maxReplicas: 5
+        maxConnections: 10000
+        maxIpAllowlistSize: 100
+        maxExtensions: 50
+        maxBackupRetentionDays: 365
+        maxPitrRetentionDays: 35
+        maxSqlApiMaxRows: 1000000
+        maxSqlApiMaxBytes: 104857600
+        maxSqlApiTimeoutSeconds: 300
+        maxSqlApiAllowedStatements: 10
+        allowedSqlStatements:
+        - select
+        - insert
+        - update
+        - delete
+        - explain
+        allowedStorageClasses:
+        - ssd
+        allowedSyncModes:
+        - async
+        - sync
+        - quorum
     usageOrganization:
       description: Organization
       type: object
@@ -4929,238 +4599,77 @@ components:
         realtimeMessagesTotal: 0
         realtimeBandwidth: []
         realtimeBandwidthTotal: 0
-    creditAvailable:
-      description: CreditAvailable
+    estimationUpdatePlan:
+      description: UpdatePlan
       type: object
       properties:
-        available:
-          type: integer
-          description: Total available credits for the organization.
-          format: int32
-          example: 100
-      required:
-      - available
-      example:
-        available: 100
-    planChangeProjectCompliance:
-      description: PlanChangeProjectCompliance
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Project ID
-          example: proj_a
-        name:
-          type: string
-          description: Project name
-          example: Marketing Site
-        isCompliant:
-          type: boolean
-          description: Whether the project complies with target plan limits
-          example: false
-        resources:
+        amount:
+          type: number
+          description: Total amount
+          format: double
+          example: 50
+        grossAmount:
+          type: number
+          description: Gross payable amount
+          format: double
+          example: 50
+        discount:
+          type: number
+          description: Discount amount
+          format: double
+          example: 50
+        credits:
+          type: number
+          description: Credits amount
+          format: double
+          example: 50
+        items:
           type: array
-          description: Resource compliance details
+          description: Estimation items
           items:
-            $ref: '#/components/schemas/planChangeResourceCompliance'
+            $ref: '#/components/schemas/estimation_item'
           example: []
-        error:
+        discounts:
+          type: array
+          description: Estimation discount items
+          items:
+            $ref: '#/components/schemas/estimation_item'
+          example: []
+        trialDays:
+          type: integer
+          description: Trial days
+          format: int32
+          example: 14
+        trialEndDate:
           type:
           - string
           - 'null'
-          description: Failure reason when compliance could not be evaluated. Present only when the project DB or Regions API was unreachable; in that case `isCompliant` is false (fail closed) and `resources` is empty.
-          example: 'Failed to get project compliance from Regions API. Status: 500'
-      required:
-      - $id
-      - name
-      - isCompliant
-      - resources
-      example:
-        $id: proj_a
-        name: Marketing Site
-        isCompliant: false
-        resources: []
-        error: 'Failed to get project compliance from Regions API. Status: 500'
-    program:
-      description: Program
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Program ID
-          example: ''
-        title:
-          type: string
-          description: Program title
-          example: ''
-        description:
-          type: string
-          description: Program description
-          example: ''
-        tag:
-          type: string
-          description: Program tag for highlighting on console
-        icon:
-          type: string
-          description: Program icon for highlighting on console
-        url:
-          type: string
-          description: URL for more information on this program
-          example: ''
-        active:
-          type: boolean
-          description: Whether this program is active
-          example: false
-        external:
-          type: boolean
-          description: Whether this program is external
-          example: false
-        billingPlanId:
-          type: string
-          description: Billing plan ID that this is program is associated with.
-          example: ''
-      required:
-      - $id
-      - title
-      - description
-      - tag
-      - icon
-      - url
-      - active
-      - external
-      - billingPlanId
-      example:
-        $id: ''
-        title: ''
-        description: ''
-        tag: null
-        icon: null
-        url: ''
-        active: false
-        external: false
-        billingPlanId: ''
-    creditList:
-      description: CreditList
-      type: object
-      properties:
-        credits:
-          type: array
-          description: Credits
-          items:
-            $ref: '#/components/schemas/credit'
-          example:
-          - 5
-        total:
-          type: integer
-          description: Total number of credits
-          format: int32
-          example: 5
-        available:
+          description: Trial end date
+          example: '2020-10-15T06:38:00.000+00:00'
+        organizationCredits:
           type: number
-          description: Total available credit balance in USD
+          description: Organization's existing credits
           format: double
-          example: 5
+          example: 0
       required:
+      - amount
+      - grossAmount
+      - discount
       - credits
-      - total
-      - available
+      - items
+      - discounts
+      - trialDays
+      - organizationCredits
       example:
-        credits: 5
-        total: 5
-        available: 5
-    billingPlanLimits:
-      description: PlanLimits
-      type: object
-      properties:
-        credits:
-          type:
-          - integer
-          - 'null'
-          description: Credits limit per billing cycle
-          format: int32
-          example: 100
-        dailyCredits:
-          type:
-          - integer
-          - 'null'
-          description: Daily credits limit (if applicable)
-          format: int32
-          example: 5
-      example:
-        credits: 100
-        dailyCredits: 5
-    addon:
-      description: Addon
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Addon ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Addon creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Addon update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        key:
-          type: string
-          description: Addon key
-          example: baa
-        resourceType:
-          type: string
-          description: Resource type (organization or project)
-          example: organization
-        resourceId:
-          type: string
-          description: Resource ID
-          example: 5e5ea5c16897e
-        status:
-          type: string
-          description: 'Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).'
-          example: active
-        currentValue:
-          type: integer
-          description: 'Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.'
-          format: int32
-          example: 1
-        nextValue:
-          type:
-          - integer
-          - 'null'
-          description: Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
-          format: int32
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - key
-      - resourceType
-      - resourceId
-      - status
-      - currentValue
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        key: baa
-        resourceType: organization
-        resourceId: 5e5ea5c16897e
-        status: active
-        currentValue: 1
-        nextValue: null
+        amount: 50
+        grossAmount: 50
+        discount: 50
+        credits: 50
+        items: []
+        discounts: []
+        trialDays: 14
+        trialEndDate: '2020-10-15T06:38:00.000+00:00'
+        organizationCredits: 0
     billingLimits:
       description: Limits
       type: object
@@ -5230,357 +4739,6 @@ components:
         imageTransformations: 100
         authPhone: 10
         budgetLimit: 100
-    aggregationTeamList:
-      description: Aggregation team list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of aggregations that matched your query.
-          format: int32
-          example: 5
-        aggregations:
-          type: array
-          description: List of aggregations.
-          items:
-            $ref: '#/components/schemas/aggregationTeam'
-          example: []
-      required:
-      - total
-      - aggregations
-      example:
-        total: 5
-        aggregations: ''
-    invoiceList:
-      description: Billing invoices list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of invoices that matched your query.
-          format: int32
-          example: 5
-        invoices:
-          type: array
-          description: List of invoices.
-          items:
-            $ref: '#/components/schemas/invoice'
-          example: []
-      required:
-      - total
-      - invoices
-      example:
-        total: 5
-        invoices: ''
-    credit:
-      description: Credit
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Credit ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Credit creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Credit update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Credit permissions. [Learn more about permissions](/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        couponId:
-          type: string
-          description: coupon ID
-          example: NEWBONUS
-        userId:
-          type: string
-          description: ID of the User.
-          example: 5e5ea5c16897e
-        teamId:
-          type: string
-          description: ID of the Team.
-          example: 5e5ea5c16897e
-        credits:
-          type: number
-          description: Provided credit amount
-          format: double
-          example: 50
-        total:
-          type: number
-          description: Provided credit amount
-          format: double
-          example: 50
-        expiration:
-          type: string
-          description: Credit expiration time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        status:
-          type: string
-          description: Status of the credit. Can be one of `disabled`, `active` or `expired`.
-          example: disabled
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - couponId
-      - userId
-      - teamId
-      - credits
-      - total
-      - expiration
-      - status
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        couponId: NEWBONUS
-        userId: 5e5ea5c16897e
-        teamId: 5e5ea5c16897e
-        credits: 50
-        total: 50
-        expiration: '2020-10-15T06:38:00.000+00:00'
-        status: disabled
-    usageOrganizationProject:
-      description: OrganizationProject
-      type: object
-      properties:
-        projectId:
-          type: string
-          description: projectId
-          example: 5e5ea5c16897e
-        bandwidth:
-          type: integer
-          description: Aggregated stats for number of requests.
-          format: int32
-          example: 0
-        users:
-          type: integer
-          description: Aggregated stats for consumed bandwidth.
-          format: int32
-          example: 0
-        executions:
-          type: integer
-          description: Aggregated stats for function executions.
-          format: int32
-          example: 0
-        databasesReads:
-          type: integer
-          description: Aggregated stats for database reads.
-          format: int32
-          example: 0
-        databasesWrites:
-          type: integer
-          description: Aggregated stats for database writes.
-          format: int32
-          example: 0
-        executionsMBSeconds:
-          type: integer
-          description: Aggregated stats for function executions in mb seconds.
-          format: int32
-          example: 0
-        buildsMBSeconds:
-          type: integer
-          description: Aggregated stats for function builds in mb seconds.
-          format: int32
-          example: 0
-        storage:
-          type: integer
-          description: Aggregated stats for number of documents.
-          format: int32
-          example: 0
-        authPhoneTotal:
-          type: integer
-          description: Aggregated stats for phone authentication.
-          format: int32
-          example: 0
-        authPhoneEstimate:
-          type: number
-          description: Aggregated stats for phone authentication estimated cost.
-          format: double
-          example: 0
-        databasesReadsTotal:
-          type: integer
-          description: Aggregated stats for total databases reads.
-          format: int32
-          example: 0
-        databasesWritesTotal:
-          type: integer
-          description: Aggregated stats for total databases writes.
-          format: int32
-          example: 0
-        imageTransformations:
-          type: integer
-          description: Aggregated stats for file transformations.
-          format: int32
-          example: 0
-        imageTransformationsTotal:
-          type: integer
-          description: Aggregated stats for total file transformations.
-          format: int32
-          example: 0
-        screenshotsGenerated:
-          type: integer
-          description: Aggregated stats for file transformations.
-          format: int32
-          example: 0
-        screenshotsGeneratedTotal:
-          type: integer
-          description: Aggregated stats for total file transformations.
-          format: int32
-          example: 0
-        realtimeConnections:
-          type: integer
-          description: Aggregated stats for realtime connections.
-          format: int32
-          example: 0
-        realtimeMessages:
-          type: integer
-          description: Aggregated stats for realtime messages.
-          format: int32
-          example: 0
-        realtimeBandwidth:
-          type: integer
-          description: Aggregated stats for realtime bandwidth.
-          format: int32
-          example: 0
-      required:
-      - projectId
-      - bandwidth
-      - users
-      - executions
-      - databasesReads
-      - databasesWrites
-      - executionsMBSeconds
-      - buildsMBSeconds
-      - storage
-      - authPhoneTotal
-      - authPhoneEstimate
-      - databasesReadsTotal
-      - databasesWritesTotal
-      - imageTransformations
-      - imageTransformationsTotal
-      - screenshotsGenerated
-      - screenshotsGeneratedTotal
-      - realtimeConnections
-      - realtimeMessages
-      - realtimeBandwidth
-      example:
-        projectId: 5e5ea5c16897e
-        bandwidth: 0
-        users: 0
-        executions: []
-        databasesReads: 0
-        databasesWrites: 0
-        executionsMBSeconds: 0
-        buildsMBSeconds: 0
-        storage: []
-        authPhoneTotal: []
-        authPhoneEstimate: []
-        databasesReadsTotal: 0
-        databasesWritesTotal: 0
-        imageTransformations: 0
-        imageTransformationsTotal: 0
-        screenshotsGenerated: 0
-        screenshotsGeneratedTotal: 0
-        realtimeConnections: 0
-        realtimeMessages: 0
-        realtimeBandwidth: 0
-    usageBillingPlan:
-      description: usageBillingPlan
-      type: object
-      properties:
-        bandwidth:
-          type: object
-          description: Bandwidth additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        executions:
-          type: object
-          description: Executions additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        member:
-          type:
-          - object
-          - 'null'
-          description: Member additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        realtime:
-          type: object
-          description: Realtime additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        realtimeMessages:
-          type: object
-          description: Realtime messages additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        realtimeBandwidth:
-          type:
-          - object
-          - 'null'
-          description: Realtime bandwidth additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        storage:
-          type: object
-          description: Storage additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        users:
-          type: object
-          description: User additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        GBHours:
-          type: object
-          description: GBHour additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        imageTransformations:
-          type: object
-          description: Image transformation additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-        credits:
-          type:
-          - object
-          - 'null'
-          description: Credits additional resources
-          allOf:
-          - $ref: '#/components/schemas/additionalResource'
-      required:
-      - bandwidth
-      - executions
-      - realtime
-      - realtimeMessages
-      - storage
-      - users
-      - GBHours
-      - imageTransformations
-      example:
-        bandwidth: null
-        executions: null
-        member: null
-        realtime: null
-        realtimeMessages: null
-        realtimeBandwidth: null
-        storage: null
-        users: null
-        GBHours: null
-        imageTransformations: null
-        credits: null
     billingAddress:
       description: Address
       type: object
@@ -5635,6 +4793,340 @@ components:
         city: ''
         state: ''
         postalCode: ''
+    billingPlanLimits:
+      description: PlanLimits
+      type: object
+      properties:
+        credits:
+          type:
+          - integer
+          - 'null'
+          description: Credits limit per billing cycle
+          format: int32
+          example: 100
+        dailyCredits:
+          type:
+          - integer
+          - 'null'
+          description: Daily credits limit (if applicable)
+          format: int32
+          example: 5
+      example:
+        credits: 100
+        dailyCredits: 5
+    paymentMethod:
+      description: paymentMethod
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Payment Method ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Payment method creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Payment method update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Payment method permissions. [Learn more about permissions](/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        providerMethodId:
+          type: string
+          description: Payment method ID from the payment provider
+          example: abdk3ed3sdkfj
+        clientSecret:
+          type: string
+          description: Client secret hash for payment setup
+          example: seti_ddfe
+        providerUserId:
+          type: string
+          description: User ID from the payment provider.
+          example: abdk3ed3sdkfj
+        userId:
+          type: string
+          description: ID of the Team.
+          example: 5e5ea5c16897e
+        expiryMonth:
+          type: integer
+          description: Expiry month of the payment method.
+          format: int32
+          example: 2
+        expiryYear:
+          type: integer
+          description: Expiry year of the payment method.
+          format: int32
+          example: 2024
+        last4:
+          type: string
+          description: Last 4 digit of the payment method
+          example: '4242'
+        brand:
+          type: string
+          description: Payment method brand
+          example: visa
+        name:
+          type: string
+          description: Name of the owner
+          example: John Doe
+        mandateId:
+          type: string
+          description: Mandate ID of the payment method
+          example: yxc
+        country:
+          type: string
+          description: Country of the payment method
+          example: de
+        state:
+          type: string
+          description: State of the payment method
+          example: ''
+        lastError:
+          type: string
+          description: Last payment error associated with the payment method.
+          example: Your card has insufficient funds.
+        default:
+          type: boolean
+          description: True when it's the default payment method.
+          example: false
+        expired:
+          type: boolean
+          description: True when payment method has expired.
+          example: false
+        failed:
+          type: boolean
+          description: True when payment method has failed to process multiple times.
+          example: false
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - providerMethodId
+      - clientSecret
+      - providerUserId
+      - userId
+      - expiryMonth
+      - expiryYear
+      - last4
+      - brand
+      - name
+      - mandateId
+      - country
+      - state
+      - lastError
+      - default
+      - expired
+      - failed
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        providerMethodId: abdk3ed3sdkfj
+        clientSecret: seti_ddfe
+        providerUserId: abdk3ed3sdkfj
+        userId: 5e5ea5c16897e
+        expiryMonth: 2
+        expiryYear: 2024
+        last4: '4242'
+        brand: visa
+        name: John Doe
+        mandateId: yxc
+        country: de
+        state: ''
+        lastError: Your card has insufficient funds.
+        default: false
+        expired: false
+        failed: false
+    aggregationTeamList:
+      description: Aggregation team list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of aggregations that matched your query.
+          format: int32
+          example: 5
+        aggregations:
+          type: array
+          description: List of aggregations.
+          items:
+            $ref: '#/components/schemas/aggregationTeam'
+          example: []
+      required:
+      - total
+      - aggregations
+      example:
+        total: 5
+        aggregations: ''
+    consoleRegionList:
+      description: Regions list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of regions that matched your query.
+          format: int32
+          example: 5
+        regions:
+          type: array
+          description: List of regions.
+          items:
+            $ref: '#/components/schemas/consoleRegion'
+          example: []
+      required:
+      - total
+      - regions
+      example:
+        total: 5
+        regions: ''
+    planChangeEstimationDetails:
+      description: PlanChangeEstimationDetails
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Currency code
+          example: USD
+        grossAmount:
+          type: number
+          description: Gross amount after all discounts and credits
+          format: double
+          example: 15
+        credits:
+          type: number
+          description: Credits applied from coupon
+          format: double
+          example: 0
+        organizationCredits:
+          type: number
+          description: Organization's existing credits applied
+          format: double
+          example: 5
+        discount:
+          type: number
+          description: Discount amount from prorated invoices
+          format: double
+          example: 0
+        amount:
+          type: number
+          description: Total amount before discounts and credits
+          format: double
+          example: 20
+        nextInvoiceDate:
+          type: string
+          description: Next invoice date
+          example: '2025-12-01T00:00:00.000Z'
+        items:
+          type: array
+          description: Line items breakdown
+          items:
+            type: object
+          example:
+          - label: Starter plan
+            value: 0
+          - label: Additional seats
+            value: 10
+        discounts:
+          type: array
+          description: Applied discounts breakdown
+          items:
+            type: object
+          example:
+          - label: Organization credits
+            value: 5
+      required:
+      - currency
+      - grossAmount
+      - credits
+      - organizationCredits
+      - discount
+      - amount
+      - nextInvoiceDate
+      - items
+      - discounts
+      example:
+        currency: USD
+        grossAmount: 15
+        credits: 0
+        organizationCredits: 5
+        discount: 0
+        amount: 20
+        nextInvoiceDate: '2025-12-01T00:00:00.000Z'
+        items:
+        - label: Starter plan
+          value: 0
+        - label: Additional seats
+          value: 10
+        discounts:
+        - label: Organization credits
+          value: 5
+    program:
+      description: Program
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Program ID
+          example: ''
+        title:
+          type: string
+          description: Program title
+          example: ''
+        description:
+          type: string
+          description: Program description
+          example: ''
+        tag:
+          type: string
+          description: Program tag for highlighting on console
+        icon:
+          type: string
+          description: Program icon for highlighting on console
+        url:
+          type: string
+          description: URL for more information on this program
+          example: ''
+        active:
+          type: boolean
+          description: Whether this program is active
+          example: false
+        external:
+          type: boolean
+          description: Whether this program is external
+          example: false
+        billingPlanId:
+          type: string
+          description: Billing plan ID that this is program is associated with.
+          example: ''
+      required:
+      - $id
+      - title
+      - description
+      - tag
+      - icon
+      - url
+      - active
+      - external
+      - billingPlanId
+      example:
+        $id: ''
+        title: ''
+        description: ''
+        tag: null
+        icon: null
+        url: ''
+        active: false
+        external: false
+        billingPlanId: ''
     addonList:
       description: Addons list
       type: object
@@ -5656,6 +5148,514 @@ components:
       example:
         total: 5
         addons: ''
+    planChangeLimits:
+      description: PlanChangeLimits
+      type: object
+      properties:
+        canChangePlan:
+          type: boolean
+          description: Whether the plan change is allowed
+          example: false
+        unsupportedAddons:
+          type: array
+          description: Active addon keys that the target plan does not support. When non-empty, `canChangePlan` is false.
+          items:
+            type: string
+          example:
+          - baa
+        projects:
+          type: object
+          description: Project count against the target plan limit
+          example: {}
+          allOf:
+          - $ref: '#/components/schemas/planChangeResourceCompliance'
+        members:
+          type: object
+          description: Organization member count against the target plan limit
+          example: {}
+          allOf:
+          - $ref: '#/components/schemas/planChangeResourceCompliance'
+        domains:
+          type: object
+          description: Custom domain count against the target plan limit
+          example: {}
+          allOf:
+          - $ref: '#/components/schemas/planChangeResourceCompliance'
+        nonCompliantProjects:
+          type: integer
+          description: Number of projects exceeding target plan limits
+          format: int32
+          example: 2
+        projectCompliance:
+          type: array
+          description: Per-project compliance details. Populated for downgrades only.
+          items:
+            $ref: '#/components/schemas/planChangeProjectCompliance'
+          example: []
+      required:
+      - canChangePlan
+      - unsupportedAddons
+      - projects
+      - members
+      - domains
+      - nonCompliantProjects
+      - projectCompliance
+      example:
+        canChangePlan: false
+        unsupportedAddons:
+        - baa
+        projects: {}
+        members: {}
+        domains: {}
+        nonCompliantProjects: 2
+        projectCompliance: []
+    downgradeFeedback:
+      description: Downgrade Feedback
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Feedback ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Feedback creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Feedback update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        title:
+          type: string
+          description: Feedback reason
+          example: I encountered a bug and outage that caused my app to lose its value
+        message:
+          type: string
+          description: Feedback message
+          example: The platform experienced significant downtime which affected my users.
+        fromPlanId:
+          type: string
+          description: Plan ID downgrading from
+          example: pro
+        toPlanId:
+          type: string
+          description: Plan ID downgrading to
+          example: free
+        teamId:
+          type: string
+          description: Organization ID
+          example: 5e5ea5c16897e
+        userId:
+          type: string
+          description: User ID who submitted feedback
+          example: 5e5ea5c16897e
+        version:
+          type: string
+          description: Console version
+          example: 1.8.0
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - title
+      - message
+      - fromPlanId
+      - toPlanId
+      - teamId
+      - userId
+      - version
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        title: I encountered a bug and outage that caused my app to lose its value
+        message: The platform experienced significant downtime which affected my users.
+        fromPlanId: pro
+        toPlanId: free
+        teamId: 5e5ea5c16897e
+        userId: 5e5ea5c16897e
+        version: 1.8.0
+    organizationList:
+      description: Organizations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of teams that matched your query.
+          format: int32
+          example: 5
+        teams:
+          type: array
+          description: List of teams.
+          items:
+            $ref: '#/components/schemas/organization'
+          example: []
+      required:
+      - total
+      - teams
+      example:
+        total: 5
+        teams: ''
+    estimation:
+      description: Estimation
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Total amount
+          format: double
+          example: 50
+        grossAmount:
+          type: number
+          description: Gross payable amount
+          format: double
+          example: 50
+        discount:
+          type: number
+          description: Discount amount
+          format: double
+          example: 50
+        credits:
+          type: number
+          description: Credits amount
+          format: double
+          example: 50
+        items:
+          type: array
+          description: Estimation items
+          items:
+            $ref: '#/components/schemas/estimation_item'
+          example: []
+        discounts:
+          type: array
+          description: Estimation discount items
+          items:
+            $ref: '#/components/schemas/estimation_item'
+          example: []
+        trialDays:
+          type: integer
+          description: Trial days
+          format: int32
+          example: 14
+        trialEndDate:
+          type:
+          - string
+          - 'null'
+          description: Trial end date
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - amount
+      - grossAmount
+      - discount
+      - credits
+      - items
+      - discounts
+      - trialDays
+      example:
+        amount: 50
+        grossAmount: 50
+        discount: 50
+        credits: 50
+        items: []
+        discounts: []
+        trialDays: 14
+        trialEndDate: '2020-10-15T06:38:00.000+00:00'
+    creditAvailable:
+      description: CreditAvailable
+      type: object
+      properties:
+        available:
+          type: integer
+          description: Total available credits for the organization.
+          format: int32
+          example: 100
+      required:
+      - available
+      example:
+        available: 100
+    additionalResource:
+      description: AdditionalResource
+      type: object
+      properties:
+        name:
+          type: string
+          description: Resource name
+          example: ''
+        unit:
+          type: string
+          description: Resource unit
+          example: GB
+        currency:
+          type: string
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
+      required:
+      - name
+      - unit
+      - currency
+      - price
+      - value
+      - invoiceDesc
+      example:
+        name: ''
+        unit: GB
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
+    planChangeProjectCompliance:
+      description: PlanChangeProjectCompliance
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Project ID
+          example: proj_a
+        name:
+          type: string
+          description: Project name
+          example: Marketing Site
+        isCompliant:
+          type: boolean
+          description: Whether the project complies with target plan limits
+          example: false
+        resources:
+          type: array
+          description: Resource compliance details
+          items:
+            $ref: '#/components/schemas/planChangeResourceCompliance'
+          example: []
+        error:
+          type:
+          - string
+          - 'null'
+          description: Failure reason when compliance could not be evaluated. Present only when the project DB or Regions API was unreachable; in that case `isCompliant` is false (fail closed) and `resources` is empty.
+          example: 'Failed to get project compliance from Regions API. Status: 500'
+      required:
+      - $id
+      - name
+      - isCompliant
+      - resources
+      example:
+        $id: proj_a
+        name: Marketing Site
+        isCompliant: false
+        resources: []
+        error: 'Failed to get project compliance from Regions API. Status: 500'
+    metric:
+      description: Metric
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The value of this metric at the timestamp.
+          format: int32
+          example: 1
+        date:
+          type: string
+          description: The date at which this metric was aggregated in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - value
+      - date
+      example:
+        value: 1
+        date: '2020-10-15T06:38:00.000+00:00'
+    roles:
+      description: Roles
+      type: object
+      properties:
+        scopes:
+          type: array
+          description: Array of scopes accessible to current user.
+          items:
+            type: string
+          example:
+          - users.read
+        roles:
+          type: array
+          description: Array of roles assigned to current user.
+          items:
+            type: string
+          example:
+          - developer
+      required:
+      - scopes
+      - roles
+      example:
+        scopes: users.read
+        roles: developer
+    invoice:
+      description: Invoice
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Invoice ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Invoice creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Invoice update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Invoice permissions. [Learn more about permissions](/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        teamId:
+          type: string
+          description: Project ID
+          example: 5e5ea5c16897e
+        aggregationId:
+          type: string
+          description: Aggregation ID
+          example: 5e5ea5c16897e
+        plan:
+          type: string
+          description: Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
+          example: tier-1
+        usage:
+          type: array
+          description: Usage breakdown per resource
+          items:
+            $ref: '#/components/schemas/usageResources'
+          example: []
+        amount:
+          type: number
+          description: Invoice Amount
+          format: double
+          example: 50
+        tax:
+          type: number
+          description: Tax percentage
+          format: double
+          example: 17
+        taxAmount:
+          type: number
+          description: Tax amount
+          format: double
+          example: 12.5
+        vat:
+          type: number
+          description: VAT percentage
+          format: double
+          example: 17
+        vatAmount:
+          type: number
+          description: VAT amount
+          format: double
+          example: 12.5
+        grossAmount:
+          type: number
+          description: Gross amount after vat, tax, and discounts applied.
+          format: double
+          example: 12.5
+        creditsUsed:
+          type: number
+          description: Credits used.
+          format: double
+          example: 30
+        currency:
+          type: string
+          description: Currency the invoice is in
+          example: USD
+        clientSecret:
+          type: string
+          description: Client secret for processing failed payments in front-end
+          example: pi_daslfasdfkla_asdkfl
+        status:
+          type: string
+          description: Invoice status
+          example: succeeded
+        type:
+          type: string
+          description: Invoice type. Can be one of `subscription`, `domain_purchase`, `domain_renewal`, `domain_transfer`, or `addon_*`.
+          example: subscription
+        lastError:
+          type: string
+          description: Last payment error associated with the invoice
+          example: Your card has insufficient balance.
+        dueAt:
+          type: string
+          description: Invoice due date.
+          example: '2020-10-15T06:38:00.000+00:00'
+        from:
+          type: string
+          description: Beginning date of the invoice
+          example: '2020-10-15T06:38:00.000+00:00'
+        to:
+          type: string
+          description: End date of the invoice
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - teamId
+      - aggregationId
+      - plan
+      - usage
+      - amount
+      - tax
+      - taxAmount
+      - vat
+      - vatAmount
+      - grossAmount
+      - creditsUsed
+      - currency
+      - clientSecret
+      - status
+      - type
+      - lastError
+      - dueAt
+      - from
+      - to
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        teamId: 5e5ea5c16897e
+        aggregationId: 5e5ea5c16897e
+        plan: tier-1
+        usage: []
+        amount: 50
+        tax: 17
+        taxAmount: 12.5
+        vat: 17
+        vatAmount: 12.5
+        grossAmount: 12.5
+        creditsUsed: 30
+        currency: USD
+        clientSecret: pi_daslfasdfkla_asdkfl
+        status: succeeded
+        type: subscription
+        lastError: Your card has insufficient balance.
+        dueAt: '2020-10-15T06:38:00.000+00:00'
+        from: '2020-10-15T06:38:00.000+00:00'
+        to: '2020-10-15T06:38:00.000+00:00'
   securitySchemes:
     Project:
       type: apiKey

@@ -1395,104 +1395,6 @@ paths:
         in: path
 components:
   schemas:
-    projectProtocol:
-      description: ProjectProtocol
-      type: object
-      properties:
-        $id:
-          description: Protocol ID.
-          example: graphql
-          title: ProjectProtocolId
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - rest
-            title: rest
-          - type: string
-            enum:
-            - graphql
-            title: graphql
-          - type: string
-            enum:
-            - websocket
-            title: websocket
-        enabled:
-          type: boolean
-          description: Protocol status.
-          example: false
-      required:
-      - $id
-      - enabled
-      example:
-        $id: graphql
-        enabled: false
-    key:
-      description: Key
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Key ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Key creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Key update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Key name.
-          example: My API Key
-        expire:
-          type: string
-          description: Key expiration date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        scopes:
-          type: array
-          description: Allowed permission scopes.
-          items:
-            type: string
-          example:
-          - users.read
-        secret:
-          type: string
-          description: Secret key.
-          example: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
-          example: '2020-10-15T06:38:00.000+00:00'
-        sdks:
-          type: array
-          description: List of SDK user agents that used this key.
-          items:
-            type: string
-          example:
-          - appwrite:flutter
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - expire
-      - scopes
-      - secret
-      - accessedAt
-      - sdks
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: My API Key
-        expire: '2020-10-15T06:38:00.000+00:00'
-        scopes: users.read
-        secret: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt: '2020-10-15T06:38:00.000+00:00'
-        sdks: appwrite:flutter
     block:
       description: Block
       type: object
@@ -1567,471 +1469,6 @@ components:
         organizationName: Acme Inc.
         organizationId: 5e5ea5c16897e
         billingPlan: pro
-    billingPlanAddonDetails:
-      description: Details
-      type: object
-      properties:
-        supported:
-          type: boolean
-          description: Is the addon supported in the plan?
-          example: true
-        planIncluded:
-          type: integer
-          description: Addon plan included value
-          format: int32
-          example: 1
-        limit:
-          type: integer
-          description: Addon limit
-          format: int32
-          example: 5
-        type:
-          type: string
-          description: Addon type
-          example: numeric
-        currency:
-          type:
-          - string
-          - 'null'
-          description: Price currency
-          example: USD
-        price:
-          type: number
-          description: Price
-          format: double
-          example: 5
-        value:
-          type: integer
-          description: Resource value
-          format: int32
-          example: 25
-        invoiceDesc:
-          type: string
-          description: Description on invoice
-          example: ''
-      required:
-      - supported
-      - planIncluded
-      - limit
-      - type
-      - price
-      - value
-      - invoiceDesc
-      example:
-        supported: true
-        planIncluded: 1
-        limit: 5
-        type: numeric
-        currency: USD
-        price: 5
-        value: 25
-        invoiceDesc: ''
-    membershipList:
-      description: Memberships List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of memberships that matched your query.
-          format: int32
-          example: 5
-        memberships:
-          type: array
-          description: List of memberships.
-          items:
-            $ref: '#/components/schemas/membership'
-          example: []
-      required:
-      - total
-      - memberships
-      example:
-        total: 5
-        memberships: ''
-    membership:
-      description: Membership
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Membership ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Membership creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Membership update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: User ID.
-          example: 5e5ea5c16897e
-        userName:
-          type: string
-          description: User name. Hide this attribute by toggling membership privacy in the Console.
-          example: John Doe
-        userEmail:
-          type: string
-          description: User email address. Hide this attribute by toggling membership privacy in the Console.
-          example: john@appwrite.io
-        userPhone:
-          type: string
-          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
-          example: +1 555 555 5555
-        teamId:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        teamName:
-          type: string
-          description: Team name.
-          example: VIP
-        invited:
-          type: string
-          description: Date, the user has been invited to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        joined:
-          type: string
-          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        confirm:
-          type: boolean
-          description: User confirmation status, true if the user has joined the team or false otherwise.
-          example: false
-        mfa:
-          type: boolean
-          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
-          example: false
-        userAccessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
-          example: '2020-10-15T06:38:00.000+00:00'
-        roles:
-          type: array
-          description: User list of roles
-          items:
-            type: string
-          example:
-          - owner
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - userId
-      - userName
-      - userEmail
-      - userPhone
-      - teamId
-      - teamName
-      - invited
-      - joined
-      - confirm
-      - mfa
-      - userAccessedAt
-      - roles
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5ea5c16897e
-        userName: John Doe
-        userEmail: john@appwrite.io
-        userPhone: +1 555 555 5555
-        teamId: 5e5ea5c16897e
-        teamName: VIP
-        invited: '2020-10-15T06:38:00.000+00:00'
-        joined: '2020-10-15T06:38:00.000+00:00'
-        confirm: false
-        mfa: false
-        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
-        roles:
-        - owner
-    additionalResource:
-      description: AdditionalResource
-      type: object
-      properties:
-        name:
-          type: string
-          description: Resource name
-          example: ''
-        unit:
-          type: string
-          description: Resource unit
-          example: GB
-        currency:
-          type: string
-          description: Price currency
-          example: USD
-        price:
-          type: number
-          description: Price
-          format: double
-          example: 5
-        value:
-          type: integer
-          description: Resource value
-          format: int32
-          example: 25
-        invoiceDesc:
-          type: string
-          description: Description on invoice
-          example: ''
-      required:
-      - name
-      - unit
-      - currency
-      - price
-      - value
-      - invoiceDesc
-      example:
-        name: ''
-        unit: GB
-        currency: USD
-        price: 5
-        value: 25
-        invoiceDesc: ''
-    appInstallationList:
-      description: App installations list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of installations that matched your query.
-          format: int32
-          example: 5
-        installations:
-          type: array
-          description: List of installations.
-          items:
-            $ref: '#/components/schemas/appInstallation'
-          example: []
-      required:
-      - total
-      - installations
-      example:
-        total: 5
-        installations: ''
-    keyList:
-      description: API Keys List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of keys that matched your query.
-          format: int32
-          example: 5
-        keys:
-          type: array
-          description: List of keys.
-          items:
-            $ref: '#/components/schemas/key'
-          example: []
-      required:
-      - total
-      - keys
-      example:
-        total: 5
-        keys: ''
-    billingPlanAddon:
-      description: Addon
-      type: object
-      properties:
-        seats:
-          type:
-          - object
-          - 'null'
-          description: Addon seats
-          allOf:
-          - $ref: '#/components/schemas/billingPlanAddonDetails'
-        projects:
-          type:
-          - object
-          - 'null'
-          description: Addon projects
-          allOf:
-          - $ref: '#/components/schemas/billingPlanAddonDetails'
-      example:
-        seats: null
-        projects: null
-    billingPlanDedicatedDatabaseLimits:
-      description: dedicatedDatabaseLimits
-      type: object
-      properties:
-        minCpu:
-          type:
-          - integer
-          - 'null'
-          description: Minimum CPU allocation in millicores.
-          format: int32
-          example: 125
-        maxCpu:
-          type:
-          - integer
-          - 'null'
-          description: Maximum CPU allocation in millicores.
-          format: int32
-          example: 32000
-        minMemoryMb:
-          type:
-          - integer
-          - 'null'
-          description: Minimum memory allocation in megabytes.
-          format: int32
-          example: 128
-        maxMemoryMb:
-          type:
-          - integer
-          - 'null'
-          description: Maximum memory allocation in megabytes.
-          format: int32
-          example: 262144
-        minStorageGb:
-          type:
-          - integer
-          - 'null'
-          description: Minimum storage allocation in gigabytes.
-          format: int32
-          example: 1
-        maxStorageGb:
-          type:
-          - integer
-          - 'null'
-          description: Maximum storage allocation in gigabytes.
-          format: int32
-          example: 16384
-        maxReplicas:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of high-availability replicas per dedicated database.
-          format: int32
-          example: 5
-        maxConnections:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of client connections.
-          format: int32
-          example: 10000
-        maxIpAllowlistSize:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of entries allowed in the IP allowlist.
-          format: int32
-          example: 100
-        maxExtensions:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of database extensions that can be enabled.
-          format: int32
-          example: 50
-        maxBackupRetentionDays:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of days a backup can be retained.
-          format: int32
-          example: 365
-        maxPitrRetentionDays:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of days of point-in-time recovery data that can be retained.
-          format: int32
-          example: 35
-        maxSqlApiMaxRows:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of rows a single SQL API query can return.
-          format: int32
-          example: 1000000
-        maxSqlApiMaxBytes:
-          type:
-          - integer
-          - 'null'
-          description: Maximum response size in bytes for a single SQL API query.
-          format: int32
-          example: 104857600
-        maxSqlApiTimeoutSeconds:
-          type:
-          - integer
-          - 'null'
-          description: Maximum execution time in seconds for a single SQL API query.
-          format: int32
-          example: 300
-        maxSqlApiAllowedStatements:
-          type:
-          - integer
-          - 'null'
-          description: Maximum number of SQL statement types that can be permitted through the SQL API.
-          format: int32
-          example: 10
-        allowedSqlStatements:
-          type:
-          - array
-          - 'null'
-          description: SQL statement types permitted through the SQL API.
-          items:
-            type: string
-          example:
-          - select
-          - insert
-          - update
-          - delete
-          - explain
-        allowedStorageClasses:
-          type:
-          - array
-          - 'null'
-          description: Storage classes available for dedicated databases.
-          items:
-            type: string
-          example:
-          - ssd
-        allowedSyncModes:
-          type:
-          - array
-          - 'null'
-          description: Replica synchronization modes available for dedicated databases.
-          items:
-            type: string
-          example:
-          - async
-          - sync
-          - quorum
-      example:
-        minCpu: 125
-        maxCpu: 32000
-        minMemoryMb: 128
-        maxMemoryMb: 262144
-        minStorageGb: 1
-        maxStorageGb: 16384
-        maxReplicas: 5
-        maxConnections: 10000
-        maxIpAllowlistSize: 100
-        maxExtensions: 50
-        maxBackupRetentionDays: 365
-        maxPitrRetentionDays: 35
-        maxSqlApiMaxRows: 1000000
-        maxSqlApiMaxBytes: 104857600
-        maxSqlApiTimeoutSeconds: 300
-        maxSqlApiAllowedStatements: 10
-        allowedSqlStatements:
-        - select
-        - insert
-        - update
-        - delete
-        - explain
-        allowedStorageClasses:
-        - ssd
-        allowedSyncModes:
-        - async
-        - sync
-        - quorum
     billingPlan:
       description: billingPlan
       type: object
@@ -2553,14 +1990,6 @@ components:
         program: null
         databaseComputeCredit: 10
         dedicatedDatabases: null
-    preferences:
-      description: Preferences
-      type: object
-      additionalProperties: true
-      example:
-        language: en
-        timezone: UTC
-        darkTheme: true
     organization:
       description: Organization
       type: object
@@ -2809,326 +2238,6 @@ components:
         markedForDeletion: ''
         platform: imagine
         projects: ''
-    billingPlanSupportedAddons:
-      description: BillingPlanSupportedAddons
-      type: object
-      properties:
-        baa:
-          type: boolean
-          description: Whether the plan supports BAA (Business Associate Agreement) addon
-          example: true
-        premiumGeoDB:
-          type: boolean
-          description: Whether the plan supports Premium Geo DB addon (project-level)
-          example: true
-        premiumGeoDBOrg:
-          type: boolean
-          description: Whether the plan supports Premium Geo DB addon (organization-level)
-          example: true
-      required:
-      - baa
-      - premiumGeoDB
-      - premiumGeoDBOrg
-      example:
-        baa: true
-        premiumGeoDB: true
-        premiumGeoDBOrg: true
-    program:
-      description: Program
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Program ID
-          example: ''
-        title:
-          type: string
-          description: Program title
-          example: ''
-        description:
-          type: string
-          description: Program description
-          example: ''
-        tag:
-          type: string
-          description: Program tag for highlighting on console
-        icon:
-          type: string
-          description: Program icon for highlighting on console
-        url:
-          type: string
-          description: URL for more information on this program
-          example: ''
-        active:
-          type: boolean
-          description: Whether this program is active
-          example: false
-        external:
-          type: boolean
-          description: Whether this program is external
-          example: false
-        billingPlanId:
-          type: string
-          description: Billing plan ID that this is program is associated with.
-          example: ''
-      required:
-      - $id
-      - title
-      - description
-      - tag
-      - icon
-      - url
-      - active
-      - external
-      - billingPlanId
-      example:
-        $id: ''
-        title: ''
-        description: ''
-        tag: null
-        icon: null
-        url: ''
-        active: false
-        external: false
-        billingPlanId: ''
-    appInstallation:
-      description: AppInstallation
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Installation ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Installation creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Installation update time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        appId:
-          type: string
-          description: ID of the installed application.
-          example: 5e5ea5c16897e
-        teamId:
-          type: string
-          description: ID of the team the application is installed on.
-          example: 5e5ea5c16897e
-        scopes:
-          type: array
-          description: Scopes granted to the application. Snapshot of the application's installation scopes taken when the installation was created or last updated.
-          items:
-            type: string
-          example:
-          - organization:organization.read
-        authorizationDetails:
-          type: array
-          description: Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
-          items:
-            type: object
-          example:
-          - type: project
-            identifiers:
-            - '*'
-        createdById:
-          type: string
-          description: ID of the user who created the installation.
-          example: 5e5ea5c16897e
-        createdByName:
-          type: string
-          description: Name of the user who created the installation.
-          example: Walter White
-        lastAccessedAt:
-          type:
-          - string
-          - 'null'
-          description: Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - appId
-      - teamId
-      - scopes
-      - authorizationDetails
-      - createdById
-      - createdByName
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        appId: 5e5ea5c16897e
-        teamId: 5e5ea5c16897e
-        scopes:
-        - organization:organization.read
-        authorizationDetails:
-        - type: project
-          identifiers:
-          - '*'
-        createdById: 5e5ea5c16897e
-        createdByName: Walter White
-        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
-    billingPlanLimits:
-      description: PlanLimits
-      type: object
-      properties:
-        credits:
-          type:
-          - integer
-          - 'null'
-          description: Credits limit per billing cycle
-          format: int32
-          example: 100
-        dailyCredits:
-          type:
-          - integer
-          - 'null'
-          description: Daily credits limit (if applicable)
-          format: int32
-          example: 5
-      example:
-        credits: 100
-        dailyCredits: 5
-    projectList:
-      description: Projects List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of projects that matched your query.
-          format: int32
-          example: 5
-        projects:
-          type: array
-          description: List of projects.
-          items:
-            $ref: '#/components/schemas/project'
-          example: []
-      required:
-      - total
-      - projects
-      example:
-        total: 5
-        projects: ''
-    billingLimits:
-      description: Limits
-      type: object
-      properties:
-        bandwidth:
-          type:
-          - integer
-          - 'null'
-          description: Bandwidth limit
-          format: int32
-          example: 5
-        storage:
-          type:
-          - integer
-          - 'null'
-          description: Storage limit
-          format: int32
-          example: 150
-        users:
-          type:
-          - integer
-          - 'null'
-          description: Users limit
-          format: int32
-          example: 200000
-        executions:
-          type:
-          - integer
-          - 'null'
-          description: Executions limit
-          format: int32
-          example: 750000
-        GBHours:
-          type:
-          - integer
-          - 'null'
-          description: GBHours limit
-          format: int32
-          example: 100
-        imageTransformations:
-          type:
-          - integer
-          - 'null'
-          description: Image transformations limit
-          format: int32
-          example: 100
-        authPhone:
-          type:
-          - integer
-          - 'null'
-          description: Auth phone limit
-          format: int32
-          example: 10
-        budgetLimit:
-          type:
-          - integer
-          - 'null'
-          description: Budget limit percentage
-          format: int32
-          example: 100
-      example:
-        bandwidth: 5
-        storage: 150
-        users: 200000
-        executions: 750000
-        GBHours: 100
-        imageTransformations: 100
-        authPhone: 10
-        budgetLimit: 100
-    projectAuthMethod:
-      description: ProjectAuthMethod
-      type: object
-      properties:
-        $id:
-          description: Auth method ID.
-          example: email-password
-          title: ProjectAuthMethodId
-          type: string
-          oneOf:
-          - type: string
-            enum:
-            - email-password
-            title: email-password
-          - type: string
-            enum:
-            - magic-url
-            title: magic-url
-          - type: string
-            enum:
-            - email-otp
-            title: email-otp
-          - type: string
-            enum:
-            - anonymous
-            title: anonymous
-          - type: string
-            enum:
-            - invites
-            title: invites
-          - type: string
-            enum:
-            - jwt
-            title: jwt
-          - type: string
-            enum:
-            - phone
-            title: phone
-        enabled:
-          type: boolean
-          description: Auth method status.
-          example: false
-      required:
-      - $id
-      - enabled
-      example:
-        $id: email-password
-        enabled: false
     usageBillingPlan:
       description: usageBillingPlan
       type: object
@@ -3215,98 +2324,195 @@ components:
         GBHours: null
         imageTransformations: null
         credits: null
-    projectService:
-      description: ProjectService
+    projectAuthMethod:
+      description: ProjectAuthMethod
       type: object
       properties:
         $id:
-          description: Service ID.
-          example: sites
-          title: ProjectServiceId
+          description: Auth method ID.
+          example: email-password
+          title: ProjectAuthMethodId
           type: string
           oneOf:
           - type: string
             enum:
-            - account
-            title: account
+            - email-password
+            title: email-password
           - type: string
             enum:
-            - avatars
-            title: avatars
+            - magic-url
+            title: magic-url
           - type: string
             enum:
-            - databases
-            title: databases
+            - email-otp
+            title: email-otp
           - type: string
             enum:
-            - tablesdb
-            title: tablesdb
+            - anonymous
+            title: anonymous
           - type: string
             enum:
-            - locale
-            title: locale
+            - invites
+            title: invites
           - type: string
             enum:
-            - health
-            title: health
+            - jwt
+            title: jwt
           - type: string
             enum:
-            - project
-            title: project
+            - phone
+            title: phone
+        enabled:
+          type: boolean
+          description: Auth method status.
+          example: false
+      required:
+      - $id
+      - enabled
+      example:
+        $id: email-password
+        enabled: false
+    projectProtocol:
+      description: ProjectProtocol
+      type: object
+      properties:
+        $id:
+          description: Protocol ID.
+          example: graphql
+          title: ProjectProtocolId
+          type: string
+          oneOf:
           - type: string
             enum:
-            - storage
-            title: storage
-          - type: string
-            enum:
-            - teams
-            title: teams
-          - type: string
-            enum:
-            - users
-            title: users
-          - type: string
-            enum:
-            - vcs
-            title: vcs
-          - type: string
-            enum:
-            - sites
-            title: sites
-          - type: string
-            enum:
-            - functions
-            title: functions
-          - type: string
-            enum:
-            - proxy
-            title: proxy
+            - rest
+            title: rest
           - type: string
             enum:
             - graphql
             title: graphql
           - type: string
             enum:
-            - migrations
-            title: migrations
-          - type: string
-            enum:
-            - messaging
-            title: messaging
-          - type: string
-            enum:
-            - advisor
-            title: advisor
+            - websocket
+            title: websocket
         enabled:
           type: boolean
-          description: Service status.
+          description: Protocol status.
           example: false
       required:
       - $id
       - enabled
       example:
-        $id: sites
+        $id: graphql
         enabled: false
+    preferences:
+      description: Preferences
+      type: object
+      additionalProperties: true
+      example:
+        language: en
+        timezone: UTC
+        darkTheme: true
+    projectList:
+      description: Projects List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of projects that matched your query.
+          format: int32
+          example: 5
+        projects:
+          type: array
+          description: List of projects.
+          items:
+            $ref: '#/components/schemas/project'
+          example: []
+      required:
+      - total
+      - projects
+      example:
+        total: 5
+        projects: ''
+    billingPlanAddonDetails:
+      description: Details
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: Is the addon supported in the plan?
+          example: true
+        planIncluded:
+          type: integer
+          description: Addon plan included value
+          format: int32
+          example: 1
+        limit:
+          type: integer
+          description: Addon limit
+          format: int32
+          example: 5
+        type:
+          type: string
+          description: Addon type
+          example: numeric
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
+      required:
+      - supported
+      - planIncluded
+      - limit
+      - type
+      - price
+      - value
+      - invoiceDesc
+      example:
+        supported: true
+        planIncluded: 1
+        limit: 5
+        type: numeric
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
+    membershipList:
+      description: Memberships List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of memberships that matched your query.
+          format: int32
+          example: 5
+        memberships:
+          type: array
+          description: List of memberships.
+          items:
+            $ref: '#/components/schemas/membership'
+          example: []
+      required:
+      - total
+      - memberships
+      example:
+        total: 5
+        memberships: ''
     project:
       description: Project
       type: object
@@ -3652,6 +2858,721 @@ components:
         oAuth2ServerUserCodeFormat: alphanumeric
         oAuth2ServerDeviceCodeDuration: 600
         oAuth2ServerDiscoveryUrl: https://auth.example.com/.well-known/openid-configuration
+    key:
+      description: Key
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Key ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Key creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Key update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Key name.
+          example: My API Key
+        expire:
+          type: string
+          description: Key expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        scopes:
+          type: array
+          description: Allowed permission scopes.
+          items:
+            type: string
+          example:
+          - users.read
+        secret:
+          type: string
+          description: Secret key.
+          example: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+          example: '2020-10-15T06:38:00.000+00:00'
+        sdks:
+          type: array
+          description: List of SDK user agents that used this key.
+          items:
+            type: string
+          example:
+          - appwrite:flutter
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - expire
+      - scopes
+      - secret
+      - accessedAt
+      - sdks
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My API Key
+        expire: '2020-10-15T06:38:00.000+00:00'
+        scopes: users.read
+        secret: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt: '2020-10-15T06:38:00.000+00:00'
+        sdks: appwrite:flutter
+    keyList:
+      description: API Keys List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of keys that matched your query.
+          format: int32
+          example: 5
+        keys:
+          type: array
+          description: List of keys.
+          items:
+            $ref: '#/components/schemas/key'
+          example: []
+      required:
+      - total
+      - keys
+      example:
+        total: 5
+        keys: ''
+    billingPlanAddon:
+      description: Addon
+      type: object
+      properties:
+        seats:
+          type:
+          - object
+          - 'null'
+          description: Addon seats
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+        projects:
+          type:
+          - object
+          - 'null'
+          description: Addon projects
+          allOf:
+          - $ref: '#/components/schemas/billingPlanAddonDetails'
+      example:
+        seats: null
+        projects: null
+    billingPlanSupportedAddons:
+      description: BillingPlanSupportedAddons
+      type: object
+      properties:
+        baa:
+          type: boolean
+          description: Whether the plan supports BAA (Business Associate Agreement) addon
+          example: true
+        premiumGeoDB:
+          type: boolean
+          description: Whether the plan supports Premium Geo DB addon (project-level)
+          example: true
+        premiumGeoDBOrg:
+          type: boolean
+          description: Whether the plan supports Premium Geo DB addon (organization-level)
+          example: true
+      required:
+      - baa
+      - premiumGeoDB
+      - premiumGeoDBOrg
+      example:
+        baa: true
+        premiumGeoDB: true
+        premiumGeoDBOrg: true
+    billingPlanDedicatedDatabaseLimits:
+      description: dedicatedDatabaseLimits
+      type: object
+      properties:
+        minCpu:
+          type:
+          - integer
+          - 'null'
+          description: Minimum CPU allocation in millicores.
+          format: int32
+          example: 125
+        maxCpu:
+          type:
+          - integer
+          - 'null'
+          description: Maximum CPU allocation in millicores.
+          format: int32
+          example: 32000
+        minMemoryMb:
+          type:
+          - integer
+          - 'null'
+          description: Minimum memory allocation in megabytes.
+          format: int32
+          example: 128
+        maxMemoryMb:
+          type:
+          - integer
+          - 'null'
+          description: Maximum memory allocation in megabytes.
+          format: int32
+          example: 262144
+        minStorageGb:
+          type:
+          - integer
+          - 'null'
+          description: Minimum storage allocation in gigabytes.
+          format: int32
+          example: 1
+        maxStorageGb:
+          type:
+          - integer
+          - 'null'
+          description: Maximum storage allocation in gigabytes.
+          format: int32
+          example: 16384
+        maxReplicas:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of high-availability replicas per dedicated database.
+          format: int32
+          example: 5
+        maxConnections:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of client connections.
+          format: int32
+          example: 10000
+        maxIpAllowlistSize:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of entries allowed in the IP allowlist.
+          format: int32
+          example: 100
+        maxExtensions:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of database extensions that can be enabled.
+          format: int32
+          example: 50
+        maxBackupRetentionDays:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of days a backup can be retained.
+          format: int32
+          example: 365
+        maxPitrRetentionDays:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of days of point-in-time recovery data that can be retained.
+          format: int32
+          example: 35
+        maxSqlApiMaxRows:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of rows a single SQL API query can return.
+          format: int32
+          example: 1000000
+        maxSqlApiMaxBytes:
+          type:
+          - integer
+          - 'null'
+          description: Maximum response size in bytes for a single SQL API query.
+          format: int32
+          example: 104857600
+        maxSqlApiTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          description: Maximum execution time in seconds for a single SQL API query.
+          format: int32
+          example: 300
+        maxSqlApiAllowedStatements:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of SQL statement types that can be permitted through the SQL API.
+          format: int32
+          example: 10
+        allowedSqlStatements:
+          type:
+          - array
+          - 'null'
+          description: SQL statement types permitted through the SQL API.
+          items:
+            type: string
+          example:
+          - select
+          - insert
+          - update
+          - delete
+          - explain
+        allowedStorageClasses:
+          type:
+          - array
+          - 'null'
+          description: Storage classes available for dedicated databases.
+          items:
+            type: string
+          example:
+          - ssd
+        allowedSyncModes:
+          type:
+          - array
+          - 'null'
+          description: Replica synchronization modes available for dedicated databases.
+          items:
+            type: string
+          example:
+          - async
+          - sync
+          - quorum
+      example:
+        minCpu: 125
+        maxCpu: 32000
+        minMemoryMb: 128
+        maxMemoryMb: 262144
+        minStorageGb: 1
+        maxStorageGb: 16384
+        maxReplicas: 5
+        maxConnections: 10000
+        maxIpAllowlistSize: 100
+        maxExtensions: 50
+        maxBackupRetentionDays: 365
+        maxPitrRetentionDays: 35
+        maxSqlApiMaxRows: 1000000
+        maxSqlApiMaxBytes: 104857600
+        maxSqlApiTimeoutSeconds: 300
+        maxSqlApiAllowedStatements: 10
+        allowedSqlStatements:
+        - select
+        - insert
+        - update
+        - delete
+        - explain
+        allowedStorageClasses:
+        - ssd
+        allowedSyncModes:
+        - async
+        - sync
+        - quorum
+    billingLimits:
+      description: Limits
+      type: object
+      properties:
+        bandwidth:
+          type:
+          - integer
+          - 'null'
+          description: Bandwidth limit
+          format: int32
+          example: 5
+        storage:
+          type:
+          - integer
+          - 'null'
+          description: Storage limit
+          format: int32
+          example: 150
+        users:
+          type:
+          - integer
+          - 'null'
+          description: Users limit
+          format: int32
+          example: 200000
+        executions:
+          type:
+          - integer
+          - 'null'
+          description: Executions limit
+          format: int32
+          example: 750000
+        GBHours:
+          type:
+          - integer
+          - 'null'
+          description: GBHours limit
+          format: int32
+          example: 100
+        imageTransformations:
+          type:
+          - integer
+          - 'null'
+          description: Image transformations limit
+          format: int32
+          example: 100
+        authPhone:
+          type:
+          - integer
+          - 'null'
+          description: Auth phone limit
+          format: int32
+          example: 10
+        budgetLimit:
+          type:
+          - integer
+          - 'null'
+          description: Budget limit percentage
+          format: int32
+          example: 100
+      example:
+        bandwidth: 5
+        storage: 150
+        users: 200000
+        executions: 750000
+        GBHours: 100
+        imageTransformations: 100
+        authPhone: 10
+        budgetLimit: 100
+    billingPlanLimits:
+      description: PlanLimits
+      type: object
+      properties:
+        credits:
+          type:
+          - integer
+          - 'null'
+          description: Credits limit per billing cycle
+          format: int32
+          example: 100
+        dailyCredits:
+          type:
+          - integer
+          - 'null'
+          description: Daily credits limit (if applicable)
+          format: int32
+          example: 5
+      example:
+        credits: 100
+        dailyCredits: 5
+    projectService:
+      description: ProjectService
+      type: object
+      properties:
+        $id:
+          description: Service ID.
+          example: sites
+          title: ProjectServiceId
+          type: string
+          oneOf:
+          - type: string
+            enum:
+            - account
+            title: account
+          - type: string
+            enum:
+            - avatars
+            title: avatars
+          - type: string
+            enum:
+            - databases
+            title: databases
+          - type: string
+            enum:
+            - tablesdb
+            title: tablesdb
+          - type: string
+            enum:
+            - locale
+            title: locale
+          - type: string
+            enum:
+            - health
+            title: health
+          - type: string
+            enum:
+            - project
+            title: project
+          - type: string
+            enum:
+            - storage
+            title: storage
+          - type: string
+            enum:
+            - teams
+            title: teams
+          - type: string
+            enum:
+            - users
+            title: users
+          - type: string
+            enum:
+            - vcs
+            title: vcs
+          - type: string
+            enum:
+            - sites
+            title: sites
+          - type: string
+            enum:
+            - functions
+            title: functions
+          - type: string
+            enum:
+            - proxy
+            title: proxy
+          - type: string
+            enum:
+            - graphql
+            title: graphql
+          - type: string
+            enum:
+            - migrations
+            title: migrations
+          - type: string
+            enum:
+            - messaging
+            title: messaging
+          - type: string
+            enum:
+            - advisor
+            title: advisor
+        enabled:
+          type: boolean
+          description: Service status.
+          example: false
+      required:
+      - $id
+      - enabled
+      example:
+        $id: sites
+        enabled: false
+    program:
+      description: Program
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Program ID
+          example: ''
+        title:
+          type: string
+          description: Program title
+          example: ''
+        description:
+          type: string
+          description: Program description
+          example: ''
+        tag:
+          type: string
+          description: Program tag for highlighting on console
+        icon:
+          type: string
+          description: Program icon for highlighting on console
+        url:
+          type: string
+          description: URL for more information on this program
+          example: ''
+        active:
+          type: boolean
+          description: Whether this program is active
+          example: false
+        external:
+          type: boolean
+          description: Whether this program is external
+          example: false
+        billingPlanId:
+          type: string
+          description: Billing plan ID that this is program is associated with.
+          example: ''
+      required:
+      - $id
+      - title
+      - description
+      - tag
+      - icon
+      - url
+      - active
+      - external
+      - billingPlanId
+      example:
+        $id: ''
+        title: ''
+        description: ''
+        tag: null
+        icon: null
+        url: ''
+        active: false
+        external: false
+        billingPlanId: ''
+    membership:
+      description: Membership
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Membership ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Membership creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Membership update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: User ID.
+          example: 5e5ea5c16897e
+        userName:
+          type: string
+          description: User name. Hide this attribute by toggling membership privacy in the Console.
+          example: John Doe
+        userEmail:
+          type: string
+          description: User email address. Hide this attribute by toggling membership privacy in the Console.
+          example: john@appwrite.io
+        userPhone:
+          type: string
+          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
+          example: +1 555 555 5555
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        teamName:
+          type: string
+          description: Team name.
+          example: VIP
+        invited:
+          type: string
+          description: Date, the user has been invited to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        joined:
+          type: string
+          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        confirm:
+          type: boolean
+          description: User confirmation status, true if the user has joined the team or false otherwise.
+          example: false
+        mfa:
+          type: boolean
+          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
+          example: false
+        userAccessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
+          example: '2020-10-15T06:38:00.000+00:00'
+        roles:
+          type: array
+          description: User list of roles
+          items:
+            type: string
+          example:
+          - owner
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - userId
+      - userName
+      - userEmail
+      - userPhone
+      - teamId
+      - teamName
+      - invited
+      - joined
+      - confirm
+      - mfa
+      - userAccessedAt
+      - roles
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5ea5c16897e
+        userName: John Doe
+        userEmail: john@appwrite.io
+        userPhone: +1 555 555 5555
+        teamId: 5e5ea5c16897e
+        teamName: VIP
+        invited: '2020-10-15T06:38:00.000+00:00'
+        joined: '2020-10-15T06:38:00.000+00:00'
+        confirm: false
+        mfa: false
+        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        roles:
+        - owner
+    additionalResource:
+      description: AdditionalResource
+      type: object
+      properties:
+        name:
+          type: string
+          description: Resource name
+          example: ''
+        unit:
+          type: string
+          description: Resource unit
+          example: GB
+        currency:
+          type: string
+          description: Price currency
+          example: USD
+        price:
+          type: number
+          description: Price
+          format: double
+          example: 5
+        value:
+          type: integer
+          description: Resource value
+          format: int32
+          example: 25
+        invoiceDesc:
+          type: string
+          description: Description on invoice
+          example: ''
+      required:
+      - name
+      - unit
+      - currency
+      - price
+      - value
+      - invoiceDesc
+      example:
+        name: ''
+        unit: GB
+        currency: USD
+        price: 5
+        value: 25
+        invoiceDesc: ''
+    appInstallationList:
+      description: App installations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of installations that matched your query.
+          format: int32
+          example: 5
+        installations:
+          type: array
+          description: List of installations.
+          items:
+            $ref: '#/components/schemas/appInstallation'
+          example: []
+      required:
+      - total
+      - installations
+      example:
+        total: 5
+        installations: ''
     devKey:
       description: DevKey
       type: object
@@ -3709,6 +3630,85 @@ components:
         secret: 919c2d18fb5d4...a2ae413da83346ad2
         accessedAt: '2020-10-15T06:38:00.000+00:00'
         sdks: appwrite:flutter
+    appInstallation:
+      description: AppInstallation
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Installation ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Installation creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Installation update time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        appId:
+          type: string
+          description: ID of the installed application.
+          example: 5e5ea5c16897e
+        teamId:
+          type: string
+          description: ID of the team the application is installed on.
+          example: 5e5ea5c16897e
+        scopes:
+          type: array
+          description: Scopes granted to the application. Snapshot of the application's installation scopes taken when the installation was created or last updated.
+          items:
+            type: string
+          example:
+          - organization:organization.read
+        authorizationDetails:
+          type: array
+          description: Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
+          items:
+            type: object
+          example:
+          - type: project
+            identifiers:
+            - '*'
+        createdById:
+          type: string
+          description: ID of the user who created the installation.
+          example: 5e5ea5c16897e
+        createdByName:
+          type: string
+          description: Name of the user who created the installation.
+          example: Walter White
+        lastAccessedAt:
+          type:
+          - string
+          - 'null'
+          description: Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - appId
+      - teamId
+      - scopes
+      - authorizationDetails
+      - createdById
+      - createdByName
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        appId: 5e5ea5c16897e
+        teamId: 5e5ea5c16897e
+        scopes:
+        - organization:organization.read
+        authorizationDetails:
+        - type: project
+          identifiers:
+          - '*'
+        createdById: 5e5ea5c16897e
+        createdByName: Walter White
+        lastAccessedAt: '2020-10-15T06:38:00.000+00:00'
   securitySchemes:
     Project:
       type: apiKey

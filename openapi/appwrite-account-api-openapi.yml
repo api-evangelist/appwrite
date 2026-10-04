@@ -4844,541 +4844,63 @@ paths:
               - secret
 components:
   schemas:
-    key:
-      description: Key
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Key ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Key creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Key update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Key name.
-          example: My API Key
-        expire:
-          type: string
-          description: Key expiration date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        scopes:
-          type: array
-          description: Allowed permission scopes.
-          items:
-            type: string
-          example:
-          - users.read
-        secret:
-          type: string
-          description: Secret key.
-          example: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
-          example: '2020-10-15T06:38:00.000+00:00'
-        sdks:
-          type: array
-          description: List of SDK user agents that used this key.
-          items:
-            type: string
-          example:
-          - appwrite:flutter
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - expire
-      - scopes
-      - secret
-      - accessedAt
-      - sdks
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: My API Key
-        expire: '2020-10-15T06:38:00.000+00:00'
-        scopes: users.read
-        secret: 919c2d18fb5d4...a2ae413da83346ad2
-        accessedAt: '2020-10-15T06:38:00.000+00:00'
-        sdks: appwrite:flutter
-    identity:
-      description: Identity
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Identity ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Identity creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Identity update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: User ID.
-          example: 5e5bb8c16897e
-        provider:
-          type: string
-          description: Identity Provider.
-          example: email
-        providerUid:
-          type: string
-          description: ID of the User in the Identity Provider.
-          example: 5e5bb8c16897e
-        providerEmail:
-          type: string
-          description: Email of the User in the Identity Provider.
-          example: user@example.com
-        providerAccessToken:
-          type: string
-          description: Identity Provider Access Token.
-          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-        providerAccessTokenExpiry:
-          type: string
-          description: The date of when the access token expires in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        providerRefreshToken:
-          type: string
-          description: Identity Provider Refresh Token.
-          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - userId
-      - provider
-      - providerUid
-      - providerEmail
-      - providerAccessToken
-      - providerAccessTokenExpiry
-      - providerRefreshToken
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5bb8c16897e
-        provider: email
-        providerUid: 5e5bb8c16897e
-        providerEmail: user@example.com
-        providerAccessToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-        providerAccessTokenExpiry: '2020-10-15T06:38:00.000+00:00'
-        providerRefreshToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
-    algoScryptModified:
-      description: AlgoScryptModified
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: scryptMod
-        salt:
-          type: string
-          description: Salt used to compute hash.
-          example: UxLMreBr6tYyjQ==
-        saltSeparator:
-          type: string
-          description: Separator used to compute hash.
-          example: Bw==
-        signerKey:
-          type: string
-          description: Key used to compute hash.
-          example: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
-      required:
-      - type
-      - salt
-      - saltSeparator
-      - signerKey
-      example:
-        type: scryptMod
-        salt: UxLMreBr6tYyjQ==
-        saltSeparator: Bw==
-        signerKey: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
-    mfaType:
-      description: MFAType
-      type: object
-      properties:
-        secret:
-          type: string
-          description: Secret token used for TOTP factor.
-          example: '[SHARED_SECRET]'
-        uri:
-          type: string
-          description: URI for authenticator apps.
-          example: otpauth://totp/appwrite:user@example.com?secret=[SHARED_SECRET]&issuer=appwrite
-      required:
-      - secret
-      - uri
-      example:
-        secret: '[SHARED_SECRET]'
-        uri: otpauth://totp/appwrite:user@example.com?secret=[SHARED_SECRET]&issuer=appwrite
-    invoice:
-      description: Invoice
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Invoice ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Invoice creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Invoice update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Invoice permissions. [Learn more about permissions](/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        teamId:
-          type: string
-          description: Project ID
-          example: 5e5ea5c16897e
-        aggregationId:
-          type: string
-          description: Aggregation ID
-          example: 5e5ea5c16897e
-        plan:
-          type: string
-          description: Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
-          example: tier-1
-        usage:
-          type: array
-          description: Usage breakdown per resource
-          items:
-            $ref: '#/components/schemas/usageResources'
-          example: []
-        amount:
-          type: number
-          description: Invoice Amount
-          format: double
-          example: 50
-        tax:
-          type: number
-          description: Tax percentage
-          format: double
-          example: 17
-        taxAmount:
-          type: number
-          description: Tax amount
-          format: double
-          example: 12.5
-        vat:
-          type: number
-          description: VAT percentage
-          format: double
-          example: 17
-        vatAmount:
-          type: number
-          description: VAT amount
-          format: double
-          example: 12.5
-        grossAmount:
-          type: number
-          description: Gross amount after vat, tax, and discounts applied.
-          format: double
-          example: 12.5
-        creditsUsed:
-          type: number
-          description: Credits used.
-          format: double
-          example: 30
-        currency:
-          type: string
-          description: Currency the invoice is in
-          example: USD
-        clientSecret:
-          type: string
-          description: Client secret for processing failed payments in front-end
-          example: pi_daslfasdfkla_asdkfl
-        status:
-          type: string
-          description: Invoice status
-          example: succeeded
-        type:
-          type: string
-          description: Invoice type. Can be one of `subscription`, `domain_purchase`, `domain_renewal`, `domain_transfer`, or `addon_*`.
-          example: subscription
-        lastError:
-          type: string
-          description: Last payment error associated with the invoice
-          example: Your card has insufficient balance.
-        dueAt:
-          type: string
-          description: Invoice due date.
-          example: '2020-10-15T06:38:00.000+00:00'
-        from:
-          type: string
-          description: Beginning date of the invoice
-          example: '2020-10-15T06:38:00.000+00:00'
-        to:
-          type: string
-          description: End date of the invoice
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - teamId
-      - aggregationId
-      - plan
-      - usage
-      - amount
-      - tax
-      - taxAmount
-      - vat
-      - vatAmount
-      - grossAmount
-      - creditsUsed
-      - currency
-      - clientSecret
-      - status
-      - type
-      - lastError
-      - dueAt
-      - from
-      - to
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        teamId: 5e5ea5c16897e
-        aggregationId: 5e5ea5c16897e
-        plan: tier-1
-        usage: []
-        amount: 50
-        tax: 17
-        taxAmount: 12.5
-        vat: 17
-        vatAmount: 12.5
-        grossAmount: 12.5
-        creditsUsed: 30
-        currency: USD
-        clientSecret: pi_daslfasdfkla_asdkfl
-        status: succeeded
-        type: subscription
-        lastError: Your card has insufficient balance.
-        dueAt: '2020-10-15T06:38:00.000+00:00'
-        from: '2020-10-15T06:38:00.000+00:00'
-        to: '2020-10-15T06:38:00.000+00:00'
-    paymentMethod:
-      description: paymentMethod
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Payment Method ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Payment method creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Payment method update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-          type: array
-          description: Payment method permissions. [Learn more about permissions](/docs/permissions).
-          items:
-            type: string
-          example:
-          - read("any")
-        providerMethodId:
-          type: string
-          description: Payment method ID from the payment provider
-          example: abdk3ed3sdkfj
-        clientSecret:
-          type: string
-          description: Client secret hash for payment setup
-          example: seti_ddfe
-        providerUserId:
-          type: string
-          description: User ID from the payment provider.
-          example: abdk3ed3sdkfj
-        userId:
-          type: string
-          description: ID of the Team.
-          example: 5e5ea5c16897e
-        expiryMonth:
-          type: integer
-          description: Expiry month of the payment method.
-          format: int32
-          example: 2
-        expiryYear:
-          type: integer
-          description: Expiry year of the payment method.
-          format: int32
-          example: 2024
-        last4:
-          type: string
-          description: Last 4 digit of the payment method
-          example: '4242'
-        brand:
-          type: string
-          description: Payment method brand
-          example: visa
-        name:
-          type: string
-          description: Name of the owner
-          example: John Doe
-        mandateId:
-          type: string
-          description: Mandate ID of the payment method
-          example: yxc
-        country:
-          type: string
-          description: Country of the payment method
-          example: de
-        state:
-          type: string
-          description: State of the payment method
-          example: ''
-        lastError:
-          type: string
-          description: Last payment error associated with the payment method.
-          example: Your card has insufficient funds.
-        default:
-          type: boolean
-          description: True when it's the default payment method.
-          example: false
-        expired:
-          type: boolean
-          description: True when payment method has expired.
-          example: false
-        failed:
-          type: boolean
-          description: True when payment method has failed to process multiple times.
-          example: false
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - $permissions
-      - providerMethodId
-      - clientSecret
-      - providerUserId
-      - userId
-      - expiryMonth
-      - expiryYear
-      - last4
-      - brand
-      - name
-      - mandateId
-      - country
-      - state
-      - lastError
-      - default
-      - expired
-      - failed
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        $permissions:
-        - read("any")
-        providerMethodId: abdk3ed3sdkfj
-        clientSecret: seti_ddfe
-        providerUserId: abdk3ed3sdkfj
-        userId: 5e5ea5c16897e
-        expiryMonth: 2
-        expiryYear: 2024
-        last4: '4242'
-        brand: visa
-        name: John Doe
-        mandateId: yxc
-        country: de
-        state: ''
-        lastError: Your card has insufficient funds.
-        default: false
-        expired: false
-        failed: false
-    oauth2ConsentList:
-      description: OAuth2 consents list
+    sessionList:
+      description: Sessions List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of consents that matched your query.
+          description: Total number of sessions that matched your query.
           format: int32
           example: 5
-        consents:
+        sessions:
           type: array
-          description: List of consents.
+          description: List of sessions.
           items:
-            $ref: '#/components/schemas/oauth2Consent'
+            $ref: '#/components/schemas/session'
           example: []
       required:
       - total
-      - consents
+      - sessions
       example:
         total: 5
-        consents: ''
-    jwt:
-      description: JWT
+        sessions: ''
+    mfaFactors:
+      description: MFAFactors
       type: object
       properties:
-        jwt:
-          type: string
-          description: JWT encoded string.
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        totp:
+          type: boolean
+          description: Can TOTP be used for MFA challenge for this account.
+          example: true
+        phone:
+          type: boolean
+          description: Can phone (SMS) be used for MFA challenge for this account.
+          example: true
+        email:
+          type: boolean
+          description: Can email be used for MFA challenge for this account.
+          example: true
+        recoveryCode:
+          type: boolean
+          description: Can recovery code be used for MFA challenge for this account.
+          example: true
+        custom:
+          type: boolean
+          description: Can custom factor be used for MFA challenge for this account.
+          example: true
       required:
-      - jwt
+      - totp
+      - phone
+      - email
+      - recoveryCode
+      - custom
       example:
-        jwt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-    keyList:
-      description: API Keys List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of keys that matched your query.
-          format: int32
-          example: 5
-        keys:
-          type: array
-          description: List of keys.
-          items:
-            $ref: '#/components/schemas/key'
-          example: []
-      required:
-      - total
-      - keys
-      example:
-        total: 5
-        keys: ''
-    algoBcrypt:
-      description: AlgoBcrypt
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: bcrypt
-      required:
-      - type
-      example:
-        type: bcrypt
+        totp: true
+        phone: true
+        email: true
+        recoveryCode: true
+        custom: true
     usageResources:
       description: Resource
       type: object
@@ -5436,107 +4958,394 @@ components:
         resourceId: ''
         type: postgresql
         specification: s-2vcpu-2gb
-    target:
-      description: Target
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Target ID.
-          example: '259125845563242502'
-        $createdAt:
-          type: string
-          description: Target creation time in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Target update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Target Name.
-          example: Apple iPhone 12
-        userId:
-          type: string
-          description: User ID.
-          example: '259125845563242502'
-        providerId:
-          type:
-          - string
-          - 'null'
-          description: Provider ID.
-          example: '259125845563242502'
-        providerType:
-          type: string
-          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
-          example: email
-        identifier:
-          type: string
-          description: The target identifier.
-          example: token
-        expired:
-          type: boolean
-          description: Is the target expired.
-          example: false
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - userId
-      - providerType
-      - identifier
-      - expired
-      example:
-        $id: '259125845563242502'
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: Apple iPhone 12
-        userId: '259125845563242502'
-        providerId: '259125845563242502'
-        providerType: email
-        identifier: token
-        expired: false
-    algoScrypt:
-      description: AlgoScrypt
+    algoMd5:
+      description: AlgoMD5
       type: object
       properties:
         type:
           type: string
           description: Algo type.
-          example: scrypt
-        costCpu:
-          type: integer
-          description: CPU complexity of computed hash.
-          format: int32
-          example: 8
-        costMemory:
-          type: integer
-          description: Memory complexity of computed hash.
-          format: int32
-          example: 14
-        costParallel:
-          type: integer
-          description: Parallelization of computed hash.
-          format: int32
-          example: 1
-        length:
-          type: integer
-          description: Length used to compute hash.
-          format: int32
-          example: 64
+          example: md5
       required:
       - type
-      - costCpu
-      - costMemory
-      - costParallel
-      - length
       example:
-        type: scrypt
-        costCpu: 8
-        costMemory: 14
-        costParallel: 1
-        length: 64
+        type: md5
+    algoSha:
+      description: AlgoSHA
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: sha
+      required:
+      - type
+      example:
+        type: sha
+    preferences:
+      description: Preferences
+      type: object
+      additionalProperties: true
+      example:
+        language: en
+        timezone: UTC
+        darkTheme: true
+    jwt:
+      description: JWT
+      type: object
+      properties:
+        jwt:
+          type: string
+          description: JWT encoded string.
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+      required:
+      - jwt
+      example:
+        jwt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    log:
+      description: Log
+      type: object
+      properties:
+        event:
+          type: string
+          description: Event name.
+          example: account.sessions.create
+        userId:
+          type: string
+          description: User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
+          example: 610fc2f985ee0
+        userEmail:
+          type: string
+          description: User email of the actor recorded for this log. During impersonation, this is the original impersonator.
+          example: john@appwrite.io
+        userName:
+          type: string
+          description: User name of the actor recorded for this log. During impersonation, this is the original impersonator.
+          example: John Doe
+        mode:
+          type: string
+          description: API mode when event triggered.
+          example: admin
+        userType:
+          type: string
+          description: 'User type who triggered the audit log. Possible values: user, admin, guest, hidden, keyProject, keyAccount, keyOrganization.'
+          example: user
+        ip:
+          type: string
+          description: IP session in use when the session was created.
+          example: 127.0.0.1
+        time:
+          type: string
+          description: Log creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        osCode:
+          type: string
+          description: Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
+          example: Mac
+        osName:
+          type: string
+          description: Operating system name.
+          example: Mac
+        osVersion:
+          type: string
+          description: Operating system version.
+          example: Mac
+        clientType:
+          type: string
+          description: Client type.
+          example: browser
+        clientCode:
+          type: string
+          description: Client code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/clients.json).
+          example: CM
+        clientName:
+          type: string
+          description: Client name.
+          example: Chrome Mobile iOS
+        clientVersion:
+          type: string
+          description: Client version.
+          example: '84.0'
+        clientEngine:
+          type: string
+          description: Client engine name.
+          example: WebKit
+        clientEngineVersion:
+          type: string
+          description: Client engine name.
+          example: 605.1.15
+        deviceName:
+          type: string
+          description: Device name.
+          example: smartphone
+        deviceBrand:
+          type: string
+          description: Device brand name.
+          example: Google
+        deviceModel:
+          type: string
+          description: Device model name.
+          example: Nexus 5
+        countryCode:
+          type: string
+          description: Country two-character ISO 3166-1 alpha code.
+          example: US
+        countryName:
+          type: string
+          description: Country name.
+          example: United States
+      required:
+      - event
+      - userId
+      - userEmail
+      - userName
+      - mode
+      - userType
+      - ip
+      - time
+      - osCode
+      - osName
+      - osVersion
+      - clientType
+      - clientCode
+      - clientName
+      - clientVersion
+      - clientEngine
+      - clientEngineVersion
+      - deviceName
+      - deviceBrand
+      - deviceModel
+      - countryCode
+      - countryName
+      example:
+        event: account.sessions.create
+        userId: 610fc2f985ee0
+        userEmail: john@appwrite.io
+        userName: John Doe
+        mode: admin
+        userType: user
+        ip: 127.0.0.1
+        time: '2020-10-15T06:38:00.000+00:00'
+        osCode: Mac
+        osName: Mac
+        osVersion: Mac
+        clientType: browser
+        clientCode: CM
+        clientName: Chrome Mobile iOS
+        clientVersion: '84.0'
+        clientEngine: WebKit
+        clientEngineVersion: 605.1.15
+        deviceName: smartphone
+        deviceBrand: Google
+        deviceModel: Nexus 5
+        countryCode: US
+        countryName: United States
+    coupon:
+      description: Coupon
+      type: object
+      properties:
+        $id:
+          type: string
+          description: coupon ID
+          example: NEWBONUS
+        code:
+          type: string
+          description: coupon ID
+          example: NEWBONUS
+        credits:
+          type: number
+          description: Provided credit amount
+          format: double
+          example: 50
+        expiration:
+          type: string
+          description: Coupon expiration time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        validity:
+          type: integer
+          description: Credit validity in days.
+          format: int32
+          example: 180
+        campaign:
+          type: string
+          description: Campaign the coupon is associated with`.
+          example: AppwriteHeroes
+        status:
+          type: string
+          description: Status of the coupon. Can be one of `disabled`, `active` or `expired`.
+          example: disabled
+        onlyNewOrgs:
+          type: boolean
+          description: If the coupon is only valid for new organizations or not.
+          example: true
+      required:
+      - $id
+      - code
+      - credits
+      - expiration
+      - validity
+      - campaign
+      - status
+      - onlyNewOrgs
+      example:
+        $id: NEWBONUS
+        code: NEWBONUS
+        credits: 50
+        expiration: '2020-10-15T06:38:00.000+00:00'
+        validity: 180
+        campaign: AppwriteHeroes
+        status: disabled
+        onlyNewOrgs: true
+    paymentMethodList:
+      description: Payment methods list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of paymentMethods that matched your query.
+          format: int32
+          example: 5
+        paymentMethods:
+          type: array
+          description: List of paymentMethods.
+          items:
+            $ref: '#/components/schemas/paymentMethod'
+          example: []
+      required:
+      - total
+      - paymentMethods
+      example:
+        total: 5
+        paymentMethods: ''
+    invoiceList:
+      description: Billing invoices list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of invoices that matched your query.
+          format: int32
+          example: 5
+        invoices:
+          type: array
+          description: List of invoices.
+          items:
+            $ref: '#/components/schemas/invoice'
+          example: []
+      required:
+      - total
+      - invoices
+      example:
+        total: 5
+        invoices: ''
+    mfaChallenge:
+      description: MFA Challenge
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Token ID.
+          example: bb8ea5c16897e
+        $createdAt:
+          type: string
+          description: Token creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: User ID.
+          example: 5e5ea5c168bb8
+        expire:
+          type: string
+          description: Token expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - userId
+      - expire
+      example:
+        $id: bb8ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5ea5c168bb8
+        expire: '2020-10-15T06:38:00.000+00:00'
+    oauth2Consent:
+      description: OAuth2 Consent
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Consent ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Consent creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Consent update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: ID of the user the consent belongs to.
+          example: 5e5ea5c16897e
+        appId:
+          type: string
+          description: ID of the registered app the consent was given to. Empty for URL-form (CIMD) clients.
+          example: 5e5ea5c16897e
+        cimdUrl:
+          type: string
+          description: Client ID metadata document URL of the client the consent was given to. Empty for registered apps.
+          example: https://example.com/.well-known/client-metadata.json
+        scopes:
+          type: array
+          description: OAuth2 scopes the user consented to.
+          items:
+            type: string
+          example:
+          - openid
+          - email
+          - profile
+        resources:
+          type: array
+          description: RFC 8707 resource indicators the user consented to.
+          items:
+            type: string
+          example:
+          - https://api.example.com/
+        authorizationDetails:
+          type: string
+          description: Authorization details the user consented to, as a JSON string. Each entry has a `type` plus project-defined fields.
+          example: '[{"type":"calendar","identifier":"primary","actions":["read_events","create_event"]}]'
+        expire:
+          type: string
+          description: Consent expiration time in ISO 8601 format. Empty when the consent has no token-bound expiry yet.
+          example: '2020-10-15T06:38:00.000+00:00'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - userId
+      - appId
+      - cimdUrl
+      - scopes
+      - resources
+      - authorizationDetails
+      - expire
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5ea5c16897e
+        appId: 5e5ea5c16897e
+        cimdUrl: https://example.com/.well-known/client-metadata.json
+        scopes:
+        - openid
+        - email
+        - profile
+        resources:
+        - https://api.example.com/
+        authorizationDetails: '[{"type":"calendar","identifier":"primary","actions":["read_events","create_event"]}]'
+        expire: '2020-10-15T06:38:00.000+00:00'
     token:
       description: Token
       type: object
@@ -5579,6 +5388,27 @@ components:
         secret: ''
         expire: '2020-10-15T06:38:00.000+00:00'
         phrase: Golden Fox
+    oauth2ConsentTokenList:
+      description: OAuth2 consent tokens list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of tokens that matched your query.
+          format: int32
+          example: 5
+        tokens:
+          type: array
+          description: List of tokens.
+          items:
+            $ref: '#/components/schemas/oauth2ConsentToken'
+          example: []
+      required:
+      - total
+      - tokens
+      example:
+        total: 5
+        tokens: ''
     session:
       description: Session
       type: object
@@ -5763,115 +5593,274 @@ components:
         - email
         secret: 5e5bb8c16897e
         mfaUpdatedAt: '2020-10-15T06:38:00.000+00:00'
-    coupon:
-      description: Coupon
+    key:
+      description: Key
       type: object
       properties:
         $id:
           type: string
-          description: coupon ID
-          example: NEWBONUS
-        code:
+          description: Key ID.
+          example: 5e5ea5c16897e
+        $createdAt:
           type: string
-          description: coupon ID
-          example: NEWBONUS
-        credits:
-          type: number
-          description: Provided credit amount
-          format: double
-          example: 50
-        expiration:
-          type: string
-          description: Coupon expiration time in ISO 8601 format.
+          description: Key creation date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        validity:
-          type: integer
-          description: Credit validity in days.
-          format: int32
-          example: 180
-        campaign:
+        $updatedAt:
           type: string
-          description: Campaign the coupon is associated with`.
-          example: AppwriteHeroes
-        status:
+          description: Key update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
           type: string
-          description: Status of the coupon. Can be one of `disabled`, `active` or `expired`.
-          example: disabled
-        onlyNewOrgs:
-          type: boolean
-          description: If the coupon is only valid for new organizations or not.
-          example: true
+          description: Key name.
+          example: My API Key
+        expire:
+          type: string
+          description: Key expiration date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        scopes:
+          type: array
+          description: Allowed permission scopes.
+          items:
+            type: string
+          example:
+          - users.read
+        secret:
+          type: string
+          description: Secret key.
+          example: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+          example: '2020-10-15T06:38:00.000+00:00'
+        sdks:
+          type: array
+          description: List of SDK user agents that used this key.
+          items:
+            type: string
+          example:
+          - appwrite:flutter
       required:
       - $id
-      - code
-      - credits
-      - expiration
-      - validity
-      - campaign
-      - status
-      - onlyNewOrgs
+      - $createdAt
+      - $updatedAt
+      - name
+      - expire
+      - scopes
+      - secret
+      - accessedAt
+      - sdks
       example:
-        $id: NEWBONUS
-        code: NEWBONUS
-        credits: 50
-        expiration: '2020-10-15T06:38:00.000+00:00'
-        validity: 180
-        campaign: AppwriteHeroes
-        status: disabled
-        onlyNewOrgs: true
-    algoSha:
-      description: AlgoSHA
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: sha
-      required:
-      - type
-      example:
-        type: sha
-    algoMd5:
-      description: AlgoMD5
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: md5
-      required:
-      - type
-      example:
-        type: md5
-    preferences:
-      description: Preferences
-      type: object
-      additionalProperties: true
-      example:
-        language: en
-        timezone: UTC
-        darkTheme: true
-    oauth2ConsentTokenList:
-      description: OAuth2 consent tokens list
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: My API Key
+        expire: '2020-10-15T06:38:00.000+00:00'
+        scopes: users.read
+        secret: 919c2d18fb5d4...a2ae413da83346ad2
+        accessedAt: '2020-10-15T06:38:00.000+00:00'
+        sdks: appwrite:flutter
+    keyList:
+      description: API Keys List
       type: object
       properties:
         total:
           type: integer
-          description: Total number of tokens that matched your query.
+          description: Total number of keys that matched your query.
           format: int32
           example: 5
-        tokens:
+        keys:
           type: array
-          description: List of tokens.
+          description: List of keys.
           items:
-            $ref: '#/components/schemas/oauth2ConsentToken'
+            $ref: '#/components/schemas/key'
           example: []
       required:
       - total
-      - tokens
+      - keys
       example:
         total: 5
-        tokens: ''
+        keys: ''
+    algoArgon2:
+      description: AlgoArgon2
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: argon2
+        memoryCost:
+          type: integer
+          description: Memory used to compute hash.
+          format: int32
+          example: 65536
+        timeCost:
+          type: integer
+          description: Amount of time consumed to compute hash
+          format: int32
+          example: 4
+        threads:
+          type: integer
+          description: Number of threads used to compute hash.
+          format: int32
+          example: 3
+      required:
+      - type
+      - memoryCost
+      - timeCost
+      - threads
+      example:
+        type: argon2
+        memoryCost: 65536
+        timeCost: 4
+        threads: 3
+    algoBcrypt:
+      description: AlgoBcrypt
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: bcrypt
+      required:
+      - type
+      example:
+        type: bcrypt
+    billingAddressList:
+      description: Billing address list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of billingAddresses that matched your query.
+          format: int32
+          example: 5
+        billingAddresses:
+          type: array
+          description: List of billingAddresses.
+          items:
+            $ref: '#/components/schemas/billingAddress'
+          example: []
+      required:
+      - total
+      - billingAddresses
+      example:
+        total: 5
+        billingAddresses: ''
+    billingAddress:
+      description: Address
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Region ID
+          example: eu-fr
+        userId:
+          type: string
+          description: User ID
+          example: 5e5ea5c16897e
+        streetAddress:
+          type: string
+          description: Street address
+          example: 13th Avenue
+        addressLine2:
+          type: string
+          description: Address line 2
+          example: ''
+        country:
+          type: string
+          description: Address country
+          example: USA
+        city:
+          type: string
+          description: city
+          example: ''
+        state:
+          type: string
+          description: state
+          example: ''
+        postalCode:
+          type: string
+          description: postal code
+          example: ''
+      required:
+      - $id
+      - userId
+      - streetAddress
+      - addressLine2
+      - country
+      - city
+      - state
+      - postalCode
+      example:
+        $id: eu-fr
+        userId: 5e5ea5c16897e
+        streetAddress: 13th Avenue
+        addressLine2: ''
+        country: USA
+        city: ''
+        state: ''
+        postalCode: ''
+    target:
+      description: Target
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Target ID.
+          example: '259125845563242502'
+        $createdAt:
+          type: string
+          description: Target creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Target update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Target Name.
+          example: Apple iPhone 12
+        userId:
+          type: string
+          description: User ID.
+          example: '259125845563242502'
+        providerId:
+          type:
+          - string
+          - 'null'
+          description: Provider ID.
+          example: '259125845563242502'
+        providerType:
+          type: string
+          description: 'The target provider type. Can be one of the following: `email`, `sms` or `push`.'
+          example: email
+        identifier:
+          type: string
+          description: The target identifier.
+          example: token
+        expired:
+          type: boolean
+          description: Is the target expired.
+          example: false
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - userId
+      - providerType
+      - identifier
+      - expired
+      example:
+        $id: '259125845563242502'
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: Apple iPhone 12
+        userId: '259125845563242502'
+        providerId: '259125845563242502'
+        providerType: email
+        identifier: token
+        expired: false
     oauth2ConsentToken:
       description: OAuth2 Consent Token
       type: object
@@ -5956,90 +5945,208 @@ components:
         - https://api.example.com/
         authorizationDetails: '[{"type":"calendar","identifier":"primary","actions":["read_events","create_event"]}]'
         expire: '2020-10-15T06:38:00.000+00:00'
-    mfaChallenge:
-      description: MFA Challenge
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Token ID.
-          example: bb8ea5c16897e
-        $createdAt:
-          type: string
-          description: Token creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: User ID.
-          example: 5e5ea5c168bb8
-        expire:
-          type: string
-          description: Token expiration date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-      required:
-      - $id
-      - $createdAt
-      - userId
-      - expire
-      example:
-        $id: bb8ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5ea5c168bb8
-        expire: '2020-10-15T06:38:00.000+00:00'
-    logList:
-      description: Logs List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of logs that matched your query.
-          format: int32
-          example: 5
-        logs:
-          type: array
-          description: List of logs.
-          items:
-            $ref: '#/components/schemas/log'
-          example: []
-      required:
-      - total
-      - logs
-      example:
-        total: 5
-        logs: ''
-    billingAddressList:
-      description: Billing address list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of billingAddresses that matched your query.
-          format: int32
-          example: 5
-        billingAddresses:
-          type: array
-          description: List of billingAddresses.
-          items:
-            $ref: '#/components/schemas/billingAddress'
-          example: []
-      required:
-      - total
-      - billingAddresses
-      example:
-        total: 5
-        billingAddresses: ''
-    algoPhpass:
-      description: AlgoPHPass
+    algoScryptModified:
+      description: AlgoScryptModified
       type: object
       properties:
         type:
           type: string
           description: Algo type.
-          example: phpass
+          example: scryptMod
+        salt:
+          type: string
+          description: Salt used to compute hash.
+          example: UxLMreBr6tYyjQ==
+        saltSeparator:
+          type: string
+          description: Separator used to compute hash.
+          example: Bw==
+        signerKey:
+          type: string
+          description: Key used to compute hash.
+          example: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
       required:
       - type
+      - salt
+      - saltSeparator
+      - signerKey
       example:
-        type: phpass
+        type: scryptMod
+        salt: UxLMreBr6tYyjQ==
+        saltSeparator: Bw==
+        signerKey: XyEKE9RcTDeLEsL/RjwPDBv/RqDl8fb3gpYEOQaPihbxf1ZAtSOHCjuAAa7Q3oHpCYhXSN9tizHgVOwn6krflQ==
+    paymentMethod:
+      description: paymentMethod
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Payment Method ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Payment method creation time in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Payment method update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+          type: array
+          description: Payment method permissions. [Learn more about permissions](/docs/permissions).
+          items:
+            type: string
+          example:
+          - read("any")
+        providerMethodId:
+          type: string
+          description: Payment method ID from the payment provider
+          example: abdk3ed3sdkfj
+        clientSecret:
+          type: string
+          description: Client secret hash for payment setup
+          example: seti_ddfe
+        providerUserId:
+          type: string
+          description: User ID from the payment provider.
+          example: abdk3ed3sdkfj
+        userId:
+          type: string
+          description: ID of the Team.
+          example: 5e5ea5c16897e
+        expiryMonth:
+          type: integer
+          description: Expiry month of the payment method.
+          format: int32
+          example: 2
+        expiryYear:
+          type: integer
+          description: Expiry year of the payment method.
+          format: int32
+          example: 2024
+        last4:
+          type: string
+          description: Last 4 digit of the payment method
+          example: '4242'
+        brand:
+          type: string
+          description: Payment method brand
+          example: visa
+        name:
+          type: string
+          description: Name of the owner
+          example: John Doe
+        mandateId:
+          type: string
+          description: Mandate ID of the payment method
+          example: yxc
+        country:
+          type: string
+          description: Country of the payment method
+          example: de
+        state:
+          type: string
+          description: State of the payment method
+          example: ''
+        lastError:
+          type: string
+          description: Last payment error associated with the payment method.
+          example: Your card has insufficient funds.
+        default:
+          type: boolean
+          description: True when it's the default payment method.
+          example: false
+        expired:
+          type: boolean
+          description: True when payment method has expired.
+          example: false
+        failed:
+          type: boolean
+          description: True when payment method has failed to process multiple times.
+          example: false
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - $permissions
+      - providerMethodId
+      - clientSecret
+      - providerUserId
+      - userId
+      - expiryMonth
+      - expiryYear
+      - last4
+      - brand
+      - name
+      - mandateId
+      - country
+      - state
+      - lastError
+      - default
+      - expired
+      - failed
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        $permissions:
+        - read("any")
+        providerMethodId: abdk3ed3sdkfj
+        clientSecret: seti_ddfe
+        providerUserId: abdk3ed3sdkfj
+        userId: 5e5ea5c16897e
+        expiryMonth: 2
+        expiryYear: 2024
+        last4: '4242'
+        brand: visa
+        name: John Doe
+        mandateId: yxc
+        country: de
+        state: ''
+        lastError: Your card has insufficient funds.
+        default: false
+        expired: false
+        failed: false
+    algoScrypt:
+      description: AlgoScrypt
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: scrypt
+        costCpu:
+          type: integer
+          description: CPU complexity of computed hash.
+          format: int32
+          example: 8
+        costMemory:
+          type: integer
+          description: Memory complexity of computed hash.
+          format: int32
+          example: 14
+        costParallel:
+          type: integer
+          description: Parallelization of computed hash.
+          format: int32
+          example: 1
+        length:
+          type: integer
+          description: Length used to compute hash.
+          format: int32
+          example: 64
+      required:
+      - type
+      - costCpu
+      - costMemory
+      - costParallel
+      - length
+      example:
+        type: scrypt
+        costCpu: 8
+        costMemory: 14
+        costParallel: 1
+        length: 64
     identityList:
       description: Identities List
       type: object
@@ -6061,144 +6168,57 @@ components:
       example:
         total: 5
         identities: ''
-    log:
-      description: Log
+    logList:
+      description: Logs List
       type: object
       properties:
-        event:
-          type: string
-          description: Event name.
-          example: account.sessions.create
-        userId:
-          type: string
-          description: User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
-          example: 610fc2f985ee0
-        userEmail:
-          type: string
-          description: User email of the actor recorded for this log. During impersonation, this is the original impersonator.
-          example: john@appwrite.io
-        userName:
-          type: string
-          description: User name of the actor recorded for this log. During impersonation, this is the original impersonator.
-          example: John Doe
-        mode:
-          type: string
-          description: API mode when event triggered.
-          example: admin
-        userType:
-          type: string
-          description: 'User type who triggered the audit log. Possible values: user, admin, guest, hidden, keyProject, keyAccount, keyOrganization.'
-          example: user
-        ip:
-          type: string
-          description: IP session in use when the session was created.
-          example: 127.0.0.1
-        time:
-          type: string
-          description: Log creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        osCode:
-          type: string
-          description: Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
-          example: Mac
-        osName:
-          type: string
-          description: Operating system name.
-          example: Mac
-        osVersion:
-          type: string
-          description: Operating system version.
-          example: Mac
-        clientType:
-          type: string
-          description: Client type.
-          example: browser
-        clientCode:
-          type: string
-          description: Client code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/clients.json).
-          example: CM
-        clientName:
-          type: string
-          description: Client name.
-          example: Chrome Mobile iOS
-        clientVersion:
-          type: string
-          description: Client version.
-          example: '84.0'
-        clientEngine:
-          type: string
-          description: Client engine name.
-          example: WebKit
-        clientEngineVersion:
-          type: string
-          description: Client engine name.
-          example: 605.1.15
-        deviceName:
-          type: string
-          description: Device name.
-          example: smartphone
-        deviceBrand:
-          type: string
-          description: Device brand name.
-          example: Google
-        deviceModel:
-          type: string
-          description: Device model name.
-          example: Nexus 5
-        countryCode:
-          type: string
-          description: Country two-character ISO 3166-1 alpha code.
-          example: US
-        countryName:
-          type: string
-          description: Country name.
-          example: United States
+        total:
+          type: integer
+          description: Total number of logs that matched your query.
+          format: int32
+          example: 5
+        logs:
+          type: array
+          description: List of logs.
+          items:
+            $ref: '#/components/schemas/log'
+          example: []
       required:
-      - event
-      - userId
-      - userEmail
-      - userName
-      - mode
-      - userType
-      - ip
-      - time
-      - osCode
-      - osName
-      - osVersion
-      - clientType
-      - clientCode
-      - clientName
-      - clientVersion
-      - clientEngine
-      - clientEngineVersion
-      - deviceName
-      - deviceBrand
-      - deviceModel
-      - countryCode
-      - countryName
+      - total
+      - logs
       example:
-        event: account.sessions.create
-        userId: 610fc2f985ee0
-        userEmail: john@appwrite.io
-        userName: John Doe
-        mode: admin
-        userType: user
-        ip: 127.0.0.1
-        time: '2020-10-15T06:38:00.000+00:00'
-        osCode: Mac
-        osName: Mac
-        osVersion: Mac
-        clientType: browser
-        clientCode: CM
-        clientName: Chrome Mobile iOS
-        clientVersion: '84.0'
-        clientEngine: WebKit
-        clientEngineVersion: 605.1.15
-        deviceName: smartphone
-        deviceBrand: Google
-        deviceModel: Nexus 5
-        countryCode: US
-        countryName: United States
+        total: 5
+        logs: ''
+    algoPhpass:
+      description: AlgoPHPass
+      type: object
+      properties:
+        type:
+          type: string
+          description: Algo type.
+          example: phpass
+      required:
+      - type
+      example:
+        type: phpass
+    mfaType:
+      description: MFAType
+      type: object
+      properties:
+        secret:
+          type: string
+          description: Secret token used for TOTP factor.
+          example: '[SHARED_SECRET]'
+        uri:
+          type: string
+          description: URI for authenticator apps.
+          example: otpauth://totp/appwrite:user@example.com?secret=[SHARED_SECRET]&issuer=appwrite
+      required:
+      - secret
+      - uri
+      example:
+        secret: '[SHARED_SECRET]'
+        uri: otpauth://totp/appwrite:user@example.com?secret=[SHARED_SECRET]&issuer=appwrite
     mfaRecoveryCodes:
       description: MFA Recovery Codes
       type: object
@@ -6217,6 +6237,93 @@ components:
         recoveryCodes:
         - a3kf0-s0cl2
         - s0co1-as98s
+    identity:
+      description: Identity
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Identity ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Identity creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Identity update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: User ID.
+          example: 5e5bb8c16897e
+        provider:
+          type: string
+          description: Identity Provider.
+          example: email
+        providerUid:
+          type: string
+          description: ID of the User in the Identity Provider.
+          example: 5e5bb8c16897e
+        providerEmail:
+          type: string
+          description: Email of the User in the Identity Provider.
+          example: user@example.com
+        providerAccessToken:
+          type: string
+          description: Identity Provider Access Token.
+          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
+        providerAccessTokenExpiry:
+          type: string
+          description: The date of when the access token expires in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        providerRefreshToken:
+          type: string
+          description: Identity Provider Refresh Token.
+          example: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - userId
+      - provider
+      - providerUid
+      - providerEmail
+      - providerAccessToken
+      - providerAccessTokenExpiry
+      - providerRefreshToken
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5bb8c16897e
+        provider: email
+        providerUid: 5e5bb8c16897e
+        providerEmail: user@example.com
+        providerAccessToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
+        providerAccessTokenExpiry: '2020-10-15T06:38:00.000+00:00'
+        providerRefreshToken: MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3
+    oauth2ConsentList:
+      description: OAuth2 consents list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of consents that matched your query.
+          format: int32
+          example: 5
+        consents:
+          type: array
+          description: List of consents.
+          items:
+            $ref: '#/components/schemas/oauth2Consent'
+          example: []
+      required:
+      - total
+      - consents
+      example:
+        total: 5
+        consents: ''
     user:
       description: User
       type: object
@@ -6420,270 +6527,163 @@ components:
         accessedAt: '2020-10-15T06:38:00.000+00:00'
         impersonator: false
         impersonatorUserId: 5e5ea5c16897e
-    sessionList:
-      description: Sessions List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of sessions that matched your query.
-          format: int32
-          example: 5
-        sessions:
-          type: array
-          description: List of sessions.
-          items:
-            $ref: '#/components/schemas/session'
-          example: []
-      required:
-      - total
-      - sessions
-      example:
-        total: 5
-        sessions: ''
-    invoiceList:
-      description: Billing invoices list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of invoices that matched your query.
-          format: int32
-          example: 5
-        invoices:
-          type: array
-          description: List of invoices.
-          items:
-            $ref: '#/components/schemas/invoice'
-          example: []
-      required:
-      - total
-      - invoices
-      example:
-        total: 5
-        invoices: ''
-    billingAddress:
-      description: Address
+    invoice:
+      description: Invoice
       type: object
       properties:
         $id:
           type: string
-          description: Region ID
-          example: eu-fr
-        userId:
-          type: string
-          description: User ID
-          example: 5e5ea5c16897e
-        streetAddress:
-          type: string
-          description: Street address
-          example: 13th Avenue
-        addressLine2:
-          type: string
-          description: Address line 2
-          example: ''
-        country:
-          type: string
-          description: Address country
-          example: USA
-        city:
-          type: string
-          description: city
-          example: ''
-        state:
-          type: string
-          description: state
-          example: ''
-        postalCode:
-          type: string
-          description: postal code
-          example: ''
-      required:
-      - $id
-      - userId
-      - streetAddress
-      - addressLine2
-      - country
-      - city
-      - state
-      - postalCode
-      example:
-        $id: eu-fr
-        userId: 5e5ea5c16897e
-        streetAddress: 13th Avenue
-        addressLine2: ''
-        country: USA
-        city: ''
-        state: ''
-        postalCode: ''
-    mfaFactors:
-      description: MFAFactors
-      type: object
-      properties:
-        totp:
-          type: boolean
-          description: Can TOTP be used for MFA challenge for this account.
-          example: true
-        phone:
-          type: boolean
-          description: Can phone (SMS) be used for MFA challenge for this account.
-          example: true
-        email:
-          type: boolean
-          description: Can email be used for MFA challenge for this account.
-          example: true
-        recoveryCode:
-          type: boolean
-          description: Can recovery code be used for MFA challenge for this account.
-          example: true
-        custom:
-          type: boolean
-          description: Can custom factor be used for MFA challenge for this account.
-          example: true
-      required:
-      - totp
-      - phone
-      - email
-      - recoveryCode
-      - custom
-      example:
-        totp: true
-        phone: true
-        email: true
-        recoveryCode: true
-        custom: true
-    paymentMethodList:
-      description: Payment methods list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of paymentMethods that matched your query.
-          format: int32
-          example: 5
-        paymentMethods:
-          type: array
-          description: List of paymentMethods.
-          items:
-            $ref: '#/components/schemas/paymentMethod'
-          example: []
-      required:
-      - total
-      - paymentMethods
-      example:
-        total: 5
-        paymentMethods: ''
-    oauth2Consent:
-      description: OAuth2 Consent
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Consent ID.
+          description: Invoice ID.
           example: 5e5ea5c16897e
         $createdAt:
           type: string
-          description: Consent creation time in ISO 8601 format.
+          description: Invoice creation time in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
         $updatedAt:
           type: string
-          description: Consent update date in ISO 8601 format.
+          description: Invoice update date in ISO 8601 format.
           example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: ID of the user the consent belongs to.
-          example: 5e5ea5c16897e
-        appId:
-          type: string
-          description: ID of the registered app the consent was given to. Empty for URL-form (CIMD) clients.
-          example: 5e5ea5c16897e
-        cimdUrl:
-          type: string
-          description: Client ID metadata document URL of the client the consent was given to. Empty for registered apps.
-          example: https://example.com/.well-known/client-metadata.json
-        scopes:
+        $permissions:
           type: array
-          description: OAuth2 scopes the user consented to.
+          description: Invoice permissions. [Learn more about permissions](/docs/permissions).
           items:
             type: string
           example:
-          - openid
-          - email
-          - profile
-        resources:
+          - read("any")
+        teamId:
+          type: string
+          description: Project ID
+          example: 5e5ea5c16897e
+        aggregationId:
+          type: string
+          description: Aggregation ID
+          example: 5e5ea5c16897e
+        plan:
+          type: string
+          description: Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
+          example: tier-1
+        usage:
           type: array
-          description: RFC 8707 resource indicators the user consented to.
+          description: Usage breakdown per resource
           items:
-            type: string
-          example:
-          - https://api.example.com/
-        authorizationDetails:
+            $ref: '#/components/schemas/usageResources'
+          example: []
+        amount:
+          type: number
+          description: Invoice Amount
+          format: double
+          example: 50
+        tax:
+          type: number
+          description: Tax percentage
+          format: double
+          example: 17
+        taxAmount:
+          type: number
+          description: Tax amount
+          format: double
+          example: 12.5
+        vat:
+          type: number
+          description: VAT percentage
+          format: double
+          example: 17
+        vatAmount:
+          type: number
+          description: VAT amount
+          format: double
+          example: 12.5
+        grossAmount:
+          type: number
+          description: Gross amount after vat, tax, and discounts applied.
+          format: double
+          example: 12.5
+        creditsUsed:
+          type: number
+          description: Credits used.
+          format: double
+          example: 30
+        currency:
           type: string
-          description: Authorization details the user consented to, as a JSON string. Each entry has a `type` plus project-defined fields.
-          example: '[{"type":"calendar","identifier":"primary","actions":["read_events","create_event"]}]'
-        expire:
+          description: Currency the invoice is in
+          example: USD
+        clientSecret:
           type: string
-          description: Consent expiration time in ISO 8601 format. Empty when the consent has no token-bound expiry yet.
+          description: Client secret for processing failed payments in front-end
+          example: pi_daslfasdfkla_asdkfl
+        status:
+          type: string
+          description: Invoice status
+          example: succeeded
+        type:
+          type: string
+          description: Invoice type. Can be one of `subscription`, `domain_purchase`, `domain_renewal`, `domain_transfer`, or `addon_*`.
+          example: subscription
+        lastError:
+          type: string
+          description: Last payment error associated with the invoice
+          example: Your card has insufficient balance.
+        dueAt:
+          type: string
+          description: Invoice due date.
+          example: '2020-10-15T06:38:00.000+00:00'
+        from:
+          type: string
+          description: Beginning date of the invoice
+          example: '2020-10-15T06:38:00.000+00:00'
+        to:
+          type: string
+          description: End date of the invoice
           example: '2020-10-15T06:38:00.000+00:00'
       required:
       - $id
       - $createdAt
       - $updatedAt
-      - userId
-      - appId
-      - cimdUrl
-      - scopes
-      - resources
-      - authorizationDetails
-      - expire
+      - $permissions
+      - teamId
+      - aggregationId
+      - plan
+      - usage
+      - amount
+      - tax
+      - taxAmount
+      - vat
+      - vatAmount
+      - grossAmount
+      - creditsUsed
+      - currency
+      - clientSecret
+      - status
+      - type
+      - lastError
+      - dueAt
+      - from
+      - to
       example:
         $id: 5e5ea5c16897e
         $createdAt: '2020-10-15T06:38:00.000+00:00'
         $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5ea5c16897e
-        appId: 5e5ea5c16897e
-        cimdUrl: https://example.com/.well-known/client-metadata.json
-        scopes:
-        - openid
-        - email
-        - profile
-        resources:
-        - https://api.example.com/
-        authorizationDetails: '[{"type":"calendar","identifier":"primary","actions":["read_events","create_event"]}]'
-        expire: '2020-10-15T06:38:00.000+00:00'
-    algoArgon2:
-      description: AlgoArgon2
-      type: object
-      properties:
-        type:
-          type: string
-          description: Algo type.
-          example: argon2
-        memoryCost:
-          type: integer
-          description: Memory used to compute hash.
-          format: int32
-          example: 65536
-        timeCost:
-          type: integer
-          description: Amount of time consumed to compute hash
-          format: int32
-          example: 4
-        threads:
-          type: integer
-          description: Number of threads used to compute hash.
-          format: int32
-          example: 3
-      required:
-      - type
-      - memoryCost
-      - timeCost
-      - threads
-      example:
-        type: argon2
-        memoryCost: 65536
-        timeCost: 4
-        threads: 3
+        $permissions:
+        - read("any")
+        teamId: 5e5ea5c16897e
+        aggregationId: 5e5ea5c16897e
+        plan: tier-1
+        usage: []
+        amount: 50
+        tax: 17
+        taxAmount: 12.5
+        vat: 17
+        vatAmount: 12.5
+        grossAmount: 12.5
+        creditsUsed: 30
+        currency: USD
+        clientSecret: pi_daslfasdfkla_asdkfl
+        status: succeeded
+        type: subscription
+        lastError: Your card has insufficient balance.
+        dueAt: '2020-10-15T06:38:00.000+00:00'
+        from: '2020-10-15T06:38:00.000+00:00'
+        to: '2020-10-15T06:38:00.000+00:00'
   securitySchemes:
     Project:
       type: apiKey

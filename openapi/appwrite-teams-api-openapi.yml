@@ -1203,6 +1203,247 @@ paths:
               - prefs
 components:
   schemas:
+    membershipList:
+      description: Memberships List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of memberships that matched your query.
+          format: int32
+          example: 5
+        memberships:
+          type: array
+          description: List of memberships.
+          items:
+            $ref: '#/components/schemas/membership'
+          example: []
+      required:
+      - total
+      - memberships
+      example:
+        total: 5
+        memberships: ''
+    team:
+      description: Team
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Team creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Team update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        name:
+          type: string
+          description: Team name.
+          example: VIP
+        total:
+          type: integer
+          description: Total number of team members.
+          format: int32
+          example: 7
+        prefs:
+          type: object
+          description: Team preferences as a key-value object
+          example:
+            theme: pink
+            timezone: UTC
+          allOf:
+          - $ref: '#/components/schemas/preferences'
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - name
+      - total
+      - prefs
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        name: VIP
+        total: 7
+        prefs:
+          theme: pink
+          timezone: UTC
+    logList:
+      description: Logs List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of logs that matched your query.
+          format: int32
+          example: 5
+        logs:
+          type: array
+          description: List of logs.
+          items:
+            $ref: '#/components/schemas/log'
+          example: []
+      required:
+      - total
+      - logs
+      example:
+        total: 5
+        logs: ''
+    membership:
+      description: Membership
+      type: object
+      properties:
+        $id:
+          type: string
+          description: Membership ID.
+          example: 5e5ea5c16897e
+        $createdAt:
+          type: string
+          description: Membership creation date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt:
+          type: string
+          description: Membership update date in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        userId:
+          type: string
+          description: User ID.
+          example: 5e5ea5c16897e
+        userName:
+          type: string
+          description: User name. Hide this attribute by toggling membership privacy in the Console.
+          example: John Doe
+        userEmail:
+          type: string
+          description: User email address. Hide this attribute by toggling membership privacy in the Console.
+          example: john@appwrite.io
+        userPhone:
+          type: string
+          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
+          example: +1 555 555 5555
+        teamId:
+          type: string
+          description: Team ID.
+          example: 5e5ea5c16897e
+        teamName:
+          type: string
+          description: Team name.
+          example: VIP
+        invited:
+          type: string
+          description: Date, the user has been invited to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        joined:
+          type: string
+          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
+          example: '2020-10-15T06:38:00.000+00:00'
+        confirm:
+          type: boolean
+          description: User confirmation status, true if the user has joined the team or false otherwise.
+          example: false
+        mfa:
+          type: boolean
+          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
+          example: false
+        userAccessedAt:
+          type: string
+          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
+          example: '2020-10-15T06:38:00.000+00:00'
+        roles:
+          type: array
+          description: User list of roles
+          items:
+            type: string
+          example:
+          - owner
+      required:
+      - $id
+      - $createdAt
+      - $updatedAt
+      - userId
+      - userName
+      - userEmail
+      - userPhone
+      - teamId
+      - teamName
+      - invited
+      - joined
+      - confirm
+      - mfa
+      - userAccessedAt
+      - roles
+      example:
+        $id: 5e5ea5c16897e
+        $createdAt: '2020-10-15T06:38:00.000+00:00'
+        $updatedAt: '2020-10-15T06:38:00.000+00:00'
+        userId: 5e5ea5c16897e
+        userName: John Doe
+        userEmail: john@appwrite.io
+        userPhone: +1 555 555 5555
+        teamId: 5e5ea5c16897e
+        teamName: VIP
+        invited: '2020-10-15T06:38:00.000+00:00'
+        joined: '2020-10-15T06:38:00.000+00:00'
+        confirm: false
+        mfa: false
+        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
+        roles:
+        - owner
+    teamList:
+      description: Teams List
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of teams that matched your query.
+          format: int32
+          example: 5
+        teams:
+          type: array
+          description: List of teams.
+          items:
+            $ref: '#/components/schemas/team'
+          example: []
+      required:
+      - total
+      - teams
+      example:
+        total: 5
+        teams: ''
+    appInstallationList:
+      description: App installations list
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of installations that matched your query.
+          format: int32
+          example: 5
+        installations:
+          type: array
+          description: List of installations.
+          items:
+            $ref: '#/components/schemas/appInstallation'
+          example: []
+      required:
+      - total
+      - installations
+      example:
+        total: 5
+        installations: ''
+    preferences:
+      description: Preferences
+      type: object
+      additionalProperties: true
+      example:
+        language: en
+        timezone: UTC
+        darkTheme: true
     log:
       description: Log
       type: object
@@ -1341,247 +1582,6 @@ components:
         deviceModel: Nexus 5
         countryCode: US
         countryName: United States
-    preferences:
-      description: Preferences
-      type: object
-      additionalProperties: true
-      example:
-        language: en
-        timezone: UTC
-        darkTheme: true
-    team:
-      description: Team
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Team creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Team update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        name:
-          type: string
-          description: Team name.
-          example: VIP
-        total:
-          type: integer
-          description: Total number of team members.
-          format: int32
-          example: 7
-        prefs:
-          type: object
-          description: Team preferences as a key-value object
-          example:
-            theme: pink
-            timezone: UTC
-          allOf:
-          - $ref: '#/components/schemas/preferences'
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - name
-      - total
-      - prefs
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        name: VIP
-        total: 7
-        prefs:
-          theme: pink
-          timezone: UTC
-    teamList:
-      description: Teams List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of teams that matched your query.
-          format: int32
-          example: 5
-        teams:
-          type: array
-          description: List of teams.
-          items:
-            $ref: '#/components/schemas/team'
-          example: []
-      required:
-      - total
-      - teams
-      example:
-        total: 5
-        teams: ''
-    membershipList:
-      description: Memberships List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of memberships that matched your query.
-          format: int32
-          example: 5
-        memberships:
-          type: array
-          description: List of memberships.
-          items:
-            $ref: '#/components/schemas/membership'
-          example: []
-      required:
-      - total
-      - memberships
-      example:
-        total: 5
-        memberships: ''
-    membership:
-      description: Membership
-      type: object
-      properties:
-        $id:
-          type: string
-          description: Membership ID.
-          example: 5e5ea5c16897e
-        $createdAt:
-          type: string
-          description: Membership creation date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt:
-          type: string
-          description: Membership update date in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        userId:
-          type: string
-          description: User ID.
-          example: 5e5ea5c16897e
-        userName:
-          type: string
-          description: User name. Hide this attribute by toggling membership privacy in the Console.
-          example: John Doe
-        userEmail:
-          type: string
-          description: User email address. Hide this attribute by toggling membership privacy in the Console.
-          example: john@appwrite.io
-        userPhone:
-          type: string
-          description: User phone number. Hide this attribute by toggling membership privacy in the Console.
-          example: +1 555 555 5555
-        teamId:
-          type: string
-          description: Team ID.
-          example: 5e5ea5c16897e
-        teamName:
-          type: string
-          description: Team name.
-          example: VIP
-        invited:
-          type: string
-          description: Date, the user has been invited to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        joined:
-          type: string
-          description: Date, the user has accepted the invitation to join the team in ISO 8601 format.
-          example: '2020-10-15T06:38:00.000+00:00'
-        confirm:
-          type: boolean
-          description: User confirmation status, true if the user has joined the team or false otherwise.
-          example: false
-        mfa:
-          type: boolean
-          description: Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
-          example: false
-        userAccessedAt:
-          type: string
-          description: Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
-          example: '2020-10-15T06:38:00.000+00:00'
-        roles:
-          type: array
-          description: User list of roles
-          items:
-            type: string
-          example:
-          - owner
-      required:
-      - $id
-      - $createdAt
-      - $updatedAt
-      - userId
-      - userName
-      - userEmail
-      - userPhone
-      - teamId
-      - teamName
-      - invited
-      - joined
-      - confirm
-      - mfa
-      - userAccessedAt
-      - roles
-      example:
-        $id: 5e5ea5c16897e
-        $createdAt: '2020-10-15T06:38:00.000+00:00'
-        $updatedAt: '2020-10-15T06:38:00.000+00:00'
-        userId: 5e5ea5c16897e
-        userName: John Doe
-        userEmail: john@appwrite.io
-        userPhone: +1 555 555 5555
-        teamId: 5e5ea5c16897e
-        teamName: VIP
-        invited: '2020-10-15T06:38:00.000+00:00'
-        joined: '2020-10-15T06:38:00.000+00:00'
-        confirm: false
-        mfa: false
-        userAccessedAt: '2020-10-15T06:38:00.000+00:00'
-        roles:
-        - owner
-    logList:
-      description: Logs List
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of logs that matched your query.
-          format: int32
-          example: 5
-        logs:
-          type: array
-          description: List of logs.
-          items:
-            $ref: '#/components/schemas/log'
-          example: []
-      required:
-      - total
-      - logs
-      example:
-        total: 5
-        logs: ''
-    appInstallationList:
-      description: App installations list
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of installations that matched your query.
-          format: int32
-          example: 5
-        installations:
-          type: array
-          description: List of installations.
-          items:
-            $ref: '#/components/schemas/appInstallation'
-          example: []
-      required:
-      - total
-      - installations
-      example:
-        total: 5
-        installations: ''
     appInstallation:
       description: AppInstallation
       type: object
