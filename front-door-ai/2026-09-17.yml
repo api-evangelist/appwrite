@@ -9,10 +9,14 @@ front_door_ai:
   final_host: appwrite.io
   ownership: own
   owner: appwrite
-  shares_host_with: null
+  shares_host_with:
+  - appwrite-graphql
   inherited_from: null
+  alias_of: null
   verdict: scored
   score: 5
+  band: 4
+  band_label: moderate
   host_score: 5
   density: 8.82
   words: 567
