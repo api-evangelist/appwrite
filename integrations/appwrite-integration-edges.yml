@@ -1,0 +1,19 @@
+edges:
+- partner_name: Amazon Web Services
+  partner: amazon-web-services
+  partner_match: shape-anchor
+  channel: provider-built
+  relationship: compatible
+  direction: provider-built
+  shape: aws-s3
+  type: docs
+  degree: declared-unqualified
+  evidence: https://appwrite.io/blog/post/announcing-s3-api
+  evidence_kind: own-blog
+  evidence_file: https://github.com/api-evangelist/appwrite/blob/main/blogs/2026-09-03-announcing-the-s3-api-use-any-s3-client-with-appwrite.md#L8
+  quote: Appwrite Storage now exposes an S3-compatible API. Point the AWS CLI, the AWS SDKs, and tools like rclone
+    at your Appwrite buckets, with no migration required.
+  detected_by: sweep-shape-compat.py
+  first_seen: '2026-10-13'
+generated: '2026-10-13'
+method: searched
