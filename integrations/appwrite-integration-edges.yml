@@ -15,5 +15,39 @@ edges:
     at your Appwrite buckets, with no migration required.
   detected_by: sweep-shape-compat.py
   first_seen: '2026-10-13'
+- partner_name: MCP Registry
+  partner: mcp
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=io.github.appwrite
+  contract_reference:
+    register: registry.modelcontextprotocol.io
+    spec_file: null
+    role: mcp-server-listing
+    registered_name: io.github.appwrite/mcp
+    register_id: io.github.appwrite/mcp
+    detected_by: sweep-agent-tools.py
+    detected: '2026-10-14'
+  mcp_registry:
+    servers:
+    - io.github.appwrite/mcp
+    hosted_remote: 1
+    local_package: 1
+    transports:
+      stdio: 1
+      streamable-http: 1
+    auth_declared: 0
+    catalog_declared: true
+    namespace_domains:
+    - appwrite.io
+  matched_by:
+  - remote-domain
+  detected_by: sweep-agent-tools.py
+  first_seen: '2026-10-14'
 generated: '2026-10-13'
 method: searched
+checked:
+- https://registry.modelcontextprotocol.io/v0/servers
