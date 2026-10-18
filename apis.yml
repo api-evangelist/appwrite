@@ -1086,6 +1086,8 @@ apis:
   humanURL: https://appwrite.io/docs/references
   baseURL: https://cloud.appwrite.io/v1
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
