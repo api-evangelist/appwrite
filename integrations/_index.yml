@@ -59,3 +59,184 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
+- slug: appwrite-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/appwrite/sdk-for-go/v7
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/appwrite/sdk-for-go/v7
+      version: v7.13.0
+      released: '2026-10-16'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/appwrite/sdk-for-go/v7
+      repo_leg: github-org:appwrite
+      publisher_leg: org:appwrite
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: appwrite-maven-central
+  label: Maven Central
+  partner: maven-central
+  partner_name: Maven Central
+  category: official SDK (Java/JVM)
+  type: register
+  channel: package-registry
+  evidence: https://central.sonatype.com/artifact/io.appwrite/sdk-for-android
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: io.appwrite:sdk-for-android
+      version: 30.0.0
+      released: '2026-10-15'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.appwrite/sdk-for-android
+      repo_leg: github-org:appwrite
+      publisher_leg: groupId:appwrite.io
+      matched_by: domain
+    - name: io.appwrite:sdk-for-kotlin
+      version: 23.0.0
+      released: '2026-10-15'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.appwrite/sdk-for-kotlin
+      repo_leg: github-org:appwrite
+      publisher_leg: groupId:appwrite.io
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: appwrite-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@appwrite.io/console
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@appwrite.io/console'
+      version: 19.0.0
+      released: '2026-10-13'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@appwrite.io/console
+      repo_leg: domain:appwrite.io
+      publisher_leg: email:appwrite.io
+      matched_by: domain
+    - name: '@appwrite.io/react'
+      version: 0.1.0
+      released: '2026-08-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@appwrite.io/react
+      repo_leg: github-org:appwrite
+      publisher_leg: email:appwrite.io
+      matched_by: domain
+    - name: appwrite-cli
+      version: 28.7.0
+      released: '2026-10-16'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/appwrite-cli
+      repo_leg: domain:appwrite.io
+      publisher_leg: email:appwrite.io
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: appwrite-nuget-gallery
+  label: NuGet Gallery
+  partner: nuget
+  partner_name: NuGet Gallery
+  category: official SDK (.NET)
+  type: register
+  channel: package-registry
+  evidence: https://www.nuget.org/packages/Appwrite
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: NuGet Gallery (public registry JSON)
+    spec_file: null
+    language: .NET
+    packages:
+    - name: Appwrite
+      version: 9.0.0
+      released: '2026-10-15'
+      released_field: published
+      lapsed: false
+      page: https://www.nuget.org/packages/Appwrite
+      repo_leg: github-org:appwrite
+      publisher_leg: org:appwrite
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: appwrite-pypi
+  label: PyPI
+  partner: pypi
+  partner_name: PyPI
+  category: official SDK (Python)
+  type: register
+  channel: package-registry
+  evidence: https://pypi.org/project/appwrite/
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: appwrite
+      version: 25.0.0
+      released: '2026-10-15'
+      released_field: upload_time
+      lapsed: false
+      page: https://pypi.org/project/appwrite/
+      repo_leg: domain:appwrite.io
+      publisher_leg: email:appwrite.io
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
