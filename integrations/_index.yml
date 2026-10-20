@@ -14,51 +14,6 @@
   relationship: compatible
   status: not-a-workflow
   arazzo: null
-- slug: appwrite-mcp-registry
-  label: MCP Registry
-  partner: mcp
-  partner_name: MCP Registry
-  type: register
-  channel: standard-directory
-  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=io.github.appwrite
-  source: edge
-  relationship: standard-participant
-  contract_reference:
-    register: registry.modelcontextprotocol.io
-    spec_file: null
-    role: mcp-server-listing
-    registered_name: io.github.appwrite/mcp
-    register_id: io.github.appwrite/mcp
-    detected_by: sweep-agent-tools.py
-    detected: '2026-10-15'
-  status: not-a-workflow
-  arazzo: null
-- slug: appwrite-pipedream
-  label: Pipedream
-  partner: pipedream
-  partner_name: Pipedream
-  type: marketplace
-  marketplace: pipedream-components
-  channel: open-source-node
-  evidence: https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/appwrite
-  source: edge
-  relationship: ipaas-bridge
-  contract_reference:
-    register: Pipedream components (PipedreamHQ/pipedream components/)
-    spec_file: null
-    role: ipaas-connector:pipedream
-    registered_name: appwrite
-    matched_domain: appwrite.io
-    matched_by: domain
-    detected_by: sweep-workflow-automation.py
-    detected: '2026-10-15'
-    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
-    app_slug: appwrite
-    actions: true
-    sources: false
-    builder: Pipedream repo (component)
-  status: not-a-workflow
-  arazzo: null
 - slug: appwrite-go-module-proxy
   label: Go module proxy
   partner_name: Go module proxy
@@ -238,5 +193,50 @@
       24 months'
     detected_by: sweep-official-sdks.py
     detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: appwrite-mcp-registry
+  label: MCP Registry
+  partner: mcp
+  partner_name: MCP Registry
+  type: register
+  channel: standard-directory
+  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=io.github.appwrite
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: registry.modelcontextprotocol.io
+    spec_file: null
+    role: mcp-server-listing
+    registered_name: io.github.appwrite/mcp
+    register_id: io.github.appwrite/mcp
+    detected_by: sweep-agent-tools.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: appwrite-pipedream
+  label: Pipedream
+  partner: pipedream
+  partner_name: Pipedream
+  type: marketplace
+  marketplace: pipedream-components
+  channel: open-source-node
+  evidence: https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/appwrite
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Pipedream components (PipedreamHQ/pipedream components/)
+    spec_file: null
+    role: ipaas-connector:pipedream
+    registered_name: appwrite
+    matched_domain: appwrite.io
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: appwrite
+    actions: true
+    sources: false
+    builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
