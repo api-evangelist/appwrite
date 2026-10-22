@@ -377,3 +377,52 @@
     detected: '2026-10-22'
   status: not-a-workflow
   arazzo: null
+- slug: appwrite-apis-guru-openapi-directory
+  label: APIs.guru OpenAPI Directory
+  partner: apis-guru
+  partner_name: APIs.guru OpenAPI Directory
+  category: API definition directory listing (OpenAPI)
+  type: register
+  channel: standard-directory
+  evidence: https://apis.guru/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: APIs.guru OpenAPI Directory
+    spec_file: null
+    standard: APIs.guru OpenAPI Directory
+    role: listed-in-directory
+    directory_provider: appwrite.io
+    matched_domain: appwrite.io
+    matched_by: domain
+    apis_listed: 2
+    version_count: 2
+    first_added: '2021-08-12'
+    last_updated: '2021-08-12'
+    origin_publisher_hosted: true
+    origin_hosts:
+    - appwrite.io
+    categories:
+    - developer_tools
+    own_openapi_files: 44
+    listings:
+    - key: appwrite.io:client
+      title: Appwrite
+      preferred: 0.9.3
+      versions: 1
+      swagger_url: https://api.apis.guru/v2/specs/appwrite.io/client/0.9.3/openapi.json
+      origin_url: https://appwrite.io/specs/open-api3?platform=client
+      openapi_version: 3.0.0
+    - key: appwrite.io:server
+      title: Appwrite
+      preferred: 0.9.3
+      versions: 1
+      swagger_url: https://api.apis.guru/v2/specs/appwrite.io/server/0.9.3/openapi.json
+      origin_url: https://appwrite.io/specs/open-api3?platform=server
+      openapi_version: 3.0.0
+    signal_note: 'participation only: a community directory listing (APIs.guru collects definitions; the provider
+      did not file them). Signals: version_count, apis_listed, origin_publisher_hosted.'
+    detected_by: sweep-openapi-directory-apis-guru.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
