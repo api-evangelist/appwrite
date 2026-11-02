@@ -1,0 +1,247 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://appwrite.io/pricing
+sources:
+- https://appwrite.io/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Starter
+published: true
+note: Page prices database compute (serverless vs dedicated tiers); Free and Pro plan details are referenced
+  in a separate 'Compare plans' page not shown here.
+plan_count: 14
+currency: USD
+plans:
+- name: Serverless database compute
+  price_text: $0 fixed fee
+  price: 0
+  currency: USD
+  period: month
+  unit: database compute
+  included_quota: $10 of compute credits for database usage included every month.
+  overage: Plan quota, then overage
+- name: Dedicated database compute
+  price_text: From $10/mo per database
+  price: 10
+  currency: USD
+  period: month
+  unit: per database
+  included_quota: Reads and writes included in compute tier
+  overage: 'HA replicas: full tier price per replica; Point-in-time recovery: +20% of base'
+- name: Starter (1 core, 1 GB)
+  price_text: $10/mo
+  price: 10
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 1 core, 1 GB
+- name: Standard (2 cores, 2 GB)
+  price_text: $20/mo
+  price: 20
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 2 cores, 2 GB
+- name: Standard Plus (2 cores, 4 GB)
+  price_text: $49/mo
+  price: 49
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 2 cores, 4 GB
+- name: Professional (4 cores, 8 GB)
+  price_text: $85/mo
+  price: 85
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 4 cores, 8 GB
+- name: Business (4 cores, 16 GB)
+  price_text: $160/mo
+  price: 160
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 4 cores, 16 GB
+- name: Business Plus (4 cores, 32 GB)
+  price_text: $299/mo
+  price: 299
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 4 cores, 32 GB
+- name: Enterprise (8 cores, 32 GB)
+  price_text: $425/mo
+  price: 425
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 8 cores, 32 GB
+- name: Enterprise Plus (8 cores, 64 GB)
+  price_text: $699/mo
+  price: 699
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 8 cores, 64 GB
+- name: Scale (16 cores, 64 GB)
+  price_text: $999/mo
+  price: 999
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 16 cores, 64 GB
+- name: Scale Plus (16 cores, 128 GB)
+  price_text: $1,699/mo
+  price: 1699
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 16 cores, 128 GB
+- name: Scale Pro (32 cores, 128 GB)
+  price_text: $2,399/mo
+  price: 2399
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 32 cores, 128 GB
+- name: Scale Max (32 cores, 256 GB)
+  price_text: $4,099/mo
+  price: 4099
+  currency: USD
+  period: month
+  unit: tier
+  included_quota: 32 cores, 256 GB
+rate_limit_statements:
+- Your project will continue to run, and additional charges will apply.
+- Your project will freeze, and Appwrite Console will continue running in read-only mode.
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  - subscription
+  units: []
+  plans:
+  - name: Serverless database compute
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Dedicated database compute
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Starter (1 core, 1 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Standard (2 cores, 2 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Standard Plus (2 cores, 4 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Professional (4 cores, 8 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Business (4 cores, 16 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Business Plus (4 cores, 32 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Enterprise (8 cores, 32 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Enterprise Plus (8 cores, 64 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Scale (16 cores, 64 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Scale Plus (16 cores, 128 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Scale Pro (32 cores, 128 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Scale Max (32 cores, 256 GB)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
