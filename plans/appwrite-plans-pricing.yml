@@ -125,20 +125,22 @@ rate_limit_statements:
 - Your project will continue to run, and additional charges will apply.
 - Your project will freeze, and Appwrite Console will continue running in read-only mode.
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - hybrid
   - metered
   - subscription
-  units: []
+  units:
+  - compute
+  - period
   plans:
   - name: Serverless database compute
     access: other
     model: metered
     model_how: derived
     units:
-    - other
+    - compute
     periods:
     - month
   - name: Dedicated database compute
@@ -154,7 +156,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Standard (2 cores, 2 GB)
@@ -162,7 +164,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Standard Plus (2 cores, 4 GB)
@@ -170,7 +172,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Professional (4 cores, 8 GB)
@@ -178,7 +180,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Business (4 cores, 16 GB)
@@ -186,7 +188,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Business Plus (4 cores, 32 GB)
@@ -194,7 +196,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Enterprise (8 cores, 32 GB)
@@ -202,7 +204,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Enterprise Plus (8 cores, 64 GB)
@@ -210,7 +212,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Scale (16 cores, 64 GB)
@@ -218,7 +220,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Scale Plus (16 cores, 128 GB)
@@ -226,7 +228,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Scale Pro (32 cores, 128 GB)
@@ -234,7 +236,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Scale Max (32 cores, 256 GB)
@@ -242,6 +244,6 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
