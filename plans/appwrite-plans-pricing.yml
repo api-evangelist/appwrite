@@ -125,7 +125,7 @@ rate_limit_statements:
 - Your project will continue to run, and additional charges will apply.
 - Your project will freeze, and Appwrite Console will continue running in read-only mode.
 x-canonical:
-  generated: '2026-11-06'
+  generated: '2026-11-13'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - hybrid

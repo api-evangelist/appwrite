@@ -44,7 +44,7 @@ accessModel:
   - rate-limits
   - security
   - sandbox
-  generated: '2026-11-06'
+  generated: '2026-11-13'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appwrite.png
 tags:
@@ -1229,6 +1229,18 @@ common:
   url: llms/appwrite-llms.txt
 - type: SourceCode
   url: https://github.com/appwrite/appwrite
+- type: UsageTerms
+  url: terms/appwrite-terms-of-service.yml
+- type: DataProcessing
+  url: privacy/appwrite-privacy-policy.yml
+- type: DeprecationSchedule
+  url: deprecation/appwrite-deprecation-policy.yml
+- type: Attestations
+  url: compliance/appwrite-compliance.yml
+- type: Eligibility
+  url: eligibility/appwrite-eligibility.yml
+- type: DataLicense
+  url: data-license/appwrite-data-license.yml
 integrations:
 - name: Text to speech with ElevenLabs AI
 - name: MCP with Cursor MCP
